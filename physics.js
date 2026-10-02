@@ -62,7 +62,19 @@
     const totalPhase = statisticalPhase + referencePhase;
     finite(totalPhase, 'Total phase');
     const p0 = (1 + visibility * Math.cos(totalPhase)) / 2;
-    return { statisticalPhase, totalPhase, p0, p1: 1 - p0 };
+    const phase = polar(totalPhase);
+    // In the two-path basis, visibility reduces the off-diagonal coherence.
+    // Recombination is H rho H, with H the balanced Hadamard beam splitter.
+    const pathDensityMatrix = [
+      [[0.5, 0], [visibility * phase[0] / 2, -visibility * phase[1] / 2]],
+      [[visibility * phase[0] / 2, visibility * phase[1] / 2], [0.5, 0]]
+    ];
+    // Only V=1 specifies a pure path state (1, exp(i Delta))/sqrt(2).
+    // Its output amplitudes use this chosen overall phase convention.
+    const coherentOutputAmplitudes = visibility === 1
+      ? [[(1 + phase[0]) / 2, phase[1] / 2], [(1 - phase[0]) / 2, -phase[1] / 2]]
+      : null;
+    return { statisticalPhase, totalPhase, p0, p1: 1 - p0, pathDensityMatrix, coherentOutputAmplitudes };
   }
 
   function applyMatrix(matrix, state) {
@@ -81,7 +93,8 @@
     if (name === 'vacuum') return [[1, 0], [0, 0]];
     if (name === 'fermion') return [[0, 0], [1, 0]];
     if (name === 'plus') return [[Math.SQRT1_2, 0], [Math.SQRT1_2, 0]];
-    throw new RangeError('Initial state must be vacuum, fermion, or plus.');
+    if (name === 'plusY') return [[Math.SQRT1_2, 0], [0, Math.SQRT1_2]];
+    throw new RangeError('Initial state must be vacuum, fermion, plus, or plusY.');
   }
 
   // Four Ising sigma anyons, fixed total vacuum charge. Basis 0/1 means that
@@ -132,6 +145,16 @@
     };
   }
 
+  // Born probabilities for the +/-1 eigenstates of a Pauli operator in the
+  // encoded qubit. X or Y readout needs a basis change before ordinary fusion
+  // measurement. Normalize the input, as in probabilities() and bloch().
+  function measurementProbabilities(state, axis = 'z') {
+    if (!['x', 'y', 'z'].includes(axis)) throw new RangeError('Measurement axis must be x, y, or z.');
+    const expectation = Math.max(-1, Math.min(1, bloch(state)[axis]));
+    const plus = (1 + expectation) / 2;
+    return { plus, minus: 1 - plus, expectation };
+  }
+
   function fidelity(a, b) {
     const normA = validateState(a);
     const normB = validateState(b);
@@ -169,6 +192,43 @@
     return paths.filter(path => totalCharge === 'either' || (path.length ? path[path.length - 1] : 'vacuum') === totalCharge);
   }
 
+  // Select one fusion-basis path without enumerating an exponentially large
+  // list. At each step, count the paths in the vacuum branch before deciding
+  // which branch contains index. The ordering is identical to fibonacciPaths:
+  // cumulative vacuum charge precedes tau wherever both choices are allowed.
+  function fibonacciPathAt(n, totalCharge, index) {
+    integer(n, 'Anyon count', 0, 70);
+    if (!['vacuum', 'tau'].includes(totalCharge)) throw new RangeError('A fixed total charge must be vacuum or tau.');
+
+    // completions[r][charge] counts ways to reach the chosen final charge
+    // from this intermediate charge after adding r further tau anyons.
+    const completions = [{ vacuum: totalCharge === 'vacuum' ? 1 : 0, tau: totalCharge === 'tau' ? 1 : 0 }];
+    for (let remaining = 1; remaining <= n; remaining++) {
+      const previous = completions[remaining - 1];
+      completions.push({ vacuum: previous.tau, tau: previous.vacuum + previous.tau });
+    }
+    const count = completions[n].vacuum;
+    if (count === 0) throw new RangeError('This total-charge sector has no fusion paths for the chosen anyon count.');
+    integer(index, 'Fusion-path index', 0, count - 1);
+
+    const path = [];
+    let charge = 'vacuum';
+    for (let step = 0; step < n; step++) {
+      const remaining = n - step - 1;
+      if (charge === 'vacuum') charge = 'tau';
+      else {
+        const vacuumBranchCount = completions[remaining].vacuum;
+        if (index < vacuumBranchCount) charge = 'vacuum';
+        else {
+          index -= vacuumBranchCount;
+          charge = 'tau';
+        }
+      }
+      path.push(charge);
+    }
+    return path;
+  }
+
   // Mutual statistics only: an e excitation winding around m excitations in
   // the toric-code anyon model gives (-1)^(N*w). Same-type e/e and m/m exchanges
   // are bosonic. This function does not evolve the lattice many-body state.
@@ -178,6 +238,55 @@
     const angle = Math.PI * enclosedCount * windings;
     const sign = (enclosedCount * windings) % 2 === 0 ? 1 : -1;
     return { angle, phase: [sign, 0], sign };
+  }
+
+  // Apply X on the lattice edge shared by two neighboring plaquettes.
+  // Plaquette labels are nonnegative integer "column,row" keys. A sequence
+  // of these operations is a dual-lattice string: its odd-incidence endpoints
+  // are m excitations, since X flips the adjacent B_p=product(Z) eigenvalues.
+  // Repeating an edge cancels it (X^2=I). Geometry bounds belong to the UI.
+  function toricStringStep(edges, from, to) {
+    if (!Array.isArray(edges)) throw new TypeError('String edges must be an array of cell-key pairs.');
+    const coordinates = new Map();
+    function parseCell(key) {
+      if (typeof key !== 'string' || !/^(0|[1-9]\d*),(0|[1-9]\d*)$/.test(key)) {
+        throw new TypeError('A cell key must be column,row with nonnegative integers and no leading zeros.');
+      }
+      const point = key.split(',').map(Number);
+      if (!point.every(Number.isSafeInteger)) throw new RangeError('Cell coordinates must be safe integers.');
+      coordinates.set(key, point);
+      return point;
+    }
+    function compareCells(a, b) {
+      const first = coordinates.get(a), second = coordinates.get(b);
+      return first[0] - second[0] || first[1] - second[1];
+    }
+    function canonicalEdge(a, b) {
+      const first = parseCell(a), second = parseCell(b);
+      if (Math.abs(first[0] - second[0]) + Math.abs(first[1] - second[1]) !== 1) {
+        throw new RangeError('A string step must join nearest-neighbor plaquettes.');
+      }
+      return compareCells(a, b) < 0 ? [a, b] : [b, a];
+    }
+    const edgeParity = new Map();
+    function toggle(a, b) {
+      const edge = canonicalEdge(a, b);
+      const key = edge.join('|');
+      if (edgeParity.has(key)) edgeParity.delete(key);
+      else edgeParity.set(key, edge);
+    }
+    for (const edge of edges) {
+      if (!Array.isArray(edge) || edge.length !== 2) throw new TypeError('Each string edge must contain exactly two cell keys.');
+      toggle(edge[0], edge[1]);
+    }
+    toggle(from, to);
+    const updatedEdges = Array.from(edgeParity.values()).sort((a, b) => compareCells(a[0], b[0]) || compareCells(a[1], b[1]));
+    const oddIncidence = new Set();
+    for (const edge of updatedEdges) for (const cell of edge) {
+      if (oddIncidence.has(cell)) oddIncidence.delete(cell);
+      else oddIncidence.add(cell);
+    }
+    return { edges: updatedEdges, defects: Array.from(oddIncidence).sort(compareCells) };
   }
 
   // Signed winding number of a polygon about a point, in Cartesian x/y.
@@ -214,7 +323,7 @@
 
   return Object.freeze({
     TAU, abelianPhase, interference, isingInitial, isingBraid, applyMatrix,
-    applyBraidWord, probabilities, bloch, fidelity, fibonacciCounts,
-    fibonacciPaths, toricPhase, windingNumber
+    applyBraidWord, probabilities, bloch, measurementProbabilities, fidelity,
+    fibonacciCounts, fibonacciPaths, fibonacciPathAt, toricPhase, toricStringStep, windingNumber
   });
 });

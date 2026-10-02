@@ -1,16 +1,16 @@
 # Ideas to explore next
 
-Start with the five small models in the playground. Each isolates one question; none simulates an entire quantum Hall material. The extensions below are proposals, with enough detail to choose a next experiment.
+Start with the five small models in the playground. Each isolates one question; none simulates an entire quantum Hall material. The directions below identify a minimal calculation, an observable, and the main interpretation pitfall. Directions 6 and 8 build on implemented path deformation and pair-string controls; their further extensions remain proposals.
 
 ## In the playground
 
 | Model | Try this | What it establishes |
 | --- | --- | --- |
-| Abelian exchange and winding | Compare one exchange with one complete trip around another anyon. | A full winding accumulates twice the exchange angle. |
-| Ideal interferometer | Change the number of enclosed anyons, then reduce visibility. | A statistical phase becomes observable when compared with a coherent reference route. |
-| Ising braid order | Exchange neighboring pairs in different orders, then compare states and measurements. | Non-Abelian exchanges can act as matrices that do not commute. |
-| Fibonacci fusion counts | Add one anyon at a time and keep track of each possible total charge. | The number of allowed fusion states follows a Fibonacci recurrence. |
-| Toric-code loops | Wind an electric-type excitation, called $e$, around magnetic-type excitations, called $m$. | Each enclosed $m$ contributes a minus sign to an $e$ loop; this is a mutual statistical phase. |
+| [Exchange and winding](../experiments.html#exchange) | Compare exchange with full winding; deform the separated-particle paths. | A full winding accumulates twice the exchange angle; smooth deformation preserves winding. |
+| [Ideal interferometer](../experiments.html#interference) | Add the two output amplitudes, then reduce visibility and inspect the density matrix. | Coherence controls whether a relative statistical phase appears in output probabilities. |
+| [Ising braid order](../experiments.html#braids) | Reverse two exchanges and switch the $X$, $Y$, and $Z$ measurement bases. | Noncommuting braids can produce states whose difference one measurement misses. |
+| [Fibonacci fusion paths](../experiments.html#fusion) | Fix the total charge, enumerate paths, and add another anyon. | Allowed basis states follow a Fibonacci recurrence; counts are not probabilities. |
+| [Toric-code strings and loops](../experiments.html#toric) | Create and move an $m$ pair with a string, then compare $e$ loops. | Open strings have excitation endpoints; an enclosed $m$ gives an $e$ loop a minus sign. |
 
 The [references](references.md) identify the models' scientific sources. “Fusion” means combining anyons and asking which collective particle type, or *topological charge*, remains. A diagram of paths describes an operation; it does not by itself measure the resulting phase.
 
@@ -38,7 +38,7 @@ Model an extended collider with several scattering routes and compare single-sou
 
 ### 6. Do the bends in a path matter?
 
-Add a freehand closed-path editor and count complete windings around a pinned anyon, rejecting paths through it. Large changes of shape preserve the statistical phase while the winding stays fixed. Display a separate magnetic-flux phase that can change with enclosed area: topology fixes the statistical contribution, not every phase acquired in motion. **Easy:** planar geometry and complex phases. [Arovas, Schrieffer & Wilczek, 1984](https://doi.org/10.1103/PhysRevLett.53.722), for the quantum Hall geometric-phase calculation motivating this illustration.
+**Implemented starting point:** deform the two separated-particle paths while keeping their exchange or winding fixed, and inspect the unchanged statistical factor. The next model would accept a freehand closed loop around a pinned anyon and calculate both winding and enclosed area. Compare the unchanged statistical contribution with an area-dependent magnetic-flux phase; their sum need not remain fixed under deformation. **Easy**, with collision rejection essential: a path through the anyon leaves the assumed separated-particle model. [Arovas, Schrieffer & Wilczek, 1984](https://doi.org/10.1103/PhysRevLett.53.722).
 
 ### 7. Can a short braid approximate a chosen quantum gate?
 
@@ -46,7 +46,7 @@ Move from fusion counts to a two-dimensional encoded state, multiply Fibonacci b
 
 ### 8. When does a wandering defect erase a stored bit?
 
-Put the toric code on a periodic square grid, create a pair of excitations, extend the string separating them, and close it. Endpoints can disappear while a loop wrapping around the grid changes the encoded state. Later, add random errors and a decoder: an algorithm that infers corrections from measured defects. **Intermediate** for strings and parity; advanced for noisy decoding. [Kitaev, 2003, Sec. 1](https://arxiv.org/abs/quant-ph/9707021); the existing card illustrates only the mutual phase.
+**Implemented starting point:** an open dual-lattice $X$ string creates or moves magnetic excitations at its endpoints; the $e$ loop reports enclosed parity. The next model would make the lattice periodic and track whether a completed string wraps around it. Observe how endpoints can disappear while such a loop changes the encoded state: absence of local defects does not guarantee an unchanged memory. **Intermediate** for logical strings; advanced for random errors and a decoder, which infers corrections from measured defects. [Kitaev, 2003, Sec. 1](https://arxiv.org/abs/quant-ph/9707021); [Dennis et al., 2002](https://arxiv.org/abs/quant-ph/0110143).
 
 ## Useful upstream software
 

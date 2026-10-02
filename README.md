@@ -1,10 +1,9 @@
-# Anyon playground
+# Anyons: visual notes
 
-**Exchange two particles. Wind one around another. Change the order.**
-In two dimensions, these operations can leave a quantum state with more than
-the familiar bosonic or fermionic exchange sign. This playground makes that
-difference visible through five small experiments and short accompanying notes.
-Some elementary quantum mechanics helps; no knowledge of anyons is assumed.
+Five interactive notes about anyon physics, with the calculation and its
+interpretation beside each figure. The intended reader knows graduate quantum
+mechanics and some condensed matter, but has no prior anyon or quantum field
+theory background. The interface is plain HTML on a white page.
 
 ## Open and explore
 
@@ -17,28 +16,32 @@ Start with the first two experiments, then explore in any order:
 
 | Experiment | What to look for |
 |---|---|
-| Exchange and winding | One exchange and one complete encircling give different phases. |
-| Interference | An enclosed anyon shifts a fringe; reduced coherence makes the shift harder to see. |
-| Ising braids | Exchanging different pairs in a different order can change a measurement. |
-| Fibonacci fusion | A simple rule generates a growing space of possible states. |
-| Toric-code loops | Winding one kind of excitation around another can change a sign. |
+| Exchange and winding | Deform a collision-free path, change orientation, or compare two exchanges with an exchange followed by its inverse. |
+| Interference | Connect the fringe to complex amplitudes and a density matrix; distinguish a phase shift from loss of coherence. |
+| Ising braids | Inspect final kets, compare Pauli components, and change measurement basis to reveal a hidden state difference. |
+| Fibonacci fusion | Browse explicit basis paths in a fixed total-charge sector and recover the state-count recurrence. |
+| Toric-code strings | Apply shared-edge Pauli operators to create, move, and annihilate pairs; derive the loop phase from plaquette eigenvalues. |
 
-Each experiment has adjustable inputs, a reset, and an explanation of the model.
+Each note introduces its symbols, gives worked example settings, and explains
+what its readout measures. Controls have a reset; mathematical derivations and
+model limits sit beside the figures.
 The Ising, Fibonacci, and toric-code examples describe **different anyon models**.
 They are not stages of one material simulation.
 
-Read the [short notes](docs/notes.md) for the common ideas, or browse the
+Read the [connected notes](docs/notes.md) for the argument in one place, or browse the
 [inspiration catalog](docs/catalog.md) for papers, existing software, and possible
 next experiments. [References](docs/references.md) connect the models to sources.
 
 ## What is calculated?
 
 The demos calculate statistical phases, ideal interference probabilities, small
-braid matrices, fusion-state counts, and loop parity. Drawn paths are schematics;
+braid matrices, encoded measurement probabilities, explicit fusion basis paths,
+and the parity of toric-code strings and loops. Drawn paths are schematics;
 the app does not solve an interacting electron fluid or reproduce an experimental
 device. Assumptions and conventions are stated beside each calculation.
-Angles are in radians; all displayed quantities are dimensionless. The
-calculations are deterministic and use no random sampling.
+The toric-code panel tracks magnetic plaquette eigenvalues and strings of Pauli
+operators; it does not store an entire many-spin wavefunction. Angles are in radians; all displayed quantities are dimensionless.
+The calculations are deterministic and use no random sampling.
 
 ## Change the code
 
@@ -46,7 +49,7 @@ calculations are deterministic and use no random sampling.
 |---|---|
 | `physics.js` | Numerical models, independent of the interface |
 | `app.js` | Controls, SVG drawings, and explanatory text |
-| `styles.css` | Layout and appearance |
+| `styles.css` | Plain-page layout and figure controls |
 | `index.html` | Plain index of experiments, notes, and code |
 | `experiments.html` | Interactive examples |
 | `tests/physics.test.js` | Physical identities and limiting cases |
@@ -78,8 +81,12 @@ npm run docs
 
 This optional editing step uses the versions of Marked and KaTeX pinned in
 `package-lock.json`. Exploring the finished pages and running the physics tests
-require no package installation. SVG exports contain
-vector drawings; JSON exports record parameters, conventions, and model results.
+require no package installation.
+
+Choose a figure from the footer to save its SVG. JSON exports record parameters,
+conventions, and computed results, including the selected measurement basis,
+fusion path, or toric string. These are records, not files that can be reimported
+through the interface.
 Each export leaves a download link available for another try.
 
 ## License

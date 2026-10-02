@@ -3,44 +3,36 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Anyons: notes and experiments — Neil Yuanting Li</title>
+  <title>Anyons: visual notes — Neil Yuanting Li</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>Anyons: notes and experiments</h1>
+  <h1>Anyons: visual notes</h1>
   <p>Neil Yuanting Li</p>
-  <p>A small collection of calculations, interactive examples, and reading notes.
-  An anyon is a particle-like excitation in two dimensions whose exchange
-  behavior can go beyond the familiar bosonic or fermionic sign.
-  These pages assume elementary quantum mechanics, but no prior knowledge of anyons.</p>
-  <p>Start with the <a href="docs/notes.html">short notes</a>, or try the first two examples below.
-  All examples run locally in a browser.</p>
+  <p>In two dimensions, exchanging identical excitations can change a quantum state by a phase or by a matrix acting on a shared state space. These notes explore what those statements mean, how to calculate their consequences, and which consequences a measurement can reveal.</p>
+  <p>Assumed background: graduate quantum mechanics and some condensed matter. State vectors, unitary matrices, Pauli operators, and density matrices are used explicitly. No quantum field theory or prior knowledge of anyons is assumed; fusion, braiding, and topological charge are introduced along the way.</p>
+  <p>Start with <a href="experiments.html#exchange">exchange</a> and <a href="experiments.html#interference">interference</a>. Each note places a model, its adjustable figure, and the reasoning behind it together. The example buttons load specific comparisons worth examining.</p>
   <hr>
-  <h2>Interactive examples</h2>
-  <ol>
-    <li><a href="experiments.html#exchange">Exchange and winding</a> — compare one exchange with a full encircling.</li>
-    <li><a href="experiments.html#interference">An ideal interferometer</a> — see how an enclosed anyon shifts an interference pattern.</li>
-    <li><a href="experiments.html#braids">Order of Ising braids</a> — exchange different pairs in different orders and compare the outcomes.</li>
-    <li><a href="experiments.html#fusion">Fibonacci fusion states</a> — count the states allowed by one simple combination rule.</li>
-    <li><a href="experiments.html#toric">Loops in the toric code</a> — move one kind of excitation around another and track the resulting sign.</li>
-  </ol>
-  <p>Each example states its equations and assumptions. These are small models of
-  exchange, fusion, and interference; they do not simulate an entire material.
-  Ising anyons, Fibonacci anyons, and toric-code excitations are different models.</p>
+  <h2>Five visual notes</h2>
+  <table class="reading-map">
+    <thead><tr><th>Note</th><th>Question to investigate</th><th>Useful QM idea</th></tr></thead>
+    <tbody>
+      <tr><td><a href="experiments.html#exchange">1. Exchange and winding</a></td><td>Why is exchanging twice different from exchanging and undoing? What survives a change of path shape?</td><td>Global phase; inverse operations</td></tr>
+      <tr><td><a href="experiments.html#interference">2. An ideal interferometer</a></td><td>How does a braid phase shift a probability? What does losing coherence actually remove?</td><td>Adding amplitudes; density matrices</td></tr>
+      <tr><td><a href="experiments.html#braids">3. Ising braids</a></td><td>When does changing the order change the state? Can one measurement hide the difference?</td><td>Noncommuting unitaries; changing basis</td></tr>
+      <tr><td><a href="experiments.html#fusion">4. Fibonacci fusion paths</a></td><td>What are the states being counted? Why are the dimensions Fibonacci numbers?</td><td>Basis vectors; dimension of a Hilbert space</td></tr>
+      <tr><td><a href="experiments.html#toric">5. The toric code</a></td><td>How do Pauli operators create pairs of excitations, and why does a loop acquire a minus sign?</td><td>Commuting spin Hamiltonians; operator algebra</td></tr>
+    </tbody>
+  </table>
+  <p>The Ising, Fibonacci, and toric-code examples describe different anyon models. Each calculation states its assumptions. Their purpose is to make particular ideas visible, rather than simulate a complete material or device.</p>
+  <h2>Read the argument in one place</h2>
+  <p><a href="docs/notes.html">Anyons: paths, states, and measurements</a> connects the five examples, explains what a quasiparticle is, and introduces the role of a gap and adiabatic transport. It includes a brief connection to Laughlin quantum Hall quasiholes. (<a href="docs/notes.md">Markdown with LaTeX source</a>)</p>
+  <h2>Questions to pursue next</h2>
+  <p>The <a href="docs/catalog.html">inspiration catalog</a> gives eight directions: pair correlations, squeezing at a saddle, motion in traps, experimental interference, collider geometry, path deformation, Fibonacci gates, and logical memory. Each entry identifies a minimal model, an observable, and a pitfall. The <a href="docs/references.html">annotated sources</a> provide routes into the papers and useful existing code.</p>
   <hr>
-  <h2>Notes and reading</h2>
-  <ul>
-    <li><a href="docs/notes.html">Five ideas behind the playground</a> — a compact introduction. (<a href="docs/notes.md">Markdown</a>)</li>
-    <li><a href="docs/catalog.html">Ideas to explore next</a> — eight possible extensions, including pair correlations and motion in traps; links to existing software. (<a href="docs/catalog.md">Markdown</a>)</li>
-    <li><a href="docs/references.html">Sources and reading routes</a> — papers behind the examples and further questions. (<a href="docs/references.md">Markdown</a>)</li>
-  </ul>
-  <hr>
-  <h2>Code</h2>
-  <p><a href="README.md">README and instructions</a> · <a href="physics.js">Numerical models</a> ·
-  <a href="tests/physics.test.js">Checks</a> · <a href="LICENSE">MIT license</a></p>
-  <p>No installation is needed to explore. Open this file in a browser.
-  Parameters and vector diagrams can be saved from each example.</p>
-  <hr>
+  <h2>Use and modify</h2>
+  <p>Open this file in a browser; the figures and LaTeX rendering work locally without installation or internet. Use the controls to change a calculation, reset an example, and save its vector figure or parameters.</p>
+  <p><a href="README.md">Setup and file guide</a> · <a href="physics.js">Numerical models</a> · <a href="tests/physics.test.js">Checks</a> · <a href="LICENSE">MIT license</a></p>
   <p><small>Copyright (c) 2026 Neil Yuanting Li.</small></p>
 </body>
 </html>
