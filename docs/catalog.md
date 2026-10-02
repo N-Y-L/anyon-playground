@@ -48,7 +48,7 @@ Choose a target qubit rotation and search short products of Fibonacci braid matr
 
 ### 8. Can a memory change after every defect disappears?
 
-**Implemented:** create an open $X$ string on the periodic grid, wrap it around, and close it. Compare its vanished endpoints with the nonzero logical parity; a state with a definite crossing logical $Z$ value changes that value. Next, inject random local errors and let a decoder choose corrections from endpoint measurements, then count incorrect logical operations. **Advanced** for a credible memory benchmark: topological protection limits what small local disturbances can do, but it does not make a two-dimensional memory automatically immune to accumulated errors. [Kitaev, 2003](https://arxiv.org/abs/quant-ph/9707021); [Dennis et al., 2002](https://arxiv.org/abs/quant-ph/0110143).
+**Implemented:** create an open $X$ string on the periodic grid, wrap it around, and close it. The endpoints cost energy; the intervening string does not. Annihilating them restores the ground energy yet can reverse a definite crossing logical $Z$ value. Next, inject random local errors and let a decoder choose corrections from endpoint measurements, then count incorrect logical operations. **Advanced** for a credible memory benchmark: topological protection limits what small local disturbances can do, but it does not make a two-dimensional memory automatically immune to accumulated errors. [Kitaev, 2003](https://arxiv.org/abs/quant-ph/9707021); [Dennis et al., 2002](https://arxiv.org/abs/quant-ph/0110143).
 
 ## Useful upstream software
 

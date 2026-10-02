@@ -98,7 +98,7 @@ $$\chi(s,\alpha)=\frac{\langle r^2\rangle_\alpha-\langle r^2\rangle_{\rm ref}}{4
 
 Here $r$ is the relative guiding-center separation, and the reference uses distinguishable particles with matched packet labels. Positive $\chi$ means a larger mean squared separation than that reference, and negative $\chi$ a smaller one. These are the paper's antibunching and bunching comparisons; they are not detector coincidence probabilities.
 
-[Try the correlation experiment](../experiments.html#correlations) at $\alpha=1/3$. At $s=2$, the model gives $\chi\simeq-0.1193$: a mean squared guiding-center separation of about $5.523\ell^2$, compared with $6\ell^2$ for the reference. Yet its formal small-separation limit is $\chi\to+1/3$. Changing the preparation changes the weights of the same allowed angular states. Interpreting the whole curve as a continuously varying attraction would miss that mechanism.
+[Try the correlation experiment](../experiments.html#correlations) at $\alpha=1/3$. At $s=2$, the model gives $\chi\simeq-0.1193$: a mean squared guiding-center separation of about $5.523\ell^2$, compared with $6\ell^2$ for the reference. Yet its formal small-separation limit is $\chi\to+1/3$. The preparation selects different weights among the same allowed angular states; no interparticle force was added to produce this crossover.
 
 <details>
 <summary>Compute the curve from its angular-state weights</summary>
@@ -114,7 +114,7 @@ The gamma function extends the factorial: $\Gamma(n+1)=n!$. The bosonic and ferm
 $$\chi(s,0)=u(\tanh u-1),\qquad
 \chi(s,1)=u(\coth u-1).$$
 
-At $s=0$, use the normalized-state limit $\chi\to\alpha$. That is a formal endpoint of this packet model; coincident quasiparticle cores are not an experimentally justified use of the separated-anyon description. The numerical weights specify a preparation, not a universal consequence of the exchange angle alone. [Equations (3), (5), and (6)](https://arxiv.org/abs/0908.3945) give the construction.
+As $s\to0$, only the lowest angular state, $k=0$, survives after normalization. It has $\langle r^2\rangle_\alpha=(4\alpha+2)\ell^2$, compared with the reference's $2\ell^2$: subtract and divide by $4\ell^2$ to obtain $\chi\to\alpha$. The excess separation comes from the allowed angular state, without a repulsive potential. This endpoint is formal; coincident quasiparticle cores lie outside the physical separated-anyon description. These weights specify a preparation, not a universal consequence of the exchange angle alone. [Equations (3), (5), and (6)](https://arxiv.org/abs/0908.3945) give the construction.
 
 </details>
 
@@ -136,9 +136,7 @@ B_1=B_3=R,\qquad B_2=F^{-1}RF=FRF.
 
 $B_j$ exchanges neighboring positions $j$ and $j+1$. To exchange the middle pair, express the state in the basis where that pair's charge is definite, apply $R$, then transform back. The basis change itself is a mathematical description, not an extra physical braid. These numerical matrices are data of the Ising model; ordinary indistinguishability alone does not determine them. Their conventions are specified in [Nayak et al., Sec. II.A.1 and Eq. (50)](https://arxiv.org/abs/0707.1889); [Ivanov](https://arxiv.org/abs/cond-mat/0005069) derives the non-Abelian exchange action for vortices with Majorana modes.
 
-Because $B_1$ and $B_2$ do not commute, chronological “1 then 2” means $B_2B_1|\Psi\rangle$, and reversing the order can change the state. With input $|+\rangle=(|0\rangle+|1\rangle)/\sqrt{2}$, the first order gives first-pair vacuum probability 1, whereas the reverse gives $1/2$.
-
-A single readout can nevertheless miss a difference—just as position measurements alone need not distinguish two ordinary wavefunctions. Write a normalized state as $c_0|0\rangle+c_1|1\rangle$. Its **Bloch vector** collects expectations of the Pauli operators on this encoded two-state space:
+Their order dependence has a familiar mechanism: rotations about different axes. Write a normalized state as $c_0|0\rangle+c_1|1\rangle$. Its **Bloch vector** collects expectations of the Pauli operators on this encoded two-state space:
 
 $$\begin{aligned}
 x=\langle X\rangle&=2\operatorname{Re}(c_0^*c_1),\\
@@ -146,7 +144,14 @@ y=\langle Y\rangle&=2\operatorname{Im}(c_0^*c_1),\\
 z=\langle Z\rangle&=|c_0|^2-|c_1|^2.
 \end{aligned}$$
 
-A $Z$ measurement reads the original pair's fusion charge: $+1$ means vacuum and $-1$ means $\psi$. The $X$ and $Y$ measurements use superposition bases, requiring an appropriate basis rotation before fusion readout. For a chosen Pauli operator $O=X,Y,Z$, outcome probabilities are $(1\pm\langle O\rangle)/2$. In the [braid experiment](../experiments.html#braids), start with $|0\rangle$: the two orders have identical $Z$ probabilities but different $X$ and $Y$ expectations. The Bloch vector makes the missed information visible. These are ideal operations, not a simulation of a complete device.
+Since $FZF=X$, the same braid matrices can be written
+
+$$B_1=e^{i\pi/8}e^{-i\pi Z/4},\qquad
+B_2=e^{i\pi/8}e^{-i\pi X/4}.$$
+
+The common phase does not affect these encoded-qubit measurements. Each remaining exponential rotates the Bloch vector through $+\pi/2$ about its indicated axis. Predict the result in the [braid experiment](../experiments.html#braids) starting from $|0\rangle$, whose vector points along $+z$. Chronological “1 then 2” means $B_2B_1|0\rangle$: the $z$ rotation leaves it still, then the $x$ rotation takes it to $-y$. Reverse the order and it ends at $+x$.
+
+A $Z$ measurement reads the original pair's fusion charge: $+1$ means vacuum and $-1$ means $\psi$. Both final vectors give those outcomes with equal probability, hiding the difference. An $X$ measurement instead gives $+1$ with probability $1/2$ for the first order and 1 for the reverse. Measuring $X$ or $Y$ requires a basis rotation before fusion readout; generally a Pauli measurement $O$ gives probabilities $(1\pm\langle O\rangle)/2$. Noncommuting operations change the state, but the chosen measurement determines whether you see it.
 
 For weakly split fusion states, transport should avoid bulk excitations yet finish before the residual splitting accumulates an appreciable relative dynamical phase. Indefinitely slower motion is not automatically closer to the ideal braid.
 
@@ -185,7 +190,9 @@ H=-J_e\sum_s A_s-J_m\sum_p B_p,\qquad J_e,J_m>0.
 
 The commuting operators $A_s$ and $B_p$ are **stabilizers**: the ground space has eigenvalue $+1$ for all of them. A vertex and a plaquette share zero or two edges; each shared edge contributes an anticommutation sign, so the two signs cancel. A violation $A_s=-1$ is called an electric excitation $e$; $B_p=-1$ is a magnetic excitation $m$. These names describe the model's charges, not literal electron and magnetic-monopole particles. [Kitaev's construction](https://arxiv.org/abs/quant-ph/9707021) supplies the Hamiltonian and excitations.
 
-Apply $Z$ along an open path of lattice edges. Interior vertices touch two operated edges and retain their stabilizer sign; each endpoint touches one, creating an $e$ pair from the ground space. Extending the string moves an endpoint. Similarly, an $X$ string crossing edges along a path between plaquette centers creates and moves an $m$ pair. In the [pair-string picture](../experiments.html#toric), selecting neighboring plaquettes applies $X$ to their shared edge and updates both endpoints. [Dennis et al.](https://arxiv.org/abs/quant-ph/0110143) explains their relation to error syndromes and memory.
+Apply $Z$ along an open path of lattice edges. Interior vertices touch two operated edges and retain their stabilizer sign; each endpoint touches one, creating an $e$ pair from the ground space. Similarly, an $X$ string crossing edges between plaquette centers creates and moves an $m$ pair. In the [pair-string picture](../experiments.html#toric), selecting neighboring plaquettes applies $X$ to their shared edge.
+
+Predict the energy as you extend that string. Only the endpoints violate stabilizers: each $m$ changes one Hamiltonian term from $-J_m$ to $+J_m$. The pair therefore costs $4J_m$ above the ground energy, independent of its separation. The interior leaves no trail of excited plaquettes. This follows directly from [Kitaev's Hamiltonian](https://arxiv.org/abs/quant-ph/9707021); [Dennis et al.](https://arxiv.org/abs/quant-ph/0110143) connects the endpoints to error detection and memory.
 
 On the periodic lattice, each species has even total excitation parity; a loop can still enclose an odd count when a partner lies outside. Direct configuration editing specifies a charge pattern rather than this local preparation protocol.
 
@@ -204,7 +211,7 @@ The interactive grid is a local patch tracking string endpoints and loop factors
 
 ## 8. All the defects disappeared. Is the memory safe?
 
-Create an $m$ pair, take one around a periodic direction, and bring it back to its partner. The pair annihilates. Every stabilizer can read $+1$ again—and yet the completed string can act on the encoded state. The local checks have no endpoints left to report.
+Create an $m$ pair, take one around a periodic direction, and bring it back to its partner. The pair annihilates, removing its $4J_m$ excitation energy. Every stabilizer reads $+1$ again—and yet the completed string can act on the encoded state. Returning to the ground energy need not return the same ground state.
 
 The [memory experiment](../experiments.html#memory) makes the boundary periodic: leaving one edge of the drawing re-enters through the opposite edge. Compare a small closed $X$ string with one wrapping right around the lattice. The small loop contracts and is a product of local stabilizers. The wrapping loop cannot be filled by a bounded region; it is a **logical operator**, acting within the ground-state space. A torus has two independent wrapping directions and four ground states, enough for two encoded qubits. Local measurements in a small contractible region cannot distinguish these ideal ground states; logical loop measurements can. [Kitaev, Secs. 1–2](https://arxiv.org/abs/quant-ph/9707021) constructs this nonlocal information.
 

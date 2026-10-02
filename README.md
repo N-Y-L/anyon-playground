@@ -8,13 +8,16 @@ theory background. The interface is plain HTML on a white page.
 
 ## Open and explore
 
-Download or clone this repository, then **double-click `index.html`**.
+Download the ZIP from [GitHub](https://github.com/N-Y-L/anyon-playground)
+(**Code → Download ZIP**) or clone this repository, then **double-click `index.html`**.
 Everything runs locally in your browser. No installation, account, internet
 connection, or build step is needed for the demos. Research links need internet.
 Equations are written in LaTeX and typeset with a locally bundled copy of KaTeX.
 
 Start with the first two experiments. Before changing a control, guess what
-will happen; the example buttons set up useful surprises. Then explore:
+will happen; the example buttons set up useful surprises. Short prediction
+questions have expandable explanations, so you can check the mechanism after
+trying it. Then explore:
 
 | Experiment | What to look for |
 |---|---|
@@ -24,7 +27,7 @@ will happen; the example buttons set up useful surprises. Then explore:
 | Fibonacci fusion | Browse explicit basis paths in a fixed total-charge sector and recover the state-count recurrence. |
 | Toric-code strings | Apply shared-edge Pauli operators to create, move, and annihilate pairs; derive the loop phase from plaquette eigenvalues. |
 | Pair correlations | Keep fractional statistics fixed and vary packet separation in a lowest-Landau-level preparation; compare with distinguishable particles. |
-| Topological memory | Create a pair, move it around a periodic lattice, and annihilate it; compare a local loop with one that changes logical loop eigenvalues. |
+| Topological memory | Watch the excitation energy as a pair separates and annihilates; compare a local loop with one that changes logical loop eigenvalues. |
 
 Each note introduces its symbols, gives worked example settings, and explains
 what its readout measures. Controls have a reset; mathematical derivations and

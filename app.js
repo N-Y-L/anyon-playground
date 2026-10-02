@@ -764,6 +764,8 @@
     return {
       ...result,
       referenceState: 'No local excitations; eigenvalue +1 for the vertical and horizontal noncontractible Z loops.',
+      energyInJm: 2 * result.defects.length,
+      energyConvention: 'energyInJm = (E-E0)/J_m = 2*N_m. Starting from the ground state, X-only strings leave all A_s eigenvalues unchanged; each m defect costs 2 J_m, independent of string length.',
       groundSpaceLoopEigenvalues: result.closed ? { verticalZ: result.logicalParity.x ? -1 : 1, horizontalZ: result.logicalParity.y ? -1 : 1 } : null,
       workedPath: memoryPlan()
     };
@@ -772,6 +774,7 @@
   function renderMemory() {
     const config = state.memory, result = memoryResults(), plan = memoryPlan();
     $('memory-defect-count').textContent = result.defects.length;
+    setMath('memory-energy', String.raw`\frac{E-E_0}{J_m}=${result.energyInJm}`);
     $('memory-status').textContent = result.closed ? 'All local excitation checks restored' : 'Open string: local excitations are present';
     if (result.closed) {
       setMath('memory-logical', String.raw`(p_x,p_y)=(${result.logicalParity.x},${result.logicalParity.y})`);
