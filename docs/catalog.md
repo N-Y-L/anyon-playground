@@ -1,6 +1,6 @@
 # Ideas to explore next
 
-Start with the five small models in the playground. Each isolates one question; none simulates an entire quantum Hall material. The directions below identify a minimal calculation, an observable, and the main interpretation pitfall. Directions 6 and 8 build on implemented path deformation and pair-string controls; their further extensions remain proposals.
+There is more to anyons than unusual exchange signs. Start with any of the seven experiments below, then follow the question that bothers you. The eight directions distinguish what you can already try from the next calculation; each gives a model, something to observe, and a pitfall worth catching.
 
 ## In the playground
 
@@ -8,17 +8,19 @@ Start with the five small models in the playground. Each isolates one question; 
 | --- | --- | --- |
 | [Exchange and winding](../experiments.html#exchange) | Compare exchange with full winding; deform the separated-particle paths. | A full winding accumulates twice the exchange angle; smooth deformation preserves winding. |
 | [Ideal interferometer](../experiments.html#interference) | Add the two output amplitudes, then reduce visibility and inspect the density matrix. | Coherence controls whether a relative statistical phase appears in output probabilities. |
+| [Pair correlations](../experiments.html#correlations) | Hold the exchange angle fixed and vary the packet separation. | The excess mean squared guiding-center separation can change sign in the specified preparation. |
 | [Ising braid order](../experiments.html#braids) | Reverse two exchanges and switch the $X$, $Y$, and $Z$ measurement bases. | Noncommuting braids can produce states whose difference one measurement misses. |
 | [Fibonacci fusion paths](../experiments.html#fusion) | Fix the total charge, enumerate paths, and add another anyon. | Allowed basis states follow a Fibonacci recurrence; counts are not probabilities. |
 | [Toric-code strings and loops](../experiments.html#toric) | Create and move an $m$ pair with a string, then compare $e$ loops. | Open strings have excitation endpoints; an enclosed $m$ gives an $e$ loop a minus sign. |
+| [Toric memory](../experiments.html#memory) | Close a string after taking it around a periodic direction. | Endpoints can disappear while a nontrivial logical operation remains. |
 
 The [references](references.md) identify the models' scientific sources. “Fusion” means combining anyons and asking which collective particle type, or *topological charge*, remains. A diagram of paths describes an operation; it does not by itself measure the resulting phase.
 
-## Eight extensions
+## Eight directions
 
 ### 1. Can the same kind of anyon bunch and antibunch?
 
-Keep the exchange rule fixed and vary the separation of two localized packets in the **lowest Landau level**: the lowest cyclotron-energy level for charged motion in a perpendicular magnetic field. Sum the specified angular-state weights and compare the mean squared separation with a matched distinguishable-particle preparation. Fractional-statistics packets in this model cross between larger and smaller separations than the reference; this reflects the prepared state, not a change of statistics or a force. **Intermediate:** a convergent numerical sum with limiting-case checks. [Vishveshwara & Cooper, 2010, Eqs. (3), (5), (6), Fig. 1](https://arxiv.org/abs/0908.3945).
+**Implemented:** keep the exchange rule fixed and vary the separation of localized packets in the **lowest Landau level**, the lowest cyclotron-energy level in a perpendicular field. Their mean squared guiding-center separation crosses above or below a matched distinguishable-particle reference in the specified state family. The next calculation would compare this preparation with the coherent states of the later dynamics paper, then ask which detector observable distinguishes them. **Intermediate:** normalized angular-state sums and convergence checks; do not relabel the plotted moment as a coincidence probability. [Vishveshwara & Cooper, 2010, Eqs. (3), (5), (6)](https://arxiv.org/abs/0908.3945); [Subramanyan & Vishveshwara, 2019](https://arxiv.org/abs/1905.00442).
 
 ### 2. Can a saddle turn a compact packet into a long, thin one?
 
@@ -30,7 +32,7 @@ Vary two curvatures of a quadratic potential using the cited preprint's two-anyo
 
 ### 4. Why do experimental interference stripes jump?
 
-Extend the ideal interferometer to a synthetic map with a magnetic-flux phase and an enclosed-particle count that changes at selected boundaries. Watch smooth fringes acquire jumps, then compare with the experiment's slips consistent with a full-winding phase of $2\pi/3$ at filling factor $1/3$. Actual device interpretation also needs electrostatics and edge motion. **Easy** for the illustration; advanced for fitting measurements. [Nakamura et al., 2020](https://arxiv.org/abs/2006.14115), an experiment separate from the bulk-packet proposals above.
+Give the ideal interferometer two controls: magnetic flux and enclosed-particle count, and plot a synthetic fringe map. The charge sets the electromagnetic phase response; statistics sets the contribution from winding around quasiparticles. Watch continuous stripes acquire jumps, then compare with the reported $2\pi/3$ slips at filling $1/3$. **Easy** for an illustration; advanced for fitting a device, where electrostatics and edge motion also shift fringes—fractional charge alone does not measure statistics. [Nakamura et al., 2020](https://arxiv.org/abs/2006.14115) provides experimental evidence, distinct from the bulk-packet theory above.
 
 ### 5. Can an apparatus make fermions look as though they bunch?
 
@@ -42,11 +44,11 @@ Model an extended collider with several scattering routes and compare single-sou
 
 ### 7. Can a short braid approximate a chosen quantum gate?
 
-Move from fusion counts to a two-dimensional encoded state, multiply Fibonacci braid matrices, and search short exchange sequences. Compare each operation with a target rotation while ignoring a common overall phase; watch the best error decrease as more candidates become available. Longer sequences are not automatically better, and Fibonacci matrices differ from the existing Ising matrices. **Intermediate** for short searches; advanced for efficient compilation. [Bonesteel et al., 2005, Figs. 1–3](https://arxiv.org/abs/quant-ph/0505065).
+Choose a target qubit rotation and search short products of Fibonacci braid matrices, comparing operations up to overall phase. Watch the best approximation improve as more candidates become available, then compare with the restricted set reachable by Ising braids alone. This asks what non-Abelian exchange can actually compute: order dependence does not guarantee universality. **Intermediate** for short searches; advanced for efficient compilation, and increasing length helps only when useful sequences are found. [Bonesteel et al., 2005](https://arxiv.org/abs/quant-ph/0505065) constructs Fibonacci gates; [Bravyi, 2006](https://arxiv.org/abs/quant-ph/0511178) supplies an additional resource for Ising computation.
 
-### 8. When does a wandering defect erase a stored bit?
+### 8. Can a memory change after every defect disappears?
 
-**Implemented starting point:** an open dual-lattice $X$ string creates or moves magnetic excitations at its endpoints; the $e$ loop reports enclosed parity. The next model would make the lattice periodic and track whether a completed string wraps around it. Observe how endpoints can disappear while such a loop changes the encoded state: absence of local defects does not guarantee an unchanged memory. **Intermediate** for logical strings; advanced for random errors and a decoder, which infers corrections from measured defects. [Kitaev, 2003, Sec. 1](https://arxiv.org/abs/quant-ph/9707021); [Dennis et al., 2002](https://arxiv.org/abs/quant-ph/0110143).
+**Implemented:** create an open $X$ string on the periodic grid, wrap it around, and close it. Compare its vanished endpoints with the nonzero logical parity; a state with a definite crossing logical $Z$ value changes that value. Next, inject random local errors and let a decoder choose corrections from endpoint measurements, then count incorrect logical operations. **Advanced** for a credible memory benchmark: topological protection limits what small local disturbances can do, but it does not make a two-dimensional memory automatically immune to accumulated errors. [Kitaev, 2003](https://arxiv.org/abs/quant-ph/9707021); [Dennis et al., 2002](https://arxiv.org/abs/quant-ph/0110143).
 
 ## Useful upstream software
 

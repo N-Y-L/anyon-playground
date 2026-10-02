@@ -1,8 +1,9 @@
 # Anyons: visual notes
 
-Five interactive notes about anyon physics, with the calculation and its
-interpretation beside each figure. The intended reader knows graduate quantum
-mechanics and some condensed matter, but has no prior anyon or quantum field
+Exchange two identical particles and ask what the state remembers. Seven
+interactive notes follow that question into interference, spatial correlations,
+and quantum memory, with the calculation beside each figure. The intended reader
+knows graduate quantum mechanics and some condensed matter, but has no prior anyon or quantum field
 theory background. The interface is plain HTML on a white page.
 
 ## Open and explore
@@ -12,7 +13,8 @@ Everything runs locally in your browser. No installation, account, internet
 connection, or build step is needed for the demos. Research links need internet.
 Equations are written in LaTeX and typeset with a locally bundled copy of KaTeX.
 
-Start with the first two experiments, then explore in any order:
+Start with the first two experiments. Before changing a control, guess what
+will happen; the example buttons set up useful surprises. Then explore:
 
 | Experiment | What to look for |
 |---|---|
@@ -21,6 +23,8 @@ Start with the first two experiments, then explore in any order:
 | Ising braids | Inspect final kets, compare Pauli components, and change measurement basis to reveal a hidden state difference. |
 | Fibonacci fusion | Browse explicit basis paths in a fixed total-charge sector and recover the state-count recurrence. |
 | Toric-code strings | Apply shared-edge Pauli operators to create, move, and annihilate pairs; derive the loop phase from plaquette eigenvalues. |
+| Pair correlations | Keep fractional statistics fixed and vary packet separation in a lowest-Landau-level preparation; compare with distinguishable particles. |
+| Topological memory | Create a pair, move it around a periodic lattice, and annihilate it; compare a local loop with one that changes logical loop eigenvalues. |
 
 Each note introduces its symbols, gives worked example settings, and explains
 what its readout measures. Controls have a reset; mathematical derivations and
@@ -36,11 +40,16 @@ next experiments. [References](docs/references.md) connect the models to sources
 
 The demos calculate statistical phases, ideal interference probabilities, small
 braid matrices, encoded measurement probabilities, explicit fusion basis paths,
-and the parity of toric-code strings and loops. Drawn paths are schematics;
+lowest-Landau-level pair correlations, and local and logical toric-string parities. Drawn paths are schematics;
 the app does not solve an interacting electron fluid or reproduce an experimental
 device. Assumptions and conventions are stated beside each calculation.
 The toric-code panel tracks magnetic plaquette eigenvalues and strings of Pauli
-operators; it does not store an entire many-spin wavefunction. Angles are in radians; all displayed quantities are dimensionless.
+operators and logical loop eigenvalues; it does not store an entire many-spin
+wavefunction or implement error correction. The correlation note uses the
+particular localized-pair preparation of Vishveshwara and Cooper (2010),
+linked beside its formulas. It computes a guiding-center separation moment,
+not a detector coincidence probability. Angles are in radians; distances and
+correlations use the dimensionless units defined in the note.
 The calculations are deterministic and use no random sampling.
 
 ## Change the code
@@ -85,7 +94,7 @@ require no package installation.
 
 Choose a figure from the footer to save its SVG. JSON exports record parameters,
 conventions, and computed results, including the selected measurement basis,
-fusion path, or toric string. These are records, not files that can be reimported
+fusion path, pair-correlation preparation, or toric string. These are records, not files that can be reimported
 through the interface.
 Each export leaves a download link available for another try.
 

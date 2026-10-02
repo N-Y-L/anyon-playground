@@ -342,6 +342,162 @@ test('Loop winding survives deformation, changes sign on reversal, and rejects c
   assert.equal(P.windingNumber(center, square.concat(square.slice().reverse())), 0);
 });
 
+test('LLL pair correlations recover Bose/Fermi limits and normalized angular-momentum weights', () => {
+  for (const alpha of [0, 1 / 3, 0.6, 1]) {
+    const origin = P.lllPairCorrelation({ alpha, separation: 0 });
+    close(origin.chi, alpha);
+    close(origin.meanSeparationSquared, 4 * alpha + 2);
+    assert.deepEqual(origin.weights, [{ k: 0, angularMomentum: alpha, probability: 1 }]);
+    for (const separation of [1e-6, 0.25, 1, 2, 4, 6, 10, 12]) {
+      const result = P.lllPairCorrelation({ alpha, separation });
+      close(result.weights.reduce((sum, value) => sum + value.probability, 0), 1);
+      const angularMean = result.weights.reduce((sum, value) => sum + value.angularMomentum * value.probability, 0);
+      close(angularMean, result.meanAngularMomentum);
+      close(result.meanSeparationSquared - result.distinguishableMeanSeparationSquared, 4 * result.chi);
+      close(result.distinguishableMeanSeparationSquared, separation * separation + 2);
+      assert.equal(result.termsUsed, result.weights.length);
+      assert.ok(result.errorBound >= 0 && result.errorBound <= 1e-15);
+      assert.ok(result.omittedProbabilityBound >= 0 && result.omittedProbabilityBound <= 1e-15);
+      result.weights.forEach((entry, k) => {
+        assert.equal(entry.k, k);
+        close(entry.angularMomentum, 2 * k + alpha);
+        assert.ok(entry.probability >= 0 && entry.probability <= 1);
+      });
+      if (separation <= 6 && alpha === 0) close(result.chi, result.u * (Math.tanh(result.u) - 1));
+      if (separation <= 6 && alpha === 1) close(result.chi, result.u / Math.tanh(result.u) - result.u);
+    }
+  }
+  // The endpoint distributions are Poisson weights restricted to even/odd
+  // angular momenta. Evaluate factorials independently of the core recurrence.
+  for (const alpha of [0, 1]) {
+    const result = P.lllPairCorrelation({ alpha, separation: 2 });
+    const normalization = alpha === 0 ? Math.cosh(1) : Math.sinh(1);
+    for (const entry of result.weights) {
+      let factorial = 1;
+      for (let n = 2; n <= entry.angularMomentum; n++) factorial *= n;
+      close(entry.probability, 1 / (factorial * normalization));
+    }
+  }
+});
+
+test('LLL fractional statistics agree with independent hypergeometric reference values', () => {
+  // Reference: arXiv:0908.3945 Eq. (6), chi=alpha*(M(1,alpha,u)+
+  // M(1,alpha,-u))/(M(1,1+alpha,u)+M(1,1+alpha,-u))-u.
+  // Generated with Python decimal at 75 digits using the complete M series
+  // M(1,b,x)=sum_n x^n/(b)_n (both signs), terminated at |term|<1e-70.
+  // This is independent of the even-angular-momentum recurrence in the core.
+  const fixtures = [
+    [1 / 3, 1, 0.12305904948388383518],
+    [1 / 3, 2, -0.11925881920748670810],
+    [1 / 3, 4, -0.0074578021608886399838],
+    [3 / 5, 2, 0.031162717153475272791],
+    [3 / 5, 3, -0.038334621710466428601],
+    [1 / 2, 6, -0.000029086896179625007749],
+    [1 / 3, 10, -8.6914762112404609016e-13]
+  ];
+  for (const [alpha, separation, expected] of fixtures) close(P.lllPairCorrelation({ alpha, separation }).chi, expected, 2e-14);
+  assert.ok(P.lllPairCorrelation({ alpha: 1 / 3, separation: 1 }).chi > 0);
+  assert.ok(P.lllPairCorrelation({ alpha: 1 / 3, separation: 2 }).chi < 0);
+  for (const alpha of [0, 1 / 3, 0.6, 1]) assert.ok(Math.abs(P.lllPairCorrelation({ alpha, separation: 12 }).chi) < 1e-12);
+});
+
+test('LLL curve samples preserve the requested separation units and reject invalid parameters', () => {
+  const curve = P.lllPairCorrelationCurve({ alpha: 1 / 3, maxSeparation: 6, points: 13 });
+  assert.equal(curve.length, 13);
+  curve.forEach((point, index) => {
+    close(point.separation, index / 2);
+    assert.deepEqual(point, P.lllPairCorrelation({ alpha: 1 / 3, separation: index / 2 }));
+  });
+  for (const alpha of [-0.1, 1.1, NaN, Infinity, '0.5']) assert.throws(() => P.lllPairCorrelation({ alpha, separation: 1 }));
+  for (const separation of [-1, 12.1, NaN, Infinity, '2']) assert.throws(() => P.lllPairCorrelation({ alpha: 0.5, separation }));
+  assert.throws(() => P.lllPairCorrelationCurve({ alpha: 0.5, points: 1 }));
+  assert.throws(() => P.lllPairCorrelationCurve({ alpha: 0.5, points: 2002 }));
+  assert.throws(() => P.lllPairCorrelationCurve({ alpha: 0.5, maxSeparation: 13 }));
+});
+
+test('Periodic strings distinguish contractible closure, torus windings, and inverse operations', () => {
+  const size = 5;
+  const empty = P.memoryStringState([], size);
+  assert.equal(empty.closed, true);
+  assert.deepEqual(empty.logicalParity, { x: 0, y: 0 });
+  let result = P.memoryStringStep([], '0,0', '4,0', size);
+  assert.deepEqual(result.defects, ['0,0', '4,0']);
+  assert.equal(result.closed, false);
+  assert.equal(result.logicalParity, null);
+  assert.deepEqual(result.cutParity, { x: 1, y: 0 });
+  assert.deepEqual(P.memoryStringStep(result.edges, '4,0', '0,0', size), empty);
+  // A contractible square may cross both drawing seams without winding.
+  const square = ['0,0', '4,0', '4,4', '0,4', '0,0'];
+  result = empty;
+  for (let i = 1; i < square.length; i++) result = P.memoryStringStep(result.edges, square[i - 1], square[i], size);
+  assert.deepEqual(result.defects, []);
+  assert.deepEqual(result.logicalParity, { x: 0, y: 0 });
+  const horizontal = Array.from({ length: size }, (_, x) => [`${x},2`, `${(x + 1) % size},2`]);
+  const vertical = Array.from({ length: size }, (_, y) => [`3,${y}`, `3,${(y + 1) % size}`]);
+  assert.deepEqual(P.memoryStringState(horizontal, size).logicalParity, { x: 1, y: 0 });
+  assert.deepEqual(P.memoryStringState(vertical, size).logicalParity, { x: 0, y: 1 });
+  assert.deepEqual(P.memoryStringState(horizontal.concat(vertical), size).logicalParity, { x: 1, y: 1 });
+  assert.deepEqual(P.memoryStringState(horizontal.concat(result.edges), size).logicalParity, { x: 1, y: 0 });
+  assert.deepEqual(P.memoryStringState(horizontal.concat(horizontal.map(edge => edge.slice().reverse())), size), empty);
+  // Two parallel noncontractible cycles have even winding and are stabilizers.
+  const shifted = horizontal.map(edge => edge.map(key => key.replace(',2', ',3')));
+  assert.deepEqual(P.memoryStringState(horizontal.concat(shifted), size).logicalParity, { x: 0, y: 0 });
+});
+
+test('Periodic syndromes and logical commutations match independent edge-qubit Pauli algebra', () => {
+  // A 3x3 torus has 18 edge qubits. Represent X support and every Z check as
+  // bit masks on the *primal* edges; overlap parity gives anticommutation.
+  const size = 3, horizontal = (x, y) => 1 << (y * size + x), vertical = (x, y) => 1 << (size * size + y * size + x);
+  const physicalEdges = [], checks = [];
+  let verticalLogicalZ = 0, horizontalLogicalZ = 0;
+  for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) {
+    physicalEdges.push({ cells: [`${x},${y}`, `${(x + 1) % size},${y}`], mask: vertical((x + 1) % size, y) });
+    physicalEdges.push({ cells: [`${x},${y}`, `${x},${(y + 1) % size}`], mask: horizontal(x, (y + 1) % size) });
+    checks.push({ cell: `${x},${y}`, mask: horizontal(x, y) | horizontal(x, (y + 1) % size) | vertical(x, y) | vertical((x + 1) % size, y) });
+    if (x === 0) verticalLogicalZ |= vertical(x, y);
+    if (y === 0) horizontalLogicalZ |= horizontal(x, y);
+  }
+  function parity(mask) {
+    let result = 0;
+    while (mask) { result ^= 1; mask &= mask - 1; }
+    return result;
+  }
+  // Deterministic bit-pattern sample, including the empty/full configurations.
+  const patterns = [0, (1 << 18) - 1];
+  let seed = 2026;
+  for (let i = 0; i < 256; i++) { seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0; patterns.push(seed & ((1 << 18) - 1)); }
+  for (const pattern of patterns) {
+    let operator = 0;
+    const edges = physicalEdges.filter((entry, index) => (pattern >>> index) & 1).map(entry => { operator ^= entry.mask; return entry.cells; });
+    const result = P.memoryStringState(edges, size);
+    const expectedDefects = checks.filter(check => parity(operator & check.mask)).map(check => check.cell).sort();
+    assert.deepEqual(result.defects, expectedDefects);
+    assert.equal(result.defects.length % 2, 0);
+    assert.deepEqual(result.cutParity, { x: parity(operator & verticalLogicalZ), y: parity(operator & horizontalLogicalZ) });
+    assert.equal(result.closed, expectedDefects.length === 0);
+    assert.deepEqual(result.logicalParity, result.closed ? result.cutParity : null);
+  }
+});
+
+test('Periodic string validation excludes ambiguous small lattices and preserves inputs', () => {
+  const input = Object.freeze([Object.freeze(['4,0', '0,0'])]);
+  const result = P.memoryStringStep(input, '0,0', '0,4', 5);
+  assert.deepEqual(input, [['4,0', '0,0']]);
+  assert.deepEqual(result.defects, ['0,4', '4,0']);
+  result.edges[0][0] = '2,2';
+  assert.deepEqual(input, [['4,0', '0,0']]);
+  for (const size of [0, 1, 2, 3.5, 65, NaN]) assert.throws(() => P.memoryStringState([], size));
+  for (const invalid of ['-1,0', '01,0', '1.0,0', '1, 0', '5,0', '0,5', '9007199254740992,0']) assert.throws(() => P.memoryStringStep([], invalid, '0,0', 5));
+  assert.throws(() => P.memoryStringState(null));
+  assert.throws(() => P.memoryStringStep(null, '0,0', '1,0'));
+  assert.throws(() => P.memoryStringState([['0,0']]));
+  assert.throws(() => P.memoryStringStep([], '0,0', '0,0', 5));
+  assert.throws(() => P.memoryStringStep([], '0,0', '2,0', 5));
+  assert.throws(() => P.memoryStringStep([], '0,0', '1,1', 5));
+  assert.throws(() => P.memoryStringStep([['0,0', '2,0']], '0,0', '1,0', 5));
+  assert.deepEqual(P.memoryStringStep([], '0,0', '63,0', 64).cutParity, { x: 1, y: 0 });
+});
+
 test('Invalid inputs fail explicitly rather than producing plausible-looking results', () => {
   assert.throws(() => P.abelianPhase(NaN, 1));
   assert.throws(() => P.abelianPhase(1, 0.5));

@@ -2,9 +2,11 @@
 
 [Open the experiments](../experiments.html) · [Ideas to explore next](catalog.md) · [Sources](references.md)
 
-An exchange changes which particle occupies each position. For identical particles, that sounds like doing nothing: the final arrangement looks the same. Quantum mechanics nevertheless allows the path to affect amplitudes. These notes explain how that happens, how to measure it, and why different anyon models give different answers. Only ordinary quantum states, matrices, and interference are needed.
+Put two identical particles back where they started and take a photograph. Nothing has changed. Now let their quantum amplitudes interfere: the counts can change. The photograph missed something that the experiment remembers—the paths.
 
-## 1. Identical configurations can be connected by different paths
+That is our starting puzzle. Later, a fixed kind of anyon will switch from a larger to a smaller pair separation than its reference, and a spin lattice will lose every visible defect while retaining a logical operation. Each surprise has a small calculation behind it. Bring ordinary quantum states, matrices, and interference; no quantum field theory is needed.
+
+## 1. The particles return. What has changed?
 
 A **configuration** specifies the particle positions at one instant. For two identical particles, exchanging the labels on those positions gives the same physical configuration. Remove configurations in which the particles coincide, because the separated-particle description is the one we want to study. A continuous exchange is then a closed path in this configuration space, even though two temporarily labeled particles end at opposite positions.
 
@@ -19,9 +21,9 @@ $$\begin{aligned}
 
 This scalar case defines **Abelian** statistics: the exchange factors commute. The argument does not classify every possible representation acting on internal states. The configuration-space approach originates with [Leinaas and Myrheim](https://doi.org/10.1007/BF02727953).
 
-[In the exchange experiment](../experiments.html#exchange), positive means counterclockwise; reversing a path gives the inverse factor. Compare exchange and winding, then deform the path. The statistical contribution stays fixed while the winding is unchanged. Bosons have $\theta=0$ and fermions $\theta=\pi$; $\theta=\pi/3$ is a different exchange rule, not a probability of being fermionic. The slider compares models rather than continuously changing the identity of an excitation in one material.
+[In the exchange experiment](../experiments.html#exchange), positive means counterclockwise; reversing a path gives the inverse factor. Try making an extravagant detour. If the winding is unchanged and the particles never meet, its statistical contribution stays fixed. Bosons have $\theta=0$ and fermions $\theta=\pi$; $\theta=\pi/3$ is another exchange rule, not a probability of being fermionic. The slider compares models rather than continuously changing one material's excitation type.
 
-## 2. Where the particle comes from, and what its phase contains
+## 2. How can electrons make something that is not an electron?
 
 In an electronic material, an anyon is a **quasiparticle**: a localized excitation of a many-electron state that can be moved and detected as a particle. Its exchange properties belong to the collective excitation; the underlying electrons retain fermionic statistics. Two-dimensional motion permits these possibilities, but does not by itself produce the required state of matter.
 
@@ -29,9 +31,9 @@ The models of well-separated anyons assume an energy **gap** $\Delta$ between th
 
 Even ideal slow transport accumulates several contributions. The **dynamical phase** depends on energy and elapsed time, $-\int E(t)\,dt/\hbar$. A **Berry phase** is a geometric contribution from how the instantaneous quantum state changes along the path. Its statistical part distinguishes braids; other geometric contributions, including a charged particle's magnetic-flux phase, can depend on the shape or area. Thus deforming a path need not preserve its complete measured phase. For non-Abelian anyons, transport can act as a matrix within a low-energy state space instead of supplying only a scalar phase. [Nayak et al., Sec. II.A.2](https://arxiv.org/abs/0707.1889) develops this separation.
 
-A concrete condensed-matter example is the electronic **Laughlin state** at filling factor $\nu=1/m$, with positive odd integer $m$. Here filling factor counts electrons per magnetic flux quantum. Its elementary quasihole has charge $+e/m$, where the electron charge is $-e$ and $e>0$. With the handedness chosen to match this playground, the quasihole exchange angle is $\theta=\pi/m$. Charge and exchange angle are distinct properties: one sets electromagnetic coupling, the other the statistical part of braiding. [Laughlin's construction](https://doi.org/10.1103/PhysRevLett.50.1395) establishes the fractional excitation; [Arovas, Schrieffer, and Wilczek](https://doi.org/10.1103/PhysRevLett.53.722) calculate its statistics. Reversing braid orientation conjugates the phase.
+A concrete example is the electronic **Laughlin state** at filling factor $\nu=1/m$, with positive odd integer $m$. Filling factor counts electrons per magnetic flux quantum. Its elementary quasihole has charge $+e/m$, where the electron charge is $-e$ and $e>0$: a localized charge deficit shared by the collective state, not a chopped-up electron. With the handedness chosen here, its exchange angle is $\theta=\pi/m$. Thus at $\nu=1/3$, measuring charge $e/3$ and measuring an exchange phase $\pi/3$ ask different questions. Charge sets electromagnetic coupling; statistics concerns exchange. [Laughlin's construction](https://doi.org/10.1103/PhysRevLett.50.1395) establishes the fractional excitation; [Arovas, Schrieffer, and Wilczek](https://doi.org/10.1103/PhysRevLett.53.722) calculate its statistics. Reversing braid orientation conjugates the phase.
 
-## 3. Interference turns a relative phase into a probability
+## 3. Give the phase something to interfere with
 
 An overall phase multiplying one isolated state cannot change measurement probabilities. To see a statistical phase, compare two coherent alternatives leading to the same output. In the ideal interferometer, one route winds around the enclosed anyons relative to the other.
 
@@ -59,6 +61,8 @@ P_0=|c_0|^2=\frac{1+\cos\Phi}{2},\qquad P_1=1-P_0.
 
 The [phasor diagram](../experiments.html#interference) draws complex amplitudes as arrows: their vector sum determines the probability after taking its squared length. Cancellation at one output redirects probability to the other. For one positive winding, adding one enclosed anyon adds $2\theta$ to $\Phi$, moving a fringe toward smaller $\phi$.
 
+Try $\phi=0$, one winding, and $\theta=\pi/3$. With no enclosed anyon, output 0 is certain. Add one, and $\Phi=2\pi/3$ gives $P_0=(1-1/2)/2=1/4$. No particle needed to hit the enclosed excitation; the interfering alternatives acquired a different relative phase.
+
 Partial coherence requires more than shortening one state's amplitude. In the balanced-route basis, use a **density matrix**, which describes both pure states and statistical mixtures:
 
 $$\rho=\frac12\begin{pmatrix}
@@ -81,15 +85,46 @@ The eigenvalues of $\rho$ are $(1+V)/2$ and $(1-V)/2$, both nonnegative in the s
 
 </details>
 
-This predicts output probabilities, not conductance. The [Nakamura et al. experiment](https://arxiv.org/abs/2006.14115) reports phase slips consistent with $2\pi/3$ braiding at filling $1/3$, using a device whose charge, area, and tunneling also matter.
+How does this reach a laboratory? The [Nakamura et al. experiment](https://arxiv.org/abs/2006.14115) reports phase slips consistent with $2\pi/3$ braiding at filling $1/3$. Our calculation isolates output probabilities; interpreting that device also requires charge, area, and tunneling. A fringe is evidence about a model of the whole apparatus, not a label announcing its cause.
 
-## 4. Non-Abelian exchange acts on a fusion state
+## 4. Can the same anyons bunch and antibunch?
 
-Some anyons have several states available even after their positions and individual types are fixed. **Topological charge** names an excitation type, including the vacuum $1$; it is not electric charge. **Fusion** asks which total type a group has when treated together. For Ising anyons,
+It is tempting to picture fractional statistics as a fixed halfway point between bosons and fermions. Test that picture by holding the exchange angle fixed and moving two prepared wave packets farther apart. In [Vishveshwara and Cooper's model](https://arxiv.org/abs/0908.3945), their mean squared separation can cross from above to below a distinguishable-particle reference. Nothing in the exchange rule has changed.
+
+The particles occupy the **lowest Landau level**, the lowest cyclotron-energy level in a perpendicular magnetic field. The remaining slow position variables describe their orbit centers, or **guiding centers**. Let $\ell$ be the single-particle magnetic length in this effective model, $d$ the separation of the packet's localization labels, $s=d/\ell$, and $\alpha=\theta/\pi$. The plotted quantity is
+
+$$\chi(s,\alpha)=\frac{\langle r^2\rangle_\alpha-\langle r^2\rangle_{\rm ref}}{4\ell^2},
+\qquad \langle r^2\rangle_{\rm ref}=(s^2+2)\ell^2.$$
+
+Here $r$ is the relative guiding-center separation, and the reference uses distinguishable particles with matched packet labels. Positive $\chi$ means a larger mean squared separation than that reference, and negative $\chi$ a smaller one. These are the paper's antibunching and bunching comparisons; they are not detector coincidence probabilities.
+
+[Try the correlation experiment](../experiments.html#correlations) at $\alpha=1/3$. At $s=2$, the model gives $\chi\simeq-0.1193$: a mean squared guiding-center separation of about $5.523\ell^2$, compared with $6\ell^2$ for the reference. Yet its formal small-separation limit is $\chi\to+1/3$. Changing the preparation changes the weights of the same allowed angular states. Interpreting the whole curve as a continuously varying attraction would miss that mechanism.
+
+<details>
+<summary>Compute the curve from its angular-state weights</summary>
+
+Set $u=s^2/4$. The relative angular-momentum eigenvalues are $\hbar(2k+\alpha)$, with $k=0,1,\ldots$. For the localized states in the paper's Eq. (3), their normalized weights are
+
+$$p_k=\frac{u^{2k+\alpha}/\Gamma(2k+\alpha+1)}
+{\displaystyle\sum_{j=0}^{\infty}u^{2j+\alpha}/\Gamma(2j+\alpha+1)},
+\qquad \chi=\sum_{k=0}^{\infty}(2k+\alpha)p_k-u.$$
+
+The gamma function extends the factorial: $\Gamma(n+1)=n!$. The bosonic and fermionic limits provide useful checks:
+
+$$\chi(s,0)=u(\tanh u-1),\qquad
+\chi(s,1)=u(\coth u-1).$$
+
+At $s=0$, use the normalized-state limit $\chi\to\alpha$. That is a formal endpoint of this packet model; coincident quasiparticle cores are not an experimentally justified use of the separated-anyon description. The numerical weights specify a preparation, not a universal consequence of the exchange angle alone. [Equations (3), (5), and (6)](https://arxiv.org/abs/0908.3945) give the construction.
+
+</details>
+
+## 5. The same positions can hide a different state
+
+Now keep four anyons at specified positions. Could their collective quantum state still have room to store information? For non-Abelian anyons it can. **Topological charge** names an excitation type, including the vacuum $1$; it is not electric charge. **Fusion** asks which total type a group has when treated together. For Ising anyons,
 
 $$\sigma\times\sigma=1+\psi.$$
 
-The plus sign lists two allowed fusion channels, not equally probable results. Four $\sigma$ anyons with fixed total vacuum have a two-dimensional **fusion Hilbert space**. Choose $|0\rangle$ when the first pair fuses to $1$, and $|1\rangle$ when it fuses to $\psi$. The other pair has the matching charge so the total remains vacuum. These labels describe collective states, not a separate spin carried by each anyon.
+The plus sign lists two allowed fusion channels, not equally probable results. Four $\sigma$ anyons with fixed total vacuum have a two-dimensional **fusion Hilbert space**. Choose $|0\rangle$ when the first pair fuses to $1$, and $|1\rangle$ when it fuses to $\psi$. The other pair has the matching charge so the total remains vacuum. These labels describe collective states, not a separate spin carried by each anyon. In the ideal separated-anyon limit, a measurement near just one anyon cannot read these collective labels.
 
 Exchanging a pair with definite fusion channel multiplies its amplitude by that channel's **R phase**. Choosing a different pair requires a change of fusion basis, described by an **F matrix**. In the convention used here,
 
@@ -103,7 +138,7 @@ $B_j$ exchanges neighboring positions $j$ and $j+1$. To exchange the middle pair
 
 Because $B_1$ and $B_2$ do not commute, chronological “1 then 2” means $B_2B_1|\Psi\rangle$, and reversing the order can change the state. With input $|+\rangle=(|0\rangle+|1\rangle)/\sqrt{2}$, the first order gives first-pair vacuum probability 1, whereas the reverse gives $1/2$.
 
-A single readout can nevertheless miss a difference. Write a normalized state as $c_0|0\rangle+c_1|1\rangle$. Its **Bloch vector** collects expectations of the Pauli operators on this encoded two-state space:
+A single readout can nevertheless miss a difference—just as position measurements alone need not distinguish two ordinary wavefunctions. Write a normalized state as $c_0|0\rangle+c_1|1\rangle$. Its **Bloch vector** collects expectations of the Pauli operators on this encoded two-state space:
 
 $$\begin{aligned}
 x=\langle X\rangle&=2\operatorname{Re}(c_0^*c_1),\\
@@ -115,7 +150,7 @@ A $Z$ measurement reads the original pair's fusion charge: $+1$ means vacuum and
 
 For weakly split fusion states, transport should avoid bulk excitations yet finish before the residual splitting accumulates an appreciable relative dynamical phase. Indefinitely slower motion is not automatically closer to the ideal braid.
 
-## 5. Fibonacci numbers count allowed fusion paths
+## 6. Why do Fibonacci numbers turn up here?
 
 Fibonacci anyons are a different model, with types $1$ and $\tau$ and rules
 
@@ -137,7 +172,9 @@ For four particles with total vacuum, the two paths are
 
 Each is a basis state for this fusion ordering. A general state assigns amplitudes to them; counting two states does not make their probabilities $1/2$. Fixing total charge defines the sector being counted: four particles instead have three paths with total $\tau$. [Explore the paths](../experiments.html#fusion) before approaching Fibonacci braid matrices and the gate constructions of [Bonesteel et al.](https://arxiv.org/abs/quant-ph/0505065).
 
-## 6. A spin model explains the toric-code minus sign
+This difference between anyon models has a practical consequence. Ising braids alone do not supply arbitrary quantum gates; an additional resource is needed, as in [Bravyi's proposal](https://arxiv.org/abs/quant-ph/0511178). Fibonacci braids can approximate a universal gate set. “Non-Abelian” tells us that order matters; it does not tell us everything those operations can compute.
+
+## 7. Build an anyon out of spins
 
 The **toric code** places a qubit on every edge of a periodic square lattice. Let $X_j,Z_j$ be Pauli operators on edge $j$, distinct from the encoded Pauli operators above. At each vertex $s$, multiply $X$ over the four incident edges; around each square plaquette $p$, multiply $Z$ over its boundary:
 
@@ -161,8 +198,29 @@ For a state $|\Psi\rangle$ with $N_m$ definite enclosed magnetic excitations,
 
 $$W_e(\partial S)|\Psi\rangle=(-1)^{N_m}|\Psi\rangle.$$
 
-One enclosed $m$ therefore contributes a minus sign to the $e$ loop, despite both species having bosonic self-exchange. Repeating the winding gives $(-1)^{wN_m}$. This **mutual statistics** depends on both species. Detecting its phase requires a reference process, just as in the interferometer. A loop wrapping around the periodic lattice cannot be written as a product over a bounded interior and can act on the encoded ground states; that is the next step toward a topological memory.
+One enclosed $m$ therefore contributes a minus sign to the $e$ loop, despite both species having bosonic self-exchange. Repeating the winding gives $(-1)^{wN_m}$. This **mutual statistics** depends on both species. Detecting its phase requires a reference process, just as in the interferometer.
 
 The interactive grid is a local patch tracking string endpoints and loop factors. It does not represent the complete periodic spin state, evolve its many-spin wavefunction, or decode noisy measurements.
 
-The examples now connect five distinct ingredients: an exchange rule, a prepared state, a transport path, an apparatus, and a measurement. For the next calculation, the [catalog](catalog.md) offers packet correlations, saddle dynamics, experimental fringe maps, and memory errors, each with its own minimal model.
+## 8. All the defects disappeared. Is the memory safe?
+
+Create an $m$ pair, take one around a periodic direction, and bring it back to its partner. The pair annihilates. Every stabilizer can read $+1$ again—and yet the completed string can act on the encoded state. The local checks have no endpoints left to report.
+
+The [memory experiment](../experiments.html#memory) makes the boundary periodic: leaving one edge of the drawing re-enters through the opposite edge. Compare a small closed $X$ string with one wrapping right around the lattice. The small loop contracts and is a product of local stabilizers. The wrapping loop cannot be filled by a bounded region; it is a **logical operator**, acting within the ground-state space. A torus has two independent wrapping directions and four ground states, enough for two encoded qubits. Local measurements in a small contractible region cannot distinguish these ideal ground states; logical loop measurements can. [Kitaev, Secs. 1–2](https://arxiv.org/abs/quant-ph/9707021) constructs this nonlocal information.
+
+<details>
+<summary>Count the four ground states without field theory</summary>
+
+An $L\times L$ periodic square lattice, with $L\geq3$, has $2L^2$ edge qubits. There are $L^2$ vertex and $L^2$ plaquette stabilizers, but $\prod_s A_s=\prod_p B_p=I$: each edge occurs twice. These two relations leave $2L^2-2$ independent constraints. Each fixed stabilizer eigenvalue halves the state-space dimension, so
+
+$$\dim\mathcal H_{\rm ground}=2^{2L^2-(2L^2-2)}=4.$$
+
+The missing two constraints leave two quantum degrees of freedom; the logical loops act on them.
+
+</details>
+
+Here is the sign test. A horizontal dual-lattice $X$ loop crosses a vertical direct-lattice $Z$ loop once. Since $XZ=-ZX$ on their shared edge, the completed $X$ loop reverses the eigenvalue of that logical $Z$ measurement. For an initial state with definite logical $Z$, this flips its encoded value. It need not change every possible input state: an eigenstate of the applied logical $X$ is unchanged up to phase.
+
+The display counts crossings of two fixed periodic seams modulo two. For **closed** strings, these parities distinguish trivial cycles from logical ones; open strings still have endpoints and do not yet define a ground-space operation. The point of topological protection is now concrete: a sufficiently small local disturbance cannot implement a whole wrapping string. A sequence of disturbances can. Detecting and correcting their evolving endpoints is the task of a decoder, and [Dennis et al.](https://arxiv.org/abs/quant-ph/0110143) shows why that task matters. The demo tracks string algebra and logical parity, not a noisy memory's lifetime.
+
+The next question depends on what caught your attention: how the pair correlation reaches detectors, how a measured fringe separates charge from statistics, or how to correct a wandering string. The [catalog](catalog.md) gives a small model and a source for each route.

@@ -9,29 +9,31 @@
 <body>
   <h1>Anyons: visual notes</h1>
   <p>Neil Yuanting Li</p>
-  <p>In two dimensions, exchanging identical excitations can change a quantum state by a phase or by a matrix acting on a shared state space. These notes explore what those statements mean, how to calculate their consequences, and which consequences a measurement can reveal.</p>
-  <p>Assumed background: graduate quantum mechanics and some condensed matter. State vectors, unitary matrices, Pauli operators, and density matrices are used explicitly. No quantum field theory or prior knowledge of anyons is assumed; fusion, braiding, and topological charge are introduced along the way.</p>
-  <p>Start with <a href="experiments.html#exchange">exchange</a> and <a href="experiments.html#interference">interference</a>. Each note places a model, its adjustable figure, and the reasoning behind it together. The example buttons load specific comparisons worth examining.</p>
+  <p>Exchange two identical particles. Everything looks as it did before. Surely nothing happened? Quantum mechanics lets the state remember the journey. In a plane, that memory has more possibilities than the familiar boson or fermion sign. Anyons are two-dimensional excitations with exchange statistics beyond the usual boson and fermion possibilities. These notes begin with that puzzle and follow it into interference, correlations, and quantum information. <a href="https://arxiv.org/abs/0707.1889">Nayak et al.'s review</a> gives the larger picture.</p>
+  <p>The fun is to make a prediction before touching a control. Does exchanging twice undo the exchange? If two measurements agree, must the states agree? If all the defects disappear, is the memory safe? Each figure gives you something small enough to calculate, and a reason to look twice.</p>
+  <p>Assumed background: graduate quantum mechanics and some condensed matter. We use states, matrices, interference, and spin operators. No quantum field theory or prior anyon knowledge is needed; new concepts are introduced where they become useful.</p>
   <hr>
-  <h2>Five visual notes</h2>
+  <h2>Seven visual notes</h2>
   <table class="reading-map">
-    <thead><tr><th>Note</th><th>Question to investigate</th><th>Useful QM idea</th></tr></thead>
+    <thead><tr><th>Note</th><th>The puzzle</th><th>A familiar starting point</th></tr></thead>
     <tbody>
-      <tr><td><a href="experiments.html#exchange">1. Exchange and winding</a></td><td>Why is exchanging twice different from exchanging and undoing? What survives a change of path shape?</td><td>Global phase; inverse operations</td></tr>
-      <tr><td><a href="experiments.html#interference">2. An ideal interferometer</a></td><td>How does a braid phase shift a probability? What does losing coherence actually remove?</td><td>Adding amplitudes; density matrices</td></tr>
-      <tr><td><a href="experiments.html#braids">3. Ising braids</a></td><td>When does changing the order change the state? Can one measurement hide the difference?</td><td>Noncommuting unitaries; changing basis</td></tr>
-      <tr><td><a href="experiments.html#fusion">4. Fibonacci fusion paths</a></td><td>What are the states being counted? Why are the dimensions Fibonacci numbers?</td><td>Basis vectors; dimension of a Hilbert space</td></tr>
-      <tr><td><a href="experiments.html#toric">5. The toric code</a></td><td>How do Pauli operators create pairs of excitations, and why does a loop acquire a minus sign?</td><td>Commuting spin Hamiltonians; operator algebra</td></tr>
+      <tr><td><a href="experiments.html#exchange">1. Exchange and winding</a></td><td>The particles return to their starting positions. Why might the state fail to return?</td><td>Global phase; inverse operations</td></tr>
+      <tr><td><a href="experiments.html#interference">2. An ideal interferometer</a></td><td>A global phase is invisible. How do we persuade it to show itself?</td><td>Adding amplitudes; density matrices</td></tr>
+      <tr><td><a href="experiments.html#braids">3. Ising braids</a></td><td>The same exchanges in a different order can give different answers. Which measurement catches the difference?</td><td>Noncommuting unitaries; changing basis</td></tr>
+      <tr><td><a href="experiments.html#fusion">4. Fibonacci fusion paths</a></td><td>Where do the extra quantum states live if no single anyon carries a little spin?</td><td>Collective basis states; Hilbert-space dimension</td></tr>
+      <tr><td><a href="experiments.html#toric">5. The toric code</a></td><td>Can ordinary Pauli operators create particles with an unusual winding phase?</td><td>Commuting spin Hamiltonians; operator algebra</td></tr>
+      <tr><td><a href="experiments.html#correlations">6. Do anyons bunch?</a></td><td>Keep the exchange rule fixed. Can changing the preparation reverse a correlation's sign?</td><td>Landau levels; expectation values in a prepared state</td></tr>
+      <tr><td><a href="experiments.html#memory">7. A memory with no local clues</a></td><td>Create a pair, walk one around, annihilate it. The defects are gone—but what happened to the stored state?</td><td>Pauli strings; simultaneous eigenstates</td></tr>
     </tbody>
   </table>
-  <p>The Ising, Fibonacci, and toric-code examples describe different anyon models. Each calculation states its assumptions. Their purpose is to make particular ideas visible, rather than simulate a complete material or device.</p>
-  <h2>Read the argument in one place</h2>
-  <p><a href="docs/notes.html">Anyons: paths, states, and measurements</a> connects the five examples, explains what a quasiparticle is, and introduces the role of a gap and adiabatic transport. It includes a brief connection to Laughlin quantum Hall quasiholes. (<a href="docs/notes.md">Markdown with LaTeX source</a>)</p>
-  <h2>Questions to pursue next</h2>
-  <p>The <a href="docs/catalog.html">inspiration catalog</a> gives eight directions: pair correlations, squeezing at a saddle, motion in traps, experimental interference, collider geometry, path deformation, Fibonacci gates, and logical memory. Each entry identifies a minimal model, an observable, and a pitfall. The <a href="docs/references.html">annotated sources</a> provide routes into the papers and useful existing code.</p>
+  <p>Start with <a href="experiments.html#exchange">1</a> and <a href="experiments.html#interference">2</a>. For particle correlations, try <a href="experiments.html#correlations">6</a> next; for quantum information, follow <a href="experiments.html#braids">3</a>, <a href="experiments.html#fusion">4</a>, <a href="experiments.html#toric">5</a>, and <a href="experiments.html#memory">7</a>. Example buttons set up a useful comparison; reset lets you start again.</p>
+  <p>The notes use several different anyon models. Their shared theme is what an exchange or a collective state can do; their particles, Hamiltonians, and preparation rules are specified separately.</p>
+  <h2>Read, then wander</h2>
+  <p>The <a href="docs/notes.html">connected notes</a> build the argument in one place, including quasiparticles, Berry phases, the energy gap, and the link to quantum Hall matter. (<a href="docs/notes.md">Markdown with LaTeX source</a>)</p>
+  <p>The <a href="docs/catalog.html">inspiration catalog</a> asks what to calculate next: squeezing at a saddle, interference in real devices, Fibonacci gates, and memory errors. It distinguishes working examples from proposed extensions. The <a href="docs/references.html">annotated sources</a> suggest where to enter each paper; links beside individual claims let you follow a particular thread without reading everything first.</p>
   <hr>
   <h2>Use and modify</h2>
-  <p>Open this file in a browser; the figures and LaTeX rendering work locally without installation or internet. Use the controls to change a calculation, reset an example, and save its vector figure or parameters.</p>
+  <p>Open this file in a browser. The figures and LaTeX rendering run locally without installation or internet; external reading links need a connection. Change a calculation, reset an example, or save a vector figure and its parameters.</p>
   <p><a href="README.md">Setup and file guide</a> · <a href="physics.js">Numerical models</a> · <a href="tests/physics.test.js">Checks</a> · <a href="LICENSE">MIT license</a></p>
   <p><small>Copyright (c) 2026 Neil Yuanting Li.</small></p>
 </body>

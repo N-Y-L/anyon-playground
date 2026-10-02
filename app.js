@@ -18,11 +18,13 @@
     interference: { thetaPi: 0.5, enclosed: 1, winding: 1, referencePi: 0, visibility: 1 },
     braids: { initial: 'plus', direction: 1, measurement: 'z', word: [1, 2] },
     fusion: { number: 4, charge: 'vacuum', pathIndex: 0 },
+    correlations: { alpha: 1 / 3, separation: 2 },
+    memory: { size: 5, edges: [], anchor: null, example: 'once', step: 0 },
     toric: { size: 'medium', windings: 1, mode: 'pairs', anchor: null, baselineDefects: [], defects: ['0,0', '3,2'], edges: [['0,0', '1,0'], ['1,0', '2,0'], ['2,0', '3,0'], ['3,0', '3,1'], ['3,1', '3,2']] }
   };
   const copy = value => JSON.parse(JSON.stringify(value));
   const state = copy(defaults);
-  const views = Object.keys(defaults);
+  const views = ['exchange', 'interference', 'braids', 'fusion', 'toric', 'correlations', 'memory'];
   let active = 'exchange';
   let animationFrame = null;
   let animationView = null;
@@ -104,7 +106,7 @@
   function piTex(value) {
     const sign = value < 0 ? '-' : '';
     const absolute = Math.abs(value);
-    for (const denominator of [1, 2, 3, 4, 6]) {
+    for (const denominator of [1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60]) {
       const numerator = Math.round(absolute * denominator);
       if (Math.abs(absolute * denominator - numerator) < 1e-9) {
         if (numerator === 0) return '0';
@@ -653,7 +655,191 @@
     toricDiagram();
   }
 
-  const renderers = { exchange: renderExchange, interference: renderInterference, braids: renderBraids, fusion: renderFusion, toric: renderToric };
+  function correlationTex(value) {
+    if (Math.abs(value) > 1e-12 && Math.abs(value) < 1e-4) {
+      const [mantissa, exponent] = value.toExponential(3).split('e');
+      return String.raw`${mantissa}\times10^{${Number(exponent)}}`;
+    }
+    return texNumber(value, 5);
+  }
+
+  function correlationsResult() {
+    return physics.lllPairCorrelation(state.correlations);
+  }
+
+  function statisticsTex(alpha) {
+    const numerator = Math.round(60 * alpha);
+    if (Math.abs(60 * alpha - numerator) > 1e-9) return texNumber(alpha, 3);
+    let a = numerator, b = 60;
+    while (b) [a, b] = [b, a % b];
+    const top = numerator / a, bottom = 60 / a;
+    return bottom === 1 ? String(top) : String.raw`\frac{${top}}{${bottom}}`;
+  }
+
+  let correlationCurves = null;
+  function renderCorrelations() {
+    const config = state.correlations, result = correlationsResult();
+    setControl('correlations-alpha', config.alpha);
+    setControl('correlations-separation', config.separation);
+    setMath('correlations-alpha-value', statisticsTex(config.alpha));
+    setMath('correlations-separation-value', texNumber(config.separation));
+    setMath('correlations-chi', correlationTex(result.chi));
+    const sign = Math.abs(result.chi) < 1e-12 ? 0 : Math.sign(result.chi);
+    $('correlations-relation').textContent = sign === 0 ? 'Same second moment within the displayed precision' : sign < 0 ? 'Bunching: smaller mean squared separation' : 'Antibunching: larger mean squared separation';
+    setMath('correlations-moments', String.raw`\begin{aligned}\langle\hat r^2\rangle_\alpha/\ell^2&=${texNumber(result.meanSeparationSquared, 4)}\\\langle\hat r^2\rangle_{\mathrm d}/\ell^2&=${texNumber(result.distinguishableMeanSeparationSquared, 4)}\end{aligned}`);
+    if (!correlationCurves || correlationCurves.alpha !== config.alpha) {
+      correlationCurves = {
+        alpha: config.alpha,
+        selected: physics.lllPairCorrelationCurve({ alpha: config.alpha, maxSeparation: 6, points: 181 }),
+        boson: physics.lllPairCorrelationCurve({ alpha: 0, maxSeparation: 6, points: 181 }),
+        fermion: physics.lllPairCorrelationCurve({ alpha: 1, maxSeparation: 6, points: 181 })
+      };
+    }
+    const plot = { left: 82, right: 681, top: 41, bottom: 294, min: -0.35, max: 1.05 };
+    const x = separation => plot.left + separation / 6 * (plot.right - plot.left);
+    const y = chi => plot.bottom - (chi - plot.min) / (plot.max - plot.min) * (plot.bottom - plot.top);
+    let svg = svgFrame('Shift of mean squared guiding-center separation in a localized LLL pair state; positive is antibunching and negative is bunching');
+    for (const tick of [-0.25, 0, 0.25, 0.5, 0.75, 1]) {
+      svg += line(plot.left, y(tick), plot.right, y(tick), `stroke="${tick === 0 ? '#777777' : colors.grid}" ${tick === 0 ? 'stroke-width="1.5"' : ''}`);
+      svg += text(plot.left - 12, y(tick) + 4, number(tick, tick === 0 || tick === 1 ? 0 : 2), 'text-anchor="end" font-size="12"');
+    }
+    for (let tick = 0; tick <= 6; tick++) {
+      svg += line(x(tick), plot.top, x(tick), plot.bottom, 'stroke-dasharray="3 5"');
+      svg += text(x(tick), plot.bottom + 24, tick, 'text-anchor="middle" font-size="12"');
+    }
+    const curve = points => points.map((point, index) => `${index ? 'L' : 'M'}${x(point.separation).toFixed(3)},${y(point.chi).toFixed(3)}`).join(' ');
+    svg += `<path d="${curve(correlationCurves.boson)}" fill="none" stroke="#888888" stroke-width="1.8" stroke-dasharray="2 5"/>`;
+    svg += `<path d="${curve(correlationCurves.fermion)}" fill="none" stroke="#555555" stroke-width="1.8" stroke-dasharray="7 5"/>`;
+    svg += `<path d="${curve(correlationCurves.selected)}" fill="none" stroke="${colors.teal}" stroke-width="3"/>`;
+    svg += line(x(config.separation), plot.top, x(config.separation), plot.bottom, `stroke="${colors.coral}" stroke-dasharray="3 5"`);
+    svg += circle(x(config.separation), y(result.chi), 6, `fill="${colors.teal}" stroke="white" stroke-width="2"`);
+    svg += text(24, 170, 'Correlation shift χ', 'text-anchor="middle" transform="rotate(-90 24 170)" font-size="14"');
+    svg += text(380, 350, 'Packet-center separation s = d / ℓ', 'text-anchor="middle" font-size="14"');
+    svg += text(678, 26, 'Positive: antibunching; negative: bunching', 'text-anchor="end" font-size="12"');
+    $('correlations-svg').innerHTML = svg;
+    if (config.separation === 0) setText('correlations-notice', String.raw`At the formal \(s\to0\) limit, only the lowest allowed angular momentum remains: \(p_0=1\), so \(\chi=\alpha=${statisticsTex(config.alpha)}\). The normalized limiting state is used, rather than substituting zero into an unnormalized weight ratio.`);
+    else if (config.alpha === 0 || config.alpha === 1) setText('correlations-notice', String.raw`The ${config.alpha === 0 ? 'bosonic' : 'fermionic'} endpoint ${config.alpha === 0 ? 'bunches' : 'antibunches'} in this second-moment comparison. Now choose a fractional \(\alpha\), keep it fixed, and move the packet centers: the sign can change without changing the statistics.`);
+    else setText('correlations-notice', String.raw`For the same exchange rule \(\theta=${piTex(config.alpha)}\), this preparation is ${sign < 0 ? 'bunched' : sign > 0 ? 'antibunched' : 'at the crossover'} at \(s=${texNumber(config.separation)}\). Compare a close pair with a more separated pair. No attractive or repulsive interaction is included; the correlation follows from the allowed angular momenta and their preparation-dependent weights.`);
+    renderCorrelationWeights(result);
+  }
+
+  function renderCorrelationWeights(result) {
+    let last = 0;
+    result.weights.forEach((entry, index) => { if (entry.probability >= 1e-4) last = index; });
+    const shown = result.weights.slice(0, last + 1);
+    const plot = { left: 74, right: 684, top: 29, bottom: 215 };
+    const y = probability => plot.bottom - probability * (plot.bottom - plot.top);
+    const step = (plot.right - plot.left) / shown.length, barWidth = Math.min(43, step * 0.62);
+    let svg = '<title>Probabilities of relative angular momentum states in the selected normalized LLL packet</title><rect width="720" height="280" fill="white"/>';
+    for (const tick of [0, 0.25, 0.5, 0.75, 1]) {
+      svg += line(plot.left, y(tick), plot.right, y(tick));
+      svg += text(plot.left - 12, y(tick) + 4, number(tick, tick === 0 || tick === 1 ? 0 : 2), 'text-anchor="end" font-size="12"');
+    }
+    shown.forEach((entry, index) => {
+      const center = plot.left + (index + 0.5) * step;
+      svg += `<rect x="${center - barWidth / 2}" y="${y(entry.probability)}" width="${barWidth}" height="${plot.bottom - y(entry.probability)}" fill="${colors.teal}"><title>k=${entry.k}; L/hbar=${entry.angularMomentum}; probability=${entry.probability}</title></rect>`;
+      svg += text(center, plot.bottom + 23, entry.k, 'text-anchor="middle" font-size="12"');
+    });
+    svg += text(24, 123, 'Probability p(k)', 'text-anchor="middle" transform="rotate(-90 24 123)" font-size="13"');
+    svg += text(379, 266, 'Angular-momentum index k', 'text-anchor="middle" font-size="13"');
+    $('correlations-weights-svg').innerHTML = svg;
+    setText('correlations-weights-caption', result.separation === 0 ? String.raw`The formal normalized limit has \(p_0=1\).` : String.raw`The plot ends after the last weight of at least \(10^{-4}\). Smaller tail weights are retained in the calculation of the mean.`);
+    setMath('correlations-angular-momentum', String.raw`\frac{\langle L\rangle}{\hbar}=${texNumber(result.meanAngularMomentum, 5)},\qquad u=${texNumber(result.u, 5)},\qquad \chi=${correlationTex(result.chi)}.`);
+  }
+
+  function memoryPlan() {
+    const size = state.memory.size, middle = Math.floor(size / 2);
+    const cycle = Array.from({ length: size + 1 }, (_, index) => `${index % size},${middle}`);
+    const plans = {
+      square: ['1,1', '2,1', '2,2', '1,2', '1,1'],
+      once: cycle,
+      twice: cycle.concat(cycle.slice(1)),
+      undo: [`1,${middle}`, `2,${middle}`, `1,${middle}`]
+    };
+    return plans[state.memory.example] || null;
+  }
+
+  function memoryResults() {
+    const result = physics.memoryStringState(state.memory.edges, state.memory.size);
+    return {
+      ...result,
+      referenceState: 'No local excitations; eigenvalue +1 for the vertical and horizontal noncontractible Z loops.',
+      groundSpaceLoopEigenvalues: result.closed ? { verticalZ: result.logicalParity.x ? -1 : 1, horizontalZ: result.logicalParity.y ? -1 : 1 } : null,
+      workedPath: memoryPlan()
+    };
+  }
+
+  function renderMemory() {
+    const config = state.memory, result = memoryResults(), plan = memoryPlan();
+    $('memory-defect-count').textContent = result.defects.length;
+    $('memory-status').textContent = result.closed ? 'All local excitation checks restored' : 'Open string: local excitations are present';
+    if (result.closed) {
+      setMath('memory-logical', String.raw`(p_x,p_y)=(${result.logicalParity.x},${result.logicalParity.y})`);
+      setMath('memory-wilson', String.raw`\begin{aligned}\langle\overline Z_{\mathrm{vertical}}\rangle&=${result.groundSpaceLoopEigenvalues.verticalZ}\\\langle\overline Z_{\mathrm{horizontal}}\rangle&=${result.groundSpaceLoopEigenvalues.horizontalZ}\end{aligned}`);
+      $('memory-sector-description').textContent = result.logicalParity.x || result.logicalParity.y ? 'A different ground state from the reference' : 'The same ground-space sector as the reference';
+    } else {
+      $('memory-logical').textContent = 'Not assigned while endpoints remain';
+      $('memory-wilson').textContent = '';
+      $('memory-sector-description').textContent = 'An open string has not returned the state to the ground space.';
+    }
+    $('memory-path-prev').disabled = !plan || config.step === 0;
+    $('memory-path-next').disabled = !plan || config.step >= plan.length - 1;
+    const exampleNames = { square: 'Small closed loop', once: 'Once around the torus', twice: 'Twice around the torus', undo: 'Move out and back' };
+    $('memory-progress').textContent = plan ? `${exampleNames[config.example]}: ${config.step} of ${plan.length - 1} edge operations applied.${config.step < plan.length - 1 ? ` Next: (${plan[config.step]}) to (${plan[config.step + 1]}).` : ' Example complete.'}` : 'Custom string. Select neighboring squares, or load another worked example.';
+    $('memory-action-hint').textContent = config.anchor === null ? 'Select two neighboring squares to apply an edge. Opposite borders are also neighbors.' : `Square (${config.anchor}) selected. Choose a neighbor; click the same square to cancel.`;
+    if (!result.closed) $('memory-notice').textContent = 'The string has endpoints, so local checks still detect excitations. Continue the worked path: the revealing comparison comes after the endpoints meet and annihilate.';
+    else if (result.logicalParity.x || result.logicalParity.y) $('memory-notice').textContent = 'No local defects remain, but a noncontractible loop measurement has flipped. The surviving string cannot be reduced to a product of local stabilizers: it has changed the encoded state.';
+    else if (config.edges.length) $('memory-notice').textContent = 'This closed string has even winding parity in both directions. It acts trivially on the ground space, even though applied edges are still visible in the drawing. Compare with one circuit around a periodic direction.';
+    else $('memory-notice').textContent = config.step ? 'The string has canceled edge by edge. Both local checks and the chosen global loop eigenvalues agree with the reference state.' : 'Start from no defects, apply an edge to create a pair, and follow one endpoint. A small loop and a trip around the torus can finish with the same local defect count but different encoded states.';
+    memoryDiagram(result);
+  }
+
+  function memoryDiagram(result) {
+    const config = state.memory, size = config.size;
+    const board = { x: 210, y: 42, cell: 60 };
+    const right = board.x + size * board.cell, bottom = board.y + size * board.cell;
+    const center = key => { const [column, row] = key.split(',').map(Number); return { x: board.x + (column + 0.5) * board.cell, y: board.y + (row + 0.5) * board.cell }; };
+    const focusedCell = document.activeElement && document.activeElement.getAttribute('data-memory-cell');
+    let svg = '<title>Periodic five-by-five toric-code tile: string endpoints are local defects and opposite borders are identified</title><rect width="720" height="400" fill="white"/>';
+    for (let index = 0; index <= size; index++) {
+      svg += line(board.x + index * board.cell, board.y, board.x + index * board.cell, bottom);
+      svg += line(board.x, board.y + index * board.cell, right, board.y + index * board.cell);
+    }
+    svg += `<rect x="${board.x}" y="${board.y}" width="${size * board.cell}" height="${size * board.cell}" fill="none" stroke="#666666" stroke-width="1.5" stroke-dasharray="5 4"/>`;
+    for (const [from, to] of result.edges) {
+      const a = center(from), b = center(to), options = `stroke="${colors.coral}" stroke-width="3" stroke-dasharray="5 4" pointer-events="none"`;
+      if (Math.abs(a.x - b.x) > board.cell + 1) {
+        const leftPoint = a.x < b.x ? a : b, rightPoint = a.x < b.x ? b : a;
+        svg += line(leftPoint.x, leftPoint.y, board.x - 17, leftPoint.y, options) + line(rightPoint.x, rightPoint.y, right + 17, rightPoint.y, options);
+      } else if (Math.abs(a.y - b.y) > board.cell + 1) {
+        const topPoint = a.y < b.y ? a : b, bottomPoint = a.y < b.y ? b : a;
+        svg += line(topPoint.x, topPoint.y, topPoint.x, board.y - 17, options) + line(bottomPoint.x, bottomPoint.y, bottomPoint.x, bottom + 17, options);
+      } else svg += line(a.x, a.y, b.x, b.y, options);
+    }
+    for (let row = 0; row < size; row++) for (let column = 0; column < size; column++) {
+      const key = `${column},${row}`, position = center(key), occupied = result.defects.includes(key), selected = config.anchor === key;
+      svg += `<g role="button" tabindex="0" data-memory-cell="${key}" aria-label="Periodic plaquette column ${column}, row ${row}; ${occupied ? 'm excitation' : 'no excitation'}${selected ? '; selected' : ''}"><rect class="cell-background" x="${position.x - 27}" y="${position.y - 27}" width="54" height="54" fill="transparent" ${selected ? 'stroke="black" stroke-width="2" stroke-dasharray="3 3"' : ''}/>`;
+      if (occupied) {
+        svg += circle(position.x, position.y, 12, `fill="${colors.coral}"`);
+        svg += text(position.x, position.y + 5, 'm', 'text-anchor="middle" font-family="Georgia,serif" font-size="17" font-style="italic" fill="white"');
+      } else svg += circle(position.x, position.y, 2.2, 'fill="#888888"');
+      svg += '</g>';
+    }
+    for (let index = 0; index < size; index++) {
+      svg += text(board.x + (index + 0.5) * board.cell, 24, index, 'text-anchor="middle" font-size="12"');
+      svg += text(board.x - 27, board.y + (index + 0.5) * board.cell + 4, index, 'text-anchor="middle" font-size="12"');
+    }
+    svg += text(100, 183, 'Left continues', 'text-anchor="middle" font-size="13"') + text(100, 204, 'at right', 'text-anchor="middle" font-size="13"');
+    svg += text(613, 183, 'Right continues', 'text-anchor="middle" font-size="13"') + text(613, 204, 'at left', 'text-anchor="middle" font-size="13"');
+    svg += text(360, 383, 'Top and bottom borders are also identified', 'text-anchor="middle" font-size="13"');
+    $('memory-svg').innerHTML = svg;
+    if (focusedCell !== null && focusedCell !== undefined) {
+      const replacement = $('memory-svg').querySelector(`[data-memory-cell="${focusedCell}"]`);
+      if (replacement) replacement.focus({ preventScroll: true });
+    }
+  }
+
+  const renderers = { exchange: renderExchange, interference: renderInterference, braids: renderBraids, fusion: renderFusion, toric: renderToric, correlations: renderCorrelations, memory: renderMemory };
   function render() { renderers[active](); }
   function announce(message) { $('status-message').textContent = message; }
 
@@ -662,7 +848,9 @@
     interference: [['interference-svg', 'Interference fringe'], ['interference-phasors', 'Coherent amplitude addition']],
     braids: [['braids-svg', 'Braid sequences'], ['braids-bloch-svg', 'Encoded Pauli expectations']],
     fusion: [['fusion-svg', 'Fusion-space dimensions'], ['fusion-path-svg', 'Selected fusion basis path']],
-    toric: [['toric-svg', 'Strings and loop on the lattice']]
+    toric: [['toric-svg', 'Strings and loop on the lattice']],
+    correlations: [['correlations-svg', 'LLL pair correlation'], ['correlations-weights-svg', 'Angular-momentum weights']],
+    memory: [['memory-svg', 'Periodic toric-code string']]
   };
   function syncExportChoices() {
     const selector = $('export-figure'), selected = selector.value;
@@ -679,8 +867,7 @@
 
   function navigate() {
     const hash = window.location.hash.slice(1);
-    if (hash === 'main') return;
-    active = views.includes(hash) ? hash : 'exchange';
+    if (hash !== 'main') active = views.includes(hash) ? hash : 'exchange';
     cancelAnimation();
     document.querySelectorAll('[data-view]').forEach(section => { section.hidden = section.dataset.view !== active; });
     document.querySelectorAll('[data-nav]').forEach(link => {
@@ -860,6 +1047,54 @@
   }));
   $('toric-play').addEventListener('click', () => animate('toric', 2800 * state.toric.windings, progress => { toricProgress = progress; toricDiagram(); }, () => announce('Loop completed.')));
 
+  listenNumber('correlations-alpha', 'correlations', 'alpha');
+  listenNumber('correlations-separation', 'correlations', 'separation');
+  const correlationExamples = {
+    close: { alpha: 1 / 3, separation: 0.5 }, separated: { alpha: 1 / 3, separation: 2 },
+    boson: { alpha: 0, separation: 2 }, fermion: { alpha: 1, separation: 2 }
+  };
+  document.querySelectorAll('[data-correlations-example]').forEach(button => button.addEventListener('click', () => {
+    state.correlations = copy(correlationExamples[button.dataset.correlationsExample]); renderCorrelations();
+  }));
+  document.querySelectorAll('[data-memory-example]').forEach(button => button.addEventListener('click', () => {
+    state.memory = { ...copy(defaults.memory), example: button.dataset.memoryExample }; renderMemory();
+  }));
+  function stepMemory(forward) {
+    const plan = memoryPlan(), config = state.memory;
+    if (!plan) return;
+    const edge = forward ? config.step : config.step - 1;
+    if (edge < 0 || edge >= plan.length - 1) return;
+    config.edges = physics.memoryStringStep(config.edges, plan[edge], plan[edge + 1], config.size).edges;
+    config.step += forward ? 1 : -1; config.anchor = null;
+    renderMemory();
+    announce($('memory-progress').textContent + ' ' + $('memory-status').textContent);
+  }
+  $('memory-path-prev').addEventListener('click', () => stepMemory(false));
+  $('memory-path-next').addEventListener('click', () => stepMemory(true));
+  $('memory-clear').addEventListener('click', () => { state.memory = { ...copy(defaults.memory), example: 'custom' }; renderMemory(); });
+  function applyMemoryCell(target) {
+    const cell = target.closest('[data-memory-cell]');
+    if (!cell) return;
+    const config = state.memory, key = cell.dataset.memoryCell;
+    if (config.anchor === null) config.anchor = key;
+    else if (config.anchor === key) config.anchor = null;
+    else {
+      const [ax, ay] = config.anchor.split(',').map(Number), [bx, by] = key.split(',').map(Number);
+      const dx = Math.abs(ax - bx), dy = Math.abs(ay - by);
+      if (!((dy === 0 && (dx === 1 || dx === config.size - 1)) || (dx === 0 && (dy === 1 || dy === config.size - 1)))) {
+        $('memory-action-hint').textContent = 'Choose a nearest neighbor, counting opposite-border squares as neighbors.';
+        return;
+      }
+      config.edges = physics.memoryStringStep(config.edges, config.anchor, key, config.size).edges;
+      config.anchor = null; config.example = 'custom'; config.step = 0;
+    }
+    renderMemory();
+  }
+  $('memory-svg').addEventListener('click', event => applyMemoryCell(event.target));
+  $('memory-svg').addEventListener('keydown', event => {
+    if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); applyMemoryCell(event.target); }
+  });
+
   document.querySelectorAll('[data-reset]').forEach(button => button.addEventListener('click', () => reset(button.dataset.reset)));
   window.addEventListener('hashchange', navigate);
   document.addEventListener('visibilitychange', () => { if (document.hidden && animationView) cancelAnimation(); });
@@ -893,17 +1128,21 @@
   });
 
   $('export-json').addEventListener('click', () => {
-    const modelNames = { exchange: 'Abelian exchange', interference: 'Balanced two-path interference', braids: 'Four Ising sigma anyons, total charge vacuum', fusion: 'Fibonacci fusion dimensions', toric: 'Toric-code mutual e/m winding' };
+    const modelNames = { exchange: 'Abelian exchange', interference: 'Balanced two-path interference', braids: 'Four Ising sigma anyons, total charge vacuum', fusion: 'Fibonacci fusion dimensions', toric: 'Toric-code mutual e/m winding', correlations: 'Localized lowest-Landau-level anyon pair correlation', memory: 'Periodic toric-code X strings and ground-space winding' };
     const results = {
       exchange: exchangeResult,
       interference: interferenceResult,
       braids: braidResults,
       fusion: fusionResults,
-      toric: toricResults
+      toric: toricResults,
+      correlations: correlationsResult,
+      memory: memoryResults
     };
     const exportData = { schemaVersion: 2, model: modelNames[active], experiment: active, parameters: copy(state[active]), conventions: { angleUnits: 'Radians in results; parameters ending in Pi are multiples of pi.', complexNumbers: '[real, imaginary]', braidOrder: 'Chronological; positive generators are counterclockwise.', outputs: 'Ideal model results; animations are schematic.' }, results: results[active]() };
     if (active === 'exchange') exportData.diagramProgress = exchangeProgress;
     if (active === 'toric') exportData.diagramProgress = toricProgress;
+    if (active === 'correlations') exportData.conventions.pairCorrelation = 'separation is packet-center distance in single-particle magnetic lengths; chi is the guiding-center mean-squared-separation shift divided by 4 ell^2; angular momentum is in hbar units. meanSeparationSquared and distinguishableMeanSeparationSquared are in ell^2 units. errorBound and omittedProbabilityBound bound series truncation, not floating-point rounding. Source: arXiv:0908.3945 Eqs. (3), (5), (6).';
+    if (active === 'memory') exportData.conventions.periodicMemory = 'Cell keys are column,row on a periodic square lattice. All edges are X operations modulo two, starting from the specified reference ground state. logicalParity is null until all endpoints annihilate.';
     saveBlob(JSON.stringify(exportData, null, 2) + '\n', 'application/json;charset=utf-8', `anyons-${active}.json`);
   });
 

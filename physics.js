@@ -77,6 +77,73 @@
     return { statisticalPhase, totalPhase, p0, p1: 1 - p0, pathDensityMatrix, coherentOutputAmplitudes };
   }
 
+  // Localized two-anyon states in the lowest Landau level, following
+  // Vishveshwara and Cooper, arXiv:0908.3945, Eqs. (3), (5), and (6).
+  // separation=|z| is packet-center separation in single-particle magnetic
+  // lengths ell; alpha=theta/pi. The relative guiding-center angular momenta
+  // are (2k+alpha) hbar. With u=|z|^2/4 their probabilities are proportional
+  // to u^(2k+alpha)/Gamma(2k+alpha+1). Cancel the common factor to start at 1.
+  // chi is the excess mean squared guiding-center separation divided by
+  // 4 ell^2. Positive chi means antibunching; this is not a g^(2) function.
+  function lllPairCorrelation({ alpha, separation }) {
+    finite(alpha, 'Statistics parameter');
+    finite(separation, 'Packet separation');
+    if (alpha < 0 || alpha > 1) throw new RangeError('Statistics parameter must lie between 0 and 1.');
+    if (separation < 0 || separation > 12) throw new RangeError('Packet separation must lie between 0 and 12 magnetic lengths.');
+    const u = separation * separation / 4;
+    const rawWeights = [];
+    let weight = 1, total = 0, totalCorrection = 0, excess = 0, excessCorrection = 0;
+    let errorBound = Infinity, omittedProbabilityBound = Infinity;
+    for (let k = 0; k < 1000; k++) {
+      const angularMomentum = 2 * k + alpha;
+      rawWeights.push({ k, angularMomentum, weight });
+      // Compensated sums also retain accuracy when the excess nearly cancels.
+      const totalIncrement = weight - totalCorrection;
+      const nextTotal = total + totalIncrement;
+      totalCorrection = (nextTotal - total) - totalIncrement;
+      total = nextTotal;
+      const excessIncrement = (angularMomentum - u) * weight - excessCorrection;
+      const nextExcess = excess + excessIncrement;
+      excessCorrection = (nextExcess - excess) - excessIncrement;
+      excess = nextExcess;
+
+      const ratio = u * u / ((angularMomentum + 1) * (angularMomentum + 2));
+      const nextWeight = weight * ratio;
+      if (ratio < 1) {
+        // Later ratios decrease. A geometric series bounds all omitted
+        // weights and their first angular-momentum moment, so this is an
+        // absolute truncation bound for chi (floating roundoff is separate).
+        const tailWeight = nextWeight / (1 - ratio);
+        const tailAngularMoment = nextWeight * ((angularMomentum + 2) / (1 - ratio) + 2 * ratio / ((1 - ratio) ** 2));
+        omittedProbabilityBound = tailWeight / total;
+        errorBound = (tailAngularMoment + (u + Math.abs(excess / total)) * tailWeight) / total;
+        if (errorBound <= 1e-15) break;
+      }
+      weight = nextWeight;
+      if (k === 999) throw new Error('The lowest-Landau-level sum did not converge.');
+    }
+    // At separation=0 this is the continuous normalized-state limit |0,alpha>.
+    // The endpoint formulas avoid cancellation of exponentially small tails.
+    let chi = excess / total;
+    if (alpha === 0) chi = -2 * u / (Math.expm1(2 * u) + 2);
+    if (alpha === 1) chi = u === 0 ? 1 : 2 * u / Math.expm1(2 * u);
+    const meanAngularMomentum = u + chi;
+    const weights = rawWeights.map(entry => ({ k: entry.k, angularMomentum: entry.angularMomentum, probability: entry.weight / total }));
+    return {
+      alpha, separation, u, chi, meanAngularMomentum,
+      meanSeparationSquared: 4 * meanAngularMomentum + 2,
+      distinguishableMeanSeparationSquared: separation * separation + 2,
+      weights, termsUsed: weights.length, errorBound, omittedProbabilityBound
+    };
+  }
+
+  function lllPairCorrelationCurve({ alpha, maxSeparation = 6, points = 121 }) {
+    finite(maxSeparation, 'Maximum packet separation');
+    if (maxSeparation < 0 || maxSeparation > 12) throw new RangeError('Maximum separation must lie between 0 and 12 magnetic lengths.');
+    integer(points, 'Number of curve points', 2, 2001);
+    return Array.from({ length: points }, (_, index) => lllPairCorrelation({ alpha, separation: maxSeparation * index / (points - 1) }));
+  }
+
   function applyMatrix(matrix, state) {
     validateState(state);
     if (!Array.isArray(matrix) || matrix.length !== 2 || matrix.some(row => !Array.isArray(row) || row.length !== 2)) {
@@ -289,6 +356,65 @@
     return { edges: updatedEdges, defects: Array.from(oddIncidence).sort(compareCells) };
   }
 
+  // X strings on an L by L periodic dual lattice, initially in the toric-code
+  // ground space. L>=3 makes an undirected pair of neighboring cell labels
+  // identify one edge even across a seam (L=2 would have parallel edges).
+  // Cut parities count seam crossings. Only an endpoint-free operator maps
+  // the ground space back into itself, so logicalParity is null otherwise.
+  // An x-winding X string anticommutes with the vertical direct-lattice Z
+  // loop; y winding anticommutes with the horizontal Z loop. These describe
+  // logical operations, not measurement outcomes for an unspecified state.
+  function memoryStringState(edges, size = 6) {
+    integer(size, 'Periodic lattice size', 3, 64);
+    if (!Array.isArray(edges)) throw new TypeError('String edges must be an array of cell-key pairs.');
+    const coordinates = new Map();
+    function parseCell(key) {
+      if (typeof key !== 'string' || !/^(0|[1-9]\d*),(0|[1-9]\d*)$/.test(key)) {
+        throw new TypeError('A cell key must be column,row with nonnegative integers and no leading zeros.');
+      }
+      const point = key.split(',').map(Number);
+      point.forEach(value => integer(value, 'Periodic cell coordinate', 0, size - 1));
+      coordinates.set(key, point);
+      return point;
+    }
+    function compareCells(a, b) {
+      const first = coordinates.get(a), second = coordinates.get(b);
+      return first[0] - second[0] || first[1] - second[1];
+    }
+    const edgeParity = new Map();
+    for (const edge of edges) {
+      if (!Array.isArray(edge) || edge.length !== 2) throw new TypeError('Each string edge must contain exactly two cell keys.');
+      const a = parseCell(edge[0]), b = parseCell(edge[1]);
+      const dx = Math.abs(a[0] - b[0]), dy = Math.abs(a[1] - b[1]);
+      if (!((dy === 0 && (dx === 1 || dx === size - 1)) || (dx === 0 && (dy === 1 || dy === size - 1)))) {
+        throw new RangeError('A periodic string step must join nearest-neighbor plaquettes, including wrapped neighbors.');
+      }
+      const canonical = compareCells(edge[0], edge[1]) < 0 ? edge.slice() : [edge[1], edge[0]];
+      const key = canonical.join('|');
+      if (edgeParity.has(key)) edgeParity.delete(key);
+      else edgeParity.set(key, canonical);
+    }
+    const updatedEdges = Array.from(edgeParity.values()).sort((a, b) => compareCells(a[0], b[0]) || compareCells(a[1], b[1]));
+    const oddIncidence = new Set();
+    const cutParity = { x: 0, y: 0 };
+    for (const edge of updatedEdges) {
+      for (const cell of edge) {
+        if (oddIncidence.has(cell)) oddIncidence.delete(cell); else oddIncidence.add(cell);
+      }
+      const a = coordinates.get(edge[0]), b = coordinates.get(edge[1]);
+      if (Math.abs(a[0] - b[0]) === size - 1) cutParity.x ^= 1;
+      if (Math.abs(a[1] - b[1]) === size - 1) cutParity.y ^= 1;
+    }
+    const defects = Array.from(oddIncidence).sort(compareCells);
+    const closed = defects.length === 0;
+    return { size, edges: updatedEdges, defects, closed, cutParity, logicalParity: closed ? { ...cutParity } : null };
+  }
+
+  function memoryStringStep(edges, from, to, size = 6) {
+    if (!Array.isArray(edges)) throw new TypeError('String edges must be an array of cell-key pairs.');
+    return memoryStringState(edges.concat([[from, to]]), size);
+  }
+
   // Signed winding number of a polygon about a point, in Cartesian x/y.
   // A point on the path returns null: moving through the anyon is outside
   // the separated-anyon approximation and must not receive a braid phase.
@@ -322,8 +448,10 @@
   }
 
   return Object.freeze({
-    TAU, abelianPhase, interference, isingInitial, isingBraid, applyMatrix,
+    TAU, abelianPhase, interference, lllPairCorrelation, lllPairCorrelationCurve,
+    isingInitial, isingBraid, applyMatrix,
     applyBraidWord, probabilities, bloch, measurementProbabilities, fidelity,
-    fibonacciCounts, fibonacciPaths, fibonacciPathAt, toricPhase, toricStringStep, windingNumber
+    fibonacciCounts, fibonacciPaths, fibonacciPathAt, toricPhase, toricStringStep,
+    memoryStringState, memoryStringStep, windingNumber
   });
 });
