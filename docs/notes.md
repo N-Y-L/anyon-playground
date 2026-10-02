@@ -213,6 +213,8 @@ The interactive grid is a local patch tracking string endpoints and loop factors
 
 Create an $m$ pair, take one around a periodic direction, and bring it back to its partner. The pair annihilates, removing its $4J_m$ excitation energy. Every stabilizer reads $+1$ again—and yet the completed string can act on the encoded state. Returning to the ground energy need not return the same ground state.
 
+The memory readout gives $E-E_0=2J_mN_m$, where $E_0$ is the ground energy and $N_m$ now counts all remaining magnetic defects, rather than those inside a chosen loop. These $X$ strings leave every $A_s$ unchanged, so there is no electric-excitation contribution.
+
 The [memory experiment](../experiments.html#memory) makes the boundary periodic: leaving one edge of the drawing re-enters through the opposite edge. Compare a small closed $X$ string with one wrapping right around the lattice. The small loop contracts and is a product of local stabilizers. The wrapping loop cannot be filled by a bounded region; it is a **logical operator**, acting within the ground-state space. A torus has two independent wrapping directions and four ground states, enough for two encoded qubits. Local measurements in a small contractible region cannot distinguish these ideal ground states; logical loop measurements can. [Kitaev, Secs. 1–2](https://arxiv.org/abs/quant-ph/9707021) constructs this nonlocal information.
 
 <details>

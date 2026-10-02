@@ -222,7 +222,7 @@
       const end = { x: x + scale * amplitude[0], y: y - scale * amplitude[1] };
       svg += circle(x, y, scale, 'fill="none" stroke="#dddddd"');
       svg += line(x - 93, y, x + 99, y) + line(x, y - 91, x, y + 91);
-      svg += text(x + 98, y - 5, 'Re', 'font-size="11"') + text(x + 5, y - 91, 'Im', 'font-size="11"');
+      svg += text(x + 98, y - 5, 'Re', 'font-size="11"') + text(x + 9, y - 73, 'Im', 'font-size="11"');
       svg += text(x, 21, `Output ${port}`, 'text-anchor="middle" font-size="14"');
       svg += `<path d="M${x},${y} L${x + scale / 2},${y}" stroke="black" stroke-width="2" fill="none" marker-end="url(#phasor-fixed)"/>`;
       svg += `<path d="M${x + scale / 2},${y} L${end.x},${end.y}" stroke="${colors.teal}" stroke-width="2" fill="none" marker-end="url(#phasor-moving)"/>`;
@@ -276,7 +276,7 @@
     if (config.visibility === 0) $('interference-notice').textContent = 'At zero visibility the curve is flat: every reference phase gives 50%. The model still assigns a statistical phase, but this readout cannot reveal it.';
     else if (config.enclosed === 0) $('interference-notice').textContent = 'With no enclosed anyons, the statistical contribution is zero. The two curves coincide; varying the reference phase still produces interference.';
     else if (Math.abs(Math.cos(result.statisticalPhase) - 1) < 1e-8) setText('interference-notice', String.raw`The statistical phase is a whole multiple of \(2\pi\), so these fringes coincide. A nonzero accumulated angle can have exactly the same phase multiplier as zero.`);
-    else $('interference-notice').textContent = 'The enclosed anyons shift the fringe; visibility changes its contrast. One enclosed semion shifts it by half a cycle, and a second restores the original fringe.';
+    else setText('interference-notice', String.raw`The selected rule adds \(\delta=${piTex(result.statisticalPhase / Math.PI)}\) to the reference phase inside the cosine. Changing visibility scales the fringe contrast; it does not change this phase.`);
   }
 
   // SVG labels use plain operation names; the sequence readout is LaTeX.
@@ -765,7 +765,7 @@
       ...result,
       referenceState: 'No local excitations; eigenvalue +1 for the vertical and horizontal noncontractible Z loops.',
       energyInJm: 2 * result.defects.length,
-      energyConvention: 'energyInJm = (E-E0)/J_m = 2*N_m. Starting from the ground state, X-only strings leave all A_s eigenvalues unchanged; each m defect costs 2 J_m, independent of string length.',
+      energyConvention: 'energyInJm = (E-E0)/J_m = 2*N_m, where E0 is the ground-state energy and N_m counts all remaining m defects on the torus. Starting from the ground state, X-only strings leave all A_s eigenvalues unchanged; each m defect costs 2 J_m, independent of string length.',
       groundSpaceLoopEigenvalues: result.closed ? { verticalZ: result.logicalParity.x ? -1 : 1, horizontalZ: result.logicalParity.y ? -1 : 1 } : null,
       workedPath: memoryPlan()
     };
@@ -868,7 +868,7 @@
     selector.dataset.options = signature;
   }
 
-  function navigate() {
+  function navigate(event) {
     const hash = window.location.hash.slice(1);
     if (hash !== 'main') active = views.includes(hash) ? hash : 'exchange';
     cancelAnimation();
@@ -881,6 +881,14 @@
     render();
     syncExportChoices();
     announce(`Note ${views.indexOf(active) + 1}: ${$(`${active}-title`).textContent}`);
+    // Route names are not element IDs. Move readers to the new note instead
+    // of leaving a "Next" link's old scroll position inside the new content.
+    if (event && hash !== 'main') {
+      const heading = $(`${active}-title`);
+      heading.setAttribute('tabindex', '-1');
+      heading.focus({ preventScroll: true });
+      heading.scrollIntoView({ block: 'start' });
+    }
   }
 
   function reset(view) {

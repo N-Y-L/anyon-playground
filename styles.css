@@ -72,7 +72,7 @@ dfn { font-style: normal; font-weight: bold; }
 .probability-track span { display: block; height: 3px; background: #145b91; }
 .probability-comparison > div:last-child .probability-track span { background: #a33b2b; }
 .fusion-readouts, .enclosure-counts { gap: 14px; }
-.enclosure-counts span { display: block; }
+.enclosure-counts > div > span { display: block; }
 .toric-svg [role=button] { cursor: pointer; }
 .toric-svg [role=button]:hover .cell-background { fill: transparent; stroke: #666; stroke-width: 1; }
 .toric-svg [role=button]:focus-visible .cell-background { stroke: #0000ee; stroke-width: 2; }

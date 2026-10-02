@@ -1,5 +1,8 @@
 # Anyons: visual notes
 
+**[Open the live playground](https://N-Y-L.github.io/anyon-playground/)** ·
+[Source code](https://github.com/N-Y-L/anyon-playground)
+
 Exchange two identical particles and ask what the state remembers. Seven
 interactive notes follow that question into interference, spatial correlations,
 and quantum memory, with the calculation beside each figure. The intended reader
@@ -8,11 +11,12 @@ theory background. The interface is plain HTML on a white page.
 
 ## Open and explore
 
-Download the ZIP from [GitHub](https://github.com/N-Y-L/anyon-playground)
-(**Code → Download ZIP**) or clone this repository, then **double-click `index.html`**.
-Everything runs locally in your browser. No installation, account, internet
-connection, or build step is needed for the demos. Research links need internet.
-Equations are written in LaTeX and typeset with a locally bundled copy of KaTeX.
+Use the [website](https://N-Y-L.github.io/anyon-playground/) directly, or explore
+offline: download the ZIP from [GitHub](https://github.com/N-Y-L/anyon-playground)
+(**Code → Download ZIP**), extract it, and **double-click `index.html`**.
+Cloning the repository works too. The downloaded demos need no installation,
+account, internet connection, or build step; research links need internet.
+Equations use a locally bundled copy of KaTeX.
 
 Start with the first two experiments. Before changing a control, guess what
 will happen; the example buttons set up useful surprises. Short prediction

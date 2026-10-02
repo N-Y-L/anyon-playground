@@ -35,9 +35,18 @@
       if (!Array.isArray(amplitude) || amplitude.length !== 2) throw new TypeError('Complex amplitudes use [real, imaginary].');
       amplitude.forEach(value => finite(value, 'Amplitude'));
     });
-    const norm = state.reduce((sum, amplitude) => sum + magnitudeSquared(amplitude), 0);
-    if (!(norm > 0) || !Number.isFinite(norm)) throw new RangeError('State norm must be positive and finite.');
-    return norm;
+    const scale = Math.max(...state.flat().map(Math.abs));
+    if (scale === 0) throw new RangeError('State must have a nonzero amplitude.');
+    return scale;
+  }
+
+  // Physical readouts do not depend on the overall amplitude scale. Divide
+  // by the largest component before forming a norm, so even finite states
+  // near the floating-point extremes can be normalized without overflow or
+  // underflow. Linear evolution itself still preserves the supplied scale.
+  function scaledState(state) {
+    const scale = validateState(state);
+    return state.map(amplitude => amplitude.map(value => value / scale));
   }
 
   function abelianPhase(theta, exchanges) {
@@ -198,17 +207,19 @@
   }
 
   function probabilities(state) {
-    const norm = validateState(state);
-    return state.map(amplitude => magnitudeSquared(amplitude) / norm);
+    const weights = scaledState(state).map(magnitudeSquared);
+    const norm = weights[0] + weights[1];
+    return weights.map(weight => weight / norm);
   }
 
   function bloch(state) {
-    const norm = validateState(state);
-    const product = multiply(conjugate(state[0]), state[1]);
+    const scaled = scaledState(state);
+    const norm = magnitudeSquared(scaled[0]) + magnitudeSquared(scaled[1]);
+    const product = multiply(conjugate(scaled[0]), scaled[1]);
     return {
       x: 2 * product[0] / norm,
       y: 2 * product[1] / norm,
-      z: (magnitudeSquared(state[0]) - magnitudeSquared(state[1])) / norm
+      z: (magnitudeSquared(scaled[0]) - magnitudeSquared(scaled[1])) / norm
     };
   }
 
@@ -223,9 +234,10 @@
   }
 
   function fidelity(a, b) {
-    const normA = validateState(a);
-    const normB = validateState(b);
-    const overlap = add(multiply(conjugate(a[0]), b[0]), multiply(conjugate(a[1]), b[1]));
+    const first = scaledState(a), second = scaledState(b);
+    const normA = magnitudeSquared(first[0]) + magnitudeSquared(first[1]);
+    const normB = magnitudeSquared(second[0]) + magnitudeSquared(second[1]);
+    const overlap = add(multiply(conjugate(first[0]), second[0]), multiply(conjugate(first[1]), second[1]));
     return Math.min(1, Math.max(0, magnitudeSquared(overlap) / (normA * normB)));
   }
 

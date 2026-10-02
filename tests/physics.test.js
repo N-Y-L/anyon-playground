@@ -498,6 +498,42 @@ test('Periodic string validation excludes ambiguous small lattices and preserves
   assert.deepEqual(P.memoryStringStep([], '0,0', '63,0', 64).cutParity, { x: 1, y: 0 });
 });
 
+test('Normalized readouts remain scale invariant across floating-point extremes', () => {
+  // This state has exact probabilities 9/25 and 16/25, Bloch components
+  // (0,24/25,-7/25), and an explicitly orthogonal partner (4,-3i).
+  const first = [[3, 0], [0, 4]], orthogonal = [[4, 0], [0, -3]];
+  const scaleState = (state, scale) => state.map(amplitude => amplitude.map(value => value * scale));
+  for (const scale of [1e-300, 1e-200, 1e-100, 1, 1e100, 1e200, 1e300]) {
+    const state = scaleState(first, scale);
+    const other = scaleState(orthogonal, 1 / scale);
+    sameState([P.probabilities(state)], [[9 / 25, 16 / 25]]);
+    const components = P.bloch(state);
+    close(components.x, 0);
+    close(components.y, 24 / 25);
+    close(components.z, -7 / 25);
+    close(P.measurementProbabilities(state, 'x').plus, 1 / 2);
+    close(P.measurementProbabilities(state, 'y').plus, 49 / 50);
+    close(P.measurementProbabilities(state, 'z').plus, 9 / 25);
+    close(P.fidelity(state, first), 1);
+    close(P.fidelity(state, other), 0);
+    close(P.fidelity(state, [[1, 0], [0, 0]]), 9 / 25);
+    // Overall complex phase, as well as independently chosen magnitude,
+    // cannot affect the overlap or either encoded measurement.
+    const phased = state.map(([real, imaginary]) => [-imaginary, real]);
+    close(P.fidelity(state, phased), 1);
+    sameState([P.probabilities(phased)], [[9 / 25, 16 / 25]]);
+  }
+  for (const magnitude of [Number.MIN_VALUE, Number.MAX_VALUE]) {
+    const plusY = [[magnitude, 0], [0, magnitude]];
+    sameState([P.probabilities(plusY)], [[0.5, 0.5]]);
+    close(P.bloch(plusY).y, 1);
+    close(P.fidelity(plusY, P.isingInitial('plusY')), 1);
+  }
+  for (const invalid of [[[0, 0], [0, 0]], [[NaN, 0], [0, 1]], [[Infinity, 0], [0, 1]], [[1, 0], [0, -Infinity]]]) {
+    for (const readout of [P.probabilities, P.bloch, state => P.fidelity(state, first), state => P.fidelity(first, state)]) assert.throws(() => readout(invalid));
+  }
+});
+
 test('Invalid inputs fail explicitly rather than producing plausible-looking results', () => {
   assert.throws(() => P.abelianPhase(NaN, 1));
   assert.throws(() => P.abelianPhase(1, 0.5));

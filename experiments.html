@@ -114,7 +114,7 @@
       <div class="experiment-workspace">
         <figure>
           <svg id="braids-svg" class="demo-svg" viewBox="0 0 720 330" role="img" aria-label="Chronological braid sequences, with time running from top to bottom"></svg>
-          <figcaption>Read downward. \(B_1,B_2,B_3\) exchange positions 1–2, 2–3, 3–4. Sequence B reverses the order of operations, keeping their directions.</figcaption>
+          <figcaption>Read downward. \(B_1,B_2,B_3\) exchange positions 1–2, 2–3, 3–4. Sequence B reverses the order of operations, keeping their directions. One planar coordinate is omitted; drawn crossings are not particle collisions.</figcaption>
           <div class="probability-comparison" aria-live="polite"><div><span id="braids-label-a">A: first pair to vacuum</span><strong id="braids-probability-a"></strong><div class="probability-track"><span id="braids-bar-a"></span></div><span id="braids-other-a"></span></div><div><span id="braids-label-b">B: first pair to vacuum</span><strong id="braids-probability-b"></strong><div class="probability-track"><span id="braids-bar-b"></span></div><span id="braids-other-b"></span></div></div>
         </figure>
         <div class="controls-card">
@@ -242,7 +242,7 @@
         <figure><svg id="memory-svg" class="demo-svg toric-svg" viewBox="0 0 720 400" role="group" aria-label="Periodic toric-code tile; select neighboring plaquettes, including opposite-edge neighbors, to apply an X edge"></svg><figcaption>Opposite borders represent the same seam. A string crossing a border continues from the matching point on the opposite border. This five-by-five lattice is a finite ideal toric code.</figcaption><p id="memory-action-hint" class="observation" role="status"></p><div class="visual-actions"><button id="memory-path-prev">Undo previous edge</button><button id="memory-path-next">Apply next edge</button><button data-reset="memory">Reset</button><button id="memory-clear">Clear to reference state</button></div><p id="memory-progress"></p></figure>
         <div class="controls-card"><h2>Compare local and global information</h2>
           <div class="readout" aria-live="polite"><span>Local \(m\) excitations</span><strong id="memory-defect-count"></strong><span id="memory-status"></span><span>Energy above the ground state</span><strong id="memory-energy"></strong></div>
-          <p class="control-note">In the <a href="#toric">displayed Hamiltonian</a>, each \(m\) defect costs \(2J_m\). These \(X\) strings leave every \(A_s\) unchanged, so \(E-E_0=2J_mN_m\), independent of string length.</p>
+          <p class="control-note">In the <a href="#toric">displayed Hamiltonian</a>, each \(m\) defect costs \(2J_m\). These \(X\) strings leave every \(A_s\) unchanged, so \(E-E_0=2J_mN_m\), independent of string length. Here \(E_0\) is the ground-state energy and \(N_m\) counts all remaining magnetic defects on the torus.</p>
           <div class="readout"><span>Closed-string winding parity</span><div id="memory-logical" class="equation"></div><span id="memory-sector-description"></span></div>
           <div id="memory-wilson" class="equation"></div>
           <p class="control-note">The parity pair \((p_x,p_y)\) counts horizontal and vertical winding modulo two. A ground-space label is shown only after all string endpoints have annihilated.</p>
