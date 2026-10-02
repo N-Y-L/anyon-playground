@@ -51,7 +51,7 @@ calculations are deterministic and use no random sampling.
 | `experiments.html` | Interactive examples |
 | `tests/physics.test.js` | Physical identities and limiting cases |
 
-To check the numerical models, install Node.js 22 or newer, then run from this
+To check the numerical models, install Node.js 22.12 or newer, then run from this
 folder:
 
 ```sh
@@ -80,6 +80,7 @@ This optional editing step uses the versions of Marked and KaTeX pinned in
 `package-lock.json`. Exploring the finished pages and running the physics tests
 require no package installation. SVG exports contain
 vector drawings; JSON exports record parameters, conventions, and model results.
+Each export leaves a download link available for another try.
 
 ## License
 

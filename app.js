@@ -506,12 +506,17 @@
   document.addEventListener('visibilitychange', () => { if (document.hidden && animationView) cancelAnimation(); });
   reduceMotion.addEventListener('change', () => { if (animationView) cancelAnimation(); });
 
+  let downloadUrl = null;
   function saveBlob(contents, type, filename) {
-    const url = URL.createObjectURL(new Blob([contents], { type }));
-    const link = document.createElement('a');
-    link.href = url; link.download = filename; document.body.append(link); link.click(); link.remove();
-    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
-    announce(`${filename} prepared for download.`);
+    if (downloadUrl) URL.revokeObjectURL(downloadUrl);
+    downloadUrl = URL.createObjectURL(new Blob([contents], { type }));
+    const link = $('export-download');
+    link.href = downloadUrl;
+    link.download = filename;
+    link.textContent = filename;
+    $('export-ready').hidden = false;
+    link.click();
+    announce(`${filename} prepared. The download link remains available below.`);
   }
 
   $('export-svg').addEventListener('click', () => {
