@@ -1,0 +1,19 @@
+{
+  "name": "anyon-playground",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Small interactive experiments and notes about anyon physics",
+  "author": "Neil Yuanting Li",
+  "license": "MIT",
+  "scripts": {
+    "test": "node --test tests/physics.test.js",
+    "docs": "node scripts/build-docs.mjs"
+  },
+  "devDependencies": {
+    "katex": "0.19.0",
+    "marked": "17.0.5"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

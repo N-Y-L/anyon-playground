@@ -1,0 +1,11 @@
+/* Copyright (c) 2026 Neil Yuanting Li. MIT License; see LICENSE. */
+html{color-scheme:light;background:white;color:black}
+body{font:18px/1.5 "Times New Roman",Times,serif;max-width:950px;margin:24px 32px}
+a{color:#0000ee}a:visited{color:#551a8b}nav{display:flex;flex-wrap:wrap;gap:8px 22px;border-bottom:1px solid #999;padding-bottom:12px}
+h1{font-size:28px}h2{font-size:23px;margin-top:30px}h3{font-size:20px;margin-top:26px}p,li{margin:12px 0}
+table{border-collapse:collapse;display:block;overflow-x:auto;font-size:16px;margin:20px 0}th,td{border:1px solid #999;padding:8px 12px;text-align:left;vertical-align:top}
+th:first-child,td:first-child{min-width:120px}.katex{font-size:1.05em}.equation{margin:22px 18px;padding:4px 0;overflow-x:auto;overflow-y:hidden}.equation .katex-display{margin:0;text-align:left}.equation .katex-display>.katex{text-align:left}
+details{margin:20px 0}summary{cursor:pointer;font-weight:bold}footer{border-top:1px solid #999;margin-top:30px;padding-top:15px;font-size:15px}
+a:focus-visible,summary:focus-visible{outline:2px solid blue;outline-offset:3px}pre{overflow:auto}sup,sub{line-height:0}
+@media(max-width:600px){body{margin:18px;font-size:17px}.equation{margin:18px 0}th,td{padding:8px;min-width:120px}}
+@media print{nav,footer{display:none}body{margin:0;max-width:none;font-size:11pt}h2,h3{break-after:avoid}.equation{break-inside:avoid}}
