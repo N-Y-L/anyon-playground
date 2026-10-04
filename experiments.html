@@ -6,7 +6,7 @@
   <meta name="description" content="Visual notes on anyons: exchange, interference, fusion, braiding, and a solvable spin model. Graduate quantum mechanics; no quantum field theory assumed.">
   <title>Anyons: visual notes</title>
   <link rel="stylesheet" href="vendor/katex/katex.min.css">
-  <link rel="stylesheet" href="styles.css?v=0.5.2">
+  <link rel="stylesheet" href="styles.css?v=0.5.3">
   <script defer src="vendor/katex/katex.min.js"></script>
   <script defer src="vendor/katex/auto-render.min.js"></script>
   <script defer src="physics.js?v=0.5.0"></script>
@@ -21,7 +21,9 @@
       <p>Here an anyon is a <dfn>quasiparticle</dfn>: a localized collective excitation of a gapped two-dimensional many-body state. The underlying electrons remain fermions; the collective excitations can obey different exchange rules. Two-dimensional motion permits these rules, but does not by itself produce an anyonic phase.</p>
       <p>Move two identical, well-separated quasiparticles and return them to their starting positions. Did you undo an exchange, or complete a winding? The final configuration cannot tell you. In two dimensions these histories cannot be continuously deformed into one another without a collision. <a href="https://doi.org/10.1007/BF02727953">Leinaas and Myrheim</a> develop the configuration-space argument.</p>
       <figure class="manga-figure">
-        <img src="assets/manga-exchange.png" width="1536" height="1024" loading="lazy" alt="Three manga panels. A white cat pins two cards bearing identical pairs of dots: “Exactly the same.” A black cat pulls an earlier storyboard strip with its teeth: “At the finish.” Both crouch to investigate two histories ending in matching arrangements. The white cat says, “We need interference.”">
+        <a href="assets/manga-exchange.png" class="manga-image-link">
+          <img src="assets/manga-exchange.png" width="1536" height="1024" loading="lazy" alt="Three manga panels. A white cat pins two cards bearing identical pairs of dots: “Exactly the same.” A black cat pulls an earlier storyboard strip with its teeth: “At the finish.” Both crouch to investigate two histories ending in matching arrangements. The white cat says, “We need interference.”">
+        </a>
         <figcaption>The last frame fixes the positions, not the braid. These paper storyboards suggest histories; the controls below distinguish winding from retracing. A statistical phase becomes observable through interference between coherent alternatives. <a href="assets/manga-exchange.png">Open full-size image</a>.
           <details><summary>Read the dialogue</summary><p>White cat: “Exactly the same.” Black cat: “At the finish.” White cat: “We need interference.”</p></details>
         </figcaption>
@@ -134,8 +136,10 @@
       <p>The reference ground state has no defects and eigenvalue \(+1\) for both chosen noncontractible \(Z\) loops. Each step below applies \(X\) to one shared lattice edge, just as in <a href="#toric">the local patch</a>. Dashed segments record the surviving \(X\) string modulo two: applying the same edge twice cancels it.</p>
       <p>“Local repair” and “winding repair” start with the same two defects, created by one edge operation. One repair repeats that edge; the other takes the long way around the periodic row. Both remove the defects. Compare their final loop eigenvalues to see what the local checks cannot decide.</p>
       <figure class="manga-figure">
-        <img src="assets/manga-memory.png" width="1536" height="1024" loading="lazy" alt="A white cat pushes together two removed black markers beside a fabric torus: “Both defects gone.” A black cat peers into the central hole: “And the stored state?” In the final panel the white cat lies flat beside the same two markers: “I took the long way.” A freestanding card beside the black cat reads “LOGICAL VALUE 0 → 1”.">
-        <figcaption>The two counters set aside stand for an annihilated pair. The error and repair together form a noncontractible \(X\) loop: it flips the chosen logical-\(Z\) value. The fabric ring models periodic boundaries; dashes mark applied operators, not remaining excitations. The winding matters, not the distance traveled. <a href="assets/manga-memory.png">Open full-size image</a>.
+        <a href="assets/manga-memory.png" class="manga-image-link">
+          <img src="assets/manga-memory.png" width="1536" height="1024" loading="lazy" alt="A white cat pushes together two removed black markers beside a fabric torus: “Both defects gone.” A black cat peers into the central hole: “And the stored state?” In the final panel the white cat lies flat beside the same two markers: “I took the long way.” A freestanding card beside the black cat reads “LOGICAL VALUE 0 → 1”.">
+        </a>
+        <figcaption>The two counters set aside stand for an annihilated pair. The error and repair together form a noncontractible \(X\) loop: it flips the chosen logical-\(Z\) eigenvalue. The card’s logical \(0\) and \(1\) denote eigenvalues \(+1\) and \(-1\), respectively. The fabric ring models periodic boundaries; dashes mark applied operators, not remaining excitations. The winding matters, not the distance traveled. <a href="assets/manga-memory.png">Open full-size image</a>.
           <details><summary>Read the dialogue</summary><p>White cat: “Both defects gone.” Black cat: “And the stored state?” White cat: “I took the long way.” Card: “LOGICAL VALUE 0 → 1”.</p></details>
         </figcaption>
       </figure>
@@ -231,7 +235,9 @@
       <h2 id="braids-record-title">The fusion state can keep a record</h2>
       <p>Now let two <em>coherent</em> alternatives either do nothing or fully wind the middle pair. Both finish at the same positions, but the winding applies \(U=B_2^2=e^{-i\pi/4}X\). This is an ideal coherent-control thought experiment. The four anyons stay in the same total-vacuum sector; the alternatives may leave different states <em>within</em> that sector.</p>
       <figure class="manga-figure">
-        <img src="assets/manga-fusion-record.png" width="1536" height="1024" loading="lazy" alt="A white cat considers a shared tray of four identical tokens beside a card already reading “NO FRINGE”: “Then we won’t read it.” The cat pulls one cloth over the entire tray with its teeth. The card stays unchanged. The white cat sits back, puzzled, as the black cat says, “It doesn’t need a reader.”">
+        <a href="assets/manga-fusion-record.png" class="manga-image-link">
+          <img src="assets/manga-fusion-record.png" width="1536" height="1024" loading="lazy" alt="A white cat considers a shared tray of four identical tokens beside a card already reading “NO FRINGE”: “Then we won’t read it.” The cat pulls one cloth over the entire tray with its teeth. The card stays unchanged. The white cat sits back, puzzled, as the black cat says, “It doesn’t need a reader.”">
+        </a>
         <figcaption>For the \(|0\rangle\) input, the alternatives leave orthogonal collective fusion states, so output counts that do not resolve fusion show no fringe. The tray represents all four anyons. Covering it means declining to consult the record; it neither creates nor erases that record. <a href="assets/manga-fusion-record.png">Open full-size image</a>.
           <details><summary>Read the dialogue</summary><p>Status card in every panel: “NO FRINGE”. White cat: “Then we won’t read it.” Black cat: “It doesn’t need a reader.”</p></details>
         </figcaption>

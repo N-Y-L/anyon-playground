@@ -29,7 +29,7 @@ The [contents](https://N-Y-L.github.io/anyon-playground/) arrange the notes by t
 
 The figures show comparisons that the controls let you test. Derivations and exact readouts carry the simpler arithmetic.
 Four short cat comics introduce puzzles about paths, quantum memory, fusion records,
-and changes of basis. Each has a caption, a text transcript, and a full-size image link.
+and changes of basis. Each has a caption and a text transcript. Select a comic or its caption link to open the full-size image.
 
 Each note introduces its symbols, gives worked example settings, and explains
 what its readout measures. Controls have a reset; mathematical derivations and
