@@ -10,7 +10,7 @@
   <script defer src="vendor/katex/katex.min.js"></script>
   <script defer src="vendor/katex/auto-render.min.js"></script>
   <script defer src="fusion-basis-physics.js?v=0.5.0"></script>
-  <script defer src="fusion-basis.js?v=0.5.0"></script>
+  <script defer src="fusion-basis.js?v=0.5.4"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to the note</a>
@@ -36,8 +36,8 @@
     <div class="example-row"><label for="fb-initial">Prepare in the left basis:</label><select id="fb-initial"><option value="vacuum">Definite pair-12 charge 1</option><option value="tau">Definite pair-12 charge τ</option><option value="plus">Equal real superposition</option><option value="plusY">Equal superposition with relative i</option></select><button id="fb-reset">Reset note</button></div>
     <div id="fb-preparation" class="equation"></div>
     <div class="state-pair">
-      <figure><svg id="fb-left-tree" class="demo-svg" viewBox="0 0 340 245" role="img" aria-label="Left-associated fusion tree"></svg><figcaption>Left basis: resolve the charge \(a\) of positions 1–2.</figcaption></figure>
-      <figure><svg id="fb-right-tree" class="demo-svg" viewBox="0 0 340 245" role="img" aria-label="Right-associated fusion tree"></svg><figcaption>Right basis: resolve the charge \(b\) of positions 2–3.</figcaption></figure>
+      <figure><svg id="fb-left-tree" class="demo-svg" viewBox="0 0 340 255" role="img" aria-label="Left-associated fusion tree"></svg><figcaption>Left basis: resolve the charge \(a\) of positions 1–2.</figcaption></figure>
+      <figure><svg id="fb-right-tree" class="demo-svg" viewBox="0 0 340 255" role="img" aria-label="Right-associated fusion tree"></svg><figcaption>Right basis: resolve the charge \(b\) of positions 2–3.</figcaption></figure>
     </div>
     <p id="fb-basis-observation" class="observation" aria-live="polite"></p>
     <details><summary>Why can the two pair-charge probabilities differ if the state is unchanged?</summary><p>They refer to different pair-charge measurements. For the same physical observable, change its matrix along with the coordinates: \(O_R=FO_LF^\dagger\), so \(c_R^\dagger O_Rc_R=c_L^\dagger O_Lc_L\). The vacuum projector for pair 1–2 is \(\operatorname{diag}(1,0)\) in the left basis; the vacuum projector for pair 2–3 has that diagonal form in the right basis. Neither measurement is actually performed by the illustration.</p></details>

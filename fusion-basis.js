@@ -43,7 +43,7 @@
     const root = isLeft ? 184 : 156;
     const pair = isLeft ? [52, 164] : [176, 288];
     const other = isLeft ? 288 : 52;
-    let svg = '<rect width="340" height="245" fill="white"/><g font-family="Times New Roman,serif" font-size="20" fill="#000">';
+    let svg = '<rect width="340" height="255" fill="white"/><g font-family="Times New Roman,serif" font-size="20" fill="#000">';
     svg += '<title>' + (isLeft ? 'Left-associated tree: pair 1–2' : 'Right-associated tree: pair 2–3') + '</title>';
     svg += '<desc>Two possible intermediate charges, vacuum 1 and tau, label the basis. Each tree specifies a basis, not a sequence of measurements.</desc>';
     const xs = isLeft ? [52, 164, 288] : [52, 176, 288];

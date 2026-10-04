@@ -10,7 +10,7 @@
   <script defer src="vendor/katex/katex.min.js"></script>
   <script defer src="vendor/katex/auto-render.min.js"></script>
   <script defer src="physics.js?v=0.5.0"></script>
-  <script defer src="app.js?v=0.5.0"></script>
+  <script defer src="app.js?v=0.5.4"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to the note</a>
@@ -83,7 +83,7 @@
         </figure>
         <div class="controls-card">
           <h2>Set the relative phase</h2>
-          <label class="field-label" for="interference-theta">Exchange angle \(\theta\)<output id="interference-theta-value"></output></label><input id="interference-theta" type="range" min="0" max="1" step="0.0166666666666667" value="0.5" aria-label="Exchange angle in multiples of pi">
+          <label class="field-label" for="interference-theta">Exchange angle \(\theta\)<output id="interference-theta-value"></output></label><input id="interference-theta" type="range" min="0" max="60" step="1" value="30" aria-label="Exchange angle in multiples of pi">
           <div class="range-labels"><span>\(0\)</span><span>\(\pi/2\)</span><span>\(\pi\)</span></div>
           <div class="two-fields"><div><label class="field-label" for="interference-enclosed">Enclosed count \(N\)</label><select id="interference-enclosed"><option>0</option><option selected>1</option><option>2</option><option>3</option><option>4</option></select></div><div><label class="field-label" for="interference-winding">Windings \(w\)</label><select id="interference-winding"><option value="1">1 counterclockwise</option><option value="2">2 counterclockwise</option><option value="-1">1 clockwise</option></select></div></div>
           <label class="field-label" for="interference-reference">Reference phase \(\phi\)<output id="interference-reference-value"></output></label><input id="interference-reference" type="range" min="0" max="2" step="0.01" value="0" aria-label="Reference phase in multiples of pi">
@@ -172,7 +172,7 @@
       <p>The plus sign lists allowed total charges; it neither adds particles nor assigns probabilities. A fixed total charge can still admit several independent quantum states. To construct a basis, add the anyons one at a time and record the cumulative charge. A previous charge \(1\) must become \(\tau\); a previous charge \(\tau\) can become \(1\) or \(\tau\). One allowed chain of intermediate charges specifies a basis vector. It is not a trajectory in real space or a claim that a sequence of measurements happened. The connection between this counting and quantum gates is developed in <a href="https://arxiv.org/abs/quant-ph/0505065">Bonesteel et al., Fig. 1</a>.</p>
       <div class="example-row"><span>Examples:</span><button data-fusion-example="four-vacuum">Four anyons, total vacuum</button><button data-fusion-example="four-tau">Four anyons, total tau</button><button data-fusion-example="growth">A larger space</button></div>
       <div class="experiment-workspace">
-        <figure><div class="figure-scroll"><svg id="fusion-path-svg" class="demo-svg" viewBox="0 0 720 250" role="img" aria-label="Allowed cumulative fusion charges with one basis path highlighted"></svg></div><figcaption>Each column adds one \(\tau\). Gray lines are allowed steps compatible with the final charge; the blue chain labels one basis state.</figcaption><p id="fusion-path-position"></p><div class="visual-actions"><button id="fusion-path-prev">Previous basis state</button><button id="fusion-path-next">Next basis state</button><button id="fusion-add">Add one anyon</button><button data-reset="fusion">Reset</button></div><div id="fusion-path-formula" class="equation"></div></figure>
+        <figure><div class="figure-scroll"><svg id="fusion-path-svg" class="demo-svg" viewBox="0 0 720 250" role="img" aria-label="Allowed cumulative fusion charges with one basis path highlighted"></svg></div><figcaption>Each column adds one \(\tau\). Gray lines are allowed steps compatible with the final charge; the blue chain labels one basis state.</figcaption><label class="field-label" for="fusion-path-index">Choose a basis state</label><input id="fusion-path-index" class="full-range" type="range" min="1" max="2" step="1" value="1" aria-describedby="fusion-path-position"><p id="fusion-path-position"></p><div class="visual-actions"><button id="fusion-path-prev">Previous basis state</button><button id="fusion-path-next">Next basis state</button><button id="fusion-add">Add one anyon</button><button data-reset="fusion">Reset</button></div><div id="fusion-path-formula" class="equation"></div></figure>
         <div class="controls-card"><h2>Fix the number and total charge</h2>
           <label class="field-label" for="fusion-number">Number of anyons \(n\)<output id="fusion-number-value">4</output></label><input id="fusion-number" type="range" min="2" max="16" step="1" value="4"><div class="range-labels"><span>2</span><span>9</span><span>16</span></div>
           <div class="fusion-readouts"><div><span>Total charge \(1\)</span><strong id="fusion-vacuum"></strong><span>basis states</span></div><div><span>Total charge \(\tau\)</span><strong id="fusion-tau"></strong><span>basis states</span></div></div>
@@ -207,7 +207,7 @@
         <div class="controls-card">
           <h2>Prepare, braid, measure</h2>
           <label class="field-label" for="braids-initial">Initial state</label><select id="braids-initial"><option value="plus">Equal real superposition</option><option value="vacuum">Vacuum basis state</option><option value="fermion">Fermion basis state</option><option value="plusY">Equal superposition with relative i</option></select><div id="braids-initial-formula" class="equation"></div>
-          <label class="field-label" for="braids-direction">Exchange direction</label><select id="braids-direction"><option value="1">Counterclockwise</option><option value="-1">Clockwise (inverse)</option></select>
+          <label class="field-label" for="braids-direction">Direction for the next exchange</label><select id="braids-direction"><option value="1">Counterclockwise</option><option value="-1">Clockwise (inverse)</option></select>
           <p class="field-label">Append to sequence A</p><div class="braid-buttons"><button data-braid="1">\(B_1\)<small>pair 1–2</small></button><button data-braid="2">\(B_2\)<small>pair 2–3</small></button><button data-braid="3">\(B_3\)<small>pair 3–4</small></button></div><p id="braids-word" class="sequence-label"></p>
           <div class="button-row"><button id="braids-undo">Remove last</button><button data-reset="braids">Reset</button></div><p id="braids-capacity" class="control-note"></p>
           <label class="field-label" for="braids-measurement">Measurement basis</label><select id="braids-measurement"><option value="z">Z: first-pair fusion</option><option value="x">X: real superpositions</option><option value="y">Y: imaginary superpositions</option></select>
@@ -266,7 +266,7 @@
       <div class="experiment-workspace">
         <figure><svg id="correlations-svg" class="demo-svg" viewBox="0 0 720 380" role="img" aria-label="LLL pair correlation versus packet-center separation, compared with bosonic and fermionic limits"></svg><figcaption><span class="legend-line teal"></span>Chosen exchange rule; dotted: bosonic limit; dashed: fermionic limit. The horizontal zero line is the distinguishable reference. The dot marks the selected separation.</figcaption><div class="visual-actions"><button data-reset="correlations">Reset</button></div></figure>
         <div class="controls-card"><h2>Keep the statistics; move the centers</h2>
-          <label class="field-label" for="correlations-alpha">Statistics parameter \(\alpha\)<output id="correlations-alpha-value"></output></label><input id="correlations-alpha" type="range" min="0" max="1" step="0.0166666666666667" value="0.3333333333333333"><div class="range-labels"><span>\(0\): boson</span><span>\(1\): fermion</span></div>
+          <label class="field-label" for="correlations-alpha">Statistics parameter \(\alpha\)<output id="correlations-alpha-value"></output></label><input id="correlations-alpha" type="range" min="0" max="60" step="1" value="20"><div class="range-labels"><span>\(0\): boson</span><span>\(1\): fermion</span></div>
           <label class="field-label" for="correlations-separation">Separation \(s=d/\ell\)<output id="correlations-separation-value"></output></label><input id="correlations-separation" type="range" min="0" max="6" step="0.05" value="2"><div class="range-labels"><span>\(0\)</span><span>\(6\)</span></div>
           <div class="readout" aria-live="polite"><span>Correlation shift \(\chi\)</span><strong id="correlations-chi"></strong><span id="correlations-relation"></span></div>
           <div id="correlations-moments" class="equation"></div>

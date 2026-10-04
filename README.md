@@ -99,7 +99,14 @@ This optional editing step uses the versions of Marked and KaTeX pinned in
 `package-lock.json`. Exploring the finished pages and running the physics tests
 require no package installation.
 
-Choose a figure from the footer to save its SVG. JSON exports record parameters,
+The fusion-path slider selects any basis state directly; the previous/next
+buttons move one state at a time. The angle slider in the interferometer and the
+statistics slider in the correlation note include both endpoints and preserve
+exact one-third presets.
+
+Choose a figure from the footer to save its SVG. Exchange and correlation figures
+keep their curve legends, and the toric figure records its winding count and loop
+multiplier inside the saved image. JSON exports record parameters,
 conventions, and computed results, including the selected measurement basis,
 fusion path, pair-correlation preparation, or toric string. These are records, not files that can be reimported
 through the interface.

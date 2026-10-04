@@ -179,7 +179,9 @@
     svg += `<path d="${anglePath}" fill="none" stroke="${colors.teal}" stroke-width="2.8"/>`;
     svg += circle(x(exchangeProgress), y(rotation(exchangeProgress) / Math.PI), 5, `fill="${colors.coral}" stroke="white" stroke-width="1.5"`);
     svg += text(178, 297, 'Colors identify paths of identical particles', 'text-anchor="middle" font-size="12"');
-    svg += text(549, 297, 'Fraction of the illustrated motion', 'text-anchor="middle" font-size="12"');
+    svg += text(549, 284, 'Fraction of the illustrated motion', 'text-anchor="middle" font-size="12"');
+    svg += line(409, 309, 431, 309, 'stroke="#888888" stroke-width="1.7" stroke-dasharray="5 5"') + text(437, 313, 'Winding', 'font-size="11"');
+    svg += line(530, 309, 552, 309, 'stroke="#888888" stroke-width="1.7" stroke-dasharray="2 4"') + text(558, 313, 'Retracing', 'font-size="11"');
     $('exchange-svg').innerHTML = svg;
     setControl('exchange-scrub', exchangeProgress);
   }
@@ -211,7 +213,8 @@
 
   function renderInterference() {
     const config = state.interference, result = interferenceResult();
-    for (const [id, key] of [['theta', 'thetaPi'], ['enclosed', 'enclosed'], ['winding', 'winding'], ['reference', 'referencePi'], ['visibility', 'visibility']]) setControl(`interference-${id}`, config[key]);
+    for (const [id, key] of [['theta', 'thetaPi'], ['enclosed', 'enclosed'], ['winding', 'winding'], ['reference', 'referencePi'], ['visibility', 'visibility']]) setControl(`interference-${id}`, key === 'thetaPi' ? Math.round(60 * config[key]) : config[key]);
+    $('interference-theta').setAttribute('aria-valuetext', `${number(config.thetaPi, 4)} pi radians`);
     setMath('interference-theta-value', piTex(config.thetaPi));
     setMath('interference-reference-value', piTex(config.referencePi));
     $('interference-visibility-value').textContent = number(config.visibility);
@@ -487,6 +490,10 @@
     const pathTex = n <= 8 ? String.raw`c_0=1,\quad ${tuple(0, n)}` : String.raw`\begin{aligned}c_0&=1\\${tuple(0, 8).replace('=', '&=')}\\${tuple(8, n).replace('=', '&=')}\end{aligned}`;
     setMath('fusion-path-formula', pathTex);
     $('fusion-path-position').textContent = `Path ${config.pathIndex + 1} of ${result.sectorDimension} in the ${config.charge === 'vacuum' ? 'vacuum' : 'tau'} sector`;
+    $('fusion-path-index').max = result.sectorDimension;
+    setControl('fusion-path-index', config.pathIndex + 1);
+    $('fusion-path-index').disabled = result.sectorDimension === 1;
+    $('fusion-path-index').setAttribute('aria-valuetext', `Path ${config.pathIndex + 1} of ${result.sectorDimension}`);
     $('fusion-path-prev').disabled = config.pathIndex === 0;
     $('fusion-path-next').disabled = config.pathIndex >= result.sectorDimension - 1;
   }
@@ -552,6 +559,8 @@
       return { x: lattice.x + (column + 0.5) * lattice.cell, y: lattice.y + (row + 0.5) * lattice.cell };
     };
     let svg = svgFrame('Toric-code plaquette excitations, dual X strings, and a contractible direct-lattice e loop');
+    const result = toricResults();
+    svg += text(342, 19, `Enclosed m: ${result.inside}; windings: ${config.windings}; loop multiplier: ${result.sign > 0 ? '+1' : '−1'}`, 'text-anchor="middle" font-size="12"');
     for (let column = 0; column <= lattice.columns; column++) svg += line(lattice.x + column * lattice.cell, lattice.y, lattice.x + column * lattice.cell, lattice.y + lattice.rows * lattice.cell);
     for (let row = 0; row <= lattice.rows; row++) svg += line(lattice.x, lattice.y + row * lattice.cell, lattice.x + lattice.columns * lattice.cell, lattice.y + row * lattice.cell);
     for (const [from, to] of config.edges) {
@@ -641,7 +650,9 @@
   let correlationCurves = null;
   function renderCorrelations() {
     const config = state.correlations, result = correlationsResult();
-    setControl('correlations-alpha', config.alpha);
+    // Integer ticks let the native range reach both endpoints exactly.
+    setControl('correlations-alpha', Math.round(60 * config.alpha));
+    $('correlations-alpha').setAttribute('aria-valuetext', number(config.alpha, 4));
     setControl('correlations-separation', config.separation);
     setMath('correlations-alpha-value', statisticsTex(config.alpha));
     setMath('correlations-separation-value', texNumber(config.separation));
@@ -677,7 +688,9 @@
     svg += circle(x(config.separation), y(result.chi), 6, `fill="${colors.teal}" stroke="white" stroke-width="2"`);
     svg += text(24, 170, 'Correlation shift χ', 'text-anchor="middle" transform="rotate(-90 24 170)" font-size="14"');
     svg += text(380, 350, 'Packet-center separation s = d / ℓ', 'text-anchor="middle" font-size="14"');
-    svg += text(678, 26, 'Positive: antibunching; negative: bunching', 'text-anchor="end" font-size="12"');
+    svg += line(82, 23, 106, 23, `stroke="${colors.teal}" stroke-width="3"`) + text(113, 27, `Selected α = ${number(config.alpha, 4)}`, 'font-size="12"');
+    svg += line(309, 23, 333, 23, 'stroke="#888888" stroke-width="1.8" stroke-dasharray="2 5"') + text(340, 27, 'Boson: α = 0', 'font-size="12"');
+    svg += line(506, 23, 530, 23, 'stroke="#555555" stroke-width="1.8" stroke-dasharray="7 5"') + text(537, 27, 'Fermion: α = 1', 'font-size="12"');
     $('correlations-svg').innerHTML = svg;
     if (config.separation === 0) setText('correlations-notice', String.raw`At the formal \(s\to0\) limit, only the lowest allowed angular momentum remains: \(p_0=1\), so \(\chi=\alpha=${statisticsTex(config.alpha)}\). The normalized limiting state is used, rather than substituting zero into an unnormalized weight ratio.`);
     else if (config.alpha === 0 || config.alpha === 1) setText('correlations-notice', String.raw`The ${config.alpha === 0 ? 'bosonic' : 'fermionic'} endpoint ${config.alpha === 0 ? 'bunches' : 'antibunches'} in this second-moment comparison. Now choose a fractional \(\alpha\), keep it fixed, and move the packet centers: the sign can change without changing the statistics.`);
@@ -759,7 +772,9 @@
     const exampleNames = { square: 'Small closed loop', once: 'Winding repair', twice: 'Twice around the torus', undo: 'Local repair' };
     $('memory-progress').textContent = plan ? `${exampleNames[config.example]}: ${config.step} of ${plan.length - 1} edge operations applied.${config.step < plan.length - 1 ? ` Next: (${plan[config.step]}) to (${plan[config.step + 1]}).` : ' Example complete.'}` : 'Custom string. Select neighboring squares, or load another worked example.';
     $('memory-action-hint').textContent = config.anchor === null ? 'Select two neighboring squares to apply an edge. Opposite borders are also neighbors.' : `Square (${config.anchor}) selected. Choose a neighbor; click the same square to cancel.`;
-    if (!result.closed) $('memory-notice').textContent = 'The string has endpoints, so local checks still detect excitations. Continue the worked path: the revealing comparison comes after the endpoints meet and annihilate.';
+    if (!result.closed) $('memory-notice').textContent = plan
+      ? 'The string has endpoints, so local checks still detect excitations. Continue the worked path: the revealing comparison comes after the endpoints meet and annihilate.'
+      : 'The string has endpoints, so local checks still detect excitations. Select neighboring squares to extend or undo the string. After all endpoints annihilate, compare the logical loop values with the reference.';
     else if (result.logicalParity.x || result.logicalParity.y) $('memory-notice').textContent = 'No local defects remain, but a noncontractible loop measurement has flipped. The surviving string cannot be reduced to a product of local stabilizers: it has changed the encoded state.';
     else if (config.edges.length) $('memory-notice').textContent = 'This closed string has even winding parity in both directions. It acts trivially on the ground space, even though applied edges are still visible in the drawing. Compare with one circuit around a periodic direction.';
     else $('memory-notice').textContent = config.step ? 'The string has canceled edge by edge. Both local checks and the chosen global loop eigenvalues agree with the reference state.' : 'Start from no defects, apply an edge to create a pair, and follow one endpoint. A small loop and a trip around the torus can finish with the same local defect count but different encoded states.';
@@ -871,10 +886,10 @@
     announce('Experiment reset to its starting settings.');
   }
 
-  function listenNumber(id, view, key, eventType = 'input') {
+  function listenNumber(id, view, key, eventType = 'input', divisor = 1) {
     $(id).addEventListener(eventType, event => {
       cancelAnimation();
-      state[view][key] = Number(event.target.value);
+      state[view][key] = Number(event.target.value) / divisor;
       if (view === 'exchange') { exchangeProgress = 0; $('exchange-progress').textContent = 'Ready to trace the braid'; }
       if (view === 'toric') toricProgress = 0;
       renderers[view]();
@@ -912,7 +927,7 @@
     });
   });
 
-  for (const [id, key] of [['theta', 'thetaPi'], ['enclosed', 'enclosed'], ['winding', 'winding'], ['reference', 'referencePi'], ['visibility', 'visibility']]) listenNumber(`interference-${id}`, 'interference', key);
+  for (const [id, key] of [['theta', 'thetaPi'], ['enclosed', 'enclosed'], ['winding', 'winding'], ['reference', 'referencePi'], ['visibility', 'visibility']]) listenNumber(`interference-${id}`, 'interference', key, 'input', key === 'thetaPi' ? 60 : 1);
   document.querySelectorAll('[data-interference-example]').forEach(button => button.addEventListener('click', () => {
     cancelAnimation(); state.interference = copy(defaults.interference);
     if (button.dataset.interferenceExample === 'two') state.interference.enclosed = 2;
@@ -944,6 +959,7 @@
   $('fusion-number').addEventListener('input', event => { state.fusion.number = Number(event.target.value); state.fusion.pathIndex = 0; renderFusion(); });
   $('fusion-charge').addEventListener('change', event => { state.fusion.charge = event.target.value; state.fusion.pathIndex = 0; renderFusion(); });
   $('fusion-add').addEventListener('click', () => { if (state.fusion.number < 16) state.fusion.number++; state.fusion.pathIndex = 0; renderFusion(); });
+  $('fusion-path-index').addEventListener('input', event => { state.fusion.pathIndex = Number(event.target.value) - 1; renderFusion(); });
   $('fusion-path-prev').addEventListener('click', () => { if (state.fusion.pathIndex > 0) state.fusion.pathIndex--; renderFusion(); });
   $('fusion-path-next').addEventListener('click', () => {
     const dimension = physics.fibonacciCounts(state.fusion.number)[state.fusion.charge];
@@ -1029,7 +1045,7 @@
   }));
   $('toric-play').addEventListener('click', () => animate('toric', 2800 * state.toric.windings, progress => { toricProgress = progress; toricDiagram(); }, () => announce('Loop completed.')));
 
-  listenNumber('correlations-alpha', 'correlations', 'alpha');
+  listenNumber('correlations-alpha', 'correlations', 'alpha', 'input', 60);
   listenNumber('correlations-separation', 'correlations', 'separation');
   const correlationExamples = {
     close: { alpha: 1 / 3, separation: 0.5 }, separated: { alpha: 1 / 3, separation: 2 },
