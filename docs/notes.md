@@ -216,7 +216,7 @@ For weakly split fusion states, transport should avoid bulk excitations yet fini
 
 ### A fusion state can retain information about the route
 
-The [Ising note's illustrated thought experiment](../experiments.html#braids) makes two earlier ideas meet. Suppose coherent control applies either $I$ or a full middle-pair winding, $U=B_2^2=e^{-i\pi/4}X$, to an initial fusion state $|\chi\rangle$. The positions return in either alternative. A balanced recombiner gives
+The [Ising note's coherent-control thought experiment](../experiments.html#braids) makes two earlier ideas meet. Suppose coherent control applies either $I$ or a full middle-pair winding, $U=B_2^2=e^{-i\pi/4}X$, to an initial fusion state $|\chi\rangle$. The positions return in either alternative. A balanced recombiner gives
 
 $$P_0=\frac{1+\operatorname{Re}[e^{i\phi}\langle\chi|U|\chi\rangle]}2,$$
 

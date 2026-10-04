@@ -60,7 +60,7 @@ Three routes through the foundations:
 - **Operations:** [fusion counting](../experiments.html#fusion) → [fusion bases](../fusion-basis.html) → [Ising readout](../experiments.html#braids) → Fibonacci gate construction.
 - **Phases of matter:** [toric strings](../experiments.html#toric) → [memory](../experiments.html#memory) → [$K$ matrices](../abelian.html) → perturbations and microscopic realizations.
 
-19. **Let the fusion space retain a route record.** P. Bonderson, K. Shtengel, and J. K. Slingerland, “Interferometry of non-Abelian Anyons,” *Annals of Physics* **323**, 2709–2755 (2008). [Open preprint](https://arxiv.org/abs/0707.4206), [DOI](https://doi.org/10.1016/j.aop.2008.01.012). Develops measurement theory for specified anyonic interferometers. The cartoon in the Ising note is a simpler coherent-control thought experiment calculated directly from that note's braid matrices, not a figure reproduced from this paper.
+19. **Let the fusion space retain a route record.** P. Bonderson, K. Shtengel, and J. K. Slingerland, “Interferometry of non-Abelian Anyons,” *Annals of Physics* **323**, 2709–2755 (2008). [Open preprint](https://arxiv.org/abs/0707.4206), [DOI](https://doi.org/10.1016/j.aop.2008.01.012). Develops measurement theory for specified anyonic interferometers. The coherent-control example in the Ising note is a simpler thought experiment calculated directly from that note's braid matrices.
 
 ## Software provenance
 

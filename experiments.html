@@ -6,7 +6,7 @@
   <meta name="description" content="Visual notes on anyons: exchange, interference, fusion, braiding, and a solvable spin model. Graduate quantum mechanics; no quantum field theory assumed.">
   <title>Anyons: visual notes</title>
   <link rel="stylesheet" href="vendor/katex/katex.min.css">
-  <link rel="stylesheet" href="styles.css?v=0.5.3">
+  <link rel="stylesheet" href="styles.css?v=0.5.5">
   <script defer src="vendor/katex/katex.min.js"></script>
   <script defer src="vendor/katex/auto-render.min.js"></script>
   <script defer src="physics.js?v=0.5.0"></script>
@@ -20,14 +20,6 @@
       <h1 id="exchange-title">Exchange is a path, not just a permutation</h1>
       <p>Here an anyon is a <dfn>quasiparticle</dfn>: a localized collective excitation of a gapped two-dimensional many-body state. The underlying electrons remain fermions; the collective excitations can obey different exchange rules. Two-dimensional motion permits these rules, but does not by itself produce an anyonic phase.</p>
       <p>Move two identical, well-separated quasiparticles and return them to their starting positions. Did you undo an exchange, or complete a winding? The final configuration cannot tell you. In two dimensions these histories cannot be continuously deformed into one another without a collision. <a href="https://doi.org/10.1007/BF02727953">Leinaas and Myrheim</a> develop the configuration-space argument.</p>
-      <figure class="manga-figure">
-        <a href="assets/manga-exchange.png" class="manga-image-link">
-          <img src="assets/manga-exchange.png" width="1536" height="1024" loading="lazy" alt="Three manga panels. A white cat pins two cards bearing identical pairs of dots: “Exactly the same.” A black cat pulls an earlier storyboard strip with its teeth: “At the finish.” Both crouch to investigate two histories ending in matching arrangements. The white cat says, “We need interference.”">
-        </a>
-        <figcaption>The last frame fixes the positions, not the braid. These paper storyboards suggest histories; the controls below distinguish winding from retracing. A statistical phase becomes observable through interference between coherent alternatives. <a href="assets/manga-exchange.png">Open full-size image</a>.
-          <details><summary>Read the dialogue</summary><p>White cat: “Exactly the same.” Black cat: “At the finish.” White cat: “We need interference.”</p></details>
-        </figcaption>
-      </figure>
       <p>A <dfn>braid</dfn> is the set of particle paths through space and time. In an <dfn>Abelian</dfn> anyon model each braid acts by a scalar phase. For two anyons, let \(k\) count counterclockwise exchanges minus clockwise exchanges:</p>
       <div class="equation">\[U=e^{ik\theta},\qquad k=1\ \text{(exchange)},\quad k=2\ \text{(full winding)}.\]</div>
       <p>The <dfn>exchange angle</dfn> \(\theta\) sets the self-exchange rule in this illustration; by itself it does not identify an entire anyon type. Bosons have \(\theta=0\), fermions have \(\theta=\pi\), and a semion has \(\theta=\pi/2\). For a microscopic example of fractional statistics, see the <a href="https://doi.org/10.1103/PhysRevLett.53.722">Berry-phase calculation for quantum Hall quasiholes by Arovas, Schrieffer, and Wilczek</a>. To read the braid directly from its geometry, follow the relative vector \(\mathbf r_1-\mathbf r_2\) and keep its polar angle continuous instead of reducing it modulo \(2\pi\). Its net rotation is \(k\pi\). The angle history distinguishes a full winding from going out and back even when the endpoints coincide.</p>
@@ -64,7 +56,7 @@
       <p>In the plane a full winding cannot be shrunk away without a collision. In three spatial dimensions there is room to disentangle it. For ordinary scalar exchange statistics in three dimensions, doing the exchange twice must therefore act as the identity, giving the familiar \(+1\) or \(-1\). In two dimensions that argument no longer restricts the phase to those two values.</p>
       <details><summary>What has been omitted from the phase?</summary>
         <p>Actual transport can also accumulate dynamical and electromagnetic phases. Here we isolate the statistical contribution. We assume a gapped phase, separated quasiparticles, and motion slow enough to avoid unwanted excitations. The slider compares different possible Abelian exchange rules; it does not continuously turn one material from a bosonic system into a fermionic one.</p>
-        <p>No physical phase is assigned to an unfinished portion of the cartoon. The animation speed is not an adiabaticity calculation. See the <a href="docs/notes.html">notes on Berry phases and quasiparticles</a>.</p>
+        <p>No physical phase is assigned to an unfinished portion of the schematic animation. The animation speed is not an adiabaticity calculation. See the <a href="docs/notes.html">notes on Berry phases and quasiparticles</a>.</p>
       </details>
       <p class="next-note">A global phase alone is unobservable. <a href="#interference">Next: put it in one arm of an interferometer.</a></p>
     </section>
@@ -135,14 +127,6 @@
       <p>Return to the toric code, but identify opposite edges of the square: leaving the right edge brings a defect back at the left, and likewise for top and bottom. This is a torus drawn as a flat periodic tile. Create two \(m\) excitations, take one around the periodic direction, and annihilate the pair. Every local plaquette can look repaired even though the encoded state has changed. This distinction is the starting point of <a href="https://arxiv.org/pdf/quant-ph/9707021#page=6">Kitaev's toric-code memory</a> and <a href="https://arxiv.org/abs/quant-ph/0110143">Dennis et al.'s analysis of logical errors</a>.</p>
       <p>The reference ground state has no defects and eigenvalue \(+1\) for both chosen noncontractible \(Z\) loops. Each step below applies \(X\) to one shared lattice edge, just as in <a href="#toric">the local patch</a>. Dashed segments record the surviving \(X\) string modulo two: applying the same edge twice cancels it.</p>
       <p>“Local repair” and “winding repair” start with the same two defects, created by one edge operation. One repair repeats that edge; the other takes the long way around the periodic row. Both remove the defects. Compare their final loop eigenvalues to see what the local checks cannot decide.</p>
-      <figure class="manga-figure">
-        <a href="assets/manga-memory.png" class="manga-image-link">
-          <img src="assets/manga-memory.png" width="1536" height="1024" loading="lazy" alt="A white cat pushes together two removed black markers beside a fabric torus: “Both defects gone.” A black cat peers into the central hole: “And the stored state?” In the final panel the white cat lies flat beside the same two markers: “I took the long way.” A freestanding card beside the black cat reads “LOGICAL VALUE 0 → 1”.">
-        </a>
-        <figcaption>The two counters set aside stand for an annihilated pair. The error and repair together form a noncontractible \(X\) loop: it flips the chosen logical-\(Z\) eigenvalue. The card’s logical \(0\) and \(1\) denote eigenvalues \(+1\) and \(-1\), respectively. The fabric ring models periodic boundaries; dashes mark applied operators, not remaining excitations. The winding matters, not the distance traveled. <a href="assets/manga-memory.png">Open full-size image</a>.
-          <details><summary>Read the dialogue</summary><p>White cat: “Both defects gone.” Black cat: “And the stored state?” White cat: “I took the long way.” Card: “LOGICAL VALUE 0 → 1”.</p></details>
-        </figcaption>
-      </figure>
       <div class="example-row"><span>Compare:</span><button data-memory-example="square">A small closed loop</button><button data-memory-example="undo">Same pair: local repair</button><button data-memory-example="once">Same pair: winding repair</button><button data-memory-example="twice">Twice around the torus</button></div>
       <div class="experiment-workspace">
         <figure><svg id="memory-svg" class="demo-svg toric-svg" viewBox="0 0 720 400" role="group" aria-label="Periodic toric-code tile; select neighboring plaquettes, including opposite-edge neighbors, to apply an X edge"></svg><figcaption>Opposite borders represent the same seam. A string crossing a border continues from the matching point on the opposite border. Blue boundary segments are the chosen vertical and horizontal \(Z\) loops. Opposite copies denote the same seam, counted once. This five-by-five lattice is a finite ideal toric code.</figcaption><p id="memory-action-hint" class="observation" role="status"></p><div class="visual-actions"><button id="memory-path-prev">Undo previous edge</button><button id="memory-path-next">Apply next edge</button><button data-reset="memory">Reset</button><button id="memory-clear">Clear to reference state</button></div><p id="memory-progress"></p></figure>
@@ -234,14 +218,6 @@
       </details>
       <h2 id="braids-record-title">The fusion state can keep a record</h2>
       <p>Now let two <em>coherent</em> alternatives either do nothing or fully wind the middle pair. Both finish at the same positions, but the winding applies \(U=B_2^2=e^{-i\pi/4}X\). This is an ideal coherent-control thought experiment. The four anyons stay in the same total-vacuum sector; the alternatives may leave different states <em>within</em> that sector.</p>
-      <figure class="manga-figure">
-        <a href="assets/manga-fusion-record.png" class="manga-image-link">
-          <img src="assets/manga-fusion-record.png" width="1536" height="1024" loading="lazy" alt="A white cat considers a shared tray of four identical tokens beside a card already reading “NO FRINGE”: “Then we won’t read it.” The cat pulls one cloth over the entire tray with its teeth. The card stays unchanged. The white cat sits back, puzzled, as the black cat says, “It doesn’t need a reader.”">
-        </a>
-        <figcaption>For the \(|0\rangle\) input, the alternatives leave orthogonal collective fusion states, so output counts that do not resolve fusion show no fringe. The tray represents all four anyons. Covering it means declining to consult the record; it neither creates nor erases that record. <a href="assets/manga-fusion-record.png">Open full-size image</a>.
-          <details><summary>Read the dialogue</summary><p>Status card in every panel: “NO FRINGE”. White cat: “Then we won’t read it.” Black cat: “It doesn’t need a reader.”</p></details>
-        </figcaption>
-      </figure>
       <p>For initial fusion state \(|\chi\rangle\), a balanced recombiner that counts output 0 without resolving fusion gives</p>
       <div class="equation">\[P_0=\frac{1+\operatorname{Re}\!\left[e^{i\phi}\langle\chi|U|\chi\rangle\right]}{2}.\]</div>
       <p>Here \(\phi\) collects the other controllable relative phases. With \(|\chi\rangle=|0\rangle\), the two fusion records are orthogonal, so \(P_0=1/2\). With \(|\chi\rangle=|+\rangle\), they agree up to phase and \(P_0=[1+\cos(\phi-\pi/4)]/2\). Nobody has to inspect the record: tracing over an orthogonal record already removes the interference term. The full joint state can remain pure.</p>

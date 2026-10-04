@@ -70,6 +70,12 @@
     model = modelFor(model); vector(model, label);
     return model.inverse.map(row => row.reduce((sum, element, i) => add(sum, multiply(element, rational(label[i]))), rational(0)));
   }
+  function inverseDifference(model, left, right) {
+    // Valid labels can have a difference beyond the per-label input limit.
+    const first = inverseTimes(model, left);
+    const second = inverseTimes(model, right);
+    return first.map((entry, i) => add(entry, negate(second[i])));
+  }
   function bilinear(model, left, right) {
     model = modelFor(model); vector(model, left);
     const response = inverseTimes(model, right);
@@ -77,7 +83,7 @@
   }
   function equivalent(model, left, right) {
     model = modelFor(model); vector(model, left); vector(model, right);
-    return inverseTimes(model, left.map((entry, i) => entry - right[i])).every(entry => entry.denominator === 1);
+    return inverseDifference(model, left, right).every(entry => entry.denominator === 1);
   }
   function sectorFor(model, label) {
     model = modelFor(model); vector(model, label);
@@ -92,7 +98,7 @@
     model = modelFor(model); vector(model, left); vector(model, right);
     const label = left.map((entry, i) => entry + right[i]);
     const sector = sectorFor(model, label);
-    const removedLocal = inverseTimes(model, label.map((entry, i) => entry - sector.label[i])).map(entry => entry.numerator);
+    const removedLocal = inverseDifference(model, label, sector.label).map(entry => entry.numerator);
     return { label, sector, removedLocal };
   }
   function phase(turns) {

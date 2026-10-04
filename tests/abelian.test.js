@@ -180,6 +180,46 @@ test('Clockwise operations conjugate phases without changing charges or fusion',
   assert.deepEqual(forward.fusion, reverse.fusion);
 });
 
+test('Sector comparisons accept valid labels at both numeric bounds', () => {
+  const comparisons = [
+    ['laughlin3', [-999999], [999999], true],
+    ['laughlin3', [-1000000], [1000000], false],
+    ['laughlin2', [-1000000], [1000000], true],
+    ['toric', [-1000000, 1], [1000000, -999999], true],
+    ['doubleSemion', [-1000000, 1], [999999, -999999], false]
+  ];
+  for (const [model, left, right, expected] of comparisons) {
+    assert.equal(P.equivalent(model, left, right), expected);
+    assert.equal(P.equivalent(model, right, left), expected);
+  }
+  assert.deepEqual(P.sectorFor('laughlin3', [-1000000]).label, [2]);
+  assert.deepEqual(P.sectorFor('toric', [-1000000, 1]).label, [0, 1]);
+});
+
+test('Boundary fusion reduction preserves exact local shifts and input limits', () => {
+  const cases = [
+    ['laughlin3', [-999999], [-1], [-1000000], [2], [-333334]],
+    ['laughlin2', [-999999], [-1], [-1000000], [0], [-500000]],
+    ['toric', [-1000000, 1], [0, 0], [-1000000, 1], [0, 1], [0, -500000]],
+    ['doubleSemion', [-999999, -1000000], [-1, 0], [-1000000, -1000000], [0, 0], [-500000, 500000]]
+  ];
+  for (const [id, left, right, label, sector, local] of cases) {
+    const result = P.fuse(id, left, right);
+    assert.deepEqual(result.label, label);
+    assert.deepEqual(result.sector.label, sector);
+    assert.deepEqual(result.removedLocal, local);
+    // Reconstruct the unreduced label directly from K and the local shift.
+    const reconstructed = P.models[id].K.map((row, i) =>
+      sector[i] + row.reduce((sum, entry, j) => sum + entry * result.removedLocal[j], 0));
+    assert.deepEqual(reconstructed, label);
+  }
+  assert.throws(() => P.equivalent('laughlin3', [1000001], [0]), RangeError);
+  assert.throws(() => P.equivalent('laughlin3', [0], [-1000001]), RangeError);
+  assert.throws(() => P.sectorFor('laughlin3', [-1000001]), RangeError);
+  assert.throws(() => P.fuse('laughlin3', [1000000], [1]), RangeError);
+  assert.throws(() => P.fuse('laughlin3', [-1000000], [-1]), RangeError);
+});
+
 test('Inputs are validated and fixed model data cannot be mutated', () => {
   assert.throws(() => P.modelFor('unknown'), RangeError);
   assert.throws(() => P.spin('toric', [1]), TypeError);
