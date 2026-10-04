@@ -76,6 +76,11 @@
   // F is real, symmetric, and its own inverse in this gauge. This changes
   // coordinates between pair-12 and pair-23 fusion bases, not the state.
   function changeBasis(state) { return applyMatrix(fMatrix(), state); }
+  // Keep the two terms separate to display their interference when recoupling.
+  function basisContributions(state) {
+    validateState(state);
+    return fMatrix().map(row => row.map((coefficient, channel) => multiply(coefficient, state[channel])));
+  }
   function probabilities(state) { return normalized(state).map(absoluteSquared); }
   function fidelity(a, b) {
     const first = normalized(a), second = normalized(b);
@@ -122,6 +127,6 @@
       pair23A: probabilities(changeBasis(stateA)), pair23B: probabilities(changeBasis(stateB))
     };
   }
-  return Object.freeze({ phi, fMatrix, braidMatrix, initialState, changeBasis, applyMatrix, matrixProduct,
+  return Object.freeze({ phi, fMatrix, braidMatrix, initialState, changeBasis, basisContributions, applyMatrix, matrixProduct,
     adjoint, probabilities, fidelity, wordMatrix, applyWord, matrixDistance, exchangeStages, compareWords });
 });

@@ -37,61 +37,63 @@
   function text(x, y, value, options = '') {
     return '<text x="' + x + '" y="' + y + '" ' + options + '>' + value + '</text>';
   }
-  function treeMarkup(side, state) {
-    const probabilities = P.probabilities(state);
+  function treeMarkup(side) {
     const isLeft = side === 'L';
     const branch = isLeft ? 108 : 232;
     const root = isLeft ? 184 : 156;
     const pair = isLeft ? [52, 164] : [176, 288];
     const other = isLeft ? 288 : 52;
-    let svg = '<rect width="340" height="335" fill="white"/><g font-family="Times New Roman,serif" font-size="20" fill="#000">';
+    let svg = '<rect width="340" height="245" fill="white"/><g font-family="Times New Roman,serif" font-size="20" fill="#000">';
     svg += '<title>' + (isLeft ? 'Left-associated tree: pair 1–2' : 'Right-associated tree: pair 2–3') + '</title>';
-    svg += '<desc>Two possible intermediate charges, vacuum 1 and tau, label the basis. Displayed amplitudes and probabilities are for the same prepared physical state.</desc>';
+    svg += '<desc>Two possible intermediate charges, vacuum 1 and tau, label the basis. Each tree specifies a basis, not a sequence of measurements.</desc>';
     const xs = isLeft ? [52, 164, 288] : [52, 176, 288];
     xs.forEach((x, i) => { svg += text(x, 19, 'position ' + (i + 1), 'font-size="15" text-anchor="middle"'); svg += text(x, 45, 'τ', 'text-anchor="middle"'); });
     svg += '<g stroke="#222" stroke-width="2" fill="none"><path d="M ' + pair[0] + ' 54 L ' + branch + ' 110 L ' + pair[1] + ' 54 M ' + branch + ' 110 L ' + branch + ' 150 L ' + root + ' 197 L ' + other + ' 54 M ' + root + ' 197 L ' + root + ' 220"/></g>';
     svg += '<circle cx="' + branch + '" cy="110" r="3"/><circle cx="' + root + '" cy="197" r="3"/>';
     svg += text(branch + (isLeft ? -14 : 14), 139, (isLeft ? 'a' : 'b') + ' ∈ {1, τ}', 'font-size="18" text-anchor="' + (isLeft ? 'end' : 'start') + '"');
     svg += text(root, 242, 'total τ', 'text-anchor="middle"');
-    svg += text(10, 272, 'channel', 'font-size="16"') + text(102, 272, 'amplitude', 'font-size="16"') + text(325, 272, 'probability', 'font-size="16" text-anchor="end"');
-    ['1', 'τ'].forEach((channel, index) => {
-      const y = 297 + 27 * index;
-      svg += text(25, y, channel, 'fill="' + colors[index] + '"') + text(102, y, complex(state[index]), 'font-size="16"') + text(325, y, percent(probabilities[index]), 'font-size="16" text-anchor="end"');
-    });
     return svg + '</g>';
   }
   function initial() { return P.initialState(byId('fb-initial').value); }
   function renderBasis() {
     const left = initial(), right = P.changeBasis(left);
     math('fb-preparation', 'c_L=' + vector(left) + ',\\qquad c_R=' + vector(right));
-    byId('fb-left-tree').innerHTML = treeMarkup('L', left);
-    byId('fb-right-tree').innerHTML = treeMarkup('R', right);
+    byId('fb-left-tree').innerHTML = treeMarkup('L');
+    byId('fb-right-tree').innerHTML = treeMarkup('R');
     const leftProbability = P.probabilities(left)[0], rightProbability = P.probabilities(right)[0];
     byId('fb-basis-observation').textContent = 'The state has not changed. The chance of vacuum charge is ' + percent(leftProbability) + ' for pair 1–2 and ' + percent(rightProbability) + ' for pair 2–3. Changing basis and back recovers the input, with squared overlap ' + number(P.fidelity(left, P.changeBasis(right)), 6) + '.';
   }
-  function phasorMarkup(stage) {
+  function phasorMarkup(stage, previous) {
     const amplitudes = stage.amplitudes;
+    const recoupling = stage.operation === 'F' || stage.operation === 'F-inverse';
+    const contributions = recoupling ? P.basisContributions(previous.amplitudes) : null;
+    const exchange = stage.operation === 'R';
     let svg = '<rect width="660" height="305" fill="white"/><g font-family="Times New Roman,serif" font-size="21" fill="#000">';
-    svg += '<title>Complex amplitudes in the ' + (stage.basis === 'L' ? 'left' : 'right') + ' fusion basis</title>';
-    svg += '<desc>Real components are horizontal and imaginary components vertical. Each circle has radius one. Channel 1 amplitude ' + complex(amplitudes[0]) + '; channel tau amplitude ' + complex(amplitudes[1]) + '.</desc>';
-    svg += text(330, 26, (stage.basis === 'L' ? 'Left basis: pair 1–2' : 'Right basis: pair 2–3'), 'text-anchor="middle"');
+    svg += '<title>' + (recoupling ? 'Weighted channel amplitudes add on changing basis' : exchange ? 'Exchange rotates each channel amplitude' : 'Prepared channel amplitudes') + '</title>';
+    svg += '<desc>Real components are horizontal and imaginary components vertical. Circles have unit radius. ' + (recoupling ? 'Blue is the contribution from incoming channel 1, red from incoming channel tau, joined head to tail. The black dashed arrow is their sum.' : exchange ? 'Gray dashed arrows are before exchange; black arrows after. Their lengths stay fixed.' : 'Black arrows are the prepared amplitudes.') + '</desc>';
+    svg += text(330, 24, (stage.basis === 'L' ? 'Left basis: pair 1–2' : 'Right basis: pair 2–3'), 'text-anchor="middle"');
+    const arrow = (start, end, color, dashed = false) => {
+      const [x, y] = start, [endX, endY] = end, dx = endX - x, dy = endY - y, length = Math.hypot(dx, dy);
+      if (length < 1e-6) return '<circle cx="' + x + '" cy="' + y + '" r="3" fill="' + color + '"/>';
+      const ux = dx / length, uy = dy / length, head = Math.min(11, 0.5 * length), half = 0.4 * head;
+      const bx = endX - head * ux, by = endY - head * uy;
+      return '<path d="M ' + x + ' ' + y + ' L ' + bx + ' ' + by + '" fill="none" stroke="' + color + '" stroke-width="2"' + (dashed ? ' stroke-dasharray="5 4"' : '') + '/><path d="M ' + endX + ' ' + endY + ' L ' + (bx - half * uy) + ' ' + (by + half * ux) + ' L ' + (bx + half * uy) + ' ' + (by - half * ux) + ' Z" fill="' + color + '"/>';
+    };
     amplitudes.forEach((amplitude, index) => {
-      const x = 166 + 328 * index, y = 151, radius = 78;
-      svg += '<circle cx="' + x + '" cy="' + y + '" r="' + radius + '" fill="none" stroke="#aaa"/>';
-      svg += '<path d="M ' + (x - 91) + ' ' + y + ' H ' + (x + 91) + ' M ' + x + ' ' + (y - 91) + ' V ' + (y + 91) + '" fill="none" stroke="#bbb"/>';
-      svg += text(x + 93, y + 6, 'Re', 'font-size="17"') + text(x + 6, y - 87, 'Im', 'font-size="17"');
-      const endX = x + amplitude[0] * radius, endY = y - amplitude[1] * radius;
-      const dx = endX - x, dy = endY - y, length = Math.hypot(dx, dy);
-      if (length > 1e-6) {
-        // The triangle tip is the amplitude itself. Scale short heads so
-        // they stay between the origin and tip instead of passing behind it.
-        const ux = dx / length, uy = dy / length;
-        const head = Math.min(16, 0.6 * length), halfWidth = 0.45 * head;
-        const baseX = endX - head * ux, baseY = endY - head * uy;
-        svg += '<path d="M ' + x + ' ' + y + ' L ' + baseX + ' ' + baseY + '" fill="none" stroke="' + colors[index] + '" stroke-width="' + Math.min(2.5, head / 2) + '" stroke-linecap="butt"/>';
-        svg += '<path d="M ' + endX + ' ' + endY + ' L ' + (baseX - halfWidth * uy) + ' ' + (baseY + halfWidth * ux) + ' L ' + (baseX + halfWidth * uy) + ' ' + (baseY - halfWidth * ux) + ' Z" fill="' + colors[index] + '" stroke="none"/>';
-      } else svg += '<circle cx="' + x + '" cy="' + y + '" r="4" fill="' + colors[index] + '"/>';
-      svg += text(x, 270, 'channel ' + (index === 0 ? '1' : 'τ') + ': ' + complex(amplitude), 'font-size="20" fill="' + colors[index] + '" text-anchor="middle"');
+      const x = 164 + 332 * index, y = 153, radius = 78;
+      const point = value => [x + radius * value[0], y - radius * value[1]];
+      svg += '<circle cx="' + x + '" cy="' + y + '" r="' + radius + '" fill="none" stroke="#bbb"/>';
+      svg += '<path d="M ' + (x - 93) + ' ' + y + ' H ' + (x + 93) + ' M ' + x + ' ' + (y - 93) + ' V ' + (y + 93) + '" fill="none" stroke="#ddd"/>';
+      svg += text(x + 95, y + 6, 'Re', 'font-size="17"') + text(x + 7, y - 89, 'Im', 'font-size="17"');
+      if (exchange) svg += arrow([x, y], point(previous.amplitudes[index]), '#888', true);
+      svg += arrow([x, y], point(amplitude), '#000', recoupling);
+      if (recoupling) {
+        const first = contributions[index][0], second = contributions[index][1];
+        const sum = first.map((value, component) => value + second[component]);
+        svg += arrow([x, y], point(first), colors[0]) + arrow(point(first), point(sum), colors[1]);
+        svg += '<circle cx="' + point(sum)[0] + '" cy="' + point(sum)[1] + '" r="3" fill="#000"/>';
+      }
+      svg += text(x, 270, 'Output channel ' + (index === 0 ? '1' : 'τ'), 'font-size="20" text-anchor="middle"');
       svg += text(x, 298, 'P = ' + percent(P.probabilities(amplitudes)[index]), 'font-size="19" text-anchor="middle"');
     });
     return svg + '</g>';
@@ -107,7 +109,18 @@
     ];
     byId('fb-stage-description').textContent = descriptions[stageIndex];
     math('fb-stage-vector', (stageIndex > 1 ? "c'" : 'c') + '_{' + stage.basis + '}=' + vector(stage.amplitudes));
-    byId('fb-phase-svg').innerHTML = phasorMarkup(stage);
+    byId('fb-phase-svg').innerHTML = phasorMarkup(stage, stages[Math.max(0, stageIndex - 1)]);
+    const recoupling = stageIndex === 1 || stageIndex === 3;
+    byId('fb-phase-caption').textContent = recoupling
+      ? 'Blue and red are the weighted contributions from incoming channels 1 and τ, joined head to tail. The black dashed arrow is their sum, with a black endpoint. Opposing contributions cancel; aligned ones reinforce. Circles have unit radius.'
+      : stageIndex === 2 ? 'Gray dashed: before exchange. Black: after exchange. R rotates the two channel amplitudes by different angles without changing their lengths. Changing back will combine these newly phased contributions.'
+        : 'Black arrows are the prepared amplitudes. Circles have unit radius; squared arrow length is a channel probability. Advance to see recoupling add complex contributions.';
+    byId('fb-contribution-equation').hidden = !recoupling;
+    if (recoupling) {
+      const coefficient = (side, channel) => `c${stageIndex === 3 ? "'" : ''}_{${side},${channel}}`;
+      const incoming = stageIndex === 1 ? 'L' : 'R', outgoing = stageIndex === 1 ? 'R' : 'L';
+      math('fb-contribution-equation', String.raw`\begin{aligned}${coefficient(outgoing, '1')}&=\underbrace{\varphi^{-1}${coefficient(incoming, '1')}}_{\text{blue}}+\underbrace{\varphi^{-1/2}${coefficient(incoming, '\\tau')}}_{\text{red}}\\${coefficient(outgoing, '\\tau')}&=\underbrace{\varphi^{-1/2}${coefficient(incoming, '1')}}_{\text{blue}}+\underbrace{-\varphi^{-1}${coefficient(incoming, '\\tau')}}_{\text{red}}\end{aligned}`);
+    }
     byId('fb-previous').disabled = stageIndex === 0;
     byId('fb-next').disabled = stageIndex === 3;
     const physical = stage.basis === 'L' ? stage.amplitudes : P.changeBasis(stage.amplitudes);
@@ -151,11 +164,12 @@
   function saveSvg() {
     let body, width, height;
     if (byId('fb-export-figure').value === 'trees') {
-      width = 720; height = 415;
-      body = '<rect width="720" height="415" fill="white"/><g font-family="Times New Roman,serif" fill="#000" font-size="22">' + text(180, 28, 'Left basis: pair 1–2', 'text-anchor="middle"') + text(540, 28, 'Right basis: pair 2–3', 'text-anchor="middle"') + '</g><g transform="translate(10 45)">' + treeMarkup('L', initial()) + '</g><g transform="translate(370 45)">' + treeMarkup('R', P.changeBasis(initial())) + '</g><text x="360" y="409" text-anchor="middle" font-family="Times New Roman,serif" font-size="18">Same state; two different pair-charge measurements.</text>';
+      width = 720; height = 325;
+      body = '<rect width="720" height="325" fill="white"/><g font-family="Times New Roman,serif" fill="#000" font-size="22">' + text(180, 28, 'Left basis: pair 1–2', 'text-anchor="middle"') + text(540, 28, 'Right basis: pair 2–3', 'text-anchor="middle"') + '</g><g transform="translate(10 45)">' + treeMarkup('L') + '</g><g transform="translate(370 45)">' + treeMarkup('R') + '</g><text x="360" y="319" text-anchor="middle" font-family="Times New Roman,serif" font-size="18">Same state; two different pair-charge measurements.</text>';
     } else {
       width = 660; height = 305;
-      body = phasorMarkup(P.exchangeStages(initial(), Number(byId('fb-direction').value))[Number(byId('fb-stage').value)]);
+      const stages = P.exchangeStages(initial(), Number(byId('fb-direction').value)), index = Number(byId('fb-stage').value);
+      body = phasorMarkup(stages[index], stages[Math.max(0, index - 1)]);
     }
     const svg = '<?xml version="1.0" encoding="UTF-8"?>\n<svg xmlns="http://www.w3.org/2000/svg" width="' + width + '" height="' + height + '" viewBox="0 0 ' + width + ' ' + height + '">' + body + '</svg>';
     prepareDownload(svg, 'image/svg+xml;charset=utf-8', 'fibonacci-' + byId('fb-export-figure').value + '.svg');

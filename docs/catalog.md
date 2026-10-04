@@ -2,22 +2,7 @@
 
 There is more to anyons than unusual exchange signs. Start with any of the experiments below, then follow the question that bothers you. The nine directions distinguish what you can already try from the next calculation; each gives a model, something to observe, and a pitfall worth catching.
 
-## In the playground
-
-| Model | Try this | What it establishes |
-| --- | --- | --- |
-| [Exchange and winding](../experiments.html#exchange) | Compare exchange with full winding; deform the separated-particle paths. | A full winding accumulates twice the exchange angle; smooth deformation preserves winding. |
-| [Ideal interferometer](../experiments.html#interference) | Add the two output amplitudes, then reduce visibility and inspect the density matrix. | Coherence controls whether a relative statistical phase appears in output probabilities. |
-| [Pair correlations](../experiments.html#correlations) | Hold the exchange angle fixed and vary the packet separation. | The excess mean squared guiding-center separation can change sign in the specified preparation. |
-| [Ising braid order](../experiments.html#braids) | Reverse two exchanges and switch the $X$, $Y$, and $Z$ measurement bases. | Noncommuting braids can produce states whose difference one measurement misses. |
-| [Fibonacci fusion paths](../experiments.html#fusion) | Fix the total charge, enumerate paths, and add another anyon. | Allowed basis states follow a Fibonacci recurrence; counts are not probabilities. |
-| [Toric-code strings and loops](../experiments.html#toric) | Create and move an $m$ pair with a string, then compare $e$ loops. | Open strings have excitation endpoints; an enclosed $m$ gives an $e$ loop a minus sign. |
-| [Berry phase](../berry.html) | Change the local eigenvector phases, then refine the sampled loop. | A closed overlap product removes gauge choices; geometry still matters. |
-| [Fibonacci basis changes](../fusion-basis.html) | Change the pair with definite fusion charge; compare braid words. | Channel-dependent exchange phases become non-diagonal matrices in another fusion basis. |
-| [Abelian theories](../abelian.html) | Compare toric code with double semion; attach a local particle. | Fusion rules alone do not determine statistics; electron attachment can change an exchange sign. |
-| [Toric memory](../experiments.html#memory) | Close a string after taking it around a periodic direction. | Endpoints can disappear while a nontrivial logical operation remains. |
-
-The [references](references.md) identify the models' scientific sources. “Fusion” means combining anyons and asking which collective particle type, or *topological charge*, remains. A diagram of paths describes an operation; it does not by itself measure the resulting phase.
+The [contents](../index.html) give the implemented experiments and their reading order. Here the question is what calculation could follow each one; nothing below is implied to be implemented unless marked explicitly.
 
 ## Nine directions
 
@@ -35,7 +20,7 @@ Vary two curvatures of a quadratic potential using the cited preprint's two-anyo
 
 ### 4. Why do experimental interference stripes jump?
 
-Give the ideal interferometer two controls: magnetic flux and enclosed-particle count, and plot a synthetic fringe map. The charge sets the electromagnetic phase response; statistics sets the contribution from winding around quasiparticles. Watch continuous stripes acquire jumps, then compare with the reported $2\pi/3$ slips at filling $1/3$. **Easy** for an illustration; advanced for fitting a device, where electrostatics and edge motion also shift fringes—fractional charge alone does not measure statistics. [Nakamura et al., 2020](https://arxiv.org/abs/2006.14115) provides experimental evidence, distinct from the bulk-packet theory above.
+Give the ideal interferometer two controls: magnetic flux and enclosed-particle count, and plot a synthetic fringe map. The charge sets the electromagnetic phase response; statistics sets the contribution from winding around quasiparticles. Watch continuous stripes acquire jumps, then compare with the reported $2\pi/3$ slips at filling $1/3$. **Intermediate** for separating the two phase contributions; advanced for fitting a device, where electrostatics and edge motion also shift fringes—fractional charge alone does not measure statistics. [Nakamura et al., 2020](https://arxiv.org/abs/2006.14115) provides experimental evidence, distinct from the bulk-packet theory above.
 
 A **proposed non-Abelian extension** asks a different question: can the fusion space remember which route was taken? If the routes leave normalized states $|u_a\rangle$ and $|u_b\rangle$, tracing over that unmeasured space weights the interference cross term by $\langle u_b|u_a\rangle$. Orthogonal records erase the fringe even when the joint state remains pure. Start with a two-dimensional fusion space before modeling repeated probes; [Bonderson, Shtengel, and Slingerland](https://arxiv.org/abs/0707.4206) develop the measurement theory.
 
@@ -45,7 +30,7 @@ Model an extended collider with several scattering routes and compare single-sou
 
 ### 6. Do the bends in a path matter?
 
-**Implemented starting point:** deform the two separated-particle paths while keeping their exchange or winding fixed, and inspect the unchanged statistical factor. The [Berry experiment](../berry.html) now supplies the geometric counterexample: a spin loop whose phase changes with its solid angle. A further model would accept a freehand closed loop around a pinned anyon and calculate both winding and enclosed area. Compare the unchanged statistical contribution with an area-dependent magnetic-flux phase; their sum need not remain fixed under deformation. **Easy**, with collision rejection essential: a path through the anyon leaves the assumed separated-particle model. [Arovas, Schrieffer & Wilczek, 1984](https://doi.org/10.1103/PhysRevLett.53.722).
+**Implemented starting point:** deform the two separated-particle paths while keeping their exchange or winding fixed, and inspect the unchanged statistical factor. The [Berry experiment](../berry.html) now supplies the geometric counterexample: a spin loop whose phase changes with its solid angle. A further model would accept a freehand closed loop around a pinned anyon and calculate both winding and enclosed area. Compare the unchanged statistical contribution with an area-dependent magnetic-flux phase; their sum need not remain fixed under deformation. **Intermediate**, with collision rejection essential: a path through the anyon leaves the assumed separated-particle model. [Arovas, Schrieffer & Wilczek, 1984](https://doi.org/10.1103/PhysRevLett.53.722).
 
 ### 7. Can a short braid approximate a chosen quantum gate?
 
@@ -68,5 +53,3 @@ Larger simulations benefit from established numerical tools. These repositories 
 | [QuTiP](https://github.com/qutip/qutip) | Finite-basis Hamiltonian evolution and open-system dynamics for packet experiments. | General quantum-dynamics library, not a ready-made anyon model. The anyon basis and Hamiltonian must still be supplied. [BSD-3-Clause](https://github.com/qutip/qutip/blob/master/LICENSE.txt). |
 | [qecsim](https://github.com/qecsim/qecsim) | Toric-code errors, measurements, and decoding. | Includes a [toric-code model and matching decoder](https://qecsim.github.io/api/models/toric.html). An appropriate starting point for extension 8. [BSD-3-Clause](https://github.com/qecsim/qecsim/blob/master/LICENSE). |
 | [Stim](https://github.com/quantumlib/Stim) | Larger stabilizer-circuit experiments and error-correction sampling. | Efficient for the restricted circuit operations used in stabilizer codes; it does not simulate arbitrary Fibonacci gates. [Apache-2.0](https://github.com/quantumlib/Stim/blob/main/LICENSE). |
-
-An original implementation keeps these small demos easy to inspect; use a package for larger calculations and fork it when the package itself needs changes. Any upstream code used retains its own copyright and license requirements, as specified in the linked licenses.

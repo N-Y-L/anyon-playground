@@ -84,40 +84,58 @@
     const model = P.models[state.model];
     return P.inspect(model, model.sectors[state.probe].label, model.sectors[state.target].label, state.n, state.direction);
   }
-  function fusionSvg(model, data) {
-    const svg = $('abelian-fusion-svg');
-    const probe = model.sectors[state.probe], target = model.sectors[state.target];
-    const heading = `${model.name}: ${probe.name} × ${target.name} = ${data.fusion.sector.name}`;
-    const subtitle = model.localFermions ? 'Sector fusion modulo local electrons' : '';
-    const reduction = `${vectorText(data.fusion.label)} = ${vectorText(data.fusion.sector.label)} + K ${vectorText(data.fusion.removedLocal)}`;
-    svg.setAttribute('aria-label', `${heading}. ${subtitle ? subtitle + '. ' : ''}Integer labels ${vectorText(data.shiftedLabel)} plus ${vectorText(data.target)} give ${vectorText(data.fusion.label)}. Remove local K n with n ${vectorText(data.fusion.removedLocal)}.`);
-    svg.innerHTML = `<title>${escapeXml(heading)}</title><desc>${escapeXml(reduction)}. Coordinates are label bookkeeping, not particle positions.</desc><rect width="660" height="245" fill="white"/>
-      <defs><marker id="abelian-fusion-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#555"/></marker></defs>
-      ${text(330, 27, heading, 23)}
-      ${subtitle ? text(330, 50, subtitle, 18, '#555') : ''}
-      <path d="M 170 83 L 327 125 M 170 166 L 327 125 L 418 125" fill="none" stroke="#777" stroke-width="1.5" marker-end="url(#abelian-fusion-arrow)"/>
-      ${text(105, 78, probe.name, 25, '#145b91')}${text(105, 105, vectorText(data.shiftedLabel), 23, '#145b91')}
-      ${text(105, 163, target.name, 25, '#a33b2b')}${text(105, 190, vectorText(data.target), 23, '#a33b2b')}
-      ${text(510, 116, data.fusion.sector.name, 28)}${text(510, 146, vectorText(data.fusion.label), 23)}
-      ${text(330, 225, reduction, 22)}`;
+  function comparisonRows(model, data) {
+    const originalExchange = P.phase(P.multiply(data.originalSpin.turns, P.rational(state.direction)));
+    return [
+      { label: 'Integer label', tex: [vectorTex(data.representative), vectorTex(data.shiftedLabel)], plain: [vectorText(data.representative), vectorText(data.shiftedLabel)] },
+      { label: 'Charge q/e', tex: [fractionTex(data.originalCharge), fractionTex(data.charge)], plain: [P.format(data.originalCharge), P.format(data.charge)] },
+      { label: 'Identical-probe exchange', tex: [phaseTex(originalExchange), phaseTex(data.exchange)], plain: [phaseText(originalExchange), phaseText(data.exchange)] },
+      { label: `Winding around ${model.sectors[state.target].name}`, tex: [phaseTex(data.originalMutual), phaseTex(data.mutual)], plain: [phaseText(data.originalMutual), phaseText(data.mutual)] }
+    ];
   }
-  function phaseSvg(model, data) {
-    const svg = $('abelian-phase-svg');
-    const heading = `${model.name} · ${state.direction === 1 ? 'counterclockwise' : 'clockwise'}`;
-    const description = `${model.name}. Probe ${vectorText(data.shiftedLabel)}, target ${vectorText(data.target)}. Exchange ${phaseText(data.exchange)}; full winding ${phaseText(data.mutual)}.`;
-    svg.setAttribute('aria-label', description);
-    const circle = (center, phase, label, color, arrowId) => {
-      const x = center + 70 * phase.complex[0], y = 167 - 70 * phase.complex[1];
-      return `${text(center, 60, label, 23)}<circle cx="${center}" cy="167" r="70" fill="none" stroke="#777"/>
-        <path d="M ${center - 70} 167 H ${center + 70} M ${center} 97 V 237" stroke="#ddd" fill="none"/>
-        ${text(center + 89, 174, '+1', 19)}${text(center - 88, 174, '−1', 19)}${text(center, 91, 'i', 19)}${text(center, 258, '−i', 19)}
-        <line x1="${center}" y1="167" x2="${x}" y2="${y}" stroke="${color}" stroke-width="2.5" marker-end="url(#${arrowId})"/>
-        <circle cx="${x}" cy="${y}" r="4" fill="${color}"/>
-        ${text(center, 298, phaseText(phase), 24, color)}`;
-    };
-    svg.innerHTML = `<title>${escapeXml(description)}</title><desc>Complex unit circles. Horizontal axis is real; vertical axis is imaginary. Arrows are final multipliers, not particle paths.</desc><rect width="660" height="320" fill="white"/>
-      <defs><marker id="abelian-spin-arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#145b91"/></marker><marker id="abelian-mutual-arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#a33b2b"/></marker></defs>
-      ${text(330, 20, heading, 19, '#555')}${circle(160, data.exchange, `Exchange ${vectorText(data.shiftedLabel)}`, '#145b91', 'abelian-spin-arrow')}${circle(495, data.mutual, `Winding around ${vectorText(data.target)}`, '#a33b2b', 'abelian-mutual-arrow')}`;
+  function comparisonTable(model, data) {
+    const table = $('abelian-comparison-table'), attached = state.n.some(component => component !== 0);
+    table.caption.textContent = `${model.name}: probe sector ${data.sector.name}, ${state.direction === 1 ? 'counterclockwise' : 'clockwise'}`;
+    const header = document.createElement('tr');
+    ['Quantity', attached ? 'Listed representative' : 'Selected representative', ...(attached ? ['After attachment'] : [])].forEach(label => {
+      const cell = document.createElement('th'); cell.scope = 'col'; cell.textContent = label; header.append(cell);
+    });
+    table.tHead.replaceChildren(header);
+    table.tBodies[0].replaceChildren(...comparisonRows(model, data).map(item => {
+      const row = document.createElement('tr'), title = document.createElement('th'); title.scope = 'row'; title.textContent = item.label; row.append(title);
+      item.tex.slice(0, attached ? 2 : 1).forEach(source => {
+        const cell = document.createElement('td'); window.katex.render(source, cell, mathOptions); row.append(cell);
+      });
+      return row;
+    }));
+    math('abelian-fusion-equation', `${vectorTex(data.shiftedLabel)}+${vectorTex(data.target)}=${vectorTex(data.fusion.label)}=${vectorTex(data.fusion.sector.label)}+K${vectorTex(data.fusion.removedLocal)}`, true);
+  }
+  function tableSvg(model, data, kind) {
+    const summary = kind === 'summary', width = 760, height = summary ? 355 : 155 + model.sectorCount * 53;
+    let body = `<title>${escapeXml(model.name)}: ${summary ? 'local attachment comparison' : 'full-winding matrix'}</title><rect width="${width}" height="${height}" fill="white"/>` +
+      text(380, 28, `${model.name} · ${state.direction === 1 ? 'counterclockwise' : 'clockwise'}`, 23);
+    if (summary) {
+      body += text(440, 74, 'Listed representative', 20) + text(645, 74, 'After attachment', 20);
+      comparisonRows(model, data).forEach((row, index) => {
+        const y = 119 + index * 47;
+        body += text(24, y, row.label, 20, '#000', 'start') + text(440, y, row.plain[0], 21) + text(645, y, row.plain[1], 21);
+      });
+      body += text(380, 320, `Both labels belong to sector ${data.sector.name}; target ${vectorText(data.target)}.`, 20);
+    } else {
+      const x = index => 230 + index * 130;
+      body += text(28, 81, 'Probe / target', 20, '#000', 'start');
+      model.sectors.forEach((target, col) => { body += text(x(col), 81, target.name, 23); });
+      model.sectors.forEach((probe, row) => {
+        const y = 129 + row * 53;
+        body += text(88, y, probe.name, 23);
+        model.sectors.forEach((target, col) => {
+          const phase = P.phase(P.multiply(P.mutual(model, probe.label, target.label).turns, P.rational(state.direction)));
+          body += text(x(col), y, phaseText(phase), 21);
+        });
+      });
+      body += text(380, height - 16, 'All local attachments leave this matrix unchanged.', 19);
+    }
+    return `<?xml version="1.0" encoding="UTF-8"?>\n<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">${body}</svg>`;
   }
   function windingTable(model) {
     const table = $('abelian-mutual-table');
@@ -132,7 +150,7 @@
       model.sectors.forEach((target, j) => {
         const cell = document.createElement('td'), button = document.createElement('button');
         const phase = P.phase(P.multiply(P.mutual(model, probe.label, target.label).turns, P.rational(state.direction)));
-        button.textContent = phaseText(phase);
+        window.katex.render(phaseTex(phase), button, mathOptions);
         button.dataset.probe = String(i); button.dataset.target = String(j);
         button.setAttribute('aria-label', `${probe.name} around ${target.name}: ${phaseText(phase)}. Select these particles.`);
         button.setAttribute('aria-pressed', String(i === state.probe && j === state.target));
@@ -146,13 +164,9 @@
   }
   function render() {
     const model = P.models[state.model], data = result();
-    fusionSvg(model, data); phaseSvg(model, data); windingTable(model);
+    comparisonTable(model, data); windingTable(model);
     math('abelian-matrix', `K=${matrixTex(model.K)},\\quad K^{-1}=${matrixTex(model.inverse)},\\quad t=${vectorTex(model.t)},\\quad |\\det K|=${model.sectorCount},\\quad \\nu=${fractionTex(data.hall)}.`, true);
     $('abelian-model-note').textContent = modelNotes[state.model];
-    $('abelian-sector-readout').textContent = `Probe ${vectorText(data.shiftedLabel)} stays in sector ${data.sector.name}`;
-    math('abelian-exchange-readout', `U_{\\rm exchange}=${phaseTex(data.exchange)}`);
-    math('abelian-mutual-readout', `U_{\\rm winding}=${phaseTex(data.mutual)}`);
-    math('abelian-charge-readout', `q/e=${fractionTex(data.charge)}`);
     const changed = state.n.some(component => component !== 0);
     const chargeChange = P.add(data.charge, P.negate(data.originalCharge));
     const spinRatio = P.phase(P.add(data.spin.turns, P.negate(data.originalSpin.turns)));
@@ -197,12 +211,8 @@
     $('abelian-announcement').textContent = `${filename} prepared. Its download link remains below the export controls.`;
   }
   $('abelian-export-svg').addEventListener('click', () => {
-    const svg = $($('abelian-export-figure').value).cloneNode(true);
-    const dimensions = svg.getAttribute('viewBox').split(' ').map(Number);
-    svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
-    svg.setAttribute('width', String(dimensions[2])); svg.setAttribute('height', String(dimensions[3]));
-    svg.removeAttribute('class');
-    save(`<?xml version="1.0" encoding="UTF-8"?>\n${new XMLSerializer().serializeToString(svg)}`, 'image/svg+xml;charset=utf-8', `${state.model}-${svg.id}.svg`);
+    const kind = $('abelian-export-figure').value;
+    save(tableSvg(P.models[state.model], result(), kind), 'image/svg+xml;charset=utf-8', `${state.model}-${kind}.svg`);
   });
   $('abelian-export-json').addEventListener('click', () => {
     const model = P.models[state.model];

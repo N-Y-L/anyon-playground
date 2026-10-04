@@ -9,14 +9,14 @@
   <link rel="stylesheet" href="styles.css">
   <script defer src="vendor/katex/katex.min.js"></script>
   <script defer src="vendor/katex/auto-render.min.js"></script>
-  <script defer src="berry-physics.js"></script>
-  <script defer src="berry.js"></script>
+  <script defer src="berry-physics.js?v=0.5.0"></script>
+  <script defer src="berry.js?v=0.5.0"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to the note</a>
-  <nav aria-label="Note navigation"><a href="index.html">Contents</a> · <a href="experiments.html#exchange">Exchange</a> · <a href="berry.html" aria-current="page">Berry phase</a> · <a href="fusion-basis.html">Fusion bases</a> · <a href="abelian.html">Abelian data</a></nav>
+  <nav aria-label="Note navigation"><a href="index.html">Contents</a> · <a href="experiments.html#exchange">Exchange</a> · <a href="experiments.html#interference">Interference</a> · <a href="berry.html" aria-current="page">Berry phase</a> · <a href="experiments.html#toric">Toric code</a> · <a href="experiments.html#memory">Memory</a> · <a href="abelian.html">Abelian theories</a> · <a href="experiments.html#fusion">Fusion paths</a> · <a href="fusion-basis.html">Fusion bases</a> · <a href="experiments.html#braids">Ising braids</a> · <a href="experiments.html#correlations">Correlations</a></nav>
   <main id="main" tabindex="-1">
-    <h1>8. Calculate a geometric phase</h1>
+    <h1>Calculate a geometric phase</h1>
     <p>An eigensolver gives you a state vector, but its overall phase is arbitrary. Run it again at a nearby field direction and the phase may be different. How can these unreliable arrows reveal a reliable Berry phase? Close the loop: every arbitrary phase then has a partner that cancels it.</p>
     <p>Start with one spin, not an anyon. Its Hamiltonian is \(H=-(\Delta/2)\boldsymbol n\cdot\boldsymbol\sigma\), with \(\Delta&gt;0\) the energy gap and \(\boldsymbol\sigma\) the Pauli matrices. The ground spin points along the unit vector \(\boldsymbol n\). Turn that direction around a latitude of polar angle \(\beta\):</p>
     <div class="equation">\[\boldsymbol n=(\sin\beta\cos\phi,\sin\beta\sin\phi,\cos\beta),\qquad |u\rangle=\begin{pmatrix}\cos(\beta/2)\\e^{i\phi}\sin(\beta/2)\end{pmatrix}.\]</div>
@@ -28,8 +28,8 @@
         <figure><svg id="berry-sphere-svg" class="demo-svg" viewBox="0 0 660 360" role="img" aria-label="Sampled spin directions on a projected Bloch sphere"></svg>
           <figcaption>Thin gray: smooth latitude. Blue: sampled directions joined by the shorter great-circle arcs. Dashed portions lie on the far hemisphere. The arrow follows the circuit direction. The black open point marks its start; the blue open points mark the selected link’s endpoints.</figcaption>
         </figure>
-        <figure><svg id="berry-phase-svg" class="demo-svg" viewBox="0 0 660 255" role="img" aria-label="Geometric phase factors for the smooth latitude and sampled loop"></svg>
-          <figcaption>Black solid arrow: exact smooth-loop factor. Blue dashed arrow and open endpoint: sampled factor. Coinciding arrows mean agreement modulo \(2\pi\).</figcaption>
+        <figure><svg id="berry-phase-svg" class="demo-svg" viewBox="0 0 660 280" role="img" aria-label="Berry-phase discretization error as the sampling mesh is refined"></svg>
+          <figcaption>Refine the <em>same</em> latitude: circles use the current phase choices; crosses use g = 0. They coincide because rephasing cannot change the loop factor. The dashed guide falls as \(N^{-2}\), normalized to the first error. The open circle marks the selected N.</figcaption>
         </figure>
       </div>
       <div class="controls-card">
@@ -68,10 +68,10 @@
     <h2>What this teaches us about anyons</h2>
     <p>These loops on the sphere can all be contracted, yet changing their area changes the phase. <em>Geometric</em> does not mean <em>topological</em>. An anyon calculation must identify the appropriate low-energy states and distinguish the transport that depends on their braid from other contributions.</p>
     <p>In a degenerate multiplet, adiabatic transport can mix states through a matrix, as in <a href="https://doi.org/10.1103/PhysRevLett.52.2111">Wilczek and Zee’s construction</a>. Such mixing alone does not establish anyons. A gap to unwanted states and a small splitting within a fusion space are different energy scales; checking transport times also requires the path and transition matrix elements. The <a href="docs/notes.html">connected notes</a> discuss these conditions.</p>
-    <p class="next-note">A phase becomes visible only against a reference: return to the <a href="experiments.html#interference">interferometer</a>. To calculate matrices in a shared anyon state space, try <a href="fusion-basis.html">changing fusion bases</a>.</p>
+    <p class="next-note">A geometric phase need not be topological. <a href="experiments.html#toric">Next: derive an anyonic winding phase directly from a spin Hamiltonian.</a></p>
   </main>
   <footer class="page-footer">
-    <div class="export-controls"><label for="berry-export-figure">Vector figure</label><select id="berry-export-figure"><option value="berry-sphere-svg">Spin directions</option><option value="berry-phase-svg">Phase factors</option><option value="berry-links-svg">Individual overlap phases</option></select><button id="berry-export-svg">Save SVG</button><button id="berry-export-json">Save parameters and results</button></div>
+    <div class="export-controls"><label for="berry-export-figure">Vector figure</label><select id="berry-export-figure"><option value="berry-sphere-svg">Spin directions</option><option value="berry-phase-svg">Mesh convergence</option><option value="berry-links-svg">Individual overlap phases</option></select><button id="berry-export-svg">Save SVG</button><button id="berry-export-json">Save parameters and results</button></div>
     <p id="berry-export-ready" hidden>Prepared file: <a id="berry-download" href="#">Download</a></p>
     <p><a href="berry-physics.js">Calculation source</a> · <a href="tests/berry.test.js">Checks</a> · <a href="docs/references.html">Sources</a> · <a href="index.html">Contents</a></p>
     <p><small>Copyright (c) 2026 Neil Yuanting Li. <a href="LICENSE">MIT license</a>.</small></p>

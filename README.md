@@ -18,23 +18,16 @@ Cloning the repository works too. The downloaded demos need no installation,
 account, internet connection, or build step; research links need internet.
 Equations use a locally bundled copy of KaTeX.
 
-Start with the first two experiments. Before changing a control, guess what
-will happen; the example buttons set up useful surprises. Short prediction
-questions have expandable explanations, so you can check the mechanism after
-trying it. Then explore:
+The [contents](https://N-Y-L.github.io/anyon-playground/) arrange the notes by the calculation you want to understand. Follow each row from left to right on a first reading:
 
-| Experiment | What to look for |
-|---|---|
-| Exchange and winding | Deform a collision-free path, change orientation, or compare two exchanges with an exchange followed by its inverse. |
-| Interference | Connect the fringe to complex amplitudes and a density matrix; distinguish a phase shift from loss of coherence. |
-| Ising braids | Inspect final kets, compare Pauli components, and change measurement basis to reveal a hidden state difference. |
-| Fibonacci fusion | Browse explicit basis paths in a fixed total-charge sector and recover the state-count recurrence. |
-| Toric-code strings | Apply shared-edge Pauli operators to create, move, and annihilate pairs; derive the loop phase from plaquette eigenvalues. |
-| Pair correlations | Keep fractional statistics fixed and vary packet separation in a lowest-Landau-level preparation; compare with distinguishable particles. |
-| Topological memory | Watch the excitation energy as a pair separates and annihilates; compare a local loop with one that changes logical loop eigenvalues. |
-| Berry phase | Change the eigenvector gauge, refine a sampled loop, and recover a phase that depends on geometry. |
-| Fibonacci fusion bases | Recouple three anyons, apply channel phases, and check how the braid relation constrains the resulting matrices. |
-| Abelian theories | Compare toric-code and double-semion statistics; attach local particles and separate electric charge from topological charge. |
+| Purpose | Reading order | What the comparison reveals |
+|---|---|---|
+| Identify and measure a phase | Exchange → Interference → Berry phase | Winding, relative phase, coherence, and gauge-invariant numerical transport are different questions. |
+| Build and classify an anyon phase | Toric strings → Topological memory → Abelian theories | Microscopic string algebra leads to mutual statistics and nonlocal information; fusion rules alone do not identify a theory. |
+| Act on collective states | Fusion paths → Fusion bases → Ising braids | Count a space, construct its operations, then choose a measurement that detects the result. |
+| Follow a quantum Hall calculation | Pair correlations | The same statistical rule can give opposite correlation signs when preparation changes. |
+
+The figures show comparisons that the controls let you test. Derivations and exact readouts carry the simpler arithmetic.
 
 Each note introduces its symbols, gives worked example settings, and explains
 what its readout measures. Controls have a reset; mathematical derivations and

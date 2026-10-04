@@ -24,7 +24,7 @@
   };
   const copy = value => JSON.parse(JSON.stringify(value));
   const state = copy(defaults);
-  const views = ['exchange', 'interference', 'braids', 'fusion', 'toric', 'correlations', 'memory'];
+  const views = ['exchange', 'interference', 'toric', 'memory', 'fusion', 'braids', 'correlations'];
   let active = 'exchange';
   let animationFrame = null;
   let animationView = null;
@@ -124,17 +124,16 @@
   }
 
   function exchangeDiagram() {
-    const config = state.exchange, result = exchangeResult();
-    const center = { x: 249, y: 192 }, rx = 155, ry = 103;
-    // Positive radius and antipodal angles keep the particles separated.
+    const config = state.exchange;
+    const center = { x: 178, y: 151 }, radius = 100;
+    // A positive radial deformation preserves the polar angle and prevents
+    // collisions. Both particles remain antipodal about a fixed center.
     function point(angle) {
-      const radius = 1 + 0.20 * config.deformation * Math.sin(2 * angle);
-      return { x: center.x + rx * radius * Math.cos(angle), y: center.y - ry * radius * Math.sin(angle) };
+      const distance = radius * (1 + 0.20 * config.deformation * Math.sin(2 * angle));
+      return { x: center.x + distance * Math.cos(angle), y: center.y - distance * Math.sin(angle) };
     }
-    function rotation(progress) {
-      const turns = config.exchanges === 0 ? 2 * Math.min(progress, 1 - progress) : config.exchanges * progress;
-      return config.direction * Math.PI * turns;
-    }
+    const turns = progress => config.exchanges === 0 ? 2 * Math.min(progress, 1 - progress) : config.exchanges * progress;
+    const rotation = progress => config.direction * Math.PI * turns(progress);
     function trajectory(start) {
       return Array.from({ length: 121 }, (_, index) => {
         const position = point(start + rotation(exchangeProgress * index / 120));
@@ -145,11 +144,12 @@
       const position = point(2 * Math.PI * index / 120);
       return `${index ? 'L' : 'M'}${position.x.toFixed(2)},${position.y.toFixed(2)}`;
     }).join(' ');
-    let svg = svgFrame('Separated anyons follow deformable exchange paths; the statistical phase depends only on the completed braid');
-    svg += `<defs><marker id="phase-arrow" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="${colors.teal}"/></marker></defs>`;
-    svg += text(249, 34, config.exchanges === 0 ? 'Exchange, then retrace the motion' : `${config.direction === 1 ? 'Counterclockwise' : 'Clockwise'} motion`, 'text-anchor="middle" font-size="14"');
+    let svg = '<title>Exchange geometry and continuous relative-angle history; a full winding and an inverse pair have different net rotations</title><rect width="720" height="320" fill="white"/>';
+    svg += '<defs><marker id="phase-arrow" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="#145b91"/></marker></defs>';
+    svg += text(178, 24, config.exchanges === 0 ? 'Exchange, then retrace' : `${config.direction === 1 ? 'Counterclockwise' : 'Clockwise'} exchange`, 'text-anchor="middle" font-size="14"');
     svg += `<path d="${outline}" fill="none" stroke="${colors.grid}" stroke-width="1.5" stroke-dasharray="5 6"/>`;
-    svg += line(230, 192, 268, 192, 'stroke-dasharray="3 5"') + line(249, 173, 249, 211, 'stroke-dasharray="3 5"');
+    const first = point(Math.PI + rotation(exchangeProgress)), second = point(rotation(exchangeProgress));
+    svg += line(second.x, second.y, first.x, first.y, `stroke="${colors.faint}" stroke-width="1" stroke-dasharray="3 4"`);
     for (const [start, color, label] of [[Math.PI, colors.teal, '1'], [0, colors.coral, '2']]) {
       if (exchangeProgress > 0) svg += `<path d="${trajectory(start)}" fill="none" stroke="${color}" stroke-width="2.5"/>`;
       const initial = point(start), current = point(start + rotation(exchangeProgress));
@@ -160,17 +160,26 @@
     const direction = config.exchanges === 0 && exchangeProgress > 0.5 ? -config.direction : config.direction;
     const arrowStart = point(-0.5), arrowEnd = point(-0.5 + direction * 0.17);
     svg += `<path d="M${arrowStart.x},${arrowStart.y} L${arrowEnd.x},${arrowEnd.y}" fill="none" stroke="${colors.teal}" stroke-width="1.8" marker-end="url(#phase-arrow)"/>`;
-    svg += line(467, 55, 467, 322);
-    svg += text(584, 70, 'Final statistical multiplier', 'text-anchor="middle" font-size="13"');
-    svg += circle(584, 190, 61, `fill="none" stroke="${colors.grid}"`);
-    svg += line(507, 190, 661, 190) + line(584, 113, 584, 267);
-    svg += text(663, 194, 'Re', 'font-size="12"') + text(591, 119, 'Im', 'font-size="12"');
-    const end = { x: 584 + 61 * result.phase[0], y: 190 - 61 * result.phase[1] };
-    svg += `<path d="M584,190 L${end.x},${end.y}" fill="none" stroke="${colors.teal}" stroke-width="2" marker-end="url(#phase-arrow)"/>`;
-    svg += circle(end.x, end.y, 4, `fill="${colors.teal}"`);
-    svg += text(584, 300, complexLabel(result.phase), 'text-anchor="middle" font-family="Georgia, serif" font-size="20"');
-    svg += text(249, 355, 'Planar paths; dashed circles mark starting positions', 'text-anchor="middle" font-size="12"');
-    svg += text(584, 355, 'Unit circle in the complex plane', 'text-anchor="middle" font-size="11"');
+    svg += line(346, 34, 346, 277);
+    const plot = { left: 412, right: 687, top: 56, bottom: 246 };
+    const x = progress => plot.left + progress * (plot.right - plot.left);
+    const y = anglePi => (plot.top + plot.bottom) / 2 - anglePi / 4 * (plot.bottom - plot.top);
+    svg += text(548, 24, 'Continuous angle change / π', 'text-anchor="middle" font-size="14"');
+    for (const tick of [-2, -1, 0, 1, 2]) {
+      svg += line(plot.left, y(tick), plot.right, y(tick));
+      svg += text(plot.left - 12, y(tick) + 4, tick, 'text-anchor="end" font-size="12"');
+    }
+    for (const tick of [0, 0.5, 1]) svg += text(x(tick), 267, tick, 'text-anchor="middle" font-size="12"');
+    svg += `<path d="M${x(0)},${y(0)} L${x(1)},${y(2 * config.direction)}" fill="none" stroke="#888888" stroke-width="1.7" stroke-dasharray="5 5"/>`;
+    svg += `<path d="M${x(0)},${y(0)} L${x(0.5)},${y(config.direction)} L${x(1)},${y(0)}" fill="none" stroke="#888888" stroke-width="1.7" stroke-dasharray="2 4"/>`;
+    const anglePath = Array.from({ length: 121 }, (_, index) => {
+      const progress = index / 120;
+      return `${index ? 'L' : 'M'}${x(progress)},${y(rotation(progress) / Math.PI)}`;
+    }).join(' ');
+    svg += `<path d="${anglePath}" fill="none" stroke="${colors.teal}" stroke-width="2.8"/>`;
+    svg += circle(x(exchangeProgress), y(rotation(exchangeProgress) / Math.PI), 5, `fill="${colors.coral}" stroke="white" stroke-width="1.5"`);
+    svg += text(178, 297, 'Colors identify paths of identical particles', 'text-anchor="middle" font-size="12"');
+    svg += text(549, 297, 'Fraction of the illustrated motion', 'text-anchor="middle" font-size="12"');
     $('exchange-svg').innerHTML = svg;
     setControl('exchange-scrub', exchangeProgress);
   }
@@ -188,7 +197,7 @@
     $('exchange-operation-label').textContent = operation;
     $('exchange-play').textContent = config.exchanges === 0 ? 'Run exchange and inverse' : config.exchanges === 1 ? 'Run exchange' : 'Run winding';
     setMath('exchange-phase', complexLabel(result.phase).replaceAll('−', '-'));
-    setText('exchange-angle', String.raw`\(k=${config.exchanges * config.direction}\); accumulated angle \(${piTex(result.angle / Math.PI)}\).`);
+    setText('exchange-angle', String.raw`\(k=${config.exchanges * config.direction}\); statistical phase angle \(k\theta=${piTex(result.angle / Math.PI)}\).`);
     if (config.exchanges === 0) setText('exchange-notice', String.raw`An exchange followed by its inverse has \(k=0\), so \(e^{i\theta}e^{-i\theta}=1\) for every exchange angle. This is different from two exchanges in the same direction.`);
     else if (config.thetaPi === 0.5) setText('exchange-notice', String.raw`For a semion, one counterclockwise exchange gives \(i\); a clockwise exchange gives \(-i\). A full winding in either direction gives \(-1\). Deforming the paths leaves these values unchanged.`);
     else if (config.thetaPi === 1) setText('exchange-notice', String.raw`A fermion gives \(-1\) for one exchange and \(+1\) for two. A full winding therefore hides the distinction between this fermionic rule and the bosonic rule; a single exchange distinguishes them.`);
@@ -198,40 +207,6 @@
 
   function interferenceResult(config = state.interference, referencePi = config.referencePi) {
     return physics.interference({ theta: config.thetaPi * Math.PI, enclosed: config.enclosed, winding: config.winding, referencePhase: referencePi * Math.PI, visibility: config.visibility });
-  }
-
-  function complexTex(value) {
-    const [real, imaginary] = value.map(cleanNumber);
-    if (Math.abs(imaginary) < 1e-9) return texNumber(real, 3);
-    const imaginaryPart = Math.abs(Math.abs(imaginary) - 1) < 1e-9 ? 'i' : `${texNumber(Math.abs(imaginary), 3)}i`;
-    if (Math.abs(real) < 1e-9) return (imaginary < 0 ? '-' : '') + imaginaryPart;
-    return `${texNumber(real, 3)}${imaginary < 0 ? '-' : '+'}${imaginaryPart}`;
-  }
-
-  function renderInterferenceState(result) {
-    const coherent = result.coherentOutputAmplitudes !== null;
-    $('interference-coherent-figure').hidden = !coherent;
-    $('interference-mixed-explanation').hidden = coherent;
-    const rho = result.pathDensityMatrix;
-    setMath('interference-density', String.raw`\rho\approx\begin{pmatrix}${complexTex(rho[0][0])}&${complexTex(rho[0][1])}\\${complexTex(rho[1][0])}&${complexTex(rho[1][1])}\end{pmatrix},\qquad\operatorname{Tr}\rho=1.`);
-    if (!coherent) return;
-    let svg = '<title>Complex amplitude addition for the two output ports in the fully coherent case</title><rect width="720" height="240" fill="white"/>';
-    svg += '<defs><marker id="phasor-fixed" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="black"/></marker><marker id="phasor-moving" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="#145b91"/></marker><marker id="phasor-sum" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="#a33b2b"/></marker></defs>';
-    result.coherentOutputAmplitudes.forEach((amplitude, port) => {
-      const x = 175 + port * 360, y = 119, scale = 77;
-      const end = { x: x + scale * amplitude[0], y: y - scale * amplitude[1] };
-      svg += circle(x, y, scale, 'fill="none" stroke="#dddddd"');
-      svg += line(x - 93, y, x + 99, y) + line(x, y - 91, x, y + 91);
-      svg += text(x + 98, y - 5, 'Re', 'font-size="11"') + text(x + 9, y - 73, 'Im', 'font-size="11"');
-      svg += text(x, 21, `Output ${port}`, 'text-anchor="middle" font-size="14"');
-      svg += `<path d="M${x},${y} L${x + scale / 2},${y}" stroke="black" stroke-width="2" fill="none" marker-end="url(#phasor-fixed)"/>`;
-      svg += `<path d="M${x + scale / 2},${y} L${end.x},${end.y}" stroke="${colors.teal}" stroke-width="2" fill="none" marker-end="url(#phasor-moving)"/>`;
-      if (Math.hypot(...amplitude) > 1e-8) svg += `<path d="M${x},${y} L${end.x},${end.y}" stroke="${colors.coral}" stroke-width="2" stroke-dasharray="4 4" fill="none" marker-end="url(#phasor-sum)"/>`;
-      svg += circle(end.x, end.y, 3.5, `fill="${colors.coral}"`);
-      svg += text(x, 228, `Squared length = ${percent(port === 0 ? result.p0 : result.p1)}`, 'text-anchor="middle" font-size="13"');
-    });
-    $('interference-phasors').innerHTML = svg;
-    setMath('interference-amplitudes', String.raw`A_0\approx ${complexTex(result.coherentOutputAmplitudes[0])},\qquad A_1\approx ${complexTex(result.coherentOutputAmplitudes[1])}.`);
   }
 
   function renderInterference() {
@@ -271,8 +246,6 @@
     svg += line(pointX, chart.top - 6, pointX, chart.bottom + 6, `stroke="${colors.coral}" opacity="0.65" stroke-dasharray="3 4"`);
     svg += circle(pointX, pointY, 7, `fill="${colors.teal}" stroke="${colors.paper}" stroke-width="2.5"`);
     $('interference-svg').innerHTML = svg;
-    renderInterferenceState(result);
-    if (active === 'interference') syncExportChoices();
     if (config.visibility === 0) $('interference-notice').textContent = 'At zero visibility the curve is flat: every reference phase gives 50%. The model still assigns a statistical phase, but this readout cannot reveal it.';
     else if (config.enclosed === 0) $('interference-notice').textContent = 'With no enclosed anyons, the statistical contribution is zero. The two curves coincide; varying the reference phase still produces interference.';
     else if (Math.abs(Math.cos(result.statisticalPhase) - 1) < 1e-8) setText('interference-notice', String.raw`The statistical phase is a whole multiple of \(2\pi\), so these fringes coincide. A nonzero accumulated angle can have exactly the same phase multiplier as zero.`);
@@ -526,33 +499,9 @@
     $('fusion-vacuum').textContent = result.vacuum.toLocaleString('en-US');
     $('fusion-tau').textContent = result.tau.toLocaleString('en-US');
     $('fusion-add').disabled = n >= 16;
-    const chart = { left: 76, right: 682, top: 50, bottom: 294 };
-    const maxValue = Math.max(2, result.tau);
-    // A shared linear scale makes the two final-charge sectors comparable.
-    const roughStep = maxValue / 4;
-    const magnitude = Math.pow(10, Math.floor(Math.log10(roughStep)));
-    const tickStep = Math.max(1, [1, 2, 5, 10].find(step => step * magnitude >= roughStep) * magnitude);
-    const yMax = Math.ceil(maxValue / tickStep) * tickStep;
-    const y = count => chart.bottom - count / yMax * (chart.bottom - chart.top);
-    let svg = svgFrame(`Fusion space dimensions for one through ${n} Fibonacci anyons`);
-    for (let tick = 0; tick <= yMax + tickStep / 2; tick += tickStep) {
-      svg += line(chart.left, y(tick), chart.right, y(tick));
-      svg += text(chart.left - 13, y(tick) + 4, tick.toLocaleString('en-US'), 'text-anchor="end" font-size="11"');
-    }
-    const groupWidth = (chart.right - chart.left) / n;
-    const barWidth = Math.min(23, groupWidth * 0.29);
-    for (let count = 1; count <= n; count++) {
-      const values = physics.fibonacciCounts(count);
-      const center = chart.left + (count - 0.5) * groupWidth;
-      for (const [value, shift, color, sector] of [[values.vacuum, -barWidth - 1.5, colors.coral, '1'], [values.tau, 1.5, colors.teal, 'τ']]) {
-        svg += `<rect x="${center + shift}" y="${y(value)}" width="${barWidth}" height="${chart.bottom - y(value)}" rx="1.5" fill="${color}" opacity="${count === n ? 1 : 0.58}"><title>${count} anyons, total charge ${sector}: ${value} fusion states</title></rect>`;
-      }
-      svg += text(center, chart.bottom + 24, count, `text-anchor="middle" font-size="11" ${count === n ? 'fill="#243b3d" font-weight="700"' : ''}`);
-    }
-    svg += text(22, 174, 'Fusion-space dimension', 'text-anchor="middle" transform="rotate(-90 22 174)" font-size="12"');
-    svg += text(378, 352, 'Number of τ anyons, n', 'text-anchor="middle" font-size="12"');
-    svg += text(679, 27, 'Linear scale; separate total-charge sectors', 'text-anchor="end" font-size="9" letter-spacing="1"');
-    $('fusion-svg').innerHTML = svg;
+    const next = physics.fibonacciCounts(n + 1)[state.fusion.charge];
+    const charge = state.fusion.charge === 'vacuum' ? '1' : String.raw`\tau`;
+    setMath('fusion-growth', String.raw`\frac{\dim V_{${n + 1}}^{${charge}}}{\dim V_{${n}}^{${charge}}}=\frac{${next}}{${result.sectorDimension}}\approx ${texNumber(next / result.sectorDimension, 6)},\qquad d_\tau\approx1.618034.`);
     renderFusionPath(result);
     const chargeTex = state.fusion.charge === 'vacuum' ? '1' : String.raw`\tau`;
     setText('fusion-notice', String.raw`For \(n=${n}\) anyons with fixed total charge \(${chargeTex}\), the fusion space has ${result.sectorDimension.toLocaleString('en-US')} independent basis states. The highlighted path labels one of these states; it is not a trajectory or a sequence of measured fusion outcomes. Each \(c_k\) is the cumulative charge after adding \(k\) anyons.`);
@@ -565,15 +514,21 @@
     return { left: lattice.x + size.left * lattice.cell, right: lattice.x + size.right * lattice.cell, top: lattice.y + size.top * lattice.cell, bottom: lattice.y + size.bottom * lattice.cell };
   }
 
+  function toricEncloses(key) {
+    const bounds = toricBounds(), [column, row] = key.split(',').map(Number);
+    const x = lattice.x + (column + 0.5) * lattice.cell;
+    const y = lattice.y + (row + 0.5) * lattice.cell;
+    return x > bounds.left && x < bounds.right && y > bounds.top && y < bounds.bottom;
+  }
+
   function toricResults() {
-    const bounds = toricBounds();
-    const polygon = [{ x: bounds.left, y: bounds.top }, { x: bounds.right, y: bounds.top }, { x: bounds.right, y: bounds.bottom }, { x: bounds.left, y: bounds.bottom }];
-    const inside = state.toric.defects.filter(key => {
-      const [column, row] = key.split(',').map(Number);
-      const point = { x: lattice.x + (column + 0.5) * lattice.cell, y: lattice.y + (row + 0.5) * lattice.cell };
-      return physics.windingNumber(point, polygon) !== 0;
-    }).length;
-    return { inside, outside: state.toric.defects.length - inside, ...physics.toricPhase(inside, state.toric.windings), stringConvention: 'Each listed dual edge applies X on the shared lattice edge; m occupations are the reference occupations toggled by string endpoints.' };
+    const config = state.toric;
+    const inside = config.defects.filter(toricEncloses).length;
+    const initialInside = config.baselineDefects.filter(toricEncloses).length;
+    const stringCrossings = config.edges.filter(([from, to]) => toricEncloses(from) !== toricEncloses(to)).length;
+    return { inside, outside: config.defects.length - inside, initialInside, stringCrossings,
+      ...physics.toricPhase(inside, config.windings),
+      stringConvention: 'Each listed dual edge applies X on the shared lattice edge. String crossings count shared-edge intersections with one Z loop; initialInside is the reference m count. Enclosed parity = (initialInside + stringCrossings) modulo two.' };
   }
 
   function loopPoint(bounds, progress) {
@@ -619,6 +574,12 @@
     }
     for (let row = 0; row <= lattice.rows; row++) for (let column = 0; column <= lattice.columns; column++) svg += circle(lattice.x + column * lattice.cell, lattice.y + row * lattice.cell, 2, 'fill="#888888" pointer-events="none"');
     svg += `<rect x="${bounds.left}" y="${bounds.top}" width="${bounds.right - bounds.left}" height="${bounds.bottom - bounds.top}" fill="none" stroke="${colors.teal}" stroke-width="3" pointer-events="none"/>`;
+    for (const [from, to] of config.edges) {
+      if (toricEncloses(from) !== toricEncloses(to)) {
+        const a = center(from), b = center(to);
+        svg += circle((a.x + b.x) / 2, (a.y + b.y) / 2, 5, 'fill="white" stroke="black" stroke-width="1.6" pointer-events="none"');
+      }
+    }
     const arrowX = (bounds.left + bounds.right) / 2;
     svg += `<path d="M${arrowX + 5},${bounds.top - 4} L${arrowX - 3},${bounds.top} L${arrowX + 5},${bounds.top + 4}" fill="none" stroke="${colors.teal}" stroke-width="2" pointer-events="none"/>`;
     const particle = loopPoint(bounds, toricProgress * config.windings);
@@ -641,6 +602,7 @@
     $('toric-outside').textContent = result.outside;
     setMath('toric-phase', result.sign === -1 ? '-1' : '+1');
     setText('toric-parity', String.raw`\((-1)^{${result.inside}\times${config.windings}}=${result.sign}\)`);
+    setMath('toric-crossings', String.raw`N_m\equiv N_m^{(0)}+C=${result.initialInside}+${result.stringCrossings}\pmod2.`);
     if (config.mode === 'pairs') {
       const oddReference = config.baselineDefects.length % 2 === 1;
       $('toric-mode-note').textContent = 'Select a square and an adjacent square. Their occupations both flip; selecting the same edge twice undoes it. Strings record changes from the reference configuration.' + (oddReference ? ' This reference configuration has an odd displayed count; a partner is assumed outside the patch.' : '');
@@ -727,24 +689,31 @@
     let last = 0;
     result.weights.forEach((entry, index) => { if (entry.probability >= 1e-4) last = index; });
     const shown = result.weights.slice(0, last + 1);
-    const plot = { left: 74, right: 684, top: 29, bottom: 215 };
+    const plot = { left: 74, right: 684, top: 48, bottom: 215 };
+    const maximum = Math.max(3, shown.at(-1).angularMomentum + 1);
+    const x = angularMomentum => plot.left + (angularMomentum + 0.5) / (maximum + 0.5) * (plot.right - plot.left);
     const y = probability => plot.bottom - probability * (plot.bottom - plot.top);
-    const step = (plot.right - plot.left) / shown.length, barWidth = Math.min(43, step * 0.62);
-    let svg = '<title>Probabilities of relative angular momentum states in the selected normalized LLL packet</title><rect width="720" height="280" fill="white"/>';
+    const barWidth = Math.min(40, 0.55 * (plot.right - plot.left) / (maximum + 0.5));
+    let svg = '<title>Angular-momentum probabilities; the difference between the two marked means is the correlation shift chi</title><rect width="720" height="280" fill="white"/>';
     for (const tick of [0, 0.25, 0.5, 0.75, 1]) {
       svg += line(plot.left, y(tick), plot.right, y(tick));
       svg += text(plot.left - 12, y(tick) + 4, number(tick, tick === 0 || tick === 1 ? 0 : 2), 'text-anchor="end" font-size="12"');
     }
-    shown.forEach((entry, index) => {
-      const center = plot.left + (index + 0.5) * step;
-      svg += `<rect x="${center - barWidth / 2}" y="${y(entry.probability)}" width="${barWidth}" height="${plot.bottom - y(entry.probability)}" fill="${colors.teal}"><title>k=${entry.k}; L/hbar=${entry.angularMomentum}; probability=${entry.probability}</title></rect>`;
-      svg += text(center, plot.bottom + 23, entry.k, 'text-anchor="middle" font-size="12"');
+    shown.forEach(entry => {
+      const center = x(entry.angularMomentum);
+      svg += `<rect x="${center - barWidth / 2}" y="${y(entry.probability)}" width="${barWidth}" height="${plot.bottom - y(entry.probability)}" fill="${colors.teal}" opacity="0.7"><title>k=${entry.k}; L/hbar=${entry.angularMomentum}; probability=${entry.probability}</title></rect>`;
+      svg += text(center, plot.bottom + 23, number(entry.angularMomentum, Number.isInteger(entry.angularMomentum) ? 0 : 2), 'text-anchor="middle" font-size="11"');
     });
-    svg += text(24, 123, 'Probability p(k)', 'text-anchor="middle" transform="rotate(-90 24 123)" font-size="13"');
-    svg += text(379, 266, 'Angular-momentum index k', 'text-anchor="middle" font-size="13"');
+    svg += line(x(result.u), plot.top, x(result.u), plot.bottom, 'stroke="#333333" stroke-width="1.8" stroke-dasharray="5 4"');
+    svg += line(x(result.meanAngularMomentum), plot.top, x(result.meanAngularMomentum), plot.bottom, `stroke="${colors.coral}" stroke-width="2"`);
+    svg += line(94, 24, 116, 24, `stroke="${colors.coral}" stroke-width="2"`) + text(123, 28, 'Anyon mean', 'font-size="12"');
+    svg += line(362, 24, 384, 24, 'stroke="#333333" stroke-width="1.8" stroke-dasharray="5 4"') + text(391, 28, 'Distinguishable mean u', 'font-size="12"');
+    svg += text(24, 132, 'Probability p(k)', 'text-anchor="middle" transform="rotate(-90 24 132)" font-size="13"');
+    svg += text(379, 267, 'Relative angular momentum L / ℏ = 2k + α', 'text-anchor="middle" font-size="13"');
     $('correlations-weights-svg').innerHTML = svg;
-    setText('correlations-weights-caption', result.separation === 0 ? String.raw`The formal normalized limit has \(p_0=1\).` : String.raw`The plot ends after the last weight of at least \(10^{-4}\). Smaller tail weights are retained in the calculation of the mean.`);
-    setMath('correlations-angular-momentum', String.raw`\frac{\langle L\rangle}{\hbar}=${texNumber(result.meanAngularMomentum, 5)},\qquad u=${texNumber(result.u, 5)},\qquad \chi=${correlationTex(result.chi)}.`);
+    const direction = Math.abs(result.chi) < 1e-12 ? 'coincides with' : result.chi < 0 ? 'lies to the left of' : 'lies to the right of';
+    setText('correlations-weights-caption', String.raw`The anyon mean ${direction} the distinguishable mean: their signed difference is \(\chi\). The full numerical sum gives both means; the bars end after the last probability of at least \(10^{-4}\).`);
+    setMath('correlations-angular-momentum', String.raw`\frac{\langle L\rangle_\alpha}{\hbar}=${texNumber(result.meanAngularMomentum, 5)},\qquad\frac{\langle L\rangle_{\mathrm d}}{\hbar}=u=${texNumber(result.u, 5)},\qquad\chi=${correlationTex(result.chi)}.`);
   }
 
   function memoryPlan() {
@@ -754,7 +723,7 @@
       square: ['1,1', '2,1', '2,2', '1,2', '1,1'],
       once: cycle,
       twice: cycle.concat(cycle.slice(1)),
-      undo: [`1,${middle}`, `2,${middle}`, `1,${middle}`]
+      undo: [`0,${middle}`, `1,${middle}`, `0,${middle}`]
     };
     return plans[state.memory.example] || null;
   }
@@ -787,7 +756,7 @@
     }
     $('memory-path-prev').disabled = !plan || config.step === 0;
     $('memory-path-next').disabled = !plan || config.step >= plan.length - 1;
-    const exampleNames = { square: 'Small closed loop', once: 'Once around the torus', twice: 'Twice around the torus', undo: 'Move out and back' };
+    const exampleNames = { square: 'Small closed loop', once: 'Winding repair', twice: 'Twice around the torus', undo: 'Local repair' };
     $('memory-progress').textContent = plan ? `${exampleNames[config.example]}: ${config.step} of ${plan.length - 1} edge operations applied.${config.step < plan.length - 1 ? ` Next: (${plan[config.step]}) to (${plan[config.step + 1]}).` : ' Example complete.'}` : 'Custom string. Select neighboring squares, or load another worked example.';
     $('memory-action-hint').textContent = config.anchor === null ? 'Select two neighboring squares to apply an edge. Opposite borders are also neighbors.' : `Square (${config.anchor}) selected. Choose a neighbor; click the same square to cancel.`;
     if (!result.closed) $('memory-notice').textContent = 'The string has endpoints, so local checks still detect excitations. Continue the worked path: the revealing comparison comes after the endpoints meet and annihilate.';
@@ -832,6 +801,8 @@
       svg += text(board.x + (index + 0.5) * board.cell, 24, index, 'text-anchor="middle" font-size="12"');
       svg += text(board.x - 27, board.y + (index + 0.5) * board.cell + 4, index, 'text-anchor="middle" font-size="12"');
     }
+    svg += line(board.x, board.y, board.x, bottom, `stroke="${colors.teal}" stroke-width="2.5" pointer-events="none"`);
+    svg += line(board.x, board.y, right, board.y, `stroke="${colors.teal}" stroke-width="2.5" pointer-events="none"`);
     svg += text(100, 183, 'Left continues', 'text-anchor="middle" font-size="13"') + text(100, 204, 'at right', 'text-anchor="middle" font-size="13"');
     svg += text(613, 183, 'Right continues', 'text-anchor="middle" font-size="13"') + text(613, 204, 'at left', 'text-anchor="middle" font-size="13"');
     svg += text(360, 383, 'Top and bottom borders are also identified', 'text-anchor="middle" font-size="13"');
@@ -847,17 +818,17 @@
   function announce(message) { $('status-message').textContent = message; }
 
   const figureChoices = {
-    exchange: [['exchange-svg', 'Exchange paths and phase']],
-    interference: [['interference-svg', 'Interference fringe'], ['interference-phasors', 'Coherent amplitude addition']],
+    exchange: [['exchange-svg', 'Exchange paths and relative-angle history']],
+    interference: [['interference-svg', 'Interference fringe']],
     braids: [['braids-svg', 'Braid sequences'], ['braids-bloch-svg', 'Encoded Pauli expectations']],
-    fusion: [['fusion-svg', 'Fusion-space dimensions'], ['fusion-path-svg', 'Selected fusion basis path']],
+    fusion: [['fusion-path-svg', 'Selected fusion basis path']],
     toric: [['toric-svg', 'Strings and loop on the lattice']],
     correlations: [['correlations-svg', 'LLL pair correlation'], ['correlations-weights-svg', 'Angular-momentum weights']],
     memory: [['memory-svg', 'Periodic toric-code string']]
   };
   function syncExportChoices() {
     const selector = $('export-figure'), selected = selector.value;
-    const options = figureChoices[active].filter(([id]) => id !== 'interference-phasors' || state.interference.visibility === 1);
+    const options = figureChoices[active];
     const signature = options.map(([id]) => id).join(',');
     if (selector.dataset.options === signature) return;
     selector.replaceChildren();
@@ -880,7 +851,7 @@
     document.title = `${$(`${active}-title`).textContent} — Anyons`;
     render();
     syncExportChoices();
-    announce(`Note ${views.indexOf(active) + 1}: ${$(`${active}-title`).textContent}`);
+    announce($(`${active}-title`).textContent);
     // Route names are not element IDs. Move readers to the new note instead
     // of leaving a "Next" link's old scroll position inside the new content.
     if (event && hash !== 'main') {
@@ -1068,7 +1039,13 @@
     state.correlations = copy(correlationExamples[button.dataset.correlationsExample]); renderCorrelations();
   }));
   document.querySelectorAll('[data-memory-example]').forEach(button => button.addEventListener('click', () => {
-    state.memory = { ...copy(defaults.memory), example: button.dataset.memoryExample }; renderMemory();
+    state.memory = { ...copy(defaults.memory), example: button.dataset.memoryExample };
+    if (['once', 'undo'].includes(state.memory.example)) {
+      const plan = memoryPlan();
+      state.memory.edges = physics.memoryStringStep([], plan[0], plan[1], state.memory.size).edges;
+      state.memory.step = 1;
+    }
+    renderMemory();
   }));
   function stepMemory(forward) {
     const plan = memoryPlan(), config = state.memory;

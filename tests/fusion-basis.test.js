@@ -122,6 +122,28 @@ test('exchange stepper separates passive coordinates from physical evolution', (
   }
 });
 
+test('recoupling contributions cancel before exchange and interfere differently after it', () => {
+  for (const name of ['vacuum', 'tau', 'plus', 'plusY']) for (const direction of [1, -1]) {
+    const steps = P.exchangeStages(P.initialState(name), direction);
+    for (const stage of [0, 2]) {
+      const input = steps[stage].amplitudes, before = JSON.stringify(input);
+      const terms = P.basisContributions(input);
+      const sum = terms.map(row => row[0].map((component, index) => component + row[1][index]));
+      near(sum, steps[stage + 1].amplitudes);
+      assert.equal(JSON.stringify(input), before);
+    }
+  }
+  const right = P.changeBasis(P.initialState('vacuum'));
+  const noExchange = P.basisContributions(right)[1];
+  near(noExchange[0], [phi ** (-1.5), 0]);
+  near(noExchange[1], [-(phi ** (-1.5)), 0]);
+  const exchanged = P.exchangeStages(P.initialState('vacuum'))[2].amplitudes;
+  const terms = P.basisContributions(exchanged)[1];
+  const output = terms[0].map((component, index) => component + terms[1][index]);
+  near(output[0] ** 2 + output[1] ** 2, 1 / phi);
+  assert.throws(() => P.basisContributions([[0, 0], [0, 0]]));
+});
+
 test('readouts are normalized and global-phase insensitive, including extreme finite scales', () => {
   const first = [[3, 0], [0, 4]], phased = [[0, 3], [-4, 0]];
   near(P.probabilities(first), [9 / 25, 16 / 25]);

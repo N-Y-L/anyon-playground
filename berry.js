@@ -78,23 +78,42 @@
       label(start.x + 15, start.y + 24, 'n(0)', 20, '#000', 'start') +
       label(330, 347, `β = ${state.betaDegrees}°; N = ${state.samples}; ${state.direction === 1 ? 'counterclockwise' : 'clockwise'} from +z`, 19);
   }
+  function convergenceData() {
+    return [8, 16, 32, 64, 128, 256].map(samples => {
+      const options = { beta: data.beta, direction: state.direction, samples };
+      return { samples, error: Math.abs(P.latitude({ ...options, gaugeStrength: state.gaugeStrength }).signedError),
+        baseError: Math.abs(P.latitude(options).signedError) };
+    });
+  }
   function phaseSvg() {
-    const svg = $('berry-phase-svg'), cx = 145, cy = 128, radius = 76;
-    const description = `Exact phase ${piText(data.exactPhase)}, sampled ${piText(data.sampledPhase)}, circular error ${Math.abs(data.signedError).toPrecision(4)} radians.`;
+    const svg = $('berry-phase-svg'), rows = convergenceData();
+    const floor = 1e-12, atPrecision = rows.every(row => row.error < floor && row.baseError < floor);
+    const description = atPrecision ? 'Every mesh agrees with the exact latitude phase to within 10^-12 radians.'
+      : 'Absolute circular error versus sample count on logarithmic axes. Local phase choices do not change the error; mesh refinement does.';
     svg.setAttribute('aria-label', description);
-    const vector = (value, color, dashed, id) => {
-      const x = cx + radius * value[0], y = cy - radius * value[1];
-      return `<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="${color}" stroke-width="${dashed ? 2 : 3.5}" ${dashed ? 'stroke-dasharray="5 4"' : ''} marker-end="url(#${id})"/><circle cx="${x}" cy="${y}" r="${dashed ? 6 : 3}" fill="${dashed ? 'white' : color}" stroke="${color}" stroke-width="1.5"/>`;
-    };
-    svg.innerHTML = startSvg(description, 255) + `<defs>${marker('berry-exact-arrow', '#000')}${marker('berry-sample-arrow', BLUE)}</defs>` +
-      `<circle cx="${cx}" cy="${cy}" r="${radius}" fill="none" stroke="#999"/><path d="M55 128H238M145 40V217" stroke="#ddd" fill="none"/>` +
-      label(253, 135, 'Re', 19) + label(145, 32, 'Im', 19) + label(232, 115, '+1', 18) + label(57, 115, '−1', 18) +
-      vector(data.exactPhasor, '#000', false, 'berry-exact-arrow') + vector(data.sampledPhasor, BLUE, true, 'berry-sample-arrow') +
-      label(310, 76, `Exact: ${piText(data.exactPhase)}`, 22, '#000', 'start') +
-      label(310, 111, `Sampled: ${piText(data.sampledPhase)}`, 22, BLUE, 'start') +
-      label(310, 154, `|error| = ${Math.abs(data.signedError).toExponential(2)} rad`, 21, '#000', 'start') +
-      label(310, 189, `Ω = ${rounded(data.solidAngle / Math.PI, 4)}π sr`, 20, '#555', 'start') +
-      label(330, 243, 'These arrows are phase factors, not spin directions.', 19);
+    if (atPrecision) {
+      svg.innerHTML = startSvg(description, 280) + label(330, 55, 'Refinement check: N = 8, 16, 32, 64, 128, 256', 21) +
+        label(330, 120, 'All errors are below 10⁻¹² rad.', 24, BLUE) +
+        label(330, 164, 'This latitude is exact at every displayed mesh size.', 20) +
+        label(330, 211, 'Choose a non-equatorial latitude to see convergence.', 20, '#555');
+      return;
+    }
+    const maximum = Math.max(...rows.map(row => Math.max(row.error, row.baseError)));
+    const minimum = Math.max(floor, Math.min(...rows.map(row => Math.min(row.error, row.baseError))));
+    const top = Math.ceil(Math.log10(maximum)), bottom = Math.floor(Math.log10(minimum));
+    const x = samples => 95 + 510 * Math.log2(samples / 8) / 5;
+    const y = error => 215 - 158 * (Math.log10(Math.max(floor, error)) - bottom) / (top - bottom);
+    let axes = '';
+    for (let exponent = bottom; exponent <= top; exponent++) axes +=
+      `<line x1="95" x2="605" y1="${y(10 ** exponent)}" y2="${y(10 ** exponent)}" stroke="#e5e5e5"/>` +
+      label(81, y(10 ** exponent) + 6, `1e${exponent}`, 18, '#555', 'end');
+    rows.forEach(row => { axes += label(x(row.samples), 239, row.samples, 18); });
+    const path = rows.map((row, j) => `${j ? 'L' : 'M'}${x(row.samples)},${y(row.error)}`).join('');
+    const guide = rows.map((row, j) => `${j ? 'L' : 'M'}${x(row.samples)},${y(rows[0].error * (8 / row.samples) ** 2)}`).join('');
+    svg.innerHTML = startSvg(description, 280) + label(330, 23, 'Circular error (rad): refinement, not rephasing', 21) + axes +
+      `<path d="M95 49V215H605" fill="none" stroke="#999"/><path d="${guide}" fill="none" stroke="#777" stroke-dasharray="5 4"/><path d="${path}" fill="none" stroke="${BLUE}"/>` +
+      rows.map(row => `<path d="M${x(row.samples) - 4} ${y(row.baseError) - 4}l8 8m0 -8l-8 8" stroke="#000"/><circle cx="${x(row.samples)}" cy="${y(row.error)}" r="${row.samples === state.samples ? 7 : 3}" fill="white" stroke="${BLUE}" stroke-width="2"/>`).join('') +
+      label(350, 270, 'Sample count N (each step doubles N)', 19);
   }
   function linksSvg() {
     const svg = $('berry-links-svg'), x = j => 65 + 535 * j / (state.samples - 1), y = phase => 143 - 96 * phase / Math.PI;
@@ -158,7 +177,7 @@
     conventions: { Hamiltonian: 'H = -Delta n.sigma/2, Delta > 0', positiveDirection: 'Increasing azimuth, counterclockwise from +z',
       overlap: '<u_(j+1)|u_j> / |<u_(j+1)|u_j>|; closing state is the initial stored state', phase: 'arg of the cyclic link product, modulo 2 pi',
       gauge: 'alpha_j = g[sin(2 pi j/N) + 0.37 cos(4 pi j/N)]', error: 'arg(exp(i sampledPhase) exp(-i exactPhase)); geometric discretization error',
-      scope: 'Geometric phase only; no time evolution, dynamical phase, anyons, or adiabatic leakage is simulated.' }, results: data,
+      scope: 'Geometric phase only; no time evolution, dynamical phase, anyons, or adiabatic leakage is simulated.' }, results: data, convergence: convergenceData(),
     sources: ['https://doi.org/10.1098/rspa.1984.0023', 'https://arxiv.org/abs/cond-mat/0503172'] }, null, 2) + '\n', 'application/json;charset=utf-8', 'berry-latitude.json'));
   window.addEventListener('pagehide', () => { if (downloadUrl) URL.revokeObjectURL(downloadUrl); });
   window.renderMathInElement(document.body, { throwOnError: true, trust: false, strict: 'error',
