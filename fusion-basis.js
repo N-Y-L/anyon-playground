@@ -75,15 +75,22 @@
     svg += '<title>Complex amplitudes in the ' + (stage.basis === 'L' ? 'left' : 'right') + ' fusion basis</title>';
     svg += '<desc>Real components are horizontal and imaginary components vertical. Each circle has radius one. Channel 1 amplitude ' + complex(amplitudes[0]) + '; channel tau amplitude ' + complex(amplitudes[1]) + '.</desc>';
     svg += text(330, 26, (stage.basis === 'L' ? 'Left basis: pair 1–2' : 'Right basis: pair 2–3'), 'text-anchor="middle"');
-    svg += '<defs>' + colors.map((color, index) => '<marker id="fb-arrow-' + index + '" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto" markerUnits="strokeWidth"><path d="M 0 0 L 7 3.5 L 0 7 Z" fill="' + color + '"/></marker>').join('') + '</defs>';
     amplitudes.forEach((amplitude, index) => {
       const x = 166 + 328 * index, y = 151, radius = 78;
       svg += '<circle cx="' + x + '" cy="' + y + '" r="' + radius + '" fill="none" stroke="#aaa"/>';
       svg += '<path d="M ' + (x - 91) + ' ' + y + ' H ' + (x + 91) + ' M ' + x + ' ' + (y - 91) + ' V ' + (y + 91) + '" fill="none" stroke="#bbb"/>';
       svg += text(x + 93, y + 6, 'Re', 'font-size="17"') + text(x + 6, y - 87, 'Im', 'font-size="17"');
       const endX = x + amplitude[0] * radius, endY = y - amplitude[1] * radius;
-      if (Math.hypot(...amplitude) > 1e-8) svg += '<path d="M ' + x + ' ' + y + ' L ' + endX + ' ' + endY + '" fill="none" stroke="' + colors[index] + '" stroke-width="2.5" marker-end="url(#fb-arrow-' + index + ')"/>';
-      else svg += '<circle cx="' + x + '" cy="' + y + '" r="4" fill="' + colors[index] + '"/>';
+      const dx = endX - x, dy = endY - y, length = Math.hypot(dx, dy);
+      if (length > 1e-6) {
+        // The triangle tip is the amplitude itself. Scale short heads so
+        // they stay between the origin and tip instead of passing behind it.
+        const ux = dx / length, uy = dy / length;
+        const head = Math.min(16, 0.6 * length), halfWidth = 0.45 * head;
+        const baseX = endX - head * ux, baseY = endY - head * uy;
+        svg += '<path d="M ' + x + ' ' + y + ' L ' + baseX + ' ' + baseY + '" fill="none" stroke="' + colors[index] + '" stroke-width="' + Math.min(2.5, head / 2) + '" stroke-linecap="butt"/>';
+        svg += '<path d="M ' + endX + ' ' + endY + ' L ' + (baseX - halfWidth * uy) + ' ' + (baseY + halfWidth * ux) + ' L ' + (baseX + halfWidth * uy) + ' ' + (baseY - halfWidth * ux) + ' Z" fill="' + colors[index] + '" stroke="none"/>';
+      } else svg += '<circle cx="' + x + '" cy="' + y + '" r="4" fill="' + colors[index] + '"/>';
       svg += text(x, 270, 'channel ' + (index === 0 ? '1' : 'τ') + ': ' + complex(amplitude), 'font-size="20" fill="' + colors[index] + '" text-anchor="middle"');
       svg += text(x, 298, 'P = ' + percent(P.probabilities(amplitudes)[index]), 'font-size="19" text-anchor="middle"');
     });

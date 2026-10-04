@@ -2,10 +2,48 @@
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
+const vm = require('node:vm');
 const P = require('../abelian-physics.js');
 const r = P.rational;
 const samePhase = (actual, expected) => assert.deepEqual(actual.reducedTurns, r(...expected));
 function close(actual, expected) { assert.ok(Math.abs(actual - expected) < 1e-12, `${actual} != ${expected}`); }
+
+test('Displayed phase formulas have imaginary exponents and agree with every selectable phase', () => {
+  // Exercise the actual UI formatter without requiring a browser or copying
+  // its implementation. Parsing the emitted formula checks its mathematical
+  // meaning: valid TeX alone does not imply a correct complex phase.
+  const controller = fs.readFileSync(path.join(__dirname, '../abelian.js'), 'utf8');
+  const start = controller.indexOf('  function phaseTex(phase) {');
+  const end = controller.indexOf('  function phaseText(phase) {', start);
+  assert.ok(start >= 0 && end > start, 'The phase formatter must be present.');
+  const formatPhase = vm.runInNewContext(`(${controller.slice(start, end)})`, { P });
+  assert.equal(formatPhase(P.phase(r(-1, 3))), 'e^{-\\frac{2\\pi i}{3}}');
+  assert.equal(formatPhase(P.phase(r(-1, 6))), 'e^{-\\frac{\\pi i}{3}}');
+
+  function evaluateFormula(source) {
+    const exact = { '+1': [1, 0], '-1': [-1, 0], i: [0, 1], '-i': [0, -1] }[source];
+    if (exact) return exact;
+    const fraction = source.match(/^e\^\{(-?)\\frac\{(\d*)\\pi i\}\{(\d+)\}\}$/);
+    const integer = source.match(/^e\^\{(-?)(\d*)\\pi i\}$/);
+    assert.ok(fraction || integer, `Expected a purely imaginary rational multiple of pi, got ${source}`);
+    const match = fraction || integer;
+    const angle = (match[1] ? -1 : 1) * Number(match[2] || 1) * Math.PI / (fraction ? Number(match[3]) : 1);
+    return [Math.cos(angle), Math.sin(angle)];
+  }
+  for (const model of Object.values(P.models)) {
+    const attachments = model.K.length === 1 ? [-1, 0, 1].map(n => [n]) : [-1, 0, 1].flatMap(a => [-1, 0, 1].map(b => [a, b]));
+    for (const a of model.sectors) for (const b of model.sectors) for (const n of attachments) for (const direction of [1, -1]) {
+      const result = P.inspect(model, a.label, b.label, n, direction);
+      for (const phase of [result.exchange, result.mutual]) {
+        const evaluated = evaluateFormula(formatPhase(phase));
+        close(evaluated[0], phase.complex[0]); close(evaluated[1], phase.complex[1]);
+        close(evaluated[0] ** 2 + evaluated[1] ** 2, 1);
+      }
+    }
+  }
+});
 
 test('Rationals reduce signs and zero exactly, and reject inexact arithmetic', () => {
   assert.deepEqual(r(6, -9), r(-2, 3));

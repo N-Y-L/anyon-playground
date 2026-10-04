@@ -37,7 +37,14 @@
     const exact = { '0': '+1', '1/4': 'i', '1/2': '-1', '3/4': '-i' }[P.format(fraction)];
     if (exact) return exact;
     const numerator = fraction.numerator * 2 > fraction.denominator ? fraction.numerator - fraction.denominator : fraction.numerator;
-    return `e^{i\\pi ${fractionTex(P.rational(2 * numerator, fraction.denominator))}}`;
+    const coefficient = P.rational(2 * numerator, fraction.denominator);
+    const sign = coefficient.numerator < 0 ? '-' : '';
+    const magnitude = Math.abs(coefficient.numerator);
+    const imaginaryNumerator = `${magnitude === 1 ? '' : magnitude}\\pi i`;
+    // The sign multiplies the whole imaginary exponent; placing a negative
+    // fraction after i pi without grouping would introduce a real term.
+    const exponent = coefficient.denominator === 1 ? imaginaryNumerator : `\\frac{${imaginaryNumerator}}{${coefficient.denominator}}`;
+    return `e^{${sign}${exponent}}`;
   }
   function phaseText(phase) {
     const fraction = phase.reducedTurns;
@@ -81,11 +88,13 @@
     const svg = $('abelian-fusion-svg');
     const probe = model.sectors[state.probe], target = model.sectors[state.target];
     const heading = `${model.name}: ${probe.name} × ${target.name} = ${data.fusion.sector.name}`;
+    const subtitle = model.localFermions ? 'Sector fusion modulo local electrons' : '';
     const reduction = `${vectorText(data.fusion.label)} = ${vectorText(data.fusion.sector.label)} + K ${vectorText(data.fusion.removedLocal)}`;
-    svg.setAttribute('aria-label', `${heading}. Integer labels ${vectorText(data.shiftedLabel)} plus ${vectorText(data.target)} give ${vectorText(data.fusion.label)}. Remove local K n with n ${vectorText(data.fusion.removedLocal)}.`);
+    svg.setAttribute('aria-label', `${heading}. ${subtitle ? subtitle + '. ' : ''}Integer labels ${vectorText(data.shiftedLabel)} plus ${vectorText(data.target)} give ${vectorText(data.fusion.label)}. Remove local K n with n ${vectorText(data.fusion.removedLocal)}.`);
     svg.innerHTML = `<title>${escapeXml(heading)}</title><desc>${escapeXml(reduction)}. Coordinates are label bookkeeping, not particle positions.</desc><rect width="660" height="245" fill="white"/>
       <defs><marker id="abelian-fusion-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#555"/></marker></defs>
       ${text(330, 27, heading, 23)}
+      ${subtitle ? text(330, 50, subtitle, 18, '#555') : ''}
       <path d="M 170 83 L 327 125 M 170 166 L 327 125 L 418 125" fill="none" stroke="#777" stroke-width="1.5" marker-end="url(#abelian-fusion-arrow)"/>
       ${text(105, 78, probe.name, 25, '#145b91')}${text(105, 105, vectorText(data.shiftedLabel), 23, '#145b91')}
       ${text(105, 163, target.name, 25, '#a33b2b')}${text(105, 190, vectorText(data.target), 23, '#a33b2b')}
@@ -98,7 +107,7 @@
     const description = `${model.name}. Probe ${vectorText(data.shiftedLabel)}, target ${vectorText(data.target)}. Exchange ${phaseText(data.exchange)}; full winding ${phaseText(data.mutual)}.`;
     svg.setAttribute('aria-label', description);
     const circle = (center, phase, label, color, arrowId) => {
-      const x = center + 69 * phase.complex[0], y = 167 - 69 * phase.complex[1];
+      const x = center + 70 * phase.complex[0], y = 167 - 70 * phase.complex[1];
       return `${text(center, 60, label, 23)}<circle cx="${center}" cy="167" r="70" fill="none" stroke="#777"/>
         <path d="M ${center - 70} 167 H ${center + 70} M ${center} 97 V 237" stroke="#ddd" fill="none"/>
         ${text(center + 89, 174, '+1', 19)}${text(center - 88, 174, '−1', 19)}${text(center, 91, 'i', 19)}${text(center, 258, '−i', 19)}
@@ -107,7 +116,7 @@
         ${text(center, 298, phaseText(phase), 24, color)}`;
     };
     svg.innerHTML = `<title>${escapeXml(description)}</title><desc>Complex unit circles. Horizontal axis is real; vertical axis is imaginary. Arrows are final multipliers, not particle paths.</desc><rect width="660" height="320" fill="white"/>
-      <defs><marker id="abelian-spin-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#145b91"/></marker><marker id="abelian-mutual-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#a33b2b"/></marker></defs>
+      <defs><marker id="abelian-spin-arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#145b91"/></marker><marker id="abelian-mutual-arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#a33b2b"/></marker></defs>
       ${text(330, 20, heading, 19, '#555')}${circle(160, data.exchange, `Exchange ${vectorText(data.shiftedLabel)}`, '#145b91', 'abelian-spin-arrow')}${circle(495, data.mutual, `Winding around ${vectorText(data.target)}`, '#a33b2b', 'abelian-mutual-arrow')}`;
   }
   function windingTable(model) {

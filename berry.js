@@ -12,7 +12,7 @@
   let state = defaults(), data, downloadUrl = null;
   const xml = value => String(value).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;' })[c]);
   const label = (x, y, value, size = 20, color = '#000', anchor = 'middle') => `<text x="${x}" y="${y}" text-anchor="${anchor}" font-family="Times New Roman, Times, serif" font-size="${size}" fill="${color}">${xml(value)}</text>`;
-  const marker = (id, color) => `<marker id="${id}" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="${color}"/></marker>`;
+  const marker = (id, color) => `<marker id="${id}" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="${color}"/></marker>`;
   const rounded = (number, places = 6) => (Math.abs(number) < 0.5 * 10 ** -places ? 0 : number).toFixed(places);
   const piText = number => `${rounded(number / Math.PI)}π`;
   const startSvg = (description, height) => `<title>${xml(description)}</title><rect width="660" height="${height}" fill="white"/>`;
