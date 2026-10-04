@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Calculate a spin-1/2 Berry phase from sampled eigenstates. Change phase conventions, refine a loop, and compare with the solid angle; graduate quantum mechanics, no field theory assumed.">
+  <title>Calculate a geometric phase</title>
+  <link rel="stylesheet" href="vendor/katex/katex.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="vendor/katex/katex.min.js"></script>
+  <script defer src="vendor/katex/auto-render.min.js"></script>
+  <script defer src="berry-physics.js"></script>
+  <script defer src="berry.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to the note</a>
+  <nav aria-label="Note navigation"><a href="index.html">Contents</a> · <a href="experiments.html#exchange">Exchange</a> · <a href="berry.html" aria-current="page">Berry phase</a> · <a href="fusion-basis.html">Fusion bases</a> · <a href="abelian.html">Abelian data</a></nav>
+  <main id="main" tabindex="-1">
+    <h1>8. Calculate a geometric phase</h1>
+    <p>An eigensolver gives you a state vector, but its overall phase is arbitrary. Run it again at a nearby field direction and the phase may be different. How can these unreliable arrows reveal a reliable Berry phase? Close the loop: every arbitrary phase then has a partner that cancels it.</p>
+    <p>Start with one spin, not an anyon. Its Hamiltonian is \(H=-(\Delta/2)\boldsymbol n\cdot\boldsymbol\sigma\), with \(\Delta&gt;0\) the energy gap and \(\boldsymbol\sigma\) the Pauli matrices. The ground spin points along the unit vector \(\boldsymbol n\). Turn that direction around a latitude of polar angle \(\beta\):</p>
+    <div class="equation">\[\boldsymbol n=(\sin\beta\cos\phi,\sin\beta\sin\phi,\cos\beta),\qquad |u\rangle=\begin{pmatrix}\cos(\beta/2)\\e^{i\phi}\sin(\beta/2)\end{pmatrix}.\]</div>
+    <p>Positive motion increases \(\phi\): it is counterclockwise when viewed from \(+z\). For slow transport, the geometric phase is half the negative oriented solid angle, \(\gamma=-\Omega/2\), where \(\Omega=\pm2\pi(1-\cos\beta)\). This is separate from the dynamical phase \(-\int E\,dt/\hbar\). We calculate only the geometric contribution. <a href="https://doi.org/10.1098/rspa.1984.0023">Berry’s original paper</a> gives the spin result.</p>
+
+    <div class="example-row" aria-label="Worked examples"><span>Try:</span><button data-berry-example="cone">A 60° cone</button><button data-berry-example="equator">The equator</button><button data-berry-example="north">The north pole</button><button data-berry-example="south">The south pole</button></div>
+    <div class="experiment-workspace">
+      <div>
+        <figure><svg id="berry-sphere-svg" class="demo-svg" viewBox="0 0 660 360" role="img" aria-label="Sampled spin directions on a projected Bloch sphere"></svg>
+          <figcaption>Thin gray: smooth latitude. Blue: sampled directions joined by the shorter great-circle arcs. Dashed portions lie on the far hemisphere. The arrow follows the circuit direction. The black open point marks its start; the blue open points mark the selected link’s endpoints.</figcaption>
+        </figure>
+        <figure><svg id="berry-phase-svg" class="demo-svg" viewBox="0 0 660 255" role="img" aria-label="Geometric phase factors for the smooth latitude and sampled loop"></svg>
+          <figcaption>Black solid arrow: exact smooth-loop factor. Blue dashed arrow and open endpoint: sampled factor. Coinciding arrows mean agreement modulo \(2\pi\).</figcaption>
+        </figure>
+      </div>
+      <div class="controls-card">
+        <h2>Sample a circuit</h2>
+        <label class="field-label" for="berry-beta">Polar angle β<output id="berry-beta-value"></output></label><input id="berry-beta" type="range" min="0" max="180" step="1" value="60">
+        <div class="range-labels"><span>North pole</span><span>South pole</span></div>
+        <label class="field-label" for="berry-direction">Circuit direction</label><select id="berry-direction"><option value="1">Counterclockwise from +z</option><option value="-1">Clockwise from +z</option></select>
+        <label class="field-label" for="berry-samples">Sample count N</label><select id="berry-samples"><option>8</option><option selected>16</option><option>32</option><option>64</option><option>128</option><option>256</option></select>
+        <label class="field-label" for="berry-gauge">Phase-choice strength g<output id="berry-gauge-value"></output></label><input id="berry-gauge" type="range" min="0" max="6" step="0.1" value="0">
+        <p class="control-note">Changing g rephases each eigenvector. It changes neither the Hamiltonian nor the prepared spin direction.</p>
+        <label class="field-label" for="berry-link">Inspect link j → j+1<output id="berry-link-value"></output></label><input id="berry-link" type="range" min="0" max="15" step="1" value="0">
+        <div class="readout" aria-live="polite"><span>Exact phase −Ω/2 (unwrapped)</span><strong id="berry-exact"></strong><span>Sampled phase arg W</span><strong id="berry-sampled"></strong><span>Absolute circular error</span><strong id="berry-error"></strong><span id="berry-overlap"></span></div>
+        <div class="visual-actions"><button id="berry-reset">Reset all settings</button></div>
+      </div>
+    </div>
+    <p class="observation" id="berry-observation" aria-live="polite"></p>
+    <p class="control-note">Phases differing by \(2\pi\) give the same multiplier. At the south pole the displayed smooth phase is \(\mp2\pi\), equivalent to zero; at the equator either principal value \(+\pi\) or \(-\pi\) represents \(-1\). The error compares the phase factors, not a naive difference of displayed angles.</p>
+
+    <h2>Watch the arbitrary phases cancel</h2>
+    <p>For normalized neighboring states with nonzero overlap, retain only the overlap’s phase. The last link returns to the first stored state:</p>
+    <div class="equation">\[z_j=\frac{\langle u_{j+1}|u_j\rangle}{|\langle u_{j+1}|u_j\rangle|},\qquad W_N=\prod_{j=0}^{N-1}z_j,\qquad u_N=u_0,\qquad \gamma_N=\arg W_N.\]</div>
+    <p>A new convention \(|u_j\rangle\mapsto e^{i\alpha_j}|u_j\rangle\) changes a link by \(z_j\mapsto e^{i(\alpha_j-\alpha_{j+1})}z_j\). Each phase appears once with each sign. Turn up g: the individual links move while the loop factor stays put. This is the cancellation used in numerical calculations with <a href="https://arxiv.org/abs/cond-mat/0503172">normalized overlap links</a>.</p>
+    <figure><svg id="berry-links-svg" class="demo-svg secondary-svg" viewBox="0 0 660 290" role="img" aria-label="Individual overlap phases with and without local eigenvector rephasing"></svg><figcaption>Black dashed line: g = 0. Blue dots: current phase choices. The vertical guide selects a link; phases use the principal interval from −π to π. Apparent jumps at its edges are changes of angle branch.</figcaption></figure>
+    <div class="equation" id="berry-selected-equation"></div>
+    <p id="berry-selected-detail"></p>
+    <details><summary>Why does the overlap product give the geometric phase?</summary>
+      <p>For the displayed spinor at fixed β, a small azimuthal step gives a link whose phase is \(-\sin^2(\beta/2)\,d\phi\) to first order:</p>
+      <div class="equation">\[\begin{aligned}\langle u(\phi+d\phi)|u(\phi)\rangle&amp;=1-i\sin^2(\beta/2)\,d\phi+O(d\phi^2),\\ \gamma&amp;=-\oint\sin^2(\beta/2)\,d\phi=-\frac{\Omega}{2}\pmod{2\pi}.\end{aligned}\]</div>
+      <p>Multiplying the normalized links adds these infinitesimal phases in the continuum limit; local rephasings still cancel around the closed circuit.</p>
+    </details>
+    <details><summary>What exactly is the finite-sample error?</summary>
+      <p>With g = 0, every link before normalization is \(\cos^2(\beta/2)+\sin^2(\beta/2)e^{\mp2\pi i/N}\). Its normalized phase raised to the Nth power gives the sampled result. At finite N, the shorter great-circle arcs between spin directions enclose a different area from the smooth latitude. Refinement makes these paths agree. Changing g cannot repair a coarse mesh: it only changes the description.</p>
+      <p>The error shown is \(|\arg(e^{i\gamma_N}e^{-i\gamma})|\). Neighboring orthogonal states make a normalized link undefined; the calculation rejects such a link rather than assigning it zero phase. The sample counts offered here avoid that singular case for these latitudes.</p>
+      <p>For reproducibility, the phase choices are \(\alpha_j=g[\sin(2\pi j/N)+0.37\cos(4\pi j/N)]\). Angles and g are in radians. The JSON export records every link and the parameters; no random seed is needed.</p>
+    </details>
+    <h2>What this teaches us about anyons</h2>
+    <p>These loops on the sphere can all be contracted, yet changing their area changes the phase. <em>Geometric</em> does not mean <em>topological</em>. An anyon calculation must identify the appropriate low-energy states and distinguish the transport that depends on their braid from other contributions.</p>
+    <p>In a degenerate multiplet, adiabatic transport can mix states through a matrix, as in <a href="https://doi.org/10.1103/PhysRevLett.52.2111">Wilczek and Zee’s construction</a>. Such mixing alone does not establish anyons. A gap to unwanted states and a small splitting within a fusion space are different energy scales; checking transport times also requires the path and transition matrix elements. The <a href="docs/notes.html">connected notes</a> discuss these conditions.</p>
+    <p class="next-note">A phase becomes visible only against a reference: return to the <a href="experiments.html#interference">interferometer</a>. To calculate matrices in a shared anyon state space, try <a href="fusion-basis.html">changing fusion bases</a>.</p>
+  </main>
+  <footer class="page-footer">
+    <div class="export-controls"><label for="berry-export-figure">Vector figure</label><select id="berry-export-figure"><option value="berry-sphere-svg">Spin directions</option><option value="berry-phase-svg">Phase factors</option><option value="berry-links-svg">Individual overlap phases</option></select><button id="berry-export-svg">Save SVG</button><button id="berry-export-json">Save parameters and results</button></div>
+    <p id="berry-export-ready" hidden>Prepared file: <a id="berry-download" href="#">Download</a></p>
+    <p><a href="berry-physics.js">Calculation source</a> · <a href="tests/berry.test.js">Checks</a> · <a href="docs/references.html">Sources</a> · <a href="index.html">Contents</a></p>
+    <p><small>Copyright (c) 2026 Neil Yuanting Li. <a href="LICENSE">MIT license</a>.</small></p>
+  </footer>
+  <p id="berry-announcement" class="sr-only" role="status" aria-live="polite"></p>
+  <noscript><p>The explanatory text remains available without JavaScript. Enable JavaScript to calculate and display the figures.</p></noscript>
+</body>
+</html>

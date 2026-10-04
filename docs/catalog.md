@@ -1,6 +1,6 @@
 # Ideas to explore next
 
-There is more to anyons than unusual exchange signs. Start with any of the seven experiments below, then follow the question that bothers you. The eight directions distinguish what you can already try from the next calculation; each gives a model, something to observe, and a pitfall worth catching.
+There is more to anyons than unusual exchange signs. Start with any of the experiments below, then follow the question that bothers you. The nine directions distinguish what you can already try from the next calculation; each gives a model, something to observe, and a pitfall worth catching.
 
 ## In the playground
 
@@ -12,11 +12,14 @@ There is more to anyons than unusual exchange signs. Start with any of the seven
 | [Ising braid order](../experiments.html#braids) | Reverse two exchanges and switch the $X$, $Y$, and $Z$ measurement bases. | Noncommuting braids can produce states whose difference one measurement misses. |
 | [Fibonacci fusion paths](../experiments.html#fusion) | Fix the total charge, enumerate paths, and add another anyon. | Allowed basis states follow a Fibonacci recurrence; counts are not probabilities. |
 | [Toric-code strings and loops](../experiments.html#toric) | Create and move an $m$ pair with a string, then compare $e$ loops. | Open strings have excitation endpoints; an enclosed $m$ gives an $e$ loop a minus sign. |
+| [Berry phase](../berry.html) | Change the local eigenvector phases, then refine the sampled loop. | A closed overlap product removes gauge choices; geometry still matters. |
+| [Fibonacci basis changes](../fusion-basis.html) | Change the pair with definite fusion charge; compare braid words. | Channel-dependent exchange phases become non-diagonal matrices in another fusion basis. |
+| [Abelian theories](../abelian.html) | Compare toric code with double semion; attach a local particle. | Fusion rules alone do not determine statistics; electron attachment can change an exchange sign. |
 | [Toric memory](../experiments.html#memory) | Close a string after taking it around a periodic direction. | Endpoints can disappear while a nontrivial logical operation remains. |
 
 The [references](references.md) identify the models' scientific sources. “Fusion” means combining anyons and asking which collective particle type, or *topological charge*, remains. A diagram of paths describes an operation; it does not by itself measure the resulting phase.
 
-## Eight directions
+## Nine directions
 
 ### 1. Can the same kind of anyon bunch and antibunch?
 
@@ -40,15 +43,19 @@ Model an extended collider with several scattering routes and compare single-sou
 
 ### 6. Do the bends in a path matter?
 
-**Implemented starting point:** deform the two separated-particle paths while keeping their exchange or winding fixed, and inspect the unchanged statistical factor. The next model would accept a freehand closed loop around a pinned anyon and calculate both winding and enclosed area. Compare the unchanged statistical contribution with an area-dependent magnetic-flux phase; their sum need not remain fixed under deformation. **Easy**, with collision rejection essential: a path through the anyon leaves the assumed separated-particle model. [Arovas, Schrieffer & Wilczek, 1984](https://doi.org/10.1103/PhysRevLett.53.722).
+**Implemented starting point:** deform the two separated-particle paths while keeping their exchange or winding fixed, and inspect the unchanged statistical factor. The [Berry experiment](../berry.html) now supplies the geometric counterexample: a spin loop whose phase changes with its solid angle. A further model would accept a freehand closed loop around a pinned anyon and calculate both winding and enclosed area. Compare the unchanged statistical contribution with an area-dependent magnetic-flux phase; their sum need not remain fixed under deformation. **Easy**, with collision rejection essential: a path through the anyon leaves the assumed separated-particle model. [Arovas, Schrieffer & Wilczek, 1984](https://doi.org/10.1103/PhysRevLett.53.722).
 
 ### 7. Can a short braid approximate a chosen quantum gate?
 
-Choose a target qubit rotation and search short products of Fibonacci braid matrices, comparing operations up to overall phase. Watch the best approximation improve as more candidates become available, then compare with the restricted set reachable by Ising braids alone. This asks what non-Abelian exchange can actually compute: order dependence does not guarantee universality. **Intermediate** for short searches; advanced for efficient compilation, and increasing length helps only when useful sequences are found. [Bonesteel et al., 2005](https://arxiv.org/abs/quant-ph/0505065) constructs Fibonacci gates; [Bravyi, 2006](https://arxiv.org/abs/quant-ph/0511178) supplies an additional resource for Ising computation.
+**Implemented starting point:** [construct and compare Fibonacci braid matrices](../fusion-basis.html), including inverse and braid-relation checks. The next calculation would choose a target qubit rotation and search short products, comparing operations up to overall phase. Watch the best approximation improve as more candidates become available, then compare with the restricted set reachable by Ising braids alone. This asks what non-Abelian exchange can actually compute: order dependence does not guarantee universality. **Intermediate** for short searches; advanced for efficient compilation, and increasing length helps only when useful sequences are found. [Bonesteel et al., 2005](https://arxiv.org/abs/quant-ph/0505065) constructs Fibonacci gates; [Bravyi, 2006](https://arxiv.org/abs/quant-ph/0511178) supplies an additional resource for Ising computation.
 
 ### 8. Can a memory change after every defect disappears?
 
 **Implemented:** create an open $X$ string on the periodic grid, wrap it around, and close it. The endpoints cost energy; the intervening string does not. Annihilating them restores the ground energy yet can reverse a definite crossing logical $Z$ value. Next, inject random local errors and let a decoder choose corrections from endpoint measurements, then count incorrect logical operations. **Advanced** for a credible memory benchmark: topological protection limits what small local disturbances can do, but it does not make a two-dimensional memory automatically immune to accumulated errors. [Kitaev, 2003](https://arxiv.org/abs/quant-ph/9707021); [Dennis et al., 2002](https://arxiv.org/abs/quant-ph/0110143).
+
+### 9. Can the ground state reveal anyons before you move one?
+
+Start with a toric-code ground state, choose a region of edge qubits, and calculate its entanglement entropy from the independent stabilizers supported there. Then combine entropies of overlapping regions to cancel the ordinary boundary contribution. For suitable large regions in a gapped two-dimensional topological phase, the remaining term measures the total quantum dimension: $\gamma=\ln\mathcal D$, with $\mathcal D=\sqrt{\sum_a d_a^2}$. Each $d_a$ describes the asymptotic growth of fusion states for type $a$; it is not the dimension of a local particle's Hilbert space. **Proposed, intermediate to advanced:** begin at the exactly solvable point and check region geometry and finite-size effects before interpreting a fitted constant. [Kitaev and Preskill](https://arxiv.org/abs/hep-th/0510092) and [Levin and Wen](https://arxiv.org/abs/cond-mat/0510613) give complementary subtraction constructions. This probes ground-state structure rather than an exchange protocol.
 
 ## Useful upstream software
 

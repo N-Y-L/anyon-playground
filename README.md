@@ -3,9 +3,9 @@
 **[Open the live playground](https://N-Y-L.github.io/anyon-playground/)** ·
 [Source code](https://github.com/N-Y-L/anyon-playground)
 
-Exchange two identical particles and ask what the state remembers. Seven
+Exchange two identical particles and ask what the state remembers. Ten
 interactive notes follow that question into interference, spatial correlations,
-and quantum memory, with the calculation beside each figure. The intended reader
+quantum memory, and the tools used to calculate them, with the calculation beside each figure. The intended reader
 knows graduate quantum mechanics and some condensed matter, but has no prior anyon or quantum field
 theory background. The interface is plain HTML on a white page.
 
@@ -32,6 +32,9 @@ trying it. Then explore:
 | Toric-code strings | Apply shared-edge Pauli operators to create, move, and annihilate pairs; derive the loop phase from plaquette eigenvalues. |
 | Pair correlations | Keep fractional statistics fixed and vary packet separation in a lowest-Landau-level preparation; compare with distinguishable particles. |
 | Topological memory | Watch the excitation energy as a pair separates and annihilates; compare a local loop with one that changes logical loop eigenvalues. |
+| Berry phase | Change the eigenvector gauge, refine a sampled loop, and recover a phase that depends on geometry. |
+| Fibonacci fusion bases | Recouple three anyons, apply channel phases, and check how the braid relation constrains the resulting matrices. |
+| Abelian theories | Compare toric-code and double-semion statistics; attach local particles and separate electric charge from topological charge. |
 
 Each note introduces its symbols, gives worked example settings, and explains
 what its readout measures. Controls have a reset; mathematical derivations and
@@ -57,6 +60,7 @@ particular localized-pair preparation of Vishveshwara and Cooper (2010),
 linked beside its formulas. It computes a guiding-center separation moment,
 not a detector coincidence probability. Angles are in radians; distances and
 correlations use the dimensionless units defined in the note.
+The Berry example computes a cyclic overlap product for a spin, not a microscopic anyon braid. The Abelian examples take specified $K$ matrices as low-energy data, not as proof that a proposed Hamiltonian realizes them.
 The calculations are deterministic and use no random sampling.
 
 ## Change the code
@@ -68,13 +72,14 @@ The calculations are deterministic and use no random sampling.
 | `styles.css` | Plain-page layout and figure controls |
 | `index.html` | Plain index of experiments, notes, and code |
 | `experiments.html` | Interactive examples |
-| `tests/physics.test.js` | Physical identities and limiting cases |
+| `berry*`, `fusion-basis*`, `abelian*` | Independent notes, each with a DOM-free numerical model and a browser interface |
+| `tests/*.test.js` | Physical identities, convention checks, and limiting cases |
 
 To check the numerical models, install Node.js 22.12 or newer, then run from this
 folder:
 
 ```sh
-node --test tests/physics.test.js
+node --test tests/*.test.js
 ```
 
 For a local web-server preview, Python 3 is sufficient:

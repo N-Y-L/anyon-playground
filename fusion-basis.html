@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A visual note on Fibonacci fusion bases: distinguish a passive F-move from a physical braid, inspect channel amplitudes, and compare braid orders.">
+  <title>Fusion bases and Fibonacci braiding — Anyons</title>
+  <link rel="stylesheet" href="vendor/katex/katex.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="vendor/katex/katex.min.js"></script>
+  <script defer src="vendor/katex/auto-render.min.js"></script>
+  <script defer src="fusion-basis-physics.js"></script>
+  <script defer src="fusion-basis.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to the note</a>
+  <nav aria-label="Note navigation"><a href="index.html">Contents</a> · <a href="experiments.html#fusion">Fusion paths</a> · <a href="experiments.html#braids">Ising braids</a> · <a href="fusion-basis.html" aria-current="page">Fusion bases</a> · <a href="docs/references.html">Sources</a></nav>
+  <main id="main" tabindex="-1">
+    <h1>9. One state, two fusion bases</h1>
+    <p>To calculate an exchange of two Fibonacci anyons, express the state in channels of definite total charge for that pair. Each channel acquires its own exchange phase. The difficulty is that a state with a definite charge for one pair need not have a definite charge for another. A change of fusion basis makes this relation explicit, much as recoupling three angular momenta changes the intermediate angular-momentum label.</p>
+    <p>Take three Fibonacci anyons of type \(\tau\), with fixed total charge \(\tau\). The rule \(\tau\times\tau=1+\tau\) permits two intermediate channels. Here \(1\) means vacuum topological charge, not one particle. The two association choices give orthonormal bases of the same two-dimensional space:</p>
+    <div class="equation">\[|a\rangle_L=|((\tau\tau)_a\tau)_\tau\rangle,\qquad |b\rangle_R=|(\tau(\tau\tau)_b)_\tau\rangle,\qquad a,b\in\{1,\tau\}.\]</div>
+    <p>Write the coordinate vectors as \(c_L\) and \(c_R\), always in channel order \((1,\tau)\). In the real symmetric gauge used here,</p>
+    <div class="equation">\[c_R=Fc_L,\qquad F=\begin{pmatrix}\varphi^{-1}&amp;\varphi^{-1/2}\\\varphi^{-1/2}&amp;-\varphi^{-1}\end{pmatrix},\qquad \varphi=\frac{1+\sqrt5}{2},\qquad F^{-1}=F.\]</div>
+    <p>This <dfn>F-move</dfn> changes coordinates. It does not move the anyons or apply a gate. Fusion trees specify a basis, not a history of measurements. See <a href="https://arxiv.org/abs/0902.3275">Trebst et al., §§2.3–2.4</a> for the fusion-space construction.</p>
+
+    <div class="example-row"><label for="fb-initial">Prepare in the left basis:</label><select id="fb-initial"><option value="vacuum">Definite pair-12 charge 1</option><option value="tau">Definite pair-12 charge τ</option><option value="plus">Equal real superposition</option><option value="plusY">Equal superposition with relative i</option></select><button id="fb-reset">Reset note</button></div>
+    <div id="fb-preparation" class="equation"></div>
+    <div class="state-pair">
+      <figure><svg id="fb-left-tree" class="demo-svg" viewBox="0 0 340 335" role="img" aria-label="Left-associated fusion tree and pair-12 channel amplitudes"></svg><figcaption>Left basis: resolve the charge \(a\) of positions 1–2.</figcaption></figure>
+      <figure><svg id="fb-right-tree" class="demo-svg" viewBox="0 0 340 335" role="img" aria-label="Right-associated fusion tree and pair-23 channel amplitudes"></svg><figcaption>Right basis: resolve the charge \(b\) of positions 2–3.</figcaption></figure>
+    </div>
+    <p id="fb-basis-observation" class="observation" aria-live="polite"></p>
+    <details><summary>Why can the two probability columns differ if the state is unchanged?</summary><p>They refer to different pair-charge measurements. For the same physical observable, change its matrix along with the coordinates: \(O_R=FO_LF^\dagger\), so \(c_R^\dagger O_Rc_R=c_L^\dagger O_Lc_L\). The vacuum projector for pair 1–2 is \(\operatorname{diag}(1,0)\) in the left basis; the vacuum projector for pair 2–3 has that diagonal form in the right basis. Neither measurement is actually performed by the illustration.</p></details>
+
+    <h2>Exchange positions 2 and 3</h2>
+    <p>An exchange multiplies each definite pair-charge channel by its own phase. We use the <em>right-handed</em> Fibonacci convention of <a href="https://arxiv.org/html/2407.21761v2#S2.SS1">Bseiso et al., §II.1, Eqs. (2)–(3)</a>: positive exchange means counterclockwise, viewed from above the plane, with</p>
+    <div class="equation">\[R=\operatorname{diag}\!\left(e^{-4\pi i/5},e^{3\pi i/5}\right),\qquad B_1=R,\qquad B_2=F^{-1}RF.\]</div>
+    <p>Here \(B_1\) exchanges positions 1–2 and \(B_2\) exchanges positions 2–3, both expressed in the left basis. Clockwise exchange uses the inverse. Opposite chirality conjugates all exchange phases. The two F-moves below only change representation; the central R step is the physical exchange.</p>
+    <div class="example-row"><label for="fb-direction">Pair-23 exchange:</label><select id="fb-direction"><option value="1">Counterclockwise</option><option value="-1">Clockwise (inverse)</option></select></div>
+    <div class="equation">\[c_L\ \xrightarrow{\text{change basis }F}\ c_R\ \xrightarrow{\text{exchange }R^{\pm1}}\ c'_R\ \xrightarrow{\text{change back }F^{-1}}\ c'_L.\]</div>
+    <div class="experiment-workspace">
+      <figure><svg id="fb-phase-svg" class="demo-svg" viewBox="0 0 660 305" role="img" aria-label="Complex channel amplitudes at the selected calculation step"></svg><figcaption>Each arrow is a complex amplitude; its squared length is a channel probability. The circles have unit radius. These are coordinates of a state, not particle trajectories.</figcaption></figure>
+      <div class="controls-card">
+        <h2>Follow the calculation</h2>
+        <label class="field-label" for="fb-stage">Calculation step</label><select id="fb-stage"><option value="0">0. Prepared state, left basis</option><option value="1">1. F: same state, right basis</option><option value="2">2. R: exchange, right basis</option><option value="3">3. F inverse: result, left basis</option></select>
+        <div class="visual-actions"><button id="fb-previous">Previous</button><button id="fb-next">Next step</button></div>
+        <p id="fb-stage-description" role="status"></p><div id="fb-stage-vector" class="equation"></div>
+        <div class="readout"><span>Current physical state vs input</span><strong id="fb-stage-fidelity"></strong><span>Squared overlap, with both states expressed in the left basis.</span></div>
+      </div>
+    </div>
+    <p id="fb-exchange-observation" class="observation"></p>
+
+    <h2>Order, equality, and a measurement</h2>
+    <p>The braid relation \(B_1B_2B_1=B_2B_1B_2\) does not say that neighbors commute. Compare short sequences below. The listed order is chronological: \([1,2]\) applies \(B_1\) first and has matrix \(B_2B_1\). A minus sign reverses the exchange direction.</p>
+    <div class="example-row"><label for="fb-comparison">Compare:</label><select id="fb-comparison"><option value="order">[1, 2] and [2, 1]</option><option value="relation">[1, 2, 1] and [2, 1, 2]</option><option value="inverse">[2, −2] and no exchange</option></select><label for="fb-comparison-initial">Input:</label><select id="fb-comparison-initial"><option value="plus">Equal real superposition</option><option value="vacuum">Pair-12 charge 1</option><option value="tau">Pair-12 charge τ</option><option value="plusY">Equal superposition with relative i</option></select></div>
+    <div id="fb-comparison-input" class="equation"></div>
+    <div class="figure-scroll"><table class="reading-map"><caption>Both outputs are expressed in the original left basis.</caption><thead><tr><th scope="col">Quantity</th><th scope="col" id="fb-word-a">Sequence A</th><th scope="col" id="fb-word-b">Sequence B</th></tr></thead><tbody>
+      <tr><th scope="row">Amplitude for channel 1</th><td id="fb-amplitude-a-0"></td><td id="fb-amplitude-b-0"></td></tr>
+      <tr><th scope="row">Amplitude for channel τ</th><td id="fb-amplitude-a-1"></td><td id="fb-amplitude-b-1"></td></tr>
+      <tr><th scope="row">P(pair 1–2 → 1)</th><td id="fb-p12-a"></td><td id="fb-p12-b"></td></tr>
+      <tr><th scope="row">P(pair 2–3 → 1)</th><td id="fb-p23-a"></td><td id="fb-p23-b"></td></tr>
+    </tbody></table></div>
+    <p id="fb-comparison-result" role="status"></p>
+    <p>A squared overlap below one distinguishes the output states even when one chosen measurement gives equal probabilities. The matrix residual compares the operators themselves, so the braid-relation check tests every input in this sector. Numerical residuals near machine precision verify the implementation; the group relation is exact.</p>
+
+    <h2>What the golden ratio counts</h2>
+    <p>Let \(D_n^1,D_n^\tau\) count fusion states of \(n\) identical \(\tau\) anyons in each fixed total-charge sector. Adding one anyon gives \(D_{n+1}^1=D_n^\tau\) and \(D_{n+1}^\tau=D_n^1+D_n^\tau\). Starting from \((D_1^1,D_1^\tau)=(0,1)\), the latter count is \(1,1,2,3,5,\ldots\). Its large-\(n\) growth factor is the <dfn>quantum dimension</dfn> \(d_\tau=\varphi\), which obeys \(d_\tau^2=1+d_\tau\). Every actual Hilbert-space dimension remains an integer. \(d_\tau\) is not the dimension of an independent local particle state.</p>
+    <p>Non-Abelian statistics alone does not guarantee universal gates. <a href="https://arxiv.org/abs/quant-ph/0511178">Ising braiding</a> on its usual qubit encoding generates Clifford operations; Fibonacci braids can approximate arbitrary encoded unitary gates to any desired accuracy. This is an approximation statement, not exact synthesis by a finite word. The density result is due to <a href="https://arxiv.org/abs/quant-ph/0001108">Freedman, Larsen, and Wang</a>; <a href="https://arxiv.org/abs/quant-ph/0610111">Hormozi et al.</a> construct explicit compiling methods. Their stated clockwise convention differs from the right-handed counterclockwise convention used above.</p>
+    <p>For a many-anyon Hamiltonian that favors a particular adjacent fusion channel, these same F-matrices convert local pair-charge projectors into a common many-body basis. That is why this recoupling calculation is useful beyond gate design: it builds the interaction matrices of an anyon chain. <a href="https://arxiv.org/abs/cond-mat/0612341">Feiguin et al.'s golden chain</a> is a concrete example.</p>
+    <footer class="page-footer"><div class="export-controls"><label for="fb-export-figure">Figure to save:</label><select id="fb-export-figure"><option value="trees">The two fusion trees</option><option value="phases">Current amplitude diagram</option></select><button id="fb-export-svg">Save SVG</button><button id="fb-export-json">Save parameters and results</button></div><p><a href="experiments.html#fusion">Fusion paths</a> · <a href="experiments.html#braids">Ising braids</a> · <a href="index.html">Contents</a></p></footer>
+    <p id="fb-export-ready" hidden>Prepared file: <a id="fb-export-download">Download</a>.</p>
+    <noscript><p>The equations and explanations remain readable; enable JavaScript to change the states and fill the interactive figures.</p></noscript>
+  </main>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="An exact K-matrix notebook: compare Abelian fusion, exchange, mutual winding, fractional charge, and local-particle attachment. Graduate quantum mechanics; no field theory assumed.">
+  <title>Abelian anyons: fusion, charge, and statistics</title>
+  <link rel="stylesheet" href="vendor/katex/katex.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="vendor/katex/katex.min.js"></script>
+  <script defer src="vendor/katex/auto-render.min.js"></script>
+  <script defer src="abelian-physics.js"></script>
+  <script defer src="abelian.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to the note</a>
+  <nav aria-label="Note navigation"><a href="index.html">Contents</a> · <a href="experiments.html#exchange">Exchange</a> · <a href="experiments.html#toric">Toric code</a> · <a href="abelian.html" aria-current="page">Abelian data</a> · <a href="#mechanism">Why the formulas fit together</a></nav>
+  <main id="main" tabindex="-1">
+    <h1>10. Same fusion rules, different anyons</h1>
+    <p>The toric code has two excitations, \(e\) and \(m\), whose individual exchanges give \(+1\), yet taking one around the other gives \(-1\). An exchange angle alone cannot describe this. We need both the particles’ <dfn>fusion rules</dfn>—what remains when they combine—and the phases of exchanges and windings. A small integer matrix \(K\) organizes these data for an Abelian phase.</p>
+    <p>Here every particle has an integer column label \(\ell\). Adding labels describes fusion. Labels that differ by \(Kn\), with integer \(n\), differ by an attached local particle and belong to the same topological sector:</p>
+    <div class="equation">\[\ell\sim\ell+Kn,\qquad [\ell]\times[\ell']=[\ell+\ell'],\qquad \mathcal A=\mathbb Z^N/K\mathbb Z^N.\]</div>
+    <p>Brackets mean an equivalence class, not a quantum state. “Local” means transparent to a full winding by every anyon; it need not mean a boson. Try the toric code first, then keep the two labels and switch to double semion. The four-sector fusion group stays the same, while the exchange factors change. The models follow <a href="https://doi.org/10.1103/PhysRevB.93.155121">Lu and Vishwanath, Sec. II A, Eq. (25), and Appendix C</a>.</p>
+
+    <div class="example-row" aria-label="Worked examples"><span>Examples:</span><button data-abelian-example="toric">Two bosons, mutual −1</button><button data-abelian-example="fermion">Their fermionic composite</button><button data-abelian-example="semions">Opposite semions</button><button data-abelian-example="electron">Attach an electron</button></div>
+    <div class="experiment-workspace">
+      <figure>
+        <svg id="abelian-fusion-svg" class="demo-svg" viewBox="0 0 660 245" role="img" aria-label="Fusion as integer-label addition followed by removal of local particles"></svg>
+        <svg id="abelian-phase-svg" class="demo-svg" viewBox="0 0 660 320" role="img" aria-label="Selected exchange and full-winding phases on separate complex unit circles"></svg>
+        <figcaption>The diagram adds labels; it does not depict a collision or a dynamical fusion protocol. Each arrow on a unit circle is a completed operation’s complex multiplier. Blue is exchange of two identical copies of the selected probe; red is that probe’s full winding around the selected target.</figcaption>
+        <div class="visual-actions"><button id="abelian-reset">Reset all settings</button></div>
+      </figure>
+      <div class="controls-card">
+        <h2>Choose a model and particles</h2>
+        <label class="field-label" for="abelian-model">Abelian phase</label>
+        <select id="abelian-model"><option value="toric">Toric code</option><option value="doubleSemion">Double semion</option><option value="laughlin2">Bosonic Laughlin, K = 2</option><option value="laughlin3">Electronic Laughlin, K = 3</option></select>
+        <label class="field-label" for="abelian-probe">Probe sector [ℓ]</label><select id="abelian-probe"></select>
+        <label class="field-label" for="abelian-target">Target sector [ℓ′]</label><select id="abelian-target"></select>
+        <fieldset><legend>Attach a local particle to the probe</legend>
+          <p class="control-note">Use the displayed representative \(\widetilde\ell=\ell+Kn\). The target keeps its listed representative.</p>
+          <label class="field-label" for="abelian-local-one">First component n₁</label><select id="abelian-local-one"><option value="-1">−1</option><option value="0" selected>0</option><option value="1">+1</option></select>
+          <div id="abelian-local-two-field"><label class="field-label" for="abelian-local-two">Second component n₂</label><select id="abelian-local-two"><option value="-1">−1</option><option value="0" selected>0</option><option value="1">+1</option></select></div>
+          <p class="control-note" id="abelian-local-note"></p>
+        </fieldset>
+        <label class="field-label" for="abelian-direction">Exchange and winding direction</label><select id="abelian-direction"><option value="1">Counterclockwise</option><option value="-1">Clockwise</option></select>
+        <div class="readout" aria-live="polite"><span id="abelian-sector-readout"></span><strong id="abelian-exchange-readout"></strong><span id="abelian-mutual-readout"></span><span id="abelian-charge-readout"></span></div>
+      </div>
+    </div>
+    <div class="equation" id="abelian-matrix"></div>
+    <p id="abelian-model-note"></p>
+    <p class="observation" id="abelian-observation" aria-live="polite"></p>
+
+    <h2>Read a row of the winding matrix</h2>
+    <p>Each entry is the full-winding factor \(M_{\ell,\ell'}\), with the probe labeling a row and the target a column. Select an entry to compare it with the probe’s exchange factor above. Attaching a local particle leaves this entire matrix unchanged.</p>
+    <div class="figure-scroll"><table class="reading-map" id="abelian-mutual-table"><caption id="abelian-table-caption">Full-winding factors</caption><thead></thead><tbody></tbody></table></div>
+    <p class="control-note">For the electronic model, the table identifies sectors modulo electrons. Exchange factors are always computed from the displayed integer representative; they are not single-valued on that quotient.</p>
+
+    <h2 id="mechanism">Why the formulas fit together</h2>
+    <p>Think of \(K\) as specifying a coupled statistical response. An excitation \(\ell'\) carries an internal flux vector \(2\pi x\), where \(Kx=\ell'\). A probe \(\ell\) picks up the Aharonov–Bohm-like phase \(2\pi\ell^{\mathsf T}x\) around it. Solving that linear system gives the inverse matrix. This is the physical input of the effective description, not a proof that a microscopic Hamiltonian realizes the phase. The <a href="https://arxiv.org/abs/cond-mat/9506066">K-matrix construction in Wen’s review, Sec. II</a>, develops its field-theory origin.</p>
+    <div class="equation">\[M_{\ell,\ell'}=e^{2\pi i\ell^{\mathsf T}K^{-1}\ell'},\qquad T_\ell=e^{i\pi\ell^{\mathsf T}K^{-1}\ell}.\]</div>
+    <p>These formulas use the positive, counterclockwise convention. Reversing a path conjugates its phase. \(T_\ell\) is the <dfn>topological twist</dfn>, also called the topological spin; for these Abelian representatives it equals the identical-particle exchange factor. It is a complex number. The earlier note’s \(\theta\) was an <em>angle</em>: here \(T_\ell=e^{i\theta_\ell}\). The full self-winding is \(M_{\ell,\ell}=T_\ell^2\). The half-angle exchange formula is part of the specified model: a winding alone would leave a sign ambiguity.</p>
+    <details><summary>Why can two bosons fuse to a fermion?</summary>
+      <p>Expand the quadratic form for the composite. Its two cross terms give</p>
+      <div class="equation">\[T_{\ell+\ell'}=T_\ell T_{\ell'}M_{\ell,\ell'}.\]</div>
+      <p>Thus toric-code \(e\) and \(m\) have \(T_e=T_m=1\), but \(M_{e,m}=-1\), so \(T_{e+m}=-1\). In double semion, \(T_s=i\) and \(T_{\bar s}=-i\), while \(M_{s,\bar s}=1\); their composite \(b\) is bosonic. Both models have fusion group \(\mathbb Z_2\times\mathbb Z_2\), but their exchange data distinguish the phases.</p>
+    </details>
+    <details><summary>What changes when a local particle is attached?</summary>
+      <p>Substitute \(\ell+Kn\) directly into the formulas:</p>
+      <div class="equation">\[\frac{M_{\ell+Kn,\ell'}}{M_{\ell,\ell'}}=e^{2\pi i n^{\mathsf T}\ell'}=1,\qquad \frac{T_{\ell+Kn}}{T_\ell}=e^{i\pi n^{\mathsf T}Kn}.\]</div>
+      <p>If every diagonal entry of \(K\) is even, the last exponent is an even multiple of \(i\pi\): the local particles are bosons. For \(K=3\), attaching one electron gives a minus sign. The sector’s mutual windings and fractional charge survive electron attachment, while its displayed exchange factor changes. Keeping the electron as a distinct object would require a different bookkeeping convention; this note explicitly quotients by all local particles.</p>
+    </details>
+
+    <h2>Charge requires another piece of information</h2>
+    <p>\(K\) specifies statistics, but it does not identify the electromagnetic charge. Supply an integer <dfn>charge vector</dfn> \(t\) to say how the internal components couple to a conserved charge:</p>
+    <div class="equation">\[\frac{q_\ell}{e}=t^{\mathsf T}K^{-1}\ell,\qquad \nu=t^{\mathsf T}K^{-1}t,\qquad \sigma_{xy}=\nu\frac{e^2}{h}.\]</div>
+    <p>Here \(e>0\) is the reference charge unit, and the sign of \(\sigma_{xy}\) follows the chosen spatial and Hall-response orientation. We choose \(t=0\) for the two neutral models and \(t=1\) for the Laughlin models. For electronic \(K=3\), \(\ell=1\) is a \(+e/3\) quasihole and the local \(\ell=-3\) is an electron of charge \(-e\). Attaching it sends \(1\to-2\), changing the charge to \(-2e/3\), reversing the exchange factor, and preserving every mutual winding. These charge and response formulas are given in <a href="https://arxiv.org/abs/1205.3156">Lu and Vishwanath, Sec. II A, Eq. (9)</a>.</p>
+    <p>Charge adds exactly for integer labels; reducing a fusion result to its listed representative can remove a local integer charge. Consequently the charge of a sector is specified modulo \(e\). Equal charge does not generally imply equal statistics: in the neutral toric example all four charges vanish, while their exchanges and windings differ.</p>
+
+    <h2>What the count tells us</h2>
+    <p>The columns of \(K\) generate the local-particle sublattice. Its fundamental cell contains \(|\det K|\) inequivalent integer labels. This gives the number of sectors and the ideal ground-state degeneracy on a closed torus. It describes a gapped topological phase, with the system much larger than its correlation length; a generic finite sample can have a small splitting between these states. A disk with edges is a different problem. See <a href="https://arxiv.org/abs/cond-mat/9506066">Wen, Secs. I–II</a>.</p>
+    <p>For these Abelian theories, the signature of \(K\)—its number of positive eigenvalues minus its number of negative eigenvalues—gives the <dfn>net chiral edge central charge</dfn> \(c_-\). It counts the imbalance between oppositely propagating edge modes: \(c_-=1\) for either displayed Laughlin model, but \(c_-=0\) for toric code and double semion. Zero net chirality does not say that an edge must be gapless. See <a href="https://arxiv.org/abs/1205.3156">Lu and Vishwanath, Sec. II A</a>.</p>
+    <p>This notebook specifies long-distance topological data. It does not calculate a gap, establish a phase from a microscopic Hamiltonian, or predict an experimental interference visibility. The integer-label addition used here has one fusion outcome per pair; it cannot describe the non-Abelian fusion spaces in the <a href="experiments.html#braids">Ising</a> and <a href="experiments.html#fusion">Fibonacci</a> notes.</p>
+    <p class="next-note">A useful comparison is to <a href="experiments.html#toric">derive the toric-code mutual minus sign directly from Pauli strings</a>, then return to see which part of that answer survives when the fusion rules are unchanged.</p>
+  </main>
+  <footer class="page-footer">
+    <div class="export-controls"><label for="abelian-export-figure">Vector figure</label><select id="abelian-export-figure"><option value="abelian-phase-svg">Exchange and winding circles</option><option value="abelian-fusion-svg">Fusion and local-particle reduction</option></select><button id="abelian-export-svg">Save SVG</button><button id="abelian-export-json">Save exact data (JSON)</button></div>
+    <p id="abelian-export-ready" hidden>Prepared file: <a id="abelian-download" href="#">Download</a></p>
+    <p>Rational arithmetic: <a href="abelian-physics.js">model source</a> · <a href="tests/abelian.test.js">checks</a> · <a href="index.html">Contents</a></p>
+    <p><small>Copyright (c) 2026 Neil Yuanting Li. <a href="LICENSE">MIT license</a>.</small></p>
+  </footer>
+  <p id="abelian-announcement" class="sr-only" role="status" aria-live="polite"></p>
+  <noscript><p>The explanatory text is available without JavaScript. Enable JavaScript to calculate the selected model and draw the figures.</p></noscript>
+</body>
+</html>

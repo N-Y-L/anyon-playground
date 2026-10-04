@@ -233,3 +233,34 @@ Here is the sign test. A horizontal dual-lattice $X$ loop crosses a vertical dir
 The display counts crossings of two fixed periodic seams modulo two. For **closed** strings, these parities distinguish trivial cycles from logical ones; open strings still have endpoints and do not yet define a ground-space operation. The point of topological protection is now concrete: a sufficiently small local disturbance cannot implement a whole wrapping string. A sequence of disturbances can. Detecting and correcting their evolving endpoints is the task of a decoder, and [Dennis et al.](https://arxiv.org/abs/quant-ph/0110143) shows why that task matters. The demo tracks string algebra and logical parity, not a noisy memory's lifetime.
 
 The next question depends on what caught your attention: how the pair correlation reaches detectors, how a measured fringe separates charge from statistics, or how to correct a wandering string. The [catalog](catalog.md) gives a small model and a source for each route.
+
+## 9. From a useful picture to a calculation
+
+So far we have often supplied the phase or braid matrix. Where would you get it when studying a new system? Three further experiments open that box.
+
+**Start from eigenstates.** In the [Berry-phase note](../berry.html), a spin follows a slowly turning field with Hamiltonian $H=-\Delta\,\boldsymbol n\cdot\boldsymbol\sigma/2$, where $\Delta>0$ is the gap and $\boldsymbol n$ is a unit vector. Its instantaneous ground state can be written
+
+$$|u(\beta,\phi)\rangle=\begin{pmatrix}\cos(\beta/2)\\e^{i\phi}\sin(\beta/2)\end{pmatrix}.$$
+
+The polar angle is $\beta$; increasing azimuth $\phi$ describes a positive circuit. Neighboring eigenvectors need not have compatible phase conventions. Provided adjacent states have nonzero overlap, multiply their normalized overlaps around the closed loop instead:
+
+$$W_N=\prod_{j=0}^{N-1}\frac{\langle u_{j+1}|u_j\rangle}{|\langle u_{j+1}|u_j\rangle|},\qquad u_N=u_0,\qquad \gamma_N=\arg W_N.$$
+
+Under $|u_j\rangle\mapsto e^{i\alpha_j}|u_j\rangle$, each factor acquires $e^{i(\alpha_j-\alpha_{j+1})}$; the phases cancel around the cycle. Try scrambling those phase choices. The links change; the loop does not. For a fine discretization of the latitude, $\gamma_N$ approaches $-\pi(1-\cos\beta)$ modulo $2\pi$. This is half the negative solid angle. Coarse sampling approximates a different, polygonal path through state space, so convergence matters. [Berry's original paper](https://doi.org/10.1098/rspa.1984.0023) gives the adiabatic phase; [Fukui, Hatsugai, and Suzuki](https://arxiv.org/abs/cond-mat/0503172) use normalized overlaps to build gauge-invariant lattice calculations.
+
+This spin is not an anyon. Change the loop's area and its phase changes continuously: geometric does not mean topological. For a nearly degenerate group of states, overlaps become matrices and transport can mix the states. That is the setting of [Wilczek and Zee](https://doi.org/10.1103/PhysRevLett.52.2111); such mixing alone still does not establish anyons. In an anyon problem we must identify a suitable low-energy space, keep excitations separated, and isolate what depends on the braid.
+
+**Start from fusion data.** The [fusion-basis note](../fusion-basis.html) asks which pair has a definite collective charge. The same three-anyon state has different coefficients in the two association bases. For Fibonacci anyons, the basis transformation involves $d=(1+\sqrt5)/2$: its squared entries give $d^{-2}$ and $d^{-1}$, which add to one. Exchanging the second pair is diagonal in its own fusion basis; conjugating by the basis transformation produces a matrix that mixes the first pair's channels. Checking inverses and the braid relation tests the supplied representation. It does not derive the entire anyon theory, or prove gate universality from a few examples.
+
+**Start from a proposed Abelian theory.** The [$K$-matrix note](../abelian.html) packages fusion and statistics into integer vectors and a bilinear form. The toric code and double-semion model each have four sectors with the same fusion group, but different exchange factors. That is a useful warning: even the list of particles and their fusion rules does not identify all of their physics. An additional charge vector specifies electromagnetic response. Attaching a local particle leaves mutual braiding unchanged; in an electronic theory it can flip an exchange sign. Keeping that distinction explicit prevents a bookkeeping convention from becoming a false physical claim.
+
+## 10. What would a research calculation have to establish?
+
+A good next question is not merely “does the curve look right?” It is “what observation would rule out my interpretation?” The small models suggest concrete checks:
+
+- **Identify the states and energy scales.** Let $\Delta_{\min}$ be the smallest gap to unwanted states along a path and $\delta E$ the energy spread within the fusion space. Slow motion suppresses leakage; excessive time can accumulate relative phases from the splitting. The schematic window $\hbar/\Delta_{\min}\ll T\ll\hbar/\delta E$ names competing scales, not a sufficient adiabaticity test. Leakage also depends on how the Hamiltonian changes and on its transition matrix elements. [Cheng, Galitski, and Das Sarma](https://arxiv.org/abs/1106.2549) work through these effects for Majorana braiding.
+- **Specify the measurement.** Fractional electric charge, a statistical phase, a pair-separation moment, and a fusion probability are different observables. Write the operator or protocol before interpreting the plot.
+- **Test what survives a change of description.** Local eigenvector phases must cancel from a closed Berry loop. A fusion-basis change must transform observables as well as states. Adding a local particle must preserve mutual statistics.
+- **Test what survives a change of physics.** Numerical convergence is different from stability against Hamiltonian perturbations. The solvable toric code supplies exact degeneracy and string algebra; establishing the surrounding phase requires showing how its gap and nonlocal information persist away from that special point.
+
+These are ways to ask sharper questions, not prerequisites for enjoying the pictures. Pick one surprise, reproduce its calculation, and change one assumption at a time.
