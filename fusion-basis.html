@@ -6,7 +6,7 @@
   <meta name="description" content="A visual note on Fibonacci fusion bases: distinguish a passive F-move from a physical braid, inspect channel amplitudes, and compare braid orders.">
   <title>Fusion bases and Fibonacci braiding — Anyons</title>
   <link rel="stylesheet" href="vendor/katex/katex.min.css">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=0.5.2">
   <script defer src="vendor/katex/katex.min.js"></script>
   <script defer src="vendor/katex/auto-render.min.js"></script>
   <script defer src="fusion-basis-physics.js?v=0.5.0"></script>
@@ -23,6 +23,13 @@
     <p>Write the coordinate vectors as \(c_L\) and \(c_R\), always in channel order \((1,\tau)\). In the real symmetric gauge used here,</p>
     <div class="equation">\[c_R=Fc_L,\qquad F=\begin{pmatrix}\varphi^{-1}&amp;\varphi^{-1/2}\\\varphi^{-1/2}&amp;-\varphi^{-1}\end{pmatrix},\qquad \varphi=\frac{1+\sqrt5}{2},\qquad F^{-1}=F.\]</div>
     <p>This <dfn>F-move</dfn> changes coordinates. It does not move the anyons or apply a gate. Fusion trees specify a basis, not a history of measurements. See <a href="https://arxiv.org/abs/0902.3275">Trebst et al., §§2.3–2.4</a> for the fusion-space construction.</p>
+
+      <figure class="manga-figure">
+        <img src="assets/manga-fusion-basis.png" width="1536" height="1024" loading="lazy" alt="A white cat performs an exaggerated foreleg stretch beside three stationary tokens: “Ready for the F-move.” A black cat turns a notebook page with one paw: “Done.” Still frozen in its stretch, the white cat turns its head: “That was it?” The black cat lifts a paw toward the tokens: “Now for R.” The tokens stay in their row.">
+        <figcaption>Turning the page stands for changing fusion basis: the coefficients change while the physical state stays fixed. No fusion measurement occurs. The announced \(R\) step will exchange a pair; that motion has not begun. <a href="assets/manga-fusion-basis.png">Open full-size image</a>.
+          <details><summary>Read the dialogue</summary><p>White cat: “Ready for the F-move.” Black cat: “Done.” White cat: “That was it?” Black cat: “Now for R.”</p></details>
+        </figcaption>
+      </figure>
 
     <div class="example-row"><label for="fb-initial">Prepare in the left basis:</label><select id="fb-initial"><option value="vacuum">Definite pair-12 charge 1</option><option value="tau">Definite pair-12 charge τ</option><option value="plus">Equal real superposition</option><option value="plusY">Equal superposition with relative i</option></select><button id="fb-reset">Reset note</button></div>
     <div id="fb-preparation" class="equation"></div>
