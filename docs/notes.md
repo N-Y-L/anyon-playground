@@ -214,6 +214,14 @@ A $Z$ measurement reads the original pair's fusion charge: $+1$ means vacuum and
 
 For weakly split fusion states, transport should avoid bulk excitations yet finish before the residual splitting accumulates an appreciable relative dynamical phase. Indefinitely slower motion is not automatically closer to the ideal braid.
 
+### A fusion state can retain information about the route
+
+The [Ising note's illustrated thought experiment](../experiments.html#braids) makes two earlier ideas meet. Suppose coherent control applies either $I$ or a full middle-pair winding, $U=B_2^2=e^{-i\pi/4}X$, to an initial fusion state $|\chi\rangle$. The positions return in either alternative. A balanced recombiner gives
+
+$$P_0=\frac{1+\operatorname{Re}[e^{i\phi}\langle\chi|U|\chi\rangle]}2,$$
+
+where $\phi$ includes the other controllable relative phases and the output measurement does not resolve fusion. For $|\chi\rangle=|0\rangle$, the alternatives leave orthogonal records and $P_0=1/2$. For $|\chi\rangle=|+\rangle=(|0\rangle+|1\rangle)/\sqrt2$, the records agree up to phase and $P_0=[1+\cos(\phi-\pi/4)]/2$. Both preparations have the same total vacuum charge. Entanglement with an unmeasured fusion state can remove path interference while the joint state remains pure. A braid's common phase, invisible in an isolated encoded-state measurement, can become a relative phase between coherent alternatives. This ideal controlled operation is not a device model; [Bonderson, Shtengel, and Slingerland](https://arxiv.org/abs/0707.4206) develop the broader non-Abelian interferometry theory.
+
 ## Can the same anyons bunch and antibunch?
 
 It is tempting to picture fractional statistics as a fixed halfway point between bosons and fermions. Test that picture by holding the exchange angle fixed and moving two prepared wave packets farther apart. In [Vishveshwara and Cooper's model](https://arxiv.org/abs/0908.3945), their mean squared separation can cross from above to below a distinguishable-particle reference. Nothing in the exchange rule has changed.

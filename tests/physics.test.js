@@ -130,6 +130,45 @@ test('Ising generators satisfy the braid relations, including complex global pha
   }
 });
 
+test('A coherent identity-versus-Ising-winding comparison retains the full braid phase', () => {
+  // U=B2^2=exp(-i*pi/4)X, including the phase that becomes relative between
+  // the two path branches. Test both columns, not only fusion probabilities.
+  const phase = [Math.SQRT1_2, -Math.SQRT1_2];
+  sameState(P.applyBraidWord([2, 2], 'vacuum'), [[0, 0], phase]);
+  sameState(P.applyBraidWord([2, 2], 'fermion'), [phase, [0, 0]]);
+
+  const preparations = [
+    { name: 'vacuum', state: [[1, 0], [0, 0]] },
+    { name: 'plus', state: [[Math.SQRT1_2, 0], [Math.SQRT1_2, 0]] }
+  ];
+  for (const { name, state } of preparations) {
+    const braided = P.applyBraidWord([2, 2], state);
+    for (const phi of [-0.7, 0, Math.PI / 4, Math.PI / 2, Math.PI, 5 * Math.PI / 4, 2 * Math.PI]) {
+      // Construct all four path x fusion amplitudes independently. The two
+      // paths are orthogonal, whether their associated fusion states are or not.
+      const armA = state.map(([re, im]) => [re * Math.SQRT1_2, im * Math.SQRT1_2]);
+      const armB = braided.map(([re, im]) => [
+        (Math.cos(phi) * re - Math.sin(phi) * im) * Math.SQRT1_2,
+        (Math.sin(phi) * re + Math.cos(phi) * im) * Math.SQRT1_2
+      ]);
+      close(norm(armA.concat(armB)), 1);
+
+      // H acts only on the path coordinate. Sum over the unobserved fusion
+      // outcomes at each port; do not renormalize either port separately.
+      const output = [1, -1].map(sign => armA.map(([re, im], channel) => [
+        (re + sign * armB[channel][0]) * Math.SQRT1_2,
+        (im + sign * armB[channel][1]) * Math.SQRT1_2
+      ]));
+      const p0 = norm(output[0]), p1 = norm(output[1]);
+      close(norm(output.flat()), 1);
+      close(p0 + p1, 1);
+      const expectedP0 = name === 'vacuum' ? 0.5 : (1 + Math.cos(phi - Math.PI / 4)) / 2;
+      close(p0, expectedP0);
+      close(p1, 1 - expectedP0);
+    }
+  }
+});
+
 test('Noncommuting exchanges yield the stated measurable order effect', () => {
   const a = P.applyBraidWord([1, 2], 'plus');
   const b = P.applyBraidWord([2, 1], 'plus');

@@ -216,6 +216,19 @@
         <p>Clockwise exchanges use \(B_j^\dagger\). Reversing order alone does not undo a sequence; undoing requires reversing order <em>and</em> inverting every exchange. The exact phases and basis convention follow <a href="https://arxiv.org/abs/0707.1889">Nayak et al., Sec. II.A.1 and Eq. (50)</a>.</p>
         <p>This is ideal unitary evolution inside a fixed fusion space. It does not simulate a Majorana device, preparation or readout dynamics, finite-separation splitting, or error correction. Ising braiding alone is not a universal set of quantum gates.</p>
       </details>
+      <h2 id="braids-record-title">The fusion state can keep a record</h2>
+      <p>Now let two <em>coherent</em> alternatives either do nothing or fully wind the middle pair. Both finish at the same positions, but the winding applies \(U=B_2^2=e^{-i\pi/4}X\). This is an ideal coherent-control thought experiment. The four anyons stay in the same total-vacuum sector; the alternatives may leave different states <em>within</em> that sector.</p>
+      <figure style="max-width:760px"><img src="assets/fusion-record.png" width="1536" height="1024" loading="lazy" style="display:block;width:100%;height:auto" alt="Two coherent alternatives end at identical four-anyon positions. For input zero, no winding leaves zero and full winding leaves one: orthogonal collective records erase the fringe. For input plus, both leave plus up to phase and a full fringe survives. A puzzled observer says, But I didn't look!"><figcaption>The brackets label the whole group's encoded fusion state, with overall phases suppressed: \(0,1,+\) mean \(|0\rangle,|1\rangle,(|0\rangle+|1\rangle)/\sqrt2\). The plotted sketches indicate contrast; the equations give the phase offset. These are alternative quantum histories, not snapshots of measured states.</figcaption></figure>
+      <p>For initial fusion state \(|\chi\rangle\), a balanced recombiner that counts output 0 without resolving fusion gives</p>
+      <div class="equation">\[P_0=\frac{1+\operatorname{Re}\!\left[e^{i\phi}\langle\chi|U|\chi\rangle\right]}{2}.\]</div>
+      <p>Here \(\phi\) collects the other controllable relative phases. With \(|\chi\rangle=|0\rangle\), the two fusion records are orthogonal, so \(P_0=1/2\). With \(|\chi\rangle=|+\rangle\), they agree up to phase and \(P_0=[1+\cos(\phi-\pi/4)]/2\). Nobody has to inspect the record: tracing over an orthogonal record already removes the interference term. The full joint state can remain pure.</p>
+      <details><summary>Where the overlap comes from—and why the braid's common phase matters here</summary>
+        <p>Let \(|a\rangle,|b\rangle\) label the control alternatives. Before recombination the normalized joint state is</p>
+        <div class="equation">\[|\Psi\rangle=\frac{|a\rangle|\chi\rangle+e^{i\phi}|b\rangle U|\chi\rangle}{\sqrt2}.\]</div>
+        <p>Output 0 projects the control onto \((|a\rangle+|b\rangle)/\sqrt2\), leaving the unnormalized fusion vector \((|\chi\rangle+e^{i\phi}U|\chi\rangle)/2\). Its squared norm is the probability above. Thus the fringe visibility is \(|\langle\chi|U|\chi\rangle|\). The factor \(e^{-i\pi/4}\) cancels in a lone encoded-state measurement but shifts the fringe when only one coherent alternative acquires it.</p>
+      </details>
+      <p>This connects <a href="#interference">visibility in the interferometer</a> with the collective state manipulated here. Real anyon interferometers require a specified probe and transport protocol; <a href="https://arxiv.org/abs/0707.4206">Bonderson, Shtengel, and Slingerland</a> develop that measurement theory.</p>
+
       <p class="next-note">The measurement matters as much as the exchange rule. <a href="#correlations">Next: follow that lesson into a quantum Hall pair calculation.</a></p>
     </section>
 
