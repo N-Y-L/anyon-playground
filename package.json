@@ -1,8 +1,8 @@
 {
   "name": "anyon-playground",
-  "version": "0.5.5",
+  "version": "0.6.0",
   "private": true,
-  "description": "Small interactive experiments and notes about anyon physics",
+  "description": "Connected visual physics notes and calculations on anyons",
   "author": "Neil Yuanting Li",
   "license": "MIT",
   "scripts": {

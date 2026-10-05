@@ -1,54 +1,40 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Anyons: visual notes — Neil Yuanting Li</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Connected physics notes on quasiparticles, Laughlin quasiholes, pair preparation, saddle dynamics and the interpretation of anyon measurements.">
+  <title>Anyons: visual physics notes</title>
+  <link rel="stylesheet" href="docs/reading.css">
 </head>
 <body>
-  <h1>Anyons: visual notes</h1>
-  <p>Neil Yuanting Li</p>
-  <p>Return two identical particles to their starting positions. The arrangement is unchanged, but the quantum state can remember how they got there. In two dimensions, exchange permits more than the boson or fermion sign. The excitations that use those possibilities are called <b>anyons</b>.</p>
-  <p>These notes ask what that memory does, how to calculate it, and what a measurement would actually reveal. The figures compare things that are easy to confuse: the same final positions with different winding, the same local defects with different stored information, or the same fusion rules with different statistics. Each control changes a specified model; the equation beside it says what is being calculated.</p>
-  <p>Assumed background: graduate quantum mechanics and some condensed matter. No quantum field theory or prior anyon knowledge. For the physical starting point—quasiparticles, an energy gap, and why electrons can support fractional excitations—read <a href="docs/notes.html#how-can-electrons-make-something-that-is-not-an-electron">how an anyon arises</a>. The <a href="docs/notes.html">connected notes</a> follow the sequence below; <a href="docs/references.html">annotated sources</a> lead into the research literature.</p>
-  <hr>
-  <h2>Identify a phase, then measure it</h2>
-  <table class="reading-map">
-    <thead><tr><th>Note</th><th>What to work out</th></tr></thead>
-    <tbody>
-      <tr><td><a href="experiments.html#exchange">Exchange and winding</a></td><td>Distinguish a full winding from going out and retracing, even when their planar tracks coincide.</td></tr>
-      <tr><td><a href="experiments.html#interference">Interference</a></td><td>Separate displacement of a fringe from loss of coherence. Relate a phase shift to measured output probabilities.</td></tr>
-      <tr><td><a href="berry.html">Calculate a geometric phase</a></td><td>Recover a closed-loop phase from eigenvectors with arbitrary phase choices, and test numerical convergence.</td></tr>
-    </tbody>
-  </table>
-  <h2>Build a microscopic example, then compare theories</h2>
-  <table class="reading-map">
-    <thead><tr><th>Note</th><th>What to work out</th></tr></thead>
-    <tbody>
-      <tr><td><a href="experiments.html#toric">Toric-code strings</a></td><td>Derive mutual statistics from Pauli operators, and see why a string excites only its endpoints.</td></tr>
-      <tr><td><a href="experiments.html#memory">Topological memory</a></td><td>Close two different strings: both remove every defect, but only one changes a logical loop measurement.</td></tr>
-      <tr><td><a href="abelian.html">Compare Abelian theories</a></td><td>Tell toric code from double semion despite identical fusion rules; determine what attaching an electron changes.</td></tr>
-    </tbody>
-  </table>
-  <h2>Build a collective state space, then act on it</h2>
-  <table class="reading-map">
-    <thead><tr><th>Note</th><th>What to work out</th></tr></thead>
-    <tbody>
-      <tr><td><a href="experiments.html#fusion">Fibonacci fusion paths</a></td><td>Construct the allowed basis states at fixed total charge, without assigning a separate spin to each anyon.</td></tr>
-      <tr><td><a href="fusion-basis.html">Fusion bases and braiding</a></td><td>Distinguish a change of coordinates from a physical exchange; construct the braid matrix and test its identities.</td></tr>
-      <tr><td><a href="experiments.html#braids">Ising braids and readout</a></td><td>Find a measurement that distinguishes braid orders even when their original fusion probabilities agree.</td></tr>
-    </tbody>
-  </table>
-  <h2>A case study: statistics meets preparation</h2>
-  <p><a href="experiments.html#correlations">Do anyons bunch?</a> Hold the statistics fixed and change a lowest-Landau-level pair preparation. Its mean squared separation can pass from above to below a distinguishable-particle reference. Follow the angular-state weights to see why; a statistical angle alone does not specify a correlation experiment.</p>
-  <p>Within each group, follow the listed order on a first pass. These are distinct models: the toric code is a spin Hamiltonian, Fibonacci and Ising examples specify fusion and braid data, and the pair calculation specifies a quantum Hall preparation. The spin in the Berry note teaches a calculation method; it is not itself an anyon. Assumptions, units, conventions, and sources are given where they are used.</p>
-  <h2>Take a calculation further</h2>
-  <p>The <a href="docs/catalog.html">inspiration catalog</a> connects these calculations to packet dynamics, experimental interference, quantum gates, and error correction. Implemented models and proposed extensions are identified separately. The <a href="docs/notes.html#what-would-a-research-calculation-have-to-establish">research questions</a> collect the checks needed to connect ideal anyon data to a physical system.</p>
-  <hr>
-  <h2>Use and modify</h2>
-  <p>Everything runs in your browser, including the equations. To explore offline, download the ZIP from the <a href="https://github.com/N-Y-L/anyon-playground">GitHub repository</a>, extract it, and open <code>index.html</code>. No installation is needed; external sources need a connection. Interactive figures can be saved as SVG, with parameters and results in JSON.</p>
-  <p><a href="https://github.com/N-Y-L/anyon-playground#readme">Source code and setup</a> · <a href="README.md">Local file guide</a> · <a href="LICENSE">MIT license</a></p>
-  <p><small>Copyright (c) 2026 Neil Yuanting Li.</small></p>
+  <nav aria-label="Main navigation"><a href="docs/notes.html">Read the notes</a><a href="docs/catalog.html">Further calculations</a><a href="docs/references.html">Sources</a><a href="https://github.com/N-Y-L/anyon-playground">Code</a></nav>
+  <main>
+    <h1>Anyons: visual physics notes</h1>
+    <p>Neil Yuanting Li</p>
+    <p>An electron fluid can carry a movable defect with a fraction of an electron’s charge. Exchanging two such defects need not give the electrons’ minus sign. What is the object being moved—and how does its exchange rule become a measured signal?</p>
+    <p><a href="docs/notes.html"><strong>From an electron fluid to a two-particle experiment →</strong></a></p>
+    <p>The connected notes construct a quasihole in a many-electron wavefunction, calculate its charge and statistical phase, then follow two effective particles through preparation, a saddle potential and a detector comparison. Three embedded figures compare the same anyons in different states, the resulting quadratic dynamics, and two references for an extended collider.</p>
+    <table><thead><tr><th>Part of the argument</th><th>The calculation</th></tr></thead><tbody>
+      <tr><td><a href="docs/notes.html#what-is-moving">A particle made from a material</a></td><td>What changes in a one-phonon state; what identifies a quasihole in the electron density.</td></tr>
+      <tr><td><a href="docs/notes.html#make-a-hole-without-removing-an-electron">Charge and exchange</a></td><td>The same localized density deficit determines fractional charge and a Berry-phase difference.</td></tr>
+      <tr><td><a href="docs/notes.html#replace-the-electron-fluid-by-two-effective-particles">Two preparations, one exchange rule</a></td><td>Project a position state, derive its angular weights and compare its separation moment with a generalized coherent state.</td></tr>
+      <tr><td><a href="docs/notes.html#let-a-saddle-amplify-the-difference">Dynamics and measurement</a></td><td>Derive contracting and expanding quadratic moments, then identify what a detector still needs.</td></tr>
+      <tr><td><a href="docs/notes.html#when-a-splitter-has-an-interior">The reference is part of the experiment</a></td><td>Separate exchange interference from a single packet’s circulation through an extended collider.</td></tr>
+    </tbody></table>
+    <h2>Independent visual notes</h2>
+    <p>These notebooks develop related models and methods. Each supplies its own assumptions; their excitations belong to different physical theories.</p>
+    <table><thead><tr><th>Notebook</th><th>Physical question</th></tr></thead><tbody>
+      <tr><td><a href="experiments.html#exchange">Exchange paths</a> · <a href="experiments.html#interference">Interference</a></td><td>What distinguishes a winding from a retraced path, and what makes its phase observable?</td></tr>
+      <tr><td><a href="berry.html">Berry phase</a></td><td>How does a cyclic product of eigenvector overlaps give a gauge-invariant geometric phase?</td></tr>
+      <tr><td><a href="experiments.html#correlations">Localized-pair correlations</a></td><td>How do the angular-state weights of the 2010 preparation change a radial moment?</td></tr>
+      <tr><td><a href="experiments.html#toric">Toric-code strings</a> · <a href="experiments.html#memory">Topological memory</a></td><td>How does an explicit spin Hamiltonian support excitations with mutual statistics and nonlocal information?</td></tr>
+      <tr><td><a href="abelian.html">Abelian theories</a></td><td>How can equal fusion rules coexist with different exchange and winding phases?</td></tr>
+      <tr><td><a href="experiments.html#fusion">Fusion paths</a> · <a href="fusion-basis.html">Fusion bases</a></td><td>How are collective state spaces counted, and how are neighboring-pair operations expressed in one basis?</td></tr>
+      <tr><td><a href="experiments.html#braids">Ising braids and readout</a></td><td>When does a measurement reveal the order of two noncommuting exchanges?</td></tr>
+    </tbody></table>
+    <h2>Read offline or change a calculation</h2>
+    <p>Download the repository ZIP, extract it, and open <code>index.html</code>. The text, equations and controls work offline; only external sources require a connection. Figures can be saved as SVG, with numerical data in JSON. The <a href="README.md">README</a> describes model files, tests and how to rebuild the reading copies.</p>
+  </main>
+  <footer>Copyright (c) 2026 Neil Yuanting Li · <a href="LICENSE">MIT license</a></footer>
 </body>
 </html>
