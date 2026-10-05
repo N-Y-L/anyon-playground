@@ -42,7 +42,25 @@ The example will be an **electron fluid**: a state of interacting electrons with
 
 Take spin-polarized electrons confined to a plane in a uniform magnetic field. Write the field as $\mathbf B=-B_0\hat{\mathbf z}$, with $B_0>0$, choose $z_j=x_j+iy_j$, and use the symmetric gauge $\mathbf A=(B_0y/2,-B_0x/2,0)$. With electron charge $-e$, $e>0$, these conventions make lowest-Landau-level wavefunctions a holomorphic function of the $z_j$ times a Gaussian and make the statistical angles below positive for counterclockwise exchange.
 
-The one-electron cyclotron motion has energies $\hbar\omega_c(n+1/2)$, where $\omega_c=eB_0/m_e$ and $m_e$ is the band mass in the electron model, and magnetic length $\ell_B=\sqrt{\hbar/(eB_0)}$. Each Landau level has $A/(2\pi\ell_B^2)$ orbitals in area $A$. Freezing the cyclotron energy therefore leaves many possible states: it does not freeze where an electron's orbit is centered. At fractional **filling** $\nu=2\pi\ell_B^2n_e$, with mean electron number density $n_e$, the lowest level is partly occupied. Interactions select a many-electron state within that large degeneracy.
+The one-electron Hamiltonian is $H=\boldsymbol\Pi^2/(2m_e)$, where $\boldsymbol\Pi=\mathbf p+e\mathbf A$ and $m_e$ is the band mass. Since $[\Pi_x,\Pi_y]=i\hbar eB_0$, the operator $c=\ell_B(\Pi_x+i\Pi_y)/(\sqrt2\hbar)$ obeys $[c,c^\dagger]=1$. Thus $H=\hbar\omega_c(c^\dagger c+1/2)$, with $\omega_c=eB_0/m_e$ and $\ell_B=\sqrt{\hbar/(eB_0)}$. These equally spaced cyclotron energies are the **Landau levels**.
+
+We need their wavefunctions, not just their energies. In the lowest level, $c\varphi=0$ becomes
+
+$$\begin{gathered}
+\left(\partial_{\bar z}+\frac{z}{4\ell_B^2}\right)\varphi=0,\qquad
+\partial_{\bar z}=\frac12(\partial_x+i\partial_y),\\
+\varphi(z,\bar z)=f(z)e^{-|z|^2/(4\ell_B^2)}.
+\end{gathered}$$
+
+The Gaussian cancels the term proportional to $z$; the remaining function $f$ is holomorphic. Its monomials give normalized orbitals
+
+$$\begin{gathered}
+\varphi_j(z)=\frac{[z/(\sqrt2\ell_B)]^j}{\sqrt{2\pi\ell_B^2j!}}
+ e^{-|z|^2/(4\ell_B^2)},\qquad j=0,1,\ldots,\\
+\langle |z|^2\rangle_j=2\ell_B^2(j+1).
+\end{gathered}$$
+
+The normalization and radius follow by setting $t=|z|^2/(2\ell_B^2)$ in the radial integral and using $\int_0^\infty t^j e^{-t}dt=j!$. Increasing $j$ moves the orbital weight outward without changing its cyclotron energy. A large disk of radius $R$ accommodates roughly $R^2/(2\ell_B^2)=A/(2\pi\ell_B^2)$ such orbitals, with boundary corrections. Freezing the cyclotron energy therefore leaves many possible states: it does not freeze where an electron's orbit is centered. At fractional **filling** $\nu=2\pi\ell_B^2n_e$, with mean electron number density $n_e$, the lowest level is partly occupied. Interactions select a many-electron state within that large degeneracy. [Tong, §1.4.3](https://arxiv.org/abs/1606.06687), gives the symmetric-gauge construction; the field orientation here fixes our choice of $z$.
 
 When interaction energies are small compared with $\hbar\omega_c$, mixing with higher levels is weak and this lowest-level projection is useful. Within the partly filled level, those interactions still do all the work of selecting the state. For $\nu=1/m$, take odd $m\geq3$ in the Laughlin liquid regime, with $m=3$ as the main example. Laughlin proposed
 
@@ -92,7 +110,7 @@ $$\begin{gathered}
 
 Screening is the input that fixes the integral, rather than merely saying that the density returns to its bulk value. It holds in the plasma liquid regime used to describe the Laughlin fluid here; the polynomial alone has not proved it. Translating back to electrons gives a localized physical charge $+e/m$, which has not been electrically neutralized. On a finite droplet its compensating charge remains outside $D$.
 
-A complementary check is adiabatic insertion of one electromagnetic flux quantum $h/e$: Hall transport of magnitude $|\sigma_{xy}|=e^2/(mh)$ transfers charge of magnitude $|\sigma_{xy}|h/e=e/m$. This uses the Hall response of the same phase, so it checks the charge without furnishing an independent derivation of that response.
+A complementary check is adiabatic insertion of one electromagnetic flux quantum $h/e$ through a small region. Faraday's law, $\oint\mathbf E\cdot d\mathbf l=-d\Phi/dt$, produces a circulating electric field. The Hall conductivity $\sigma_{xy}$ relates the transverse current density to this field, so radial charge transport across an enclosing circle has magnitude $|I_r|=|\sigma_{xy}\dot\Phi|$. Integrating in time with $|\sigma_{xy}|=e^2/(mh)$ gives $|\Delta Q|=|\sigma_{xy}|h/e=e/m$; the insertion direction chooses deficit or excess. This uses the Hall response of the same phase, so it checks the charge without furnishing an independent derivation of that response.
 
 What licenses treating $\eta$ as a position of a mobile particle? A smooth repulsive potential for electrons can pin the deficit. Moving the potential slowly transports a family of low-energy many-electron states with a localized density deficit following it. This works when the bulk gap persists, the quasihole stays away from the edge and other cores, and the motion does not excite the fluid across $\Delta$. Removing or weakening the pinning permits superpositions of different positions. An effective wavefunction for the quasihole describes those superpositions. It is a new description of states made from the same electrons, not another elementary constituent added to the Hamiltonian.
 
@@ -143,7 +161,7 @@ $$\begin{aligned}
 &\quad|\eta_1-\eta_2|^{-2/m}.
 \end{aligned}$$
 
-Because the unnormalized electron state is holomorphic in the parameters, differentiating its norm gives the normalized Berry connection
+Because the unnormalized electron state is holomorphic in the parameters, $\partial_{\eta_a}\mathcal Z_2=\langle\Phi|\partial_{\eta_a}\Phi\rangle$. Differentiating $|\Psi\rangle=\mathcal Z_2^{-1/2}|\Phi\rangle$ also contributes $-\tfrac12d\log\mathcal Z_2$. Combining these terms gives the normalized Berry connection
 
 $$\begin{aligned}
 \mathcal A&=i\langle\Psi|d\Psi\rangle\\
@@ -264,7 +282,7 @@ $$
 
 Thus the $2\ell^2$ left at $j=0$ is the guiding-center zero-point width, not an omitted cyclotron term. Matched differences of full-position and guiding-center radial moments agree, because the extra frozen contribution cancels.
 
-For distinguishable particles with the same localization labels and ordinary coherent packets, the mean is $\langle r^2\rangle_{\rm d}=(s^2+2)\ell^2$. Define the excess relative to this reference by
+For the distinguishable reference, prepare two independent guiding-center coherent packets centered at $(d/2,0)$ and $(-d/2,0)$. Each has $\operatorname{Var}X_i=\operatorname{Var}Y_i=\ell^2/2$. Independence gives $\operatorname{Var}x=\operatorname{Var}y=\ell^2$, while $\langle x\rangle=d$ and $\langle y\rangle=0$. Thus $\langle r^2\rangle_{\rm d}=d^2+2\ell^2=(s^2+2)\ell^2$. This reference fixes both the labels and the packet widths. Define the excess relative to it by
 
 $$\chi=\frac{\langle r^2\rangle-\langle r^2\rangle_{\rm d}}{4\ell^2}.
 $$
@@ -432,6 +450,10 @@ A more general quadratic potential provides a useful extension. For one guiding 
 
 The pair calculation has made a reference indispensable: “more separated” meant more separated than a particular distinguishable preparation. A collider poses the same problem in another form. What should count as the result of two distinguishable particles in an apparatus with its own coherent paths?
 
+For more background on what a channel carries, the optional [transport derivation of incoming flux and mean current](https://n-y-l.github.io/quantum-transport-notes/docs/notes.html#counting) supplies the connection to reservoirs. Return here for the two-particle calculation: a one-particle transmission probability alone does not give a coincidence probability.
+
+<span id="point-splitter"></span>
+
 Start with a pointlike balanced splitter and two identical incident packets, one in each input channel. A **channel** here is a propagating input or output mode. For a symmetric lossless splitter write its one-particle scattering matrix as
 
 $$\begin{gathered}
@@ -451,7 +473,11 @@ At a balanced splitter, these are zero and one. The result assumes matching inte
 
 A drain is an output reservoir in which particles are collected. An extended collider can keep a packet circulating before letting it out. In the model of [Samal, Vishveshwara, Gefen and Väyrynen](https://arxiv.org/abs/2412.19674), two channels couple through a loop around an **antidot**, a depleted region supporting a closed edge path. An **edge channel** is a low-energy mode propagating along the boundary of a Hall fluid. A particle may complete different numbers of loops before reaching a drain. These delayed alternatives interfere even when only one source is active. This is single-particle self-interference; no partner is required.
 
-Take identical synchronized pure input packets with common spectral amplitude $\phi(k)$ and probability $p(k)=|\phi(k)|^2$, with $\int p(k)dk=1$, and the detectors count all outgoing times. Define
+A smaller example of this one-particle interference is the [side-orbital calculation](https://n-y-l.github.io/quantum-transport-notes/docs/notes.html#side-orbital): a coherent excursion into a second orbital can cancel transmission completely. It is a different device, useful for seeing why a one-source reference must retain interference inside the apparatus. After that optional detour, resume with the packet calculation below.
+
+<span id="collider-packets"></span>
+
+Take channels with the same linear dispersion and outgoing spectral modes normalized by $\langle k|k^\prime\rangle=\delta(k-k^\prime)$. Use identical synchronized pure input packets with common spectral amplitude $\phi(k)$ and probability $p(k)=|\phi(k)|^2$, with $\int p(k)dk=1$, and the detectors count all outgoing times. Define
 
 $$\begin{aligned}
 a&=\int p(k)|T(k)|^2dk,\\
@@ -466,7 +492,7 @@ $$\begin{aligned}
 &\quad\big[T(k)T(k')\pm R(k)R(k')\big].
 \end{aligned}$$
 
-The first term leaves both input particles in their original channels; the second swaps which input supplies each detector. Integration over both detection times uses Fourier orthogonality to pair equal wave numbers, giving $P_{11}=\int dk\,dk'|\mathcal A|^2$. The two squared terms yield $a^2+b^2$. The cross term factorizes into $J^2$, so
+The first term leaves both input particles in their original channels; the second swaps which input supplies each detector. Counting all outgoing temporal modes is equivalent to summing probabilities over these orthogonal spectral modes, giving $P_{11}=\int dk\,dk'|\mathcal A|^2$. The two squared terms yield $a^2+b^2$. The cross term factorizes into $J^2$, so
 
 $$\begin{aligned}
 P_{11}^{B/F}&=a^2+b^2\pm2\operatorname{Re}J^2\\
@@ -509,7 +535,7 @@ This is a boson/fermion theory of a noninteracting extended scatterer, published
 
 ## What an interferometer has actually measured
 
-A different route keeps the phase itself in view. In a quantum Hall interferometer, two weak tunneling alternatives for an edge quasiparticle enclose a region of the fluid. Their relative amplitude produces an oscillatory contribution to the measured conductance,
+A different route keeps the phase itself in view. In a quantum Hall interferometer, two weak tunneling alternatives for an edge quasiparticle enclose a region of the fluid. Their relative amplitude produces an oscillatory contribution to the measured conductance—the change in mean current per small change in applied voltage—
 
 $$\begin{gathered}
 G_{\rm osc}\propto\cos\Theta,\\

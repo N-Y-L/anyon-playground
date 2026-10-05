@@ -14,12 +14,18 @@ references for an extended boson/fermion collider. Ten independent notebooks
 remain available for exchange, interference, Berry numerics, toric strings and
 memory, Abelian data, fusion paths and bases, Ising braids, and localized pairs.
 
+Start with the connected anyon notes. The separate
+[quantum-transport notes](https://n-y-l.github.io/quantum-transport-notes/)
+provide optional, linked detours on channel current and single-particle
+interference at the collider section; they are not prerequisites for the
+quasihole construction. Each detour links back to its point of departure.
+
 ## Open
 
 Use the [website](https://n-y-l.github.io/anyon-playground/), or download the
 repository ZIP, extract it, and double-click `index.html`. No installation or
 internet connection is needed for the text, equations or calculations. KaTeX
-and its fonts are bundled locally. Source links require internet.
+and its fonts are bundled locally. Source links and the companion transport site require internet.
 
 Default figures and typeset math in `docs/` are included in the saved HTML,
 so that the connected notes also remain readable without JavaScript. Controls

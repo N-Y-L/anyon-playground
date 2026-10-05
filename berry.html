@@ -14,7 +14,7 @@
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to the note</a>
-  <nav aria-label="Note navigation"><a href="index.html">Contents</a> · <a href="experiments.html#exchange">Exchange</a> · <a href="experiments.html#interference">Interference</a> · <a href="berry.html" aria-current="page">Berry phase</a> · <a href="experiments.html#toric">Toric code</a> · <a href="experiments.html#memory">Memory</a> · <a href="abelian.html">Abelian theories</a> · <a href="experiments.html#fusion">Fusion paths</a> · <a href="fusion-basis.html">Fusion bases</a> · <a href="experiments.html#braids">Ising braids</a> · <a href="experiments.html#correlations">Correlations</a></nav>
+  <nav aria-label="Note navigation"><a href="index.html">Contents</a> · <a href="docs/notes.html">Connected notes</a> · <a href="experiments.html#exchange">Exchange</a> · <a href="experiments.html#interference">Interference</a> · <a href="berry.html" aria-current="page">Berry phase</a> · <a href="experiments.html#toric">Toric code</a> · <a href="experiments.html#memory">Memory</a> · <a href="abelian.html">Abelian theories</a> · <a href="experiments.html#fusion">Fusion paths</a> · <a href="fusion-basis.html">Fusion bases</a> · <a href="experiments.html#braids">Ising braids</a> · <a href="experiments.html#correlations">Correlations</a></nav>
   <main id="main" tabindex="-1">
     <h1>Calculate a geometric phase</h1>
     <p>An eigensolver gives you a state vector, but its overall phase is arbitrary. Run it again at a nearby field direction and the phase may be different. How can these unreliable arrows reveal a reliable Berry phase? Close the loop: every arbitrary phase then has a partner that cancels it.</p>
@@ -55,7 +55,7 @@
     <figure><svg id="berry-links-svg" class="demo-svg secondary-svg" viewBox="0 0 660 290" role="img" aria-label="Individual overlap phases with and without local eigenvector rephasing"></svg><figcaption>Black dashed line: g = 0. Blue dots: current phase choices. The vertical guide selects a link; phases use the principal interval from −π to π. Apparent jumps at its edges are changes of angle branch.</figcaption></figure>
     <div class="equation" id="berry-selected-equation"></div>
     <p id="berry-selected-detail"></p>
-    <details><summary>Why does the overlap product give the geometric phase?</summary>
+    <details open><summary>Why does the overlap product give the geometric phase?</summary>
       <p>For the displayed spinor at fixed β, a small azimuthal step gives a link whose phase is \(-\sin^2(\beta/2)\,d\phi\) to first order:</p>
       <div class="equation">\[\begin{aligned}\langle u(\phi+d\phi)|u(\phi)\rangle&amp;=1-i\sin^2(\beta/2)\,d\phi+O(d\phi^2),\\ \gamma&amp;=-\oint\sin^2(\beta/2)\,d\phi=-\frac{\Omega}{2}\pmod{2\pi}.\end{aligned}\]</div>
       <p>Multiplying the normalized links adds these infinitesimal phases in the continuum limit; local rephasings still cancel around the closed circuit.</p>
