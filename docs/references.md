@@ -8,6 +8,8 @@ Links beside the [calculations](notes.md) identify their scientific starting poi
 
 [Laughlin, 1983](https://doi.org/10.1103/PhysRevLett.50.1395) constructs the fractional Hall state and its charged excitations. [Arovas, Schrieffer and Wilczek, 1984](https://doi.org/10.1103/PhysRevLett.53.722) compute quasihole statistics by Berry transport. [Leinaas and Myrheim, 1977](https://doi.org/10.1007/BF02727953) give the configuration-space argument for allowed particle statistics.
 
+[Fulsebakke and collaborators, 2023](https://doi.org/10.21468/SciPostPhys.14.6.149) supply the numerical Laughlin quasihole density profile reproduced in the notes. Figure 11(a) compares finite spherical systems with a thermodynamic extrapolation; the [figure caption](notes.md#figure-charge) gives its source and reuse license.
+
 [Kjønsberg and Leinaas, 1997](https://arxiv.org/abs/cond-mat/9606214) is especially useful at the transition to an effective anyon coordinate: it constructs the quasihole map and distinguishes projected-coordinate states from generalized coherent states. Its complex conjugation and operator factors matter when comparing conventions.
 
 ## Preparation, dynamics and measurements

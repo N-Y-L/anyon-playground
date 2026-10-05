@@ -1,4 +1,4 @@
-# Anyons: visual physics notes
+# Anyons and quantum transport
 
 [Read online](https://n-y-l.github.io/anyon-playground/) · [Connected notes](docs/notes.md)
 

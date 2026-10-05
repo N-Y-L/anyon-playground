@@ -22,7 +22,7 @@ Interferometry poses a related control problem: an enclosed-charge transition ca
 
 ## Independent branches
 
-The [toric-code note](../experiments.html#toric) gives an explicit lattice Hamiltonian with mutual statistics. Its [memory extension](../experiments.html#memory) explains why removing all local defects need not restore a ground state. The [Abelian notebook](../abelian.html) compares fusion and statistics. The [fusion-basis notebook](../fusion-basis.html) develops operations in a collective space and connects them to interacting anyon chains. These are useful separate problems rather than prerequisites for the bulk-pair calculation.
+The [toric-code note](../experiments.html#toric) gives an explicit lattice Hamiltonian with mutual statistics. Its [memory extension](../experiments.html#memory) explains why removing all local defects need not restore the original encoded state. The [Abelian notebook](../abelian.html) compares fusion and statistics. The [fusion-basis notebook](../fusion-basis.html) develops operations in a collective space and connects them to interacting anyon chains. These are useful separate problems rather than prerequisites for the bulk-pair calculation.
 
 ## Useful upstream software
 

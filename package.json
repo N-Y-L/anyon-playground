@@ -2,7 +2,7 @@
   "name": "anyon-playground",
   "version": "0.6.0",
   "private": true,
-  "description": "Connected visual physics notes and calculations on anyons",
+  "description": "Notes and calculations on anyons and quantum transport",
   "author": "Neil Yuanting Li",
   "license": "MIT",
   "scripts": {

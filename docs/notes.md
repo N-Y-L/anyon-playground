@@ -1,4 +1,4 @@
-# Anyons: what is exchanged, and what is measured?
+# Anyons and quantum transport
 
 Put two identical particles far apart in a plane. Move each to the other's starting position, keeping them apart throughout: that is an **exchange**. The paths matter. Doing the exchange twice in the same direction winds the particles around one another; undoing the first motion retraces the paths. These are different processes in two dimensions.
 
