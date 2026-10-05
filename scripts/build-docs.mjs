@@ -5,10 +5,15 @@ import { fileURLToPath } from 'node:url';
 import { marked } from 'marked';
 import katex from 'katex';
 import { createRequire } from 'node:module';
+import { createHash } from 'node:crypto';
 const require = createRequire(import.meta.url);
 const figures = require('../notes-figures.js');
 
 const docs = new URL('../docs/', import.meta.url);
+const styleVersion = createHash('sha256').update(await readFile(new URL('reading.css', docs))).digest('hex').slice(0, 12);
+// A changed stylesheet needs a new URL even for readers with an older page open.
+const home = new URL('../index.html', import.meta.url);
+await writeFile(home, (await readFile(home, 'utf8')).replace(/href="docs\/reading\.css(?:\?v=[^"]*)?"/, `href="docs/reading.css?v=${styleVersion}"`));
 const escape = text => text.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
 function renderMath(tex, displayMode) {
   return katex.renderToString(tex.trim(), {
@@ -67,7 +72,7 @@ for (const name of ['notes', 'catalog', 'references']) {
   const scripts = name === 'notes' ? ['pair-states-physics.js','collider-physics.js','notes-figures.js','notes-interactions.js'].map(file => `<script defer src="../${file}"></script>`).join('') : '';
   const page = `<!doctype html>
 <!-- Generated from ${name}.md by scripts/build-docs.mjs. -->
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${escape(title)}</title><link rel="stylesheet" href="../vendor/katex/katex.min.css"><link rel="stylesheet" href="reading.css">${scripts}</head>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${escape(title)}</title><link rel="stylesheet" href="../vendor/katex/katex.min.css"><link rel="stylesheet" href="reading.css?v=${styleVersion}">${scripts}</head>
 <body><nav aria-label="Reading navigation"><a href="../index.html">All notes</a><a href="notes.html">Notes</a><a href="catalog.html">Further calculations</a><a href="references.html">Sources</a></nav>
 <main id="main">${body}</main><footer><a href="${name}.md">Markdown source</a> · <a href="../LICENSE">MIT license</a> · Neil Yuanting Li</footer></body></html>\n`;
   await writeFile(new URL(name + '.html', docs), page);
