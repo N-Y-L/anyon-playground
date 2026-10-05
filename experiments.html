@@ -51,7 +51,7 @@
         </div>
       </div>
       <p class="observation" id="exchange-notice"></p>
-      <details><summary>Prediction: could a full winding alone distinguish the bosonic and fermionic settings?</summary><p>Set “Two in the same direction,” then compare the bosonic and fermionic presets. Both give \(e^{2i\theta}=+1\) in this same-species model. One exchange distinguishes their statistical multipliers.</p></details>
+      <p>A full winding gives the same phase for bosons and fermions: both have \(e^{2i\theta}=+1\) in this same-species model. One exchange distinguishes their statistical multipliers.</p>
       <h2>Why two dimensions matter</h2>
       <p>In the plane a full winding cannot be shrunk away without a collision. In three spatial dimensions there is room to disentangle it. For ordinary scalar exchange statistics in three dimensions, doing the exchange twice must therefore act as the identity, giving the familiar \(+1\) or \(-1\). In two dimensions that argument no longer restricts the phase to those two values.</p>
       <details><summary>What has been omitted from the phase?</summary>
@@ -65,7 +65,7 @@
       <h1 id="interference-title">Turn a statistical phase into a probability</h1>
       <p>The phase in the previous note cannot be read off from a lone state. Give it something to interfere with. Split a probe into two coherent alternatives and recombine them. Let one alternative wind \(w\) times around \(N\) anyons of the same Abelian type as the probe. Relative to the reference route, this adds the statistical phase \(\delta=2Nw\theta\). Write the remaining controllable relative phase as \(\phi\), so \(\Delta=\phi+\delta\).</p>
       <div class="equation">\[P_0=\frac{1+V\cos\Delta}{2},\qquad P_1=1-P_0.\]</div>
-      <p>The two paths are balanced. Their <dfn>visibility</dfn> \(0\le V\le1\) measures the retained coherence: \(V=1\) gives full-contrast fringes and \(V=0\) gives no interference. The dotted curve removes the enclosed anyons while keeping the other settings fixed. Try changing the reference phase until a previously dark output becomes bright; that is how a relative phase becomes a measurable probability. The fractional-statistics contribution has a microscopic origin in <a href="https://doi.org/10.1103/PhysRevLett.53.722">Arovas et al.</a>; a real interferometer involves further physics, as in <a href="https://arxiv.org/abs/2006.14115">Nakamura et al.</a></p>
+      <p>The two paths are balanced. Their <dfn>visibility</dfn> \(0\le V\le1\) measures the retained coherence: \(V=1\) gives full-contrast fringes and \(V=0\) gives no interference. The dotted curve removes the enclosed anyons while keeping the other settings fixed. Changing the reference phase shifts the bright and dark outputs: a relative phase becomes a measurable probability. The fractional-statistics contribution has a microscopic origin in <a href="https://doi.org/10.1103/PhysRevLett.53.722">Arovas et al.</a>; a real interferometer involves further physics, as in <a href="https://arxiv.org/abs/2006.14115">Nakamura et al.</a></p>
       <div class="example-row"><span>Examples:</span><button data-interference-example="semion">One semion</button><button data-interference-example="two">Two semions</button><button data-interference-example="laughlin">Laughlin angle</button><button data-interference-example="incoherent">Lose coherence</button></div>
       <div class="experiment-workspace">
         <figure>
@@ -84,7 +84,7 @@
         </div>
       </div>
       <p class="observation" id="interference-notice"></p>
-      <details><summary>Keep the Laughlin angle fixed. How many extra enclosed anyons restore the same fringe?</summary><p>For one positive winding, three: \(2(N+3)\pi/3=2N\pi/3+2\pi\). At fixed visibility, the entire curve repeats for every reference phase, even though the enclosed count changed. Compare the settings \(N=0\) and \(N=3\).</p></details>
+      <p>At the Laughlin angle \(\theta=\pi/3\), adding three enclosed anyons restores the same fringe for one positive winding: \(2(N+3)\pi/3=2N\pi/3+2\pi\). At fixed visibility, the entire curve repeats for every reference phase, even though the enclosed count changed.</p>
       <h2>Where the cosine comes from</h2>
       <p>For \(V=1\), choose the recombiner convention \(H=\frac1{\sqrt2}\begin{pmatrix}1&amp;1\\1&amp;-1\end{pmatrix}\). Writing the two orthogonal route states as \(|a\rangle\) and \(|b\rangle\), the incoming path state is \((|a\rangle+e^{i\Delta}|b\rangle)/\sqrt2\). Applying \(H\) gives</p>
       <div class="equation">\[A_0=\frac{1+e^{i\Delta}}2,\qquad A_1=\frac{1-e^{i\Delta}}2,\qquad P_j=|A_j|^2.\]</div>
@@ -140,7 +140,7 @@
         </div>
       </div>
       <p class="observation" id="memory-notice"></p>
-      <details><summary>Going once around the torus: does a longer string cost more energy, and does zero energy mean “undone”?</summary><p>The worked path has two defects until they annihilate, so its energy stays at \(4J_m\), then returns to zero. The final noncontractible string still flips a logical loop eigenvalue. Energy and local excitation checks do not distinguish the degenerate ground states.</p></details>
+      <details><summary>Energy and logical state after a winding around the torus</summary><p>The worked path has two defects until they annihilate, so its energy stays at \(4J_m\), then returns to zero. The final noncontractible string still flips a logical loop eigenvalue. Energy and local excitation checks do not distinguish the degenerate ground states.</p></details>
       <h2>Why the local checks miss the change</h2>
       <p>A small closed \(X\) loop bounds a region. It is a product of star stabilizers, so it acts as the identity on the ground space. A loop that winds around the torus bounds no disk on the torus. It can cross a conjugate noncontractible \(Z\) loop once, and that crossing gives \(XZ=-ZX\). Starting from the reference state, the closed string therefore changes the loop eigenvalues to</p>
       <div class="equation">\[\langle\overline Z_{\mathrm{vertical}}\rangle=(-1)^{p_x},\qquad\langle\overline Z_{\mathrm{horizontal}}\rangle=(-1)^{p_y}.\]</div>
@@ -165,7 +165,7 @@
         </div>
       </div>
       <p class="observation" id="fusion-notice"></p>
-      <details><summary>Four anyons, total vacuum: do two allowed paths make the first-pair outcomes equally likely?</summary><p>No. Write a normalized state as \(c_1\lvert p_1\rangle+c_2\lvert p_2\rangle\), using the two displayed paths. First-pair vacuum and tau outcomes have probabilities \(|c_1|^2\) and \(|c_2|^2\). Both paths already have total vacuum charge; the fusion rule supplies a basis, not amplitudes.</p></details>
+      <details><summary>Fusion paths do not fix measurement probabilities</summary><p>A normalized state has the form \(c_1\lvert p_1\rangle+c_2\lvert p_2\rangle\), using the two displayed paths. First-pair vacuum and tau outcomes have probabilities \(|c_1|^2\) and \(|c_2|^2\). Both paths already have total vacuum charge; the fusion rule supplies a basis, not amplitudes.</p></details>
       <h2>Count without listing every path</h2>
       <p>Write \(V_n^c\) for the fusion space of \(n\) anyons with fixed total charge \(c\). Let \(a_n=\dim V_n^1\) and \(b_n=\dim V_n^\tau\). Every path to vacuum comes from \(\tau\); a path to \(\tau\) can come from either type. Therefore</p>
       <div class="equation">\[a_{n+1}=b_n,\qquad b_{n+1}=a_n+b_n,\qquad(a_0,b_0)=(1,0).\]</div>
@@ -178,7 +178,7 @@
     <section id="view-braids" data-view="braids" aria-labelledby="braids-title" hidden>
       <h1 id="braids-title">Non-Abelian exchange: order and measurement</h1>
       <p>A braid need not act by just one phase. If several anyons share a space of possible fusion states, exchanging them can rotate that state. Now change to the Ising model, where two anyons of type \(\sigma\) can combine to give vacuum \(1\) or the fermionic type \(\psi\): \(\sigma\times\sigma=1+\psi\). This is a <dfn>fusion rule</dfn>: the plus sign lists allowed total charges, not a sum of particles or a claim of equal probabilities. <dfn>Topological charge</dfn> labels excitation type; it is not electric charge.</p>
-      <p>Four \(\sigma\) anyons with total vacuum charge have a two-dimensional state space. Choose \(|0\rangle\) when the first pair fuses to \(1\), and \(|1\rangle\) when it fuses to \(\psi\). The other pair must fuse to the same type. The two basis states belong to the <em>same</em> total-charge sector, so their coherent superpositions are allowed.</p>
+      <p>Four \(\sigma\) anyons with total vacuum charge have a two-dimensional state space. Choose \(|0\rangle\) when the first pair fuses to \(1\), and \(|1\rangle\) when it fuses to \(\psi\). The other pair must fuse to the same type: \(\psi\times\psi=1\), whereas \(1\times\psi=\psi\). The two basis states belong to the <em>same</em> total-charge sector, so their coherent superpositions are allowed.</p>
       <div class="equation">\[|0\rangle=|((\sigma\sigma)_1(\sigma\sigma)_1)_1\rangle,\qquad |1\rangle=|((\sigma\sigma)_\psi(\sigma\sigma)_\psi)_1\rangle.\]</div>
       <p>Exchanging neighbors acts on this shared space by a unitary matrix \(B_j\). The first comparison below applies \(B_1\) and then \(B_2\), versus \(B_2\) and then \(B_1\). The order of matrix multiplication now has an observable consequence. The exchange algebra appears for Majorana vortices in <a href="https://arxiv.org/abs/cond-mat/0005069">Ivanov's derivation</a>; the fusion-space conventions used here are collected in <a href="https://arxiv.org/abs/0707.1889">Nayak et al.</a></p>
       <div class="example-row"><span>Examples:</span><button data-braid-example="order">Order changes the readout</button><button data-braid-example="hidden">A hidden state difference</button><button data-braid-example="undo">An exchange and its inverse</button></div>

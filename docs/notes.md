@@ -1,10 +1,16 @@
 # Anyons: from an electron fluid to a two-particle experiment
 
-An electron fluid can contain a movable defect with charge $+e/3$. The electrons still have charge $-e$. Exchange two electrons and their wavefunction changes sign; exchange two of these defects and the many-electron state can acquire a statistical phase $e^{i\pi/3}$. The two exchanges act on different things.
+Put two identical particles far apart in a plane. Move each to the other's starting position, keeping them apart throughout: that is an **exchange**. The paths matter. Doing the exchange twice in the same direction winds the particles around one another; undoing the first motion retraces the paths. These are different processes in two dimensions.
+
+Quantum transport adds ordinary phases from elapsed time, energies and magnetic flux. After those contributions are removed or matched against a reference process, an exchange can leave a residual effect that depends on how the paths wind. This is **exchange statistics**. In the simplest case the effect is a scalar phase $e^{i\theta}$: bosons have $\theta=0$, fermions $\theta=\pi$, modulo $2\pi$. Particles with other values are **Abelian anyons**. “Abelian” says that these scalar operations commute. Some systems instead allow exchanges to act by noncommuting matrices on several states; those are non-Abelian anyons, discussed at the end.
+
+What counts as the particle? An electron fluid can contain a localized, movable rearrangement with charge $+e/3$. Transport two such rearrangements slowly enough for the electrons to follow their instantaneous low-energy state, and exchanging them can contribute $e^{i\pi/3}$. The electrons themselves still carry charge $-e$ and obey fermionic antisymmetry. The operation exchanges two collective excitations, not two electron coordinates.
+
+A phase multiplying one isolated state is unobservable; the exchange phase becomes measurable as a relative phase between coherent histories, or through the interference it imposes on a two-particle state. We will construct the collective excitation, calculate its charge and exchange phase, and then ask what a preparation and a detector actually measure. The first step is to make the particle description concrete.
 
 ## What is moving?
 
-A particle in a material need not be one of the material's constituents. A concrete example is a phonon, a quantum of a normal mode of the atoms' motion. For a periodic chain of $N$ equal masses, displacement $u_j$ from site $ja$, conjugate momentum $p_j$, and nearest-neighbor spring constant $\kappa$,
+A particle in a material need not be one of the material's constituents. A concrete example is a phonon, a quantum of a normal mode of the atoms' motion. For a periodic chain of $N$ atoms of mass $M$, lattice spacing $a$, displacement $u_j$ from site $ja$, conjugate momentum $p_j$, and nearest-neighbor spring constant $\kappa$,
 
 $$\begin{aligned}
 H&=\sum_j\left[\frac{p_j^2}{2M}+\frac{\kappa}{2}(u_{j+1}-u_j)^2\right]\\
@@ -60,9 +66,9 @@ The extra zero makes finding an electron at $\eta$ impossible. Whether the surro
 
 $$n_\eta(\mathbf r)=\left\langle\Psi_\eta\left|\sum_i\delta^{(2)}(\mathbf r-\mathbf r_i)\right|\Psi_\eta\right\rangle.$$
 
-In the Laughlin fluid, this density has a localized deficit near $\eta$ and returns to the bulk value away from it. The positively charged deficit is a **quasihole**. On a finite droplet, the displaced electronic charge goes elsewhere, typically toward the edge; a disk $D$ used to measure the quasihole should surround its core but exclude that distant compensation. Its charge is
+In the Laughlin fluid, this density has a localized deficit near $\eta$ and returns to the bulk value away from it. The positively charged deficit is a **quasihole**. Write $n_L(\mathbf r)$ for the density of $\Psi_m$ without a quasihole. On a finite droplet, the displaced electronic charge goes elsewhere, typically toward the edge; a disk $D$ used to measure the quasihole should surround its core but exclude that distant compensation. Its charge is
 
-$$q_h=-e\int_D\big[n_\eta(\mathbf r)-n_0(\mathbf r)\big]d^2r.$$
+$$q_h=-e\int_D\big[n_\eta(\mathbf r)-n_L(\mathbf r)\big]d^2r.$$
 
 A zero in a polynomial has located the defect, but has not yet evaluated this integral. To find the missing charge, write its probability density as a classical Boltzmann weight. Up to constants independent of electron positions,
 
@@ -74,7 +80,7 @@ $$\begin{aligned}
 
 This is the energy divided by temperature of a fictitious two-dimensional plasma with logarithmic repulsion. One convention assigns auxiliary charge $m$ to each plasma particle, charge $1$ to the inserted impurity, and inverse temperature $2/m$. The same logarithmic interaction then produces both coefficients, $2m$ and $2$. The quadratic term acts as the potential of a uniform neutralizing background, fixing the bulk density. These are auxiliary charges used to evaluate the quantum probability distribution, not the electrical charges in the sample.
 
-Now use a physical property of this auxiliary plasma: in its screening liquid regime, the rearranged density cancels the impurity's long-distance logarithmic field. If $\delta n=n_\eta-n_0$ is the change in particle number density, the impurity plus its surrounding response must therefore have zero auxiliary charge:
+Now use a physical property of this auxiliary plasma: in its screening liquid regime, the rearranged density cancels the impurity's long-distance logarithmic field. If $\delta n=n_\eta-n_L$ is the change in particle number density, the impurity plus its surrounding response must therefore have zero auxiliary charge:
 
 $$\begin{gathered}
 1+m\int_D\delta n\,d^2r=0\\
@@ -96,7 +102,7 @@ Here the puzzle sharpens. This polynomial is symmetric in $\eta_1,\eta_2$. Never
 
 The construction is [Laughlin’s](https://doi.org/10.1103/PhysRevLett.50.1395). For longer accounts of the wavefunction and quasiholes, see [Tong, §§3.1–3.2](https://arxiv.org/abs/1606.06687) and [Simon, Ch. 20](https://www-thphys.physics.ox.ac.uk/people/SteveSimon/topological2019/Topobook-Oct18-2019.pdf).
 
-## The electrons do not exchange; their state goes round a loop
+## Exchange the quasiholes, transport the electron state
 
 Pin one quasihole at the origin and move another around a circle $\eta=Re^{i\varphi}$ in the bulk. Let the radius be large compared with the quasihole cores, but small compared with the distance to the edge. After removing the dynamical phase, the transported state acquires the Berry phase
 
@@ -197,14 +203,21 @@ x=X_1-X_2,\quad y=Y_1-Y_2.
 
 Their commutators are $[X,Y]=i\ell^2/2$ and formally $[x,y]=2i\ell^2$ before restricting to exchange-invariant observables. The two independent frozen cyclotron ground states contribute $2\ell^2$ to the relative squared radius. This same decomposition explains both the minimum guiding-center width and the constant to subtract from a full-position moment.
 
-Exchange sends $(x,y)$ to $(-x,-y)$. One convention needs care when we pass from transported states to their coordinate wavefunctions. A localized ket and the coefficients of a fixed state expanded in those kets transform with opposite phases. For positive quasihole charge in our into-page field, effective lowest-level coordinate orbitals are antiholomorphic, proportional to $(x_{\rm full}-iy_{\rm full})^j$ times a Gaussian. Their scalar boundary condition is therefore
+Exchange sends $(x,y)$ to $(-x,-y)$. To pass from the transported electron state to an effective coordinate wavefunction, first make the phase convention explicit. Write $\alpha=\theta/\pi$; for the Laughlin quasihole, $\alpha=1/m$. The calculation above gave a statistical Berry connection $\mathcal A_{\rm stat}=\alpha\,d\varphi$, where $\varphi=\arg\zeta$ and $\zeta=\eta_1-\eta_2$. The original normalized electron-state family is single-valued in these parameters. On a chosen angular branch, change its phase to
 
 $$\begin{gathered}
-\psi(r,\varphi+\pi)=e^{-i\pi\alpha}\psi(r,\varphi),\\
-j=2n+\alpha,\quad n=0,1,\ldots.
+|\widetilde\Psi(\zeta)\rangle=e^{i\alpha\varphi}|\Psi(\zeta)\rangle,\\
+\widetilde{\mathcal A}_{\rm stat}
+=\mathcal A_{\rm stat}-\alpha\,d\varphi=0.
 \end{gathered}$$
 
-Here $\alpha=\theta/\pi$ is the positive statistical parameter of the transported quasihole ket; for the Laughlin hole, $\alpha=1/m$. The coordinate amplitude carries the inverse phase. Equivalently, complex-conjugating the coordinate convention gives the positive boundary phase used in many pair-model papers. The physical content is unchanged. In our displayed coordinate gauge, the orbital generator $-i\hbar\partial_\varphi$ has eigenvalues $-j\hbar$; $j$ is the nonnegative radial index used below. Bosons retain even $j$ and fermions odd $j$; fractional statistics shift the sequence. The regular branch $j\geq0$ also specifies the model's short-distance behavior. These restrictions say which states are available, not which states a preparation occupies. The [microscopic-to-anyon mapping](https://arxiv.org/abs/cond-mat/9606214) makes the complex conjugation explicit.
+The transformation law follows from $\mathcal A=i\langle\Psi|d\Psi\rangle$. It removes the statistical connection locally, leaving the electromagnetic contribution in place. The same statistics now appears in the frame's boundary condition: after an exchange, $|\widetilde\Psi(\varphi+\pi)\rangle=e^{i\pi\alpha}|\widetilde\Psi(\varphi)\rangle$. A coefficient representing a fixed physical state in this frame, or an overlap with its bra, carries the inverse phase. Thus the effective scalar wavefunction obeys
+
+$$\begin{gathered}
+\psi(r,\varphi+\pi)=e^{-i\pi\alpha}\psi(r,\varphi).
+\end{gathered}$$
+
+For positive quasihole charge in our into-page field, lowest-level coordinate orbitals are antiholomorphic, proportional to $(x_{\rm full}-iy_{\rm full})^j$ times a Gaussian. Their angular factor $e^{-ij\varphi}$ satisfies this boundary condition when $j=2n+\alpha$, $n=0,1,\ldots$. The statistics fixes the boundary condition; the charge and field fix the holomorphic or antiholomorphic form. Complex-conjugating the coordinate convention gives the positive boundary phase used in many pair-model papers, with unchanged physical content. In our displayed coordinate gauge, the orbital generator $-i\hbar\partial_\varphi$ has eigenvalues $-j\hbar$; $j$ is the nonnegative radial index used below. Bosons retain even $j$ and fermions odd $j$; fractional statistics shift the sequence. The regular branch $j\geq0$ also specifies the model's short-distance behavior. These restrictions say which states are available, not which states a preparation occupies. The [microscopic-to-anyon mapping](https://arxiv.org/abs/cond-mat/9606214) makes the complex conjugation explicit.
 
 ### The localized pair is a superposition, not a separation eigenstate
 
@@ -509,7 +522,7 @@ To label the states, ask what excitation type a pair presents to a probe surroun
 
 $$\sigma\times\sigma=1+\psi.$$
 
-The plus sign lists allowed pair types, not equal probabilities. Four $\sigma$ excitations with total type $1$ span two states: the first pair and the second pair can both have type $1$, or both type $\psi$. Call them $|0\rangle,|1\rangle$. These are collective pair labels, not a spin attached to each excitation.
+The plus sign lists allowed pair types, not equal probabilities. The other rules needed here are $\psi\times\psi=1$ and that vacuum acts as an identity, so $1\times1=1$ and $1\times\psi=\psi$. Four $\sigma$ excitations with total type $1$ therefore span two states: the first pair and the second pair can both have type $1$, or both type $\psi$. A mixed assignment has total type $\psi$ and is excluded. Call the two allowed states $|0\rangle,|1\rangle$. These are collective pair labels, not a spin attached to each excitation.
 
 In a standard Ising convention, exchanging the first pair acts as $R=\operatorname{diag}(e^{-i\pi/8},e^{3i\pi/8})$. To exchange the middle pair, change to the basis in which that pair's type is definite, using
 

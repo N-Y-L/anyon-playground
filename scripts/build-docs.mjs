@@ -68,10 +68,9 @@ for (const name of ['notes', 'catalog', 'references']) {
   if (name === 'notes') body = body.replace(/<!-- FIGURE: (pair|saddle|collider) -->/g, (_, figure) => figures.initialMarkup(figure));
   const headings = [...body.matchAll(/<h2 id="([^"]+)">([^<]+)<\/h2>/g)];
   const contents = name === 'notes' ? `<nav class="contents" aria-label="In these notes"><span>In these notes</span>${headings.map(([,id,title]) => `<a href="#${id}">${title}</a>`).join('')}</nav>` : '';
-  if (name === 'notes') body = body.replace(/(<\/h1>)/, '$1' + contents);
+  if (name === 'notes') body = body.replace(/(<h2\b)/, contents + '$1');
   const scripts = name === 'notes' ? ['pair-states-physics.js','collider-physics.js','notes-figures.js','notes-interactions.js'].map(file => `<script defer src="../${file}"></script>`).join('') : '';
   const page = `<!doctype html>
-<!-- Generated from ${name}.md by scripts/build-docs.mjs. -->
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${escape(title)}</title><link rel="stylesheet" href="../vendor/katex/katex.min.css"><link rel="stylesheet" href="reading.css?v=${styleVersion}">${scripts}</head>
 <body><nav aria-label="Reading navigation"><a href="../index.html">All notes</a><a href="notes.html">Notes</a><a href="catalog.html">Further calculations</a><a href="references.html">Sources</a></nav>
 <main id="main">${body}</main><footer><a href="${name}.md">Markdown source</a> · <a href="../LICENSE">MIT license</a> · Neil Yuanting Li</footer></body></html>\n`;
