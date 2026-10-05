@@ -8,7 +8,7 @@
     try {
       let parameters;
       if(name==='phonon') parameters={time:number('phonon-time')};
-      else if(name==='charge'||name==='winding') parameters={};
+      else if(name==='winding') parameters={};
       else if(name==='collider') parameters={r:number('collider-r'),ratio:number('collider-ratio')};
       else {parameters={alpha:number(`${name}-alpha`),separation:number(`${name}-separation`)};if(name==='saddle')parameters.tau=number('saddle-tau');}
       const result=F[name](parameters);values[name]=result;
@@ -32,7 +32,7 @@
     const anchor=document.createElement('a');anchor.href=url;anchor.download=`anyon-${name}.${kind==='svg'?'svg':'json'}`;anchor.textContent='Download again';
     el(`${name}-download`).replaceChildren(anchor);anchor.click();
   }
-  for(const name of ['phonon','charge','winding','pair','saddle','collider']){
+  for(const name of ['phonon','winding','pair','saddle','collider']){
     const figure=el(`figure-${name}`);if(!figure)continue;
     figure.querySelectorAll('input,select').forEach(input=>input.addEventListener('input',()=>update(name)));
     figure.querySelector('[data-reset-figure]')?.addEventListener('click',()=>reset(name));

@@ -77,7 +77,7 @@ for (const name of ['notes', 'catalog', 'references']) {
   const page = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${escape(title)}</title><link rel="stylesheet" href="../vendor/katex/katex.min.css"><link rel="stylesheet" href="reading.css?v=${styleVersion}">${scripts}</head>
 <body><nav aria-label="Reading navigation"><a href="../index.html">All notes</a><a href="notes.html">Notes</a><a href="catalog.html">Further calculations</a><a href="references.html">Sources</a></nav>
-<main id="main">${body}</main><footer><a href="${name}.md">Markdown source</a> · <a href="../LICENSE">MIT license</a> · Neil Yuanting Li</footer></body></html>\n`;
+<main id="main">${body}</main><footer><a href="${name}.md">Markdown source</a> · <a href="../LICENSE">Code: MIT</a> · <a href="../assets/README.md">Image credits</a> · Neil Yuanting Li</footer></body></html>\n`;
   await writeFile(new URL(name + '.html', docs), page);
   console.log('Built ' + fileURLToPath(new URL(name + '.html', docs)));
 }

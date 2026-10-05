@@ -175,7 +175,7 @@ test('Reading-page controls, exact statistics presets, resets, and exported resu
 // Verify the new calculations stay connected to the saved page, including offline defaults.
 test('Early reading figures retain exact packet data, reset behavior and vector exports', async () => {
   const page=createNotes();
-  for(const name of ['phonon','charge','winding']) {
+  for(const name of ['phonon','winding']) {
     assert.match(page.element(`${name}-drawing`).innerHTML, /<svg/);
     assert.doesNotMatch(page.element(`${name}-summary`).textContent, /Could not calculate/);
     const svg=await page.save(name,'svg');

@@ -9,7 +9,7 @@ and calibrated measurements. They use graduate quantum mechanics and mathematics
 without assuming quantum field theory.
 
 The main reading page begins with an exact one-phonon fluctuation packet,
-a diagram of local quasihole charge and distant compensation, and matched
+a published quasihole density profile with local/global charge accounting, and matched
 winding paths that isolate the statistical phase. Three later comparisons show
 projected-coordinate and generalized-coherent pair states, their assigned saddle
 moments, and two references for an extended boson/fermion collider. Ten independent notebooks
@@ -39,9 +39,9 @@ JSON exports are records, not importable sessions.
 
 - The phonon plot evaluates a finite periodic harmonic chain with its translation
   mode fixed. It shows excess displacement variance; mean displacement remains
-  zero. It is not a phonon position probability. The two nearby charge and winding
-  diagrams are schematics of the screened bulk limit, not calculated density
-  profiles or experimental data.
+  zero. It is not a phonon position probability. The quasihole density figure is a credited numerical result from Fulsebakke et al.
+  (2023); its bulk profile is distinct from the finite-droplet charge accounting below it.
+  The winding diagram is a schematic of the screened bulk limit.
 - Pair lengths use the effective particle's magnetic length, not the electron's.
   The localization label is not an exact separation. The normalized zero-label
   limit is mathematical; physical quasihole cores cannot remain separated there.
@@ -102,3 +102,10 @@ of `python3`. Stop the server with Ctrl+C.
 
 [MIT](LICENSE), copyright (c) 2026 Neil Yuanting Li.
 Bundled KaTeX retains its [MIT license](vendor/katex/LICENSE).
+
+## Figure credits
+
+The quasihole density panel is from Fulsebakke et al., *SciPost Physics* **14**, 149
+(2023), Fig. 11(a), reused under CC BY 4.0. It is distributed locally as a vector
+SVG for sharp, offline reading. See [image provenance and license](assets/README.md).
+The repository's MIT license does not replace the source figure's CC BY license.

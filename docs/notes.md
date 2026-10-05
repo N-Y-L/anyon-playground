@@ -34,13 +34,22 @@ $$\begin{gathered}
 
 Under time evolution each $f_k$ gains $e^{-i\omega_kt}$. A packet narrow around $k_0$ therefore carries its excess fluctuations and energy along the chain with group velocity $d\omega_k/dk|_{k_0}$. No atom travels along with the packet. The packet can spread; anharmonic interactions can give it a finite lifetime. The particle description is useful when this lifetime is long compared with the motion or scattering being studied.
 
+The following snapshots show the excess fluctuations carried by a packet concentrated around $k_0a=\pi/3$.
+
+<!-- FIGURE: phonon -->
+
+<details class="figure-method">
+<summary>Packet and units used in the figure</summary>
+
 For a concrete packet, take $N=128$ and
 
 $$f_k=C\exp\!\left[-\frac{(ka-\pi/3)^2}{4(0.18)^2}\right]e^{28ika},$$
 
-with $C$ fixed by $\sum_k|f_k|^2=1$ over the nonzero allowed modes in $-\pi\leq ka<\pi$. Its initial envelope is centered near site $j=-28$. The figure evaluates the displayed variance directly at three times; no classical displacement is assigned to the one-phonon state.
+with $C$ fixed by $\sum_k|f_k|^2=1$ over the nonzero allowed modes in $-\pi\leq ka<\pi$. Its initial envelope is centered near site $j=-28$. The plotted curves evaluate the variance above directly; no classical displacement is assigned to the state.
 
-<!-- FIGURE: phonon -->
+Times are in $\sqrt{M/\kappa}$ and excess variances in $\hbar/\sqrt{\kappa M}$. The finite-chain mode probabilities, packet parameters and site values are included in the data download.
+
+</details>
 
 The single phonon is an **excitation**: a change carrying energy above the ground state. This is the useful content of **quasiparticle**: a sufficiently persistent excitation whose states, energy, motion and interactions admit an effective particle description. Phonons get this description from harmonic normal modes. The localized charged excitations below arise from a correlated electronic state, by a different construction. Quantizing a spring has not explained their charge or their statistics.
 

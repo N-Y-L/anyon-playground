@@ -26,9 +26,24 @@ a:focus-visible,summary:focus-visible,button:focus-visible,input:focus-visible,s
 
 .concept-figure .figure-scroll-hint{display:none}
 .concept-figure .figure-drawing{overflow:visible}
-.protocol-panels,.charge-layout{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:22px}
+.protocol-panels{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:22px}
 .concept-figure .figure-drawing svg{min-width:0;max-width:350px;margin:auto}
-.charge-ledger{font-size:17px;line-height:1.55}.charge-ledger p{margin:18px 0}
 .phase-difference,.phase-common{text-align:center;font-size:18px;margin:14px 0}
-@media(max-width:600px){.protocol-panels,.charge-layout{grid-template-columns:1fr;gap:10px}.charge-ledger{font-size:16px}.charge-ledger p{margin:12px 0}.phase-difference,.phase-common{font-size:17px}}
-@media print{.protocol-panels,.charge-layout{grid-template-columns:1fr 1fr;gap:12pt}.charge-ledger,.phase-difference,.phase-common{font-size:9pt}.charge-ledger p{margin:10pt 0}}
+@media(max-width:600px){.protocol-panels{grid-template-columns:1fr;gap:10px}.phase-difference,.phase-common{font-size:17px}}
+@media print{.protocol-panels{grid-template-columns:1fr 1fr;gap:12pt}.phase-difference,.phase-common{font-size:9pt}}
+
+.figure-title{font-size:21px;font-weight:normal;line-height:1.35;margin:0 0 18px}
+.figure-shared-condition{font-size:16px;text-align:center;color:#555;margin:0 0 8px}
+.phase-result{border-top:1px solid #ccc;margin:12px 0;padding-top:12px;text-align:center}
+.phase-result .phase-difference{font-size:26px;margin:4px 0 8px}.phase-result p{font-size:16px;margin:6px 0}
+.phase-common{font-size:16px;color:#555;margin:14px 0 20px}.empty-summary{display:none}
+.figure-method{font-size:16px;margin:14px 0 28px}.figure-method summary{font-weight:normal;color:#444}
+.phonon-figure .figure-drawing svg{max-width:none;min-width:0}#phonon-drawing .phonon-narrow{display:none}
+@media(max-width:600px){.figure-title{font-size:20px}.figure-shared-condition,.phase-common{font-size:15px}.phase-result .phase-difference{font-size:24px}#phonon-drawing .phonon-wide{display:none}#phonon-drawing .phonon-narrow{display:block}}
+@media print{.figure-title{font-size:13pt}.figure-shared-condition,.phase-common,.phase-result p{font-size:9pt}.phase-result .phase-difference{font-size:15pt}#phonon-drawing .phonon-wide{display:block}#phonon-drawing .phonon-narrow{display:none}.figure-method{font-size:9pt}}
+
+.source-drawing{max-width:640px;margin:16px auto 22px}.source-drawing img{display:block;width:100%;height:auto}
+.figure-credit{display:block;margin-top:10px;font-size:14px;color:#555}
+.charge-ledger{font-size:16px;line-height:1.5}.charge-ledger caption{caption-side:top;text-align:left;font-size:16px;margin:0 0 8px;color:#333}.charge-ledger th{font-weight:normal}.charge-ledger tbody tr:last-child{font-weight:bold}
+@media(max-width:600px){.charge-ledger{font-size:15px}.charge-ledger caption{font-size:15px}.charge-ledger th,.charge-ledger td{padding:8px 5px}.figure-credit{font-size:13px}}
+@media print{.source-drawing{max-width:410px}.source-drawing img{filter:grayscale(1)}.figure-credit{font-size:8pt}.charge-ledger,.charge-ledger caption{font-size:9pt}}

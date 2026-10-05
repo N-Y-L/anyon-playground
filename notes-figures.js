@@ -58,28 +58,49 @@
   function phonon({time=48}={}) {
     const times=[0,time/2,time];
     const snapshots=times.map(time=>Phonon.packet({time}));
-    const left=72,right=726,top=146,bottom=352;
-    const maximum=Math.ceil(Math.max(...snapshots[0].excessVariance)/.025)*.025;
-    const x=j=>left+(right-left)*(j+64)/128;
-    const y=v=>bottom-(bottom-top)*v/maximum;
-    let body='<text x="72" y="26">Mean displacement: ⟨uⱼ⟩ = 0 at every site and time</text>';
-    body+='<path d="M72 65H726" stroke="#777"/>';
-    for(let j=-64;j<=64;j+=4) body+=`<circle cx="${x(j)}" cy="65" r="2.2" fill="#555"/>`;
-    body+='<text x="72" y="115">Excess displacement variance, in ℏ / √(κM)</text>';
-    for(const value of [0,maximum/2,maximum])body+=`<path d="M72 ${y(value)}H726" stroke="#ddd"/><text x="61" y="${y(value)+6}" text-anchor="end">${f(value,3)}</text>`;
-    body+=`<path d="M72 ${top}V${bottom}H726" stroke="#222" fill="none"/>`;
-    for(const j of [-64,-32,0,32,64])body+=`<path d="M${x(j)} ${bottom}v5" stroke="#222"/><text x="${x(j)}" y="${bottom+27}" text-anchor="middle">${j}</text>`;
-    const colors=[grey,red,blue],dashes=['3 5','9 5',''];
-    snapshots.forEach((snapshot,index)=>{
-      const dash=dashes[index]?` stroke-dasharray="${dashes[index]}"`:'';
-      body+=`<path d="${snapshot.positions.map((j,n)=>`${n?'L':'M'}${x(j).toFixed(2)},${y(snapshot.excessVariance[n]).toFixed(2)}`).join(' ')}" stroke="${colors[index]}" stroke-width="2.5" fill="none"${dash}/>`;
-      const lx=76+index*219;
-      body+=`<path d="M${lx} 427h32" stroke="${colors[index]}" stroke-width="2.5"${dash}/><text x="${lx+42}" y="433">t = ${f(times[index],1)}</text>`;
-    });
-    body+='<text x="400" y="405" text-anchor="middle">Site j (position ja)</text><text x="72" y="466">Times in √(M/κ); N = 128; central wave number k₀a = π/3</text>';
+    const title='A phonon carries moving fluctuations';
+    const description='Three exact harmonic-chain snapshots of excess displacement variance on one fixed vertical scale. Mean displacement is zero. Dotted, dashed and solid curves identify the initial, halfway and final times.';
+    const colors=[grey,red,blue],dashes=['2 5','10 6',''];
+    function drawing(narrow, className='') {
+      const width=narrow?440:760,height=narrow?444:404;
+      const left=narrow?70:76,right=width-(narrow?26:32),top=82,bottom=narrow?286:292;
+      const x=j=>left+(right-left)*(j+64)/128;
+      const y=value=>bottom-(bottom-top)*value/.18;
+      const fontSize=narrow?22:19;
+      const style=index=>`stroke="${colors[index]}" stroke-width="${index===0?3.2:2.6}"${dashes[index]?` stroke-dasharray="${dashes[index]}"`:''}`;
+      let body=`<text x="14" y="27">Excess displacement variance</text><text x="14" y="56" font-size="${narrow?20:18}">in ℏ / √(κM)</text><text x="${width-14}" y="56" text-anchor="end" font-size="${narrow?22:18}">⟨uⱼ⟩ = 0</text>`;
+      for(const value of [0,.05,.10,.15]) {
+        body+=`<path d="M${left} ${y(value)}H${right}" stroke="#ddd"/><text x="${left-10}" y="${y(value)+7}" text-anchor="end">${value===0?'0':value.toFixed(2)}</text>`;
+      }
+      body+=`<path d="M${left} ${top}V${bottom}H${right}" stroke="#222" fill="none"/>`;
+      for(const j of [-64,-32,0,32,64]) {
+        body+=`<path d="M${x(j)} ${bottom}v5" stroke="#222"/><text x="${x(j)}" y="${bottom+29}" text-anchor="middle">${j}</text>`;
+      }
+      // Draw the solid curve first, leaving the earlier dashed traces visible
+      // when nearby-time snapshots overlap. At time zero they coincide exactly.
+      for(const index of [2,1,0]) {
+        const snapshot=snapshots[index];
+        body+=`<path d="${snapshot.positions.map((j,n)=>`${n?'L':'M'}${x(j).toFixed(2)},${y(snapshot.excessVariance[n]).toFixed(2)}`).join(' ')}" ${style(index)} fill="none"/>`;
+      }
+      body+=`<text x="${(left+right)/2}" y="${bottom+61}" text-anchor="middle">Site j (position ja)</text>`;
+      const legendY=narrow?418:380;
+      if(narrow) body+='<text x="14" y="384">Time in √(M/κ)</text>';
+      else body+='<text x="14" y="386">Time in √(M/κ):</text>';
+      if(time===0) {
+        const lx=narrow?24:238;
+        for(const index of [2,1,0]) body+=`<path d="M${lx} ${legendY}h38" ${style(index)}/>`;
+        body+=`<text x="${lx+50}" y="${legendY+7}">t = 0 (all three coincide)</text>`;
+      } else {
+        times.forEach((value,index)=>{
+          const lx=narrow?14+index*140:238+index*174;
+          body+=`<path d="M${lx} ${legendY}h30" ${style(index)}/><text x="${lx+40}" y="${legendY+7}">t = ${f(value,1)}</text>`;
+        });
+      }
+      return `<svg xmlns="http://www.w3.org/2000/svg"${className?` class="${className}"`:''} viewBox="0 0 ${width} ${height}" role="img" aria-label="${title}" style="font-family:Georgia,serif;font-size:${fontSize}px"><title>${title}</title><desc>${description}</desc><rect width="${width}" height="${height}" fill="white"/>${body}</svg>`;
+    }
     const peak=snapshot=>snapshot.positions[snapshot.excessVariance.indexOf(Math.max(...snapshot.excessVariance))];
-    return {svg:svg('A one-phonon packet carries fluctuations along the chain','Three exact harmonic-chain snapshots of excess displacement variance. The mean displacement at every site remains zero. Curves use the same vertical scale and distinct line styles.',body,490),
-      summary:`The variance peaks near sites ${snapshots.map(peak).join(', ')} at times ${times.map(t=>f(t,1)).join(', ')}. Its summed excess stays ${f(snapshots[0].varianceSum,4)} in units ℏ/√(κM); the mean displacement stays zero.`,
+    return {title,svg:drawing(false),display:drawing(false,'phonon-wide')+drawing(true,'phonon-narrow'),
+      summary:time===0?`At t = 0, all three snapshots peak at site ${peak(snapshots[0])}.`:`At t = ${times.map(t=>f(t,1)).join(', ')}, the peaks lie at sites ${snapshots.map(peak).join(', ')}.`,
       conventions:'Periodic harmonic chain; zero translation mode omitted. Position is in lattice spacings a, time in sqrt(M/kappa), frequency in sqrt(kappa/M), energy in hbar sqrt(kappa/M), and excess displacement variance in hbar/sqrt(kappa M). The variance is not a phonon position probability. No anharmonic damping is modeled.',
       data:{time,snapshots}};
   }
@@ -87,41 +108,35 @@
     return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" role="img" aria-label="${title}" style="font-family:Georgia,serif;font-size:18px"><title>${title}</title><desc>${description}</desc><rect width="${width}" height="${height}" fill="white"/>${body}</svg>`;
   }
   function charge() {
-    const drawing=panel('Measure the charge inside D, leaving the compensation outside','A schematic finite electron droplet. The dashed local measurement disk D contains the quasihole core and excludes the distant compensating region near the edge.',
-      '<text x="175" y="24" text-anchor="middle">Finite electron droplet</text><circle cx="175" cy="184" r="120" fill="#e4e4e4" stroke="#444" stroke-width="1.5"/><circle cx="175" cy="184" r="100" fill="white"/><circle cx="175" cy="184" r="65" fill="none" stroke="#222" stroke-width="2" stroke-dasharray="7 5"/><circle cx="175" cy="184" r="18" fill="#e6eef4" stroke="#145b91" stroke-width="2"/><text x="175" y="222" text-anchor="middle">core</text><text x="239" y="132">D</text><path d="M82 60L102 98" stroke="#555"/><text x="30" y="51">distant compensation</text>');
-    const ledger='<div class="charge-ledger"><p><strong>Inside D</strong><br>Mean electron-number change ≈ −1/m<br>Electric charge ≈ +e/m</p><p><strong>Outside D, mostly near the edge</strong><br>Mean electron-number change ≈ +1/m<br>Electric charge ≈ −e/m</p><p><strong>Whole droplet</strong><br>Same N electrons: ΔN = 0<br>Total charge change: ΔQ = 0</p></div>';
-    const labels='<text x="380" y="62" font-weight="bold">Inside D</text><text x="380" y="92">Mean electron-number change ≈ −1/m</text><text x="380" y="120">Electric charge ≈ +e/m</text><text x="380" y="172" font-weight="bold">Outside D, mostly near the edge</text><text x="380" y="202">Mean electron-number change ≈ +1/m</text><text x="380" y="230">Electric charge ≈ −e/m</text><text x="380" y="282" font-weight="bold">Whole droplet: ΔN = 0, ΔQ = 0</text><text x="28" y="355">Spatial bookkeeping in the screened bulk limit; no density profile is plotted.</text>';
-    const full=svg('Fractional local charge without removing an electron','The local electronic deficit and distant compensation cancel over the full same-N system. Geometry and shading are schematic, not a calculated density.',`<svg x="0" y="0" width="350" height="320">${drawing}</svg>${labels}`,380);
-    return {svg:full,display:`<div class="charge-layout">${drawing}${ledger}</div>`,
-      summary:'For m = 3, the local charge approaches +e/3 even though the total electron number is unchanged.',
-      conventions:'Charge-accounting schematic for a finite same-electron-number Laughlin droplet in the screened, well-separated bulk limit. The local charge approaches e/m; the total number difference is exactly zero. Shading is not a computed electron density or an auxiliary plasma charge.',
-      data:{kind:'schematic',localMeanElectronNumberChange:'approximately -1/m',localElectricCharge:'approximately +e/m',wholeDropletElectronNumberChange:0}};
+    return `<figure class="inline-figure charge-figure source-figure" id="figure-charge"><h3 class="figure-title">A quasihole is a local deficit in electron density</h3><div id="charge-drawing" class="source-drawing"><a href="../assets/fulsebakke-2023-quasihole-density.svg" aria-label="Open the published quasihole density figure at full size"><img src="../assets/fulsebakke-2023-quasihole-density.svg" width="618" height="468" loading="lazy" alt="Published density profiles for a Laughlin quasihole at filling one third. Density vanishes at the center, overshoots the bulk value near three magnetic lengths, and approaches the bulk value with damped oscillations. Colored curves are finite systems; the dashed black curve is the thermodynamic limit."></a></div><figcaption>The published calculation resolves the core and its surrounding oscillations. The authors’ dimensionless electron-density profile g(r) has its bulk reference at g = 1. The source’s ℓ is our electron magnetic length ℓ<sub>B</sub>. The colored curves use spherical systems with N<sub>e</sub> = 5–100; r is chord distance. The dashed black curve is their thermodynamic extrapolation. This shows the bulk profile, not the compensating edge of a finite droplet.<span class="figure-credit">From <a href="https://doi.org/10.21468/SciPostPhys.14.6.149">Fulsebakke et al. (2023), Fig. 11(a)</a>, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Panel cropped from the original; curves and labels unchanged.</span></figcaption><div class="table-scroll"><table class="charge-ledger"><caption>Charge accounting for a finite droplet with the same N electrons</caption><thead><tr><th scope="col">Region</th><th scope="col">Mean electron-number change</th><th scope="col">Electric charge change</th></tr></thead><tbody><tr><th scope="row">Local disk D</th><td>≈ −1/m</td><td>≈ +e/m</td></tr><tr><th scope="row">Outside D</th><td>≈ +1/m</td><td>≈ −e/m</td></tr><tr><th scope="row">Whole droplet</th><td>0 exactly</td><td>0 exactly</td></tr></tbody></table></div><p class="figure-summary">D surrounds the core and excludes distant compensation. The local entries use the screened bulk limit derived above; the total follows exactly from fixed N. The density shape alone does not evaluate the charge integral.</p><p class="figure-tools"><a href="../assets/fulsebakke-2023-quasihole-density.svg" download>Download source figure (SVG)</a></p></figure>`;
   }
   function winding() {
     function loop(inside) {
-      const stationary=inside?175:53;
-      return panel(inside?'Stationary quasihole inside the loop':'Stationary quasihole outside the loop',
-        'One quasihole follows the same counterclockwise circle in both preparations. The stationary quasihole is well inside or well outside. Path geometry is schematic.',
-        `<text x="175" y="27" text-anchor="middle">Stationary hole ${inside?'inside':'outside'}</text><circle cx="175" cy="146" r="78" fill="none" stroke="${blue}" stroke-width="2.5"/><path d="M169 62L157 68L169 74" fill="none" stroke="${blue}" stroke-width="2.5"/><circle cx="253" cy="146" r="7" fill="white" stroke="${blue}" stroke-width="2.5"/><path d="M263 144L281 126" stroke="#555"/><text x="257" y="114">moving</text><circle cx="${stationary}" cy="146" r="6" fill="#222"/><text x="${stationary}" y="177" text-anchor="middle">fixed</text><text x="175" y="251" text-anchor="middle">Same CCW path, area A</text><text x="175" y="294" text-anchor="middle">${inside?'γ<tspan baseline-shift="sub" font-size="70%">in</tspan> = φ<tspan baseline-shift="sub" font-size="70%">B</tspan> + 2π/m':'γ<tspan baseline-shift="sub" font-size="70%">out</tspan> = φ<tspan baseline-shift="sub" font-size="70%">B</tspan>'}</text>`);
+      const stationary=inside?175:48;
+      return panel(inside?'One stationary quasihole enclosed':'Reference: no stationary quasihole enclosed',
+        'The moving quasihole makes the same counterclockwise loop in both preparations. Only the position of the fixed quasihole changes.',
+        `<text x="175" y="25" text-anchor="middle" font-size="16" fill="#555">${inside?'ONE ENCLOSED':'REFERENCE'}</text><text x="175" y="53" text-anchor="middle">Fixed quasihole ${inside?'inside':'outside'}</text><circle cx="175" cy="166" r="75" fill="none" stroke="${blue}" stroke-width="2.5"/><path d="M171 85L159 92L172 98" fill="none" stroke="${blue}" stroke-width="2.5"/><circle cx="250" cy="166" r="7" fill="white" stroke="${blue}" stroke-width="2.5"/><path d="M260 164L277 147" stroke="#777"/><text x="251" y="136">moving</text><circle cx="${stationary}" cy="166" r="6" fill="#222"/><text x="${stationary}" y="195" text-anchor="middle">fixed</text><text x="175" y="283" text-anchor="middle" font-size="21">${inside?'γ<tspan baseline-shift="sub" font-size="70%">in</tspan> = φ<tspan baseline-shift="sub" font-size="70%">B</tspan> + 2π/m':'γ<tspan baseline-shift="sub" font-size="70%">out</tspan> = φ<tspan baseline-shift="sub" font-size="70%">B</tspan>'}</text>`,350,310);
     }
     const outside=loop(false),inside=loop(true);
-    const full=svg('Matched winding paths isolate the statistical phase','Compare a stationary quasihole outside and inside an identical counterclockwise loop. The common magnetic contribution cancels; in the screened bulk limit the extra full-winding phase is 2 pi divided by m.',
-      `<svg x="10" y="0" width="350" height="320">${outside}</svg><svg x="400" y="0" width="350" height="320">${inside}</svg><text x="380" y="355" text-anchor="middle">γ<tspan baseline-shift="sub" font-size="70%">in</tspan> − γ<tspan baseline-shift="sub" font-size="70%">out</tspan> = 2π/m → 2π/3 for m = 3</text><text x="380" y="390" text-anchor="middle">φ<tspan baseline-shift="sub" font-size="70%">B</tspan> = q<tspan baseline-shift="sub" font-size="70%">h</tspan>Φ/ℏ = −A/(mℓ<tspan baseline-shift="sub" font-size="70%">B</tspan>²), common to the two paths</text>`,415);
-    return {svg:full,display:`<div class="protocol-panels">${outside}${inside}</div><p class="phase-difference">γ<sub>in</sub> − γ<sub>out</sub> = 2π/m → 2π/3 for m = 3</p><p class="phase-common">φ<sub>B</sub> = q<sub>h</sub>Φ/ℏ = −A/(mℓ<sub>B</sub>²), common to the two paths</p>`,
-      summary:'Each run retains its magnetic phase. Subtracting matched runs isolates a full winding, not a single exchange.',
+    const difference='γ<sub>in</sub> − γ<sub>out</sub> = 2π/m';
+    const full=svg('Subtract matched loops to isolate braiding','Same loop, field, area and moving quasihole in both runs. Once dynamical phases have been removed or matched, the magnetic contribution cancels and the full-winding phase is 2 pi divided by m.',
+      `<text x="380" y="27" text-anchor="middle">Same counterclockwise path, enclosed area A and magnetic field</text><svg x="10" y="42" width="350" height="310">${outside}</svg><svg x="400" y="42" width="350" height="310">${inside}</svg><path d="M72 361H688" stroke="#bbb"/><text x="380" y="404" text-anchor="middle" font-size="25">γ<tspan baseline-shift="sub" font-size="70%">in</tspan> − γ<tspan baseline-shift="sub" font-size="70%">out</tspan> = 2π/m</text><text x="380" y="435" text-anchor="middle">For m = 3: a full winding contributes 2π/3.</text><text x="380" y="473" text-anchor="middle" font-size="16">Common magnetic phase: φ<tspan baseline-shift="sub" font-size="70%">B</tspan> = q<tspan baseline-shift="sub" font-size="70%">h</tspan>Φ/ℏ = −A/(mℓ<tspan baseline-shift="sub" font-size="70%">B</tspan>²)</text>`,495);
+    return {title:'Subtract matched loops to isolate braiding',svg:full,
+      display:`<p class="figure-shared-condition">Same counterclockwise path, enclosed area A and magnetic field</p><div class="protocol-panels">${outside}${inside}</div><div class="phase-result"><p class="phase-difference">${difference}</p><p>For m = 3: a full winding contributes 2π/3.</p></div><p class="phase-common">Common magnetic phase: φ<sub>B</sub> = q<sub>h</sub>Φ/ℏ = −A/(mℓ<sub>B</sub>²)</p>`,
+      summary:'',
       conventions:'Schematic quasihole protocols, not measured data. Counterclockwise transport in B_z = -B_0. Same loop, field and quasihole charge; dynamical phases removed or matched. Stationary core is well inside or well outside, far from the moving core; both remain far from the edge. Screened bulk limit; phases understood modulo 2 pi.',
       data:{kind:'schematic',reference:'stationary quasihole outside',comparison:'stationary quasihole inside',commonMagneticPhase:'q_h Phi/hbar = -A/(m ell_B^2)',windingDifference:'2 pi/m'}};
   }
 
   function makeFigure(name, value, controls, caption, extra='') {
-    return `<figure class="inline-figure${value.display?' concept-figure':''}" id="figure-${name}"><div id="${name}-drawing" class="figure-drawing" tabindex="0" aria-label="${value.display?'Diagram:':'Scrollable'} ${name} figure">${value.display||value.svg}</div><p class="figure-scroll-hint">Swipe or scroll horizontally to view the whole figure.</p><figcaption>${caption}</figcaption>${controls?`<div class="figure-controls">${controls}<button type="button" data-reset-figure="${name}">Reset</button></div>`:''}<p id="${name}-summary" class="figure-summary" aria-live="polite">${value.summary}</p>${extra}<p class="figure-tools"><button type="button" data-save-svg="${name}">Save SVG</button> <button type="button" data-save-data="${name}">Save data</button> <span id="${name}-download" role="status"></span></p></figure>`;
+    return `<figure class="inline-figure ${name}-figure${value.display?' concept-figure':''}" id="figure-${name}">${value.title?`<h3 class="figure-title">${value.title}</h3>`:''}<div id="${name}-drawing" class="figure-drawing" tabindex="0" aria-label="${value.display?'Figure:':'Scrollable'} ${name} figure">${value.display||value.svg}</div><p class="figure-scroll-hint">Swipe or scroll horizontally to view the whole figure.</p><figcaption>${caption}</figcaption>${controls?`<div class="figure-controls">${controls}<button type="button" data-reset-figure="${name}">Reset</button></div>`:''}<p id="${name}-summary" class="figure-summary${value.summary?'':' empty-summary'}" aria-live="polite">${value.summary}</p>${extra}<p class="figure-tools"><button type="button" data-save-svg="${name}">Save SVG</button> <button type="button" data-save-data="${name}">Save data</button> <span id="${name}-download" role="status"></span></p></figure>`;
   }
   const statControl=id=>`<label for="${id}-alpha">Statistics α <select id="${id}-alpha"><option value="0">0 · bosons</option><option value="0.3333333333333333" selected>1/3</option><option value="0.6">3/5</option><option value="1">1 · fermions</option></select></label>`;
   const sepControl=(id,separation=2)=>`<label for="${id}-separation">Label d/ℓ <input id="${id}-separation" type="range" min="0" max="6" step=".01" value="${separation}"><output id="${id}-separation-value">${separation}</output></label>`;
   function initialMarkup(name) {
-    if(name==='phonon') return makeFigure(name,phonon(),`<label for="phonon-time">Last snapshot time <input id="phonon-time" type="range" min="0" max="60" step="1" value="48"><output id="phonon-time-value">48</output></label>`,'Exact snapshots of the one-phonon state specified above, at the initial, halfway and selected final times. The lower curves show excess displacement variance, not mean atomic displacement or a phonon position probability. Harmonic dispersion spreads the packet slightly; no damping is modeled. The upper dots mark the zero mean at fixed sites. Times are in √(M/κ).');
-    if(name==='charge') return makeFigure(name,charge(),'','The disk D includes the localized deficit but excludes distant electronic compensation. The charge inside D approaches +e/m in the screened bulk limit, while integrating the density difference over the whole same-N droplet gives exactly zero. Shading marks regions only; no density profile or microscopic length scale is asserted. This physical compensation is distinct from neutralization of the fictitious plasma impurity used in the derivation.');
-    if(name==='winding') return makeFigure(name,winding(),'','An equivalent reference keeps two quasiholes in both preparations. In the reference the fixed hole lies well outside the loop; in the second preparation it lies well inside. The moving hole follows the same path in the same field. After removing or matching dynamical phases, the common electromagnetic phase φ<sub>B</sub> cancels. The +2π/m difference uses the notes’ field and counterclockwise conventions, in the screened bulk limit with cores and edge well separated. These diagrams do not specify physical radii.');
+    if(name==='phonon') return makeFigure(name,phonon(),`<label for="phonon-time">Final time <input id="phonon-time" type="range" min="0" max="60" step="1" value="48"><output id="phonon-time-value">48</output></label>`,'The excess fluctuations move right and spread, while their sum over the chain stays fixed. Mean atomic displacement remains zero. These are three times in the same one-phonon state; harmonic dispersion is included, damping is not.');
+    if(name==='charge') return charge();
+    if(name==='winding') return makeFigure(name,winding(),'','Both preparations contain two quasiholes; the outside hole supplies an equivalent reference to the calculation above. Dynamical phases are removed or matched. The displayed difference is a full winding, twice the elementary exchange angle. The paths are schematic and the result assumes separated cores in the screened bulk, with the notes’ field convention.');
     if(name==='pair') {const value=pair();return makeFigure(name,value,statControl(name)+sepControl(name),'Both curves use the same statistics and localization label. Only the preparation coefficients change. Positive χ means a larger radial moment than the distinguishable reference; negative χ means smaller. The zero-label value is a formal normalized-state limit, outside the separated-core interpretation.',`<div class="table-scroll"><table><thead><tr><th>Preparation</th><th>χ</th><th>⟨r²⟩ / ℓ²</th></tr></thead><tbody id="pair-table">${value.rows}</tbody></table></div>`);}
     if(name==='saddle') return makeFigure(name,saddle(),statControl(name)+sepControl(name,4)+`<label for="saddle-tau">Time τ <input id="saddle-tau" type="range" min="0" max="1.2" step=".01" value=".6"><output id="saddle-tau-value">0.6</output></label><button type="button" id="saddle-sensitive">Near a sign change</button>`,'Both preparations evolve at matching incoming labels under the specified SU(1,1) saddle. The curve shows the assigned quadratic moment C_alg, not a counting probability; matching its operator to a detector remains a physical requirement. Time only amplifies its initial value. The preparations differ here at finite separation, while sharing their leading large-separation tail. The usable time interval in a real saddle depends on its spatial extent and the validity of level projection.');
     if(name==='collider') return makeFigure(name,collider(),`<label for="collider-r">Junction amplitude r <input id="collider-r" type="range" min=".05" max=".98" step=".01" value=".95"><output id="collider-r-value">0.95</output></label><label for="collider-ratio">Inverse spectral width ℓₚ/L <input id="collider-ratio" type="range" min=".2" max="8" step=".1" value="2.5"><output id="collider-ratio-value">2.5</output></label>`,'A computed illustration of the extended-loop model, with identical simultaneous incident packets and time-integrating detectors. The default fermion probability is below the incoherent-path reference B₁, yet above the measured-one-source reference B₂. Nothing about the exchange rule changed. This figure models bosons and fermions; it does not interpolate to anyons.');
