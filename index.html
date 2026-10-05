@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Connected physics notes on quasiparticles, Laughlin quasiholes, pair preparation, saddle dynamics and the interpretation of anyon measurements.">
+  <meta name="description" content="What is an anyon, and how could an experiment identify one? A connected reading sequence with definitions, derivations and interactive figures.">
   <title>Anyons: visual physics notes</title>
   <link rel="stylesheet" href="docs/reading.css?v=8147d99755ac">
 </head>
@@ -11,18 +11,24 @@
   <main>
     <h1>Anyons: visual physics notes</h1>
     <p>Neil Yuanting Li</p>
-    <p>An electron fluid can carry a movable defect with a fraction of an electron’s charge. Exchanging two such defects need not give the electrons’ minus sign. What is the object being moved—and how does its exchange rule become a measured signal?</p>
-    <p><a href="docs/notes.html"><strong>From an electron fluid to a two-particle experiment →</strong></a></p>
-    <p>The connected notes construct a quasihole in a many-electron wavefunction, calculate its charge and statistical phase, then follow two effective particles through preparation, a saddle potential and a detector comparison. Three embedded figures compare the same anyons in different states, the resulting quadratic dynamics, and two references for an extended collider.</p>
-    <table><thead><tr><th>Part of the argument</th><th>The calculation</th></tr></thead><tbody>
-      <tr><td><a href="docs/notes.html#what-is-moving">A particle made from a material</a></td><td>What changes in a one-phonon state; what identifies a quasihole in the electron density.</td></tr>
-      <tr><td><a href="docs/notes.html#make-a-hole-without-removing-an-electron">Charge and exchange</a></td><td>The same localized density deficit determines fractional charge and a Berry-phase difference.</td></tr>
-      <tr><td><a href="docs/notes.html#replace-the-electron-fluid-by-two-effective-particles">Two preparations, one exchange rule</a></td><td>Project a position state, derive its angular weights and compare its separation moment with a generalized coherent state.</td></tr>
-      <tr><td><a href="docs/notes.html#let-a-saddle-amplify-the-difference">Dynamics and measurement</a></td><td>Derive contracting and expanding quadratic moments, then identify what a detector still needs.</td></tr>
-      <tr><td><a href="docs/notes.html#when-a-splitter-has-an-interior">The reference is part of the experiment</a></td><td>Separate exchange interference from a single packet’s circulation through an extended collider.</td></tr>
-    </tbody></table>
-    <h2>Independent visual notes</h2>
-    <p>These notebooks develop related models and methods. Each supplies its own assumptions; their excitations belong to different physical theories.</p>
+    <p>What is an anyon, and how could an experiment identify one? Start with exchanging two identical particles. Then ask what, inside a material, could behave as a particle with a different exchange rule.</p>
+    <p><a href="docs/notes.html"><strong>Start reading: what makes an anyon? →</strong></a></p>
+    <p>Read the connected notes from top to bottom. They assume graduate quantum mechanics and mathematics; the physical meaning of anyons is the subject to be developed. The figures appear beside the calculations they explain.</p>
+    <h2>Reading order</h2>
+    <ol>
+      <li><a href="docs/notes.html">What does exchanging two objects do to their quantum state?</a></li>
+      <li><a href="docs/notes.html#what-is-moving">What can move like a particle inside a material?</a></li>
+      <li><a href="docs/notes.html#make-a-hole-without-removing-an-electron">How can a small region carry a fraction of an electron’s charge?</a></li>
+      <li><a href="docs/notes.html#exchange-the-quasiholes-transport-the-electron-state">What happens when two such regions are exchanged?</a></li>
+      <li><a href="docs/notes.html#replace-the-electron-fluid-by-two-effective-particles">How do we describe and prepare two of these moving objects?</a></li>
+      <li><a href="docs/notes.html#let-a-saddle-amplify-a-correlation">How does an applied potential move them?</a></li>
+      <li><a href="docs/notes.html#when-a-splitter-has-an-interior">How do we separate the effect of exchange from interference in the apparatus?</a> Then <a href="docs/notes.html#what-an-interferometer-has-actually-measured">compare with a measured signal</a>.</li>
+      <li><a href="docs/notes.html#a-calculation-worth-taking-further">What remains to be calculated?</a></li>
+      <li><a href="docs/notes.html#when-a-phase-is-no-longer-enough">What changes when an exchange acts by a matrix?</a></li>
+    </ol>
+    <details>
+    <summary>Optional notebooks after the main notes</summary>
+    <p>These explore related models and methods. Each supplies its own assumptions; follow the links from the main text when you want the additional calculation.</p>
     <table><thead><tr><th>Notebook</th><th>Physical question</th></tr></thead><tbody>
       <tr><td><a href="experiments.html#exchange">Exchange paths</a> · <a href="experiments.html#interference">Interference</a></td><td>What distinguishes a winding from a retraced path, and what makes its phase observable?</td></tr>
       <tr><td><a href="berry.html">Berry phase</a></td><td>How does a cyclic product of eigenvector overlaps give a gauge-invariant geometric phase?</td></tr>
@@ -32,6 +38,7 @@
       <tr><td><a href="experiments.html#fusion">Fusion paths</a> · <a href="fusion-basis.html">Fusion bases</a></td><td>How are collective state spaces counted, and how are neighboring-pair operations expressed in one basis?</td></tr>
       <tr><td><a href="experiments.html#braids">Ising braids and readout</a></td><td>When does a measurement reveal the order of two noncommuting exchanges?</td></tr>
     </tbody></table>
+    </details>
     <h2>Read offline or change a calculation</h2>
     <p>Download the repository ZIP, extract it, and open <code>index.html</code>. The text, equations and controls work offline; only external sources require a connection. Figures can be saved as SVG, with numerical data in JSON. The <a href="README.md">README</a> describes model files, tests and how to rebuild the reading copies.</p>
   </main>

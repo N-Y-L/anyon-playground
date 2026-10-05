@@ -1,12 +1,12 @@
-# Anyons: from an electron fluid to a two-particle experiment
+# Anyons: what is exchanged, and what is measured?
 
 Put two identical particles far apart in a plane. Move each to the other's starting position, keeping them apart throughout: that is an **exchange**. The paths matter. Doing the exchange twice in the same direction winds the particles around one another; undoing the first motion retraces the paths. These are different processes in two dimensions.
 
-Quantum transport adds ordinary phases from elapsed time, energies and magnetic flux. After those contributions are removed or matched against a reference process, an exchange can leave a residual effect that depends on how the paths wind. This is **exchange statistics**. In the simplest case the effect is a scalar phase $e^{i\theta}$: bosons have $\theta=0$, fermions $\theta=\pi$, modulo $2\pi$. Particles with other values are **Abelian anyons**. “Abelian” says that these scalar operations commute. Some systems instead allow exchanges to act by noncommuting matrices on several states; those are non-Abelian anyons, discussed at the end.
+Quantum transport adds ordinary phases from elapsed time, energies and magnetic flux. After those contributions are removed or matched against a reference process, an exchange can leave a residual effect that depends on how the paths wind. This is **exchange statistics**. In the simplest case the effect is a scalar phase $e^{i\theta}$; the angle $\theta$ is the **statistical phase** of the exchange. Bosons have $\theta=0$, fermions $\theta=\pi$, modulo $2\pi$. Particles with other values are **Abelian anyons**. “Abelian” says that these scalar operations commute. Some systems instead allow exchanges to act by noncommuting matrices on several states; those are non-Abelian anyons, discussed at the end.
 
-What counts as the particle? An electron fluid can contain a localized, movable rearrangement with charge $+e/3$. Transport two such rearrangements slowly enough for the electrons to follow their instantaneous low-energy state, and exchanging them can contribute $e^{i\pi/3}$. The electrons themselves still carry charge $-e$ and obey fermionic antisymmetry. The operation exchanges two collective excitations, not two electron coordinates.
+What counts as the particle? A change in the state of many electrons can be concentrated in one region and transported to another. In the example we will construct, such a moving rearrangement carries charge $+e/3$. Transport two of them slowly enough for the electrons to follow their instantaneous low-energy state, and exchanging them can contribute $e^{i\pi/3}$. The electrons themselves still carry charge $-e$ and obey fermionic antisymmetry. It is the two rearrangements that are exchanged.
 
-A phase multiplying one isolated state is unobservable; the exchange phase becomes measurable as a relative phase between coherent histories, or through the interference it imposes on a two-particle state. We will construct the collective excitation, calculate its charge and exchange phase, and then ask what a preparation and a detector actually measure. The first step is to make the particle description concrete.
+A phase multiplying one isolated state is unobservable; the exchange phase becomes measurable as a relative phase between coherent histories, or through the interference it imposes on a two-particle state. We will construct the many-electron state, calculate the charge and exchange phase of its moving rearrangements, and then ask what a preparation and a detector actually measure. The first step is to make the particle description concrete.
 
 ## What is moving?
 
@@ -34,9 +34,11 @@ $$\begin{gathered}
 
 Under time evolution each $f_k$ gains $e^{-i\omega_kt}$. A packet narrow around $k_0$ therefore carries its excess fluctuations and energy along the chain with group velocity $d\omega_k/dk|_{k_0}$. No atom travels along with the packet. The packet can spread; anharmonic interactions can give it a finite lifetime. The particle description is useful when this lifetime is long compared with the motion or scattering being studied.
 
-This is the useful content of **quasiparticle**: a sufficiently persistent excitation whose states, energy, motion and interactions admit an effective particle description. Phonons get this description from harmonic normal modes. The fractional defects below arise from a correlated electronic state, by a different construction. Quantizing a spring has not explained their charge or their statistics.
+The single phonon is an **excitation**: a change carrying energy above the ground state. This is the useful content of **quasiparticle**: a sufficiently persistent excitation whose states, energy, motion and interactions admit an effective particle description. Phonons get this description from harmonic normal modes. The localized charged excitations below arise from a correlated electronic state, by a different construction. Quantizing a spring has not explained their charge or their statistics.
 
 ## Make a hole without removing an electron
+
+The example will be an **electron fluid**: a state of interacting electrons with approximately uniform density in its interior and no crystalline order. Its quantum state is still a many-electron wavefunction.
 
 Take spin-polarized electrons confined to a plane in a uniform magnetic field. Write the field as $\mathbf B=-B_0\hat{\mathbf z}$, with $B_0>0$, choose $z_j=x_j+iy_j$, and use the symmetric gauge $\mathbf A=(B_0y/2,-B_0x/2,0)$. With electron charge $-e$, $e>0$, these conventions make lowest-Landau-level wavefunctions a holomorphic function of the $z_j$ times a Gaussian and make the statistical angles below positive for counterclockwise exchange.
 
@@ -70,7 +72,7 @@ In the Laughlin fluid, this density has a localized deficit near $\eta$ and retu
 
 $$q_h=-e\int_D\big[n_\eta(\mathbf r)-n_L(\mathbf r)\big]d^2r.$$
 
-A zero in a polynomial has located the defect, but has not yet evaluated this integral. To find the missing charge, write its probability density as a classical Boltzmann weight. Up to constants independent of electron positions,
+A zero in a polynomial has located the quasihole, but has not yet evaluated this integral. To find the missing charge, write its probability density as a classical Boltzmann weight. Up to constants independent of electron positions,
 
 $$\begin{aligned}
 -\log|\Phi_\eta|^2&=-2m\sum_{i<j}\log\frac{|z_i-z_j|}{\ell_B}\\
@@ -92,7 +94,7 @@ Screening is the input that fixes the integral, rather than merely saying that t
 
 A complementary check is adiabatic insertion of one electromagnetic flux quantum $h/e$: Hall transport of magnitude $|\sigma_{xy}|=e^2/(mh)$ transfers charge of magnitude $|\sigma_{xy}|h/e=e/m$. This uses the Hall response of the same phase, so it checks the charge without furnishing an independent derivation of that response.
 
-What licenses treating $\eta$ as a position of a mobile particle? A smooth repulsive potential for electrons can pin the deficit. Moving the potential slowly transports a family of low-energy many-electron states with a localized density deficit following it. This works when the bulk gap persists, the defect stays away from the edge and other cores, and the motion does not excite the fluid across $\Delta$. Removing or weakening the pinning permits superpositions of different positions. An effective wavefunction for the quasihole describes those superpositions. It is a new description of states made from the same electrons, not another elementary constituent added to the Hamiltonian.
+What licenses treating $\eta$ as a position of a mobile particle? A smooth repulsive potential for electrons can pin the deficit. Moving the potential slowly transports a family of low-energy many-electron states with a localized density deficit following it. This works when the bulk gap persists, the quasihole stays away from the edge and other cores, and the motion does not excite the fluid across $\Delta$. Removing or weakening the pinning permits superpositions of different positions. An effective wavefunction for the quasihole describes those superpositions. It is a new description of states made from the same electrons, not another elementary constituent added to the Hamiltonian.
 
 With two quasiholes the family is
 
@@ -123,7 +125,7 @@ $$\begin{aligned}
 &=\frac{2\pi}{m}.
 \end{aligned}$$
 
-The same density deficit gave charge $e/m$ and now gives a full-winding phase $2\pi/m$. This is the mechanism: transporting a zero of the electron wavefunction samples the density of the other electrons; the second defect changes the number sampled by a fraction.
+The same density deficit gave charge $e/m$ and now gives a full-winding phase $2\pi/m$. This is the mechanism: transporting a zero of the electron wavefunction samples the density of the other electrons; the second quasihole changes the number sampled by a fraction.
 
 The uniform background contributes $-2\pi n_e A=-A/(m\ell_B^2)$ for enclosed area $A$. With our field convention this equals the electromagnetic Aharonov–Bohm phase $q_h\Phi/\hbar$, where $\Phi=-B_0A$. That area-dependent contribution survives even with no other quasihole present. It is the **difference** $\Delta\gamma$ that isolates braiding. The dynamical phase, $-\int E(t)dt/\hbar$, must likewise be removed or matched between the two protocols. A generic Berry phase is not automatically a statistical phase.
 
@@ -287,7 +289,7 @@ The words “bunching” and “antibunching” in this calculation refer to the
 
 ### Which localized state?
 
-There is another natural way to prepare a compact pair, used in [Subramanyan and Vishveshwara’s dynamics study](https://arxiv.org/abs/1905.00442). It becomes clear once we identify the operators that preserve the exchange condition. A linear relative coordinate changes angular momentum by one unit and takes a state out of the chosen sector. Quadratic operations connect neighboring allowed states, whose orbital indices differ by two.
+There is another natural way to prepare a compact pair, used in [Subramanyan and Vishveshwara’s dynamics study](https://arxiv.org/abs/1905.00442). It becomes clear once we identify the operators that preserve the exchange condition. A linear relative coordinate changes angular momentum by one unit and takes a state out of the chosen sector. Quadratic combinations—squares or products of coordinate operators—can connect neighboring allowed states, whose orbital indices differ by two.
 
 Define three generators by their action on this basis, with $\kappa=\alpha/2+1/4$:
 
