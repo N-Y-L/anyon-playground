@@ -6,6 +6,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
+const { createHash } = require('node:crypto');
 
 // Exercise the actual saved reading page and its browser scripts. This adapter
 // enforces select-option matching and event wiring; it does not test layout,
@@ -82,9 +83,12 @@ function createNotes() {
   // The generated page's actual load order must establish model globals
   // before rendering helpers, then bind the interaction handlers.
   const sources = Array.from(html.matchAll(/<script\b[^>]*src="([^"]+)"[^>]*>/g), match => match[1]);
-  assert.deepEqual(sources, ['../pair-states-physics.js', '../collider-physics.js', '../notes-figures.js', '../notes-interactions.js']);
+  assert.deepEqual(sources.map(source => source.split('?')[0]), ['../pair-states-physics.js', '../collider-physics.js', '../notes-figures.js', '../notes-interactions.js']);
   for (const source of sources) {
-    vm.runInContext(fs.readFileSync(path.join(root, 'docs', source), 'utf8'), context, { filename: source });
+    const [file, query] = source.split('?');
+    const script = fs.readFileSync(path.join(root, 'docs', file), 'utf8');
+    assert.equal(query, 'v=' + createHash('sha256').update(script).digest('hex').slice(0, 12), 'Changed scripts need fresh cache URLs');
+    vm.runInContext(script, context, { filename: file });
   }
 
   return {
@@ -143,13 +147,13 @@ test('Reading-page controls, exact statistics presets, resets, and exported resu
   page.reset('saddle');
   data = await page.save('saddle');
   assert.equal(data.results.alpha, 1 / 3);
-  assert.equal(data.results.separation, 2);
+  assert.equal(data.results.separation, 4);
   assert.equal(data.results.tau, 0.6);
   assert.match(data.conventions, /assigned algebraic moment/);
   const svg = await page.save('saddle', 'svg');
   assert.match(svg, /C_alg \/ ℓ²/);
-  assert.match(svg, /α = 1\/3; initial label d\/ℓ = 2; marker τ = 0\.6/);
-  assert.match(page.element('saddle-summary').textContent, /α = 1\/3, d\/ℓ = 2 and τ = 0\.6/);
+  assert.match(svg, /α = 1\/3; initial label d\/ℓ = 4; marker τ = 0\.6/);
+  assert.match(page.element('saddle-summary').textContent, /α = 1\/3, d\/ℓ = 4 and τ = 0\.6/);
   assert.doesNotMatch(svg, /<image\b|data:image/);
 
   page.input('collider-r', '.8');

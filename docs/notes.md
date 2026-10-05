@@ -38,7 +38,7 @@ This is the useful content of **quasiparticle**: a sufficiently persistent excit
 
 ## Make a hole without removing an electron
 
-Take spin-polarized electrons confined to a plane in a uniform magnetic field. Write the field as $\mathbf B=-B_0\hat{\mathbf z}$, with $B_0>0$, and choose $z_j=x_j+iy_j$. With electron charge $-e$, $e>0$, this convention makes lowest-Landau-level wavefunctions a holomorphic function of the $z_j$ times a Gaussian and makes the statistical angles below positive for counterclockwise exchange.
+Take spin-polarized electrons confined to a plane in a uniform magnetic field. Write the field as $\mathbf B=-B_0\hat{\mathbf z}$, with $B_0>0$, choose $z_j=x_j+iy_j$, and use the symmetric gauge $\mathbf A=(B_0y/2,-B_0x/2,0)$. With electron charge $-e$, $e>0$, these conventions make lowest-Landau-level wavefunctions a holomorphic function of the $z_j$ times a Gaussian and make the statistical angles below positive for counterclockwise exchange.
 
 The one-electron cyclotron motion has energies $\hbar\omega_c(n+1/2)$, where $\omega_c=eB_0/m_e$ and $m_e$ is the band mass in the electron model, and magnetic length $\ell_B=\sqrt{\hbar/(eB_0)}$. Each Landau level has $A/(2\pi\ell_B^2)$ orbitals in area $A$. Freezing the cyclotron energy therefore leaves many possible states: it does not freeze where an electron's orbit is centered. At fractional **filling** $\nu=2\pi\ell_B^2n_e$, with mean electron number density $n_e$, the lowest level is partly occupied. Interactions select a many-electron state within that large degeneracy.
 
@@ -106,16 +106,16 @@ The construction is [Laughlin’s](https://doi.org/10.1103/PhysRevLett.50.1395).
 
 Pin one quasihole at the origin and move another around a circle $\eta=Re^{i\varphi}$ in the bulk. Let the radius be large compared with the quasihole cores, but small compared with the distance to the edge. After removing the dynamical phase, the transported state acquires the Berry phase
 
-$$\gamma=i\int_0^{2\pi}\langle\Psi_\eta|\partial_\varphi\Psi_\eta\rangle\,d\varphi.$$
+$$\gamma=i\int_0^{2\pi}\langle\Psi_{\eta,0}|\partial_\varphi\Psi_{\eta,0}\rangle\,d\varphi.$$
 
 The inner product integrates over all electron coordinates. On this circular path the normalization is independent of $\varphi$ by rotational symmetry. For the two-hole family write $\Phi_{\eta,0}$ and $\Psi_{\eta,0}$; only the first parameter moves. Differentiating its insertion factor gives
 
 $$\begin{aligned}
 \partial_\eta\Phi_{\eta,0}&=\sum_i\frac{1}{\eta-z_i}\Phi_{\eta,0},\\
-\gamma&=i\oint d\eta\int d^2z\,\frac{n_\eta(z)}{\eta-z}.
+\gamma&=i\oint d\eta\int d^2z\,\frac{n_{\eta,0}(z)}{\eta-z}.
 \end{aligned}$$
 
-The density includes the moving hole's own density distortion, so one must not treat the entire integrand as a fixed function of $z$ and casually perform a contour integral. Instead, compare transport with and without a second, well-separated hole inside the same path. Screening makes the density difference near the stationary hole independent of the distant moving hole, up to corrections that vanish with separation. The moving core's contribution is the same in the two processes and cancels. For that stationary density difference $\delta n(z)$, the contour integral is legitimate:
+Here $n_{\eta,0}$ is the electron density in the two-hole state. It includes the moving hole's own density distortion, so one must not treat the entire integrand as a fixed function of $z$ and casually perform a contour integral. Instead, compare transport with and without a second, well-separated hole inside the same path. Screening makes the density difference near the stationary hole independent of the distant moving hole, up to corrections that vanish with separation. The moving core's contribution is the same in the two processes and cancels. For that stationary density difference $\delta n(z)$, the contour integral is legitimate:
 
 $$\begin{aligned}
 \Delta\gamma&=i\int d^2z\,\delta n(z)\oint\frac{d\eta}{\eta-z}\\
@@ -174,7 +174,7 @@ Take equal quasihole charges $q=e/m$, neglect their mutual interaction in this m
 
 $$\ell=\sqrt{\frac{\hbar}{|q|B_0}}=\sqrt m\,\ell_B.$$
 
-It is not the electron magnetic length. A smooth potential supplies the slow motion after projection; an effective mass, if introduced before projection, drops out of the remaining orbit-center dynamics. This is a model for well-separated low-energy excitations, not a re-solution of the Coulomb many-electron problem. Whether a particular trap prepares one of its states has to be checked separately.
+It is not the electron magnetic length. A smooth potential supplies the slow motion after projection; an effective mass, if introduced before projection, drops out of the remaining orbit-center dynamics. The microscopic mapping used here concerns the low-energy quasihole manifold. Introducing an unprojected charged particle constructs an effective projected description; it does not derive a quasihole mass or a microscopic cyclotron ladder. This is a model for well-separated low-energy excitations, not a re-solution of the Coulomb many-electron problem. Whether a particular trap prepares one of its states has to be checked separately.
 
 A particle coordinate in a magnetic field separates into cyclotron motion and the **guiding center**, the center of that orbit. To see how projection changes its algebra, take one particle with kinetic momentum $\boldsymbol\Pi=\mathbf p-q\mathbf A$ in signed field $B_z$:
 
@@ -217,7 +217,7 @@ $$\begin{gathered}
 \psi(r,\varphi+\pi)=e^{-i\pi\alpha}\psi(r,\varphi).
 \end{gathered}$$
 
-For positive quasihole charge in our into-page field, lowest-level coordinate orbitals are antiholomorphic, proportional to $(x_{\rm full}-iy_{\rm full})^j$ times a Gaussian. Their angular factor $e^{-ij\varphi}$ satisfies this boundary condition when $j=2n+\alpha$, $n=0,1,\ldots$. The statistics fixes the boundary condition; the charge and field fix the holomorphic or antiholomorphic form. Complex-conjugating the coordinate convention gives the positive boundary phase used in many pair-model papers, with unchanged physical content. In our displayed coordinate gauge, the orbital generator $-i\hbar\partial_\varphi$ has eigenvalues $-j\hbar$; $j$ is the nonnegative radial index used below. Bosons retain even $j$ and fermions odd $j$; fractional statistics shift the sequence. The regular branch $j\geq0$ also specifies the model's short-distance behavior. These restrictions say which states are available, not which states a preparation occupies. The [microscopic-to-anyon mapping](https://arxiv.org/abs/cond-mat/9606214) makes the complex conjugation explicit.
+For positive quasihole charge in our into-page field, lowest-level coordinate orbitals in symmetric gauge are antiholomorphic, proportional to $(x_{\rm full}-iy_{\rm full})^j$ times a Gaussian. Their angular factor $e^{-ij\varphi}$ satisfies this boundary condition when $j=2n+\alpha$, $n=0,1,\ldots$. The statistics fixes the boundary condition; the charge and field fix the holomorphic or antiholomorphic form. Complex-conjugating the coordinate convention gives the positive boundary phase used in many pair-model papers, with unchanged physical content. With the stated electromagnetic gauge and statistical phase convention, the orbital generator $-i\hbar\partial_\varphi$ has eigenvalues $-j\hbar$; $j$ is the nonnegative radial index used below. Bosons retain even $j$ and fermions odd $j$; fractional statistics shift the sequence. The regular branch $j\geq0$ also specifies the model's short-distance behavior. These restrictions say which states are available, not which states a preparation occupies. The [microscopic-to-anyon mapping](https://arxiv.org/abs/cond-mat/9606214) makes the complex conjugation explicit.
 
 ### The localized pair is a superposition, not a separation eigenstate
 
@@ -230,7 +230,7 @@ j=2n+\alpha.
 
 The scalar product here uses $d^2w$; choosing the physical half-plane of unordered configurations changes only a common normalization. The gamma function enters through the radial integral, $\int_0^\infty t^j e^{-t}dt=\Gamma(j+1)$, with $t=|w|^2$. The branch of $w^j$ carries the exchange boundary condition.
 
-The full position ket $|w_0\rangle$ exists before projection. Project it onto these orbitals:
+Within this auxiliary point-particle model, the full position ket $|w_0\rangle$ exists before projection. Project it onto these orbitals:
 
 $$\begin{aligned}
 P_\alpha|w_0\rangle&=\sum_n|n,\alpha\rangle\langle n,\alpha|w_0\rangle\\
@@ -318,18 +318,30 @@ $$\chi_{\rm coh}(u,\alpha)
 
 where $I_\mu(u)=\sum_{n\geq0}(u/2)^{2n+\mu}/[n!\Gamma(n+\mu+1)]$ is the modified Bessel function. The defining series explains where the function comes from: it is the normalization and its derivative, not a new physical postulate.
 
-At large $u$, the coherent-state excess has the leading tail $\chi_{\rm coh}\sim\alpha(\alpha-1)/(2u)$ for $0<\alpha<1$; the localized-coordinate excess decays exponentially with a power prefactor. Thus the distinction survives beyond a small numerical correction at one separation. [Kjønsberg and Leinaas](https://arxiv.org/abs/cond-mat/9606214) analyze which effective states represent localized Laughlin holes. A microscopic pinning-and-release protocol is needed to decide which state family, or which other superposition, an apparatus actually prepares.
+At large $u$, the coherent-state excess has the leading tail $\chi_{\rm coh}\sim\alpha(\alpha-1)/(2u)$ for $0<\alpha<1$; the localized-coordinate excess decays exponentially with a power prefactor. Thus the distinction survives beyond a small numerical correction at one separation.
 
-## Let a saddle amplify the difference
-
-A smooth saddle potential has one stable and one unstable direction of drift. For a single guiding center with $[X,Y]=i\ell^2$, choose its oriented energy as $H=-g(XY+YX)/2$, where $g>0$ has units of energy per length squared. The Heisenberg equations give
+For the ideal Laughlin trial family, its microscopic normalization already constrains the effective state. Put $\eta_{1,2}=\pm\zeta/2$ and $u=|\zeta|^2/(4\ell^2)$. Expanding $\prod_i(z_i^2-\zeta^2/4)\Psi_m$ in powers of $\zeta^2$ gives electron states with different total angular momenta, hence orthogonal states in a rotationally symmetric droplet. Absorbing fixed length factors into constants $A_n$, their norm and normalized weights are
 
 $$\begin{gathered}
-\dot X=-\lambda X,\qquad \dot Y=\lambda Y,\\
+\mathcal Z_2(u)=\sum_{n=0}^{N}A_nu^{2n},\qquad
+p_n=\frac{A_nu^{2n}}{\mathcal Z_2(u)},\\
+\langle j\rangle=\alpha+u\partial_u\log\mathcal Z_2.
+\end{gathered}$$
+
+The last line uses the angular-basis identification $j=2n+\alpha$. For separated holes well inside a sufficiently large droplet, write the screened norm as $\mathcal Z_2=C e^u u^{-\alpha}[1+\varepsilon(u)]$. The leading terms cancel in $\chi=\langle j\rangle-u$, leaving $\chi=u\partial_u\log[1+\varepsilon(u)]$. The residual therefore tests the screening and edge corrections. Of the two preparations above, the projected-coordinate family has the rapidly decaying corrections consistent with short-range screening; the generalized coherent family has an algebraic correction. This motivates [Kjønsberg and Leinaas's approximate coordinate-state mapping](https://arxiv.org/abs/cond-mat/9606214). The full norm would determine every $A_n$; its screened asymptotic form does not. A specified pinning-and-release protocol still needs its own microscopic state and operator mapping.
+
+<span id="let-a-saddle-amplify-the-difference"></span>
+
+## Let a saddle amplify a correlation
+
+A smooth saddle potential has one stable and one unstable direction of drift. For a single guiding center, write $X_s,Y_s$ with $[X_s,Y_s]=i\ell^2$ and choose its oriented energy as $H=-g(X_sY_s+Y_sX_s)/2$, where $g>0$ has units of energy per length squared. The Heisenberg equations give
+
+$$\begin{gathered}
+\dot X_s=-\lambda X_s,\qquad \dot Y_s=\lambda Y_s,\\
 \lambda=\frac{g\ell^2}{\hbar}.
 \end{gathered}$$
 
-An incoming packet contracts along $X$ and expands along $Y$. A rotation of axes writes the same energy as the difference of two quadratic curvatures. The saddle resembles a beam splitter because incoming motion approaches its center along one direction and outgoing motion separates along the other. Quantum widths and tunneling determine the splitting; a classical trajectory alone cannot predict it.
+An incoming packet contracts along $X_s$ and expands along $Y_s$. A rotation of axes writes the same energy as the difference of two quadratic curvatures. The saddle resembles a beam splitter because incoming motion approaches its center along one direction and outgoing motion separates along the other. Quantum widths and tunneling determine the splitting; a classical trajectory alone cannot predict it.
 
 For a pair, adopt the solvable algebraic model of the cited bulk-dynamics papers. Let
 
@@ -392,7 +404,15 @@ The explicit sum used in the figure is
 $$\delta=\frac u2\sum_{n=0}^\infty p_n
 \left[\sqrt{1-\frac{\alpha(\alpha-1)}{(2n+\alpha+1)(2n+\alpha+2)}}-1\right].$$
 
-It vanishes for bosons and fermions. For fractional statistics it is small but can decide the sign near a zero of $\chi$. Dropping it would erase part of the very preparation dependence being studied.
+It vanishes for bosons and fermions. Its origin can be seen directly from the bare projected quadratic $T_+=w^2/2$ and its Hermitian part $T_1=(T_++T_+^\dagger)/2$. The adjacent-coefficient recurrence of the projected-coordinate state gives $\langle T_1\rangle_{\rm loc}=u/2$ exactly. Thus $\delta=\langle K_1-T_1\rangle_{\rm loc}$ measures the operator-assignment difference in this state. It can decide the outgoing sign near a zero of $\chi$.
+
+At large $u$ and $0<\alpha<1$, expanding the displayed sum gives $\delta\sim\alpha(1-\alpha)/(4u)$, which dominates the exponentially small $\chi_{\rm loc}$. Both preparations therefore share the leading outgoing tail
+
+$$\frac{C_{\rm alg,loc}(t)}{\ell^2}
+\sim\frac{C_{\rm alg,coh}(t)}{\ell^2}
+\sim e^{2\tau}\frac{\alpha(1-\alpha)}{4u}.$$
+
+They differ at subleading order and at finite separation. The figure starts at $\alpha=1/3$, $d/\ell=4$: at $\tau=0.6$, the assigned moments are $0.05515\ell^2$ and $0.06976\ell^2$ for the projected-coordinate and generalized coherent states. Using the bare projected quadratics would also change the Hamiltonian algebra; it cannot be implemented by simply deleting $\delta$ from this time evolution.
 
 <!-- FIGURE: saddle -->
 
@@ -404,7 +424,7 @@ where the indicator is the projector onto that region for a specified outgoing p
 
 The growing solution also has a physical stopping point. The potential must remain smooth over a packet and weak enough not to mix the retained levels with higher ones; eventually the expanding packet leaves the region where a quadratic saddle is an adequate approximation. Close encounters can bring quasihole cores and residual interactions into play. These conditions delimit the time interval over which the simple exponential evolution describes the proposed experiment.
 
-A more general quadratic potential provides a useful extension. For one guiding center, $V=(aX^2+bY^2)/2$ gives $\ddot X=-(\ell^4ab/\hbar^2)X$. Curvatures of the same sign give oscillatory motion; opposite signs give exponential drift. The [2025 preprint by Basani, Subramanyan and Vishveshwara](https://arxiv.org/abs/2509.15488) develops such trap and saddle dynamics for the generalized coherent pair states. Its symmetry methods build on the same quadratic algebra. Changing a curvature can change stable motion into unstable motion; it does not interpolate the particle statistics.
+A more general quadratic potential provides a useful extension. For one guiding center, $V=(aX_s^2+bY_s^2)/2$ gives $\ddot X_s=-(\ell^4ab/\hbar^2)X_s$. Curvatures of the same sign give oscillatory motion; opposite signs give exponential drift. The [2025 preprint by Basani, Subramanyan and Vishveshwara](https://arxiv.org/abs/2509.15488) develops such trap and saddle dynamics for the generalized coherent pair states. Its symmetry methods build on the same quadratic algebra. Changing a curvature can change stable motion into unstable motion; it does not interpolate the particle statistics.
 
 ## When a splitter has an interior
 
@@ -477,7 +497,7 @@ T(q)&=\frac{r(1-e^{iq})}{1-r^2e^{iq}},\\
 R(q)&=-\frac{(1-r^2)e^{iq/2}}{1-r^2e^{iq}}.
 \end{aligned}$$
 
-Expanding the denominator as a geometric series identifies successive windings. Squaring each winding separately gives $b_{\rm cl}=(1-r^2)/(1+r^2)$ and $a_{\rm cl}=2r^2/(1+r^2)$. Adding the amplitudes first gives the resonant $T,R$ used in $B_2$. The figure integrates over a uniform incident spectrum $0\leq q\leq L/\ell_p$, where $\ell_p$ sets the inverse spectral width. It is not an rms packet length: a perfectly sharp spectral window has long spatial tails.
+Expanding the denominator as a geometric series identifies successive windings. Squaring each winding separately gives $b_{\rm cl}=(1-r^2)/(1+r^2)$ and $a_{\rm cl}=2r^2/(1+r^2)$. Adding the amplitudes first gives the resonant $T,R$ used in $B_2$. The figure integrates over a uniform incident spectrum $0\leq q\leq L/\ell_p$, where $\ell_p$ sets the inverse spectral width. One edge of this window is fixed at the resonance $q=0$, where $T=0$; translating the window relative to the resonances would change the probabilities. Here $\ell_p$ is not an rms packet length: a perfectly sharp spectral window has long spatial tails.
 
 <!-- FIGURE: collider -->
 
@@ -506,7 +526,7 @@ This is why electrostatics enters an experiment about topology. The device used 
 
 ## A calculation worth taking further
 
-There is now a precise question behind “how do anyons move?” Start with two weak pins in a microscopic Laughlin droplet, choose their separation and release protocol, and project the resulting state onto the low-energy quasihole manifold. Does the state match the localized-coordinate weights, the generalized coherent weights, or neither? The state can first be tested through its radial weights. The physical saddle Hamiltonian and measured position operators must also be projected into the same manifold and compared with the assigned algebraic generators; matching the state alone does not match its dynamics or its readout. Only with that operator map can the additional expectation $\delta$ and the outgoing model moment be interpreted for the apparatus. The distinction matters because two preparations with the same charge and statistics already predict different outgoing moments in the solvable saddle model.
+There is now a precise question behind “how do anyons move?” Start with two weak pins in a microscopic Laughlin droplet, choose their separation and release protocol, and project the resulting state onto the low-energy quasihole manifold. How accurately does the released state follow the projected-coordinate description motivated by the ideal trial family, and does the chosen protocol instead produce generalized coherent weights or another superposition? The state can first be tested through its radial weights. The physical saddle Hamiltonian and measured position operators must also be projected into the same manifold and compared with the assigned algebraic generators; matching the state alone does not match its dynamics or its readout. Only with that operator map can $\delta$ and the outgoing model moment be interpreted for the apparatus. The two preparations share a leading large-separation tail in the assigned saddle moment but differ at finite separation. State preparation and operator assignment must therefore be tested together.
 
 A controlled study would keep cores and edges separated, track leakage out of the chosen manifold, and compare results as system size and the retained basis increase. It would then derive the actual detector observable from the outgoing state, using the same preparation in the distinguishable comparison. The point is not to find a curve that looks fractional. It is to establish which measured difference survives after the state and apparatus have been specified.
 

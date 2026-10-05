@@ -11,6 +11,10 @@ const figures = require('../notes-figures.js');
 
 const docs = new URL('../docs/', import.meta.url);
 const styleVersion = createHash('sha256').update(await readFile(new URL('reading.css', docs))).digest('hex').slice(0, 12);
+const notesScripts = (await Promise.all(['pair-states-physics.js','collider-physics.js','notes-figures.js','notes-interactions.js'].map(async file => {
+  const version = createHash('sha256').update(await readFile(new URL('../' + file, docs))).digest('hex').slice(0, 12);
+  return `<script defer src="../${file}?v=${version}"></script>`;
+}))).join('');
 // A changed stylesheet needs a new URL even for readers with an older page open.
 const home = new URL('../index.html', import.meta.url);
 await writeFile(home, (await readFile(home, 'utf8')).replace(/href="docs\/reading\.css(?:\?v=[^"]*)?"/, `href="docs/reading.css?v=${styleVersion}"`));
@@ -69,7 +73,7 @@ for (const name of ['notes', 'catalog', 'references']) {
   const headings = [...body.matchAll(/<h2 id="([^"]+)">([^<]+)<\/h2>/g)];
   const contents = name === 'notes' ? `<nav class="contents" aria-label="In these notes"><span>In these notes</span>${headings.map(([,id,title]) => `<a href="#${id}">${title}</a>`).join('')}</nav>` : '';
   if (name === 'notes') body = body.replace(/(<h2\b)/, contents + '$1');
-  const scripts = name === 'notes' ? ['pair-states-physics.js','collider-physics.js','notes-figures.js','notes-interactions.js'].map(file => `<script defer src="../${file}"></script>`).join('') : '';
+  const scripts = name === 'notes' ? notesScripts : '';
   const page = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${escape(title)}</title><link rel="stylesheet" href="../vendor/katex/katex.min.css"><link rel="stylesheet" href="reading.css?v=${styleVersion}">${scripts}</head>
 <body><nav aria-label="Reading navigation"><a href="../index.html">All notes</a><a href="notes.html">Notes</a><a href="catalog.html">Further calculations</a><a href="references.html">Sources</a></nav>

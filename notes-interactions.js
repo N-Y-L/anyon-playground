@@ -18,7 +18,7 @@
   }
   function reset(name) {
     if(name==='collider'){el('collider-r').value=.95;el('collider-ratio').value=2.5;}
-    else{el(`${name}-alpha`).value=String(1/3);el(`${name}-separation`).value=2;if(name==='saddle')el('saddle-tau').value=.6;}
+    else{el(`${name}-alpha`).value=String(1/3);el(`${name}-separation`).value=name==='saddle'?4:2;if(name==='saddle')el('saddle-tau').value=.6;}
     update(name);
   }
   function save(name,kind) {
