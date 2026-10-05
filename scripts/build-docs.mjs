@@ -11,7 +11,7 @@ const figures = require('../notes-figures.js');
 
 const docs = new URL('../docs/', import.meta.url);
 const styleVersion = createHash('sha256').update(await readFile(new URL('reading.css', docs))).digest('hex').slice(0, 12);
-const notesScripts = (await Promise.all(['pair-states-physics.js','collider-physics.js','notes-figures.js','notes-interactions.js'].map(async file => {
+const notesScripts = (await Promise.all(['pair-states-physics.js','collider-physics.js','phonon-physics.js','notes-figures.js','notes-interactions.js'].map(async file => {
   const version = createHash('sha256').update(await readFile(new URL('../' + file, docs))).digest('hex').slice(0, 12);
   return `<script defer src="../${file}?v=${version}"></script>`;
 }))).join('');
@@ -69,7 +69,7 @@ for (const name of ['notes', 'catalog', 'references']) {
   const source = await readFile(new URL(name + '.md', docs), 'utf8');
   const title = source.split('\n')[0].replace(/^# /, '');
   let body = marked.parse(source).replace(/href="([^":]+)\.md(#[^"]*)?"/g, 'href="$1.html$2"');
-  if (name === 'notes') body = body.replace(/<!-- FIGURE: (pair|saddle|collider) -->/g, (_, figure) => figures.initialMarkup(figure));
+  if (name === 'notes') body = body.replace(/<!-- FIGURE: (phonon|charge|winding|pair|saddle|collider) -->/g, (_, figure) => figures.initialMarkup(figure));
   const headings = [...body.matchAll(/<h2 id="([^"]+)">([^<]+)<\/h2>/g)];
   const contents = name === 'notes' ? `<nav class="contents" aria-label="In these notes"><span>In these notes</span>${headings.map(([,id,title]) => `<a href="#${id}">${title}</a>`).join('')}</nav>` : '';
   if (name === 'notes') body = body.replace(/(<h2\b)/, contents + '$1');

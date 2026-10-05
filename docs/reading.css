@@ -23,3 +23,12 @@ a:focus-visible,summary:focus-visible,button:focus-visible,input:focus-visible,s
 @media(max-width:600px){.figure-drawing svg{min-width:600px}.figure-scroll-hint{display:block;font:12px/1.5 system-ui,sans-serif;color:#555;margin:8px 0}}
 @page{margin:0.7in}
 @media print{nav,footer,.figure-controls,.figure-tools,.figure-scroll-hint{display:none}body{margin:0;padding:0;max-width:none;font-size:10.5pt;line-height:1.45}h1{font-size:24pt}h2{font-size:17pt;margin-top:24pt;break-after:avoid}h3{break-after:avoid}.equation{break-inside:avoid;font-size:10pt;overflow:visible}.inline-figure{break-inside:avoid;margin:18pt 0}.figure-drawing{overflow:visible}.figure-drawing svg{min-width:0;filter:grayscale(1)}.inline-figure figcaption,.figure-summary{font-size:9pt}a{color:inherit;text-decoration:none}}
+
+.concept-figure .figure-scroll-hint{display:none}
+.concept-figure .figure-drawing{overflow:visible}
+.protocol-panels,.charge-layout{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:22px}
+.concept-figure .figure-drawing svg{min-width:0;max-width:350px;margin:auto}
+.charge-ledger{font-size:17px;line-height:1.55}.charge-ledger p{margin:18px 0}
+.phase-difference,.phase-common{text-align:center;font-size:18px;margin:14px 0}
+@media(max-width:600px){.protocol-panels,.charge-layout{grid-template-columns:1fr;gap:10px}.charge-ledger{font-size:16px}.charge-ledger p{margin:12px 0}.phase-difference,.phase-common{font-size:17px}}
+@media print{.protocol-panels,.charge-layout{grid-template-columns:1fr 1fr;gap:12pt}.charge-ledger,.phase-difference,.phase-common{font-size:9pt}.charge-ledger p{margin:10pt 0}}

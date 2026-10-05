@@ -34,6 +34,14 @@ $$\begin{gathered}
 
 Under time evolution each $f_k$ gains $e^{-i\omega_kt}$. A packet narrow around $k_0$ therefore carries its excess fluctuations and energy along the chain with group velocity $d\omega_k/dk|_{k_0}$. No atom travels along with the packet. The packet can spread; anharmonic interactions can give it a finite lifetime. The particle description is useful when this lifetime is long compared with the motion or scattering being studied.
 
+For a concrete packet, take $N=128$ and
+
+$$f_k=C\exp\!\left[-\frac{(ka-\pi/3)^2}{4(0.18)^2}\right]e^{28ika},$$
+
+with $C$ fixed by $\sum_k|f_k|^2=1$ over the nonzero allowed modes in $-\pi\leq ka<\pi$. Its initial envelope is centered near site $j=-28$. The figure evaluates the displayed variance directly at three times; no classical displacement is assigned to the one-phonon state.
+
+<!-- FIGURE: phonon -->
+
 The single phonon is an **excitation**: a change carrying energy above the ground state. This is the useful content of **quasiparticle**: a sufficiently persistent excitation whose states, energy, motion and interactions admit an effective particle description. Phonons get this description from harmonic normal modes. The localized charged excitations below arise from a correlated electronic state, by a different construction. Quantizing a spring has not explained their charge or their statistics.
 
 ## Make a hole without removing an electron
@@ -110,6 +118,8 @@ $$\begin{gathered}
 
 Screening is the input that fixes the integral, rather than merely saying that the density returns to its bulk value. It holds in the plasma liquid regime used to describe the Laughlin fluid here; the polynomial alone has not proved it. Translating back to electrons gives a localized physical charge $+e/m$, which has not been electrically neutralized. On a finite droplet its compensating charge remains outside $D$.
 
+<!-- FIGURE: charge -->
+
 A complementary check is adiabatic insertion of one electromagnetic flux quantum $h/e$ through a small region. Faraday's law, $\oint\mathbf E\cdot d\mathbf l=-d\Phi/dt$, produces a circulating electric field. The Hall conductivity $\sigma_{xy}$ relates the transverse current density to this field, so radial charge transport across an enclosing circle has magnitude $|I_r|=|\sigma_{xy}\dot\Phi|$. Integrating in time with $|\sigma_{xy}|=e^2/(mh)$ gives $|\Delta Q|=|\sigma_{xy}|h/e=e/m$; the insertion direction chooses deficit or excess. This uses the Hall response of the same phase, so it checks the charge without furnishing an independent derivation of that response.
 
 What licenses treating $\eta$ as a position of a mobile particle? A smooth repulsive potential for electrons can pin the deficit. Moving the potential slowly transports a family of low-energy many-electron states with a localized density deficit following it. This works when the bulk gap persists, the quasihole stays away from the edge and other cores, and the motion does not excite the fluid across $\Delta$. Removing or weakening the pinning permits superpositions of different positions. An effective wavefunction for the quasihole describes those superpositions. It is a new description of states made from the same electrons, not another elementary constituent added to the Hamiltonian.
@@ -146,6 +156,8 @@ $$\begin{aligned}
 The same density deficit gave charge $e/m$ and now gives a full-winding phase $2\pi/m$. This is the mechanism: transporting a zero of the electron wavefunction samples the density of the other electrons; the second quasihole changes the number sampled by a fraction.
 
 The uniform background contributes $-2\pi n_e A=-A/(m\ell_B^2)$ for enclosed area $A$. With our field convention this equals the electromagnetic Aharonov–Bohm phase $q_h\Phi/\hbar$, where $\Phi=-B_0A$. That area-dependent contribution survives even with no other quasihole present. It is the **difference** $\Delta\gamma$ that isolates braiding. The dynamical phase, $-\int E(t)dt/\hbar$, must likewise be removed or matched between the two protocols. A generic Berry phase is not automatically a statistical phase.
+
+<!-- FIGURE: winding -->
 
 A full winding is two exchanges, so this result fixes an exchange phase only up to a sign. To find the sign for the elementary quasihole, transport the normalized two-hole state through a half exchange itself. The same screening argument supplies the needed normalization.
 

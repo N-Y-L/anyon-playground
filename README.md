@@ -8,9 +8,11 @@ through charge, Berry transport, two-particle preparation, quadratic dynamics
 and calibrated measurements. They use graduate quantum mechanics and mathematics
 without assuming quantum field theory.
 
-The main reading page includes three interactive comparisons: projected-coordinate
-and generalized-coherent pair states, their assigned saddle moments, and two
-references for an extended boson/fermion collider. Ten independent notebooks
+The main reading page begins with an exact one-phonon fluctuation packet,
+a diagram of local quasihole charge and distant compensation, and matched
+winding paths that isolate the statistical phase. Three later comparisons show
+projected-coordinate and generalized-coherent pair states, their assigned saddle
+moments, and two references for an extended boson/fermion collider. Ten independent notebooks
 remain available for exchange, interference, Berry numerics, toric strings and
 memory, Abelian data, fusion paths and bases, Ising braids, and localized pairs.
 
@@ -35,6 +37,11 @@ JSON exports are records, not importable sessions.
 
 ## Models and limits
 
+- The phonon plot evaluates a finite periodic harmonic chain with its translation
+  mode fixed. It shows excess displacement variance; mean displacement remains
+  zero. It is not a phonon position probability. The two nearby charge and winding
+  diagrams are schematics of the screened bulk limit, not calculated density
+  profiles or experimental data.
 - Pair lengths use the effective particle's magnetic length, not the electron's.
   The localization label is not an exact separation. The normalized zero-label
   limit is mathematical; physical quasihole cores cannot remain separated there.
@@ -50,6 +57,9 @@ JSON exports are records, not importable sessions.
   error-correction experiment.
 
 Conventions and derivations are next to the figures. Calculations are deterministic.
+The phonon calculation records every finite-chain mode and plotted site; its
+normalization, conserved energy, Fourier sum rule and displacement variance are
+checked, including an independent small-chain Fock-space calculation.
 The pair-series tail has a truncation bound; collider quadrature reports a
 refinement error estimate, not a rigorous global error bound.
 
@@ -58,7 +68,7 @@ refinement error estimate, not a rigorous global error bound.
 | Files | Purpose |
 |---|---|
 | `docs/notes.md` | Authoritative connected prose and mathematics |
-| `pair-states-physics.js`, `collider-physics.js` | DOM-free models for the main notes |
+| `phonon-physics.js`, `pair-states-physics.js`, `collider-physics.js` | DOM-free models for the main notes |
 | `notes-figures.js`, `notes-interactions.js` | Shared static/live SVG figures and controls |
 | `physics.js`, `app.js`, `experiments.html` | Original independent interactive models |
 | `berry*`, `fusion-basis*`, `abelian*` | Independent model and interface modules |

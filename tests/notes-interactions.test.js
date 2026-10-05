@@ -83,7 +83,7 @@ function createNotes() {
   // The generated page's actual load order must establish model globals
   // before rendering helpers, then bind the interaction handlers.
   const sources = Array.from(html.matchAll(/<script\b[^>]*src="([^"]+)"[^>]*>/g), match => match[1]);
-  assert.deepEqual(sources.map(source => source.split('?')[0]), ['../pair-states-physics.js', '../collider-physics.js', '../notes-figures.js', '../notes-interactions.js']);
+  assert.deepEqual(sources.map(source => source.split('?')[0]), ['../pair-states-physics.js', '../collider-physics.js', '../phonon-physics.js', '../notes-figures.js', '../notes-interactions.js']);
   for (const source of sources) {
     const [file, query] = source.split('?');
     const script = fs.readFileSync(path.join(root, 'docs', file), 'utf8');
@@ -170,4 +170,26 @@ test('Reading-page controls, exact statistics presets, resets, and exported resu
   assert.ok(data.results.boson < data.results.B2);
   assert.ok(data.results.converged);
   assert.equal(page.revoked.length, page.downloadCount - 3, 'Each replacement download should release its previous object URL');
+});
+
+// Verify the new calculations stay connected to the saved page, including offline defaults.
+test('Early reading figures retain exact packet data, reset behavior and vector exports', async () => {
+  const page=createNotes();
+  for(const name of ['phonon','charge','winding']) {
+    assert.match(page.element(`${name}-drawing`).innerHTML, /<svg/);
+    assert.doesNotMatch(page.element(`${name}-summary`).textContent, /Could not calculate/);
+    const svg=await page.save(name,'svg');
+    assert.doesNotMatch(svg, /<image\b|data:image/);
+    assert.match(svg, /<title>/);
+  }
+  let data=await page.save('phonon');
+  assert.equal(data.results.time,48);
+  assert.deepEqual(data.results.snapshots.map(x=>x.parameters.time),[0,24,48]);
+  assert.match(data.conventions,/not a phonon position probability/);
+  page.input('phonon-time','60');
+  data=await page.save('phonon');
+  assert.deepEqual(data.results.snapshots.map(x=>x.parameters.time),[0,30,60]);
+  assert.equal(page.element('phonon-time-value').textContent,'60');
+  page.reset('phonon');
+  assert.equal((await page.save('phonon')).results.time,48);
 });
