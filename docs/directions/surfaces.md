@@ -8,7 +8,7 @@ There are two answers worth comparing. A scalar condensate without gauge flux mu
 
 <div class="try-this">
 
-**Checks in the figure.** The scalar vortex–antivortex pair gives opposite phase windings around the two small loops. Rotation can hide a zero, but cannot remove its winding. The magnetic lowest Landau level with two flux quanta instead has two positive zeros. Moving a zero changes the state; switching gauge patches changes its phase representation while preserving the physical zeros.
+**Checks in the figure.** The scalar vortex–antivortex pair gives opposite phase windings around its two zeros. Rotation can hide a zero, but cannot remove its winding. The magnetic lowest Landau level with two flux quanta instead has two positive zeros. Moving a zero changes the state; switching gauge patches changes its phase representation while preserving the physical zeros.
 
 </div>
 

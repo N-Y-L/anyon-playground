@@ -39,7 +39,7 @@ $$
 
 These definitions are possible for every fermion site; by themselves they do not establish an end mode. A zero-energy end mode is a *particular linear combination* that commutes with the Hamiltonian and is localized near a boundary. That distinction is central to [Kitaev's original construction](https://arxiv.org/abs/cond-mat/0010440).
 
-For an infinite uniform chain, with lattice spacing set to one, the positive bulk excitation energy is
+For an infinite uniform chain, with lattice spacing set to one, the nonnegative bulk excitation energy is
 
 $$
 E(k)=\sqrt{(\mu+2w\cos k)^2+4\Delta^2\sin^2 k}.
@@ -49,7 +49,7 @@ At nonzero pairing, its gap closes at $\mu=\pm2w$. The interval $|\mu|<2w$ suppo
 
 ## The finite energy and its profiles
 
-For the quadratic Hamiltonian, the singular values of the real Majorana coupling matrix $M$ below are the positive quasiparticle energies. Its smallest singular value $E_0$ is the magnitude of the energy difference between the lowest even and odd states. It is nonnegative; the parity label identifies the lower state.
+For the quadratic Hamiltonian, the singular values of the real Majorana coupling matrix $M$ below are the nonnegative quasiparticle energies. Its smallest singular value $E_0$ is the magnitude of the energy difference between the lowest even and odd states. Away from a crossing, the parity label identifies the lower state; at an exact zero, the two states are degenerate.
 
 The blue and red profiles are the left and right singular vectors of this one mode, with each normalized to unit sum of squares. They obey $M^{\mathsf T}v=E_0u$ and $Mu=E_0v$ with consistent singular-vector signs. The figure instead fixes both signs positive at their own ends; the common coupling in these equations can then be $-E_0$. The two profiles are components of one fermionic degree of freedom.
 

@@ -52,11 +52,11 @@ The state stays empty, acquiring only a phase. For $\varepsilon<0$, it is an exc
 
 ## Two energy comparisons
 
-For the full wire, let $E_0(t)$ be the lowest energy over both sectors and $E_p(t)$ the lowest energy in the initial sector. Then
+For the full wire, let $E_{\rm gs}(t)$ be the lowest many-body energy over both sectors and $E_p(t)$ the lowest energy in the initial sector. Then
 
-$$\langle H(t)\rangle-E_0(t)
+$$\langle H(t)\rangle-E_{\rm gs}(t)
 =\bigl[\langle H(t)\rangle-E_p(t)\bigr]
-+\bigl[E_p(t)-E_0(t)\bigr].$$
++\bigl[E_p(t)-E_{\rm gs}(t)\bigr].$$
 
 The first term measures excitation above the accessible sector's lowest state. The second records the cost of staying in that sector when the other one lies lower. Only the first can be reduced by improving adiabatic following within the sector. Parity conservation still permits transitions between states of the same parity, including creation of quasiparticle pairs.
 

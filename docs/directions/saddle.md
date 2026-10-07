@@ -94,7 +94,7 @@ Here $\Theta$ restricts the incoming arm. This state is normalized by flux rathe
 
 $$P(+Y\mid +X,E)=\frac{1}{1+e^{2\pi E/(\hbar\lambda)}}.$$
 
-The sign follows the chosen arms: classically $E=-gXY<0$ on a trajectory from $+X$ to $+Y$. Negative energies therefore approach unit probability for that exit. Reversing the incoming arm interchanges the two probabilities. [The extended inverted-oscillator treatment](https://arxiv.org/abs/2012.09875) develops this scattering calculation and its equivalent canonical forms.
+The sign follows the chosen arms: classically $E=-gXY<0$ on a trajectory from $+X$ to $+Y$. As $E/(\hbar\lambda)\to-\infty$, the probability of the $+Y$ exit approaches one. Reversing the incoming arm interchanges the two probabilities. [The extended inverted-oscillator treatment](https://arxiv.org/abs/2012.09875) develops this scattering calculation and its equivalent canonical forms.
 
 This logistic dependence has the form of a Fermi occupation with $k_BT_{\mathrm{eff}}=\hbar\lambda/(2\pi)$. No many-particle statistics entered this one-particle calculation. A pure Gaussian remains pure, and its energy spread cannot be replaced by its mean energy in the stationary formula.
 

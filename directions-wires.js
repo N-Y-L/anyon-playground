@@ -264,7 +264,7 @@
     const id = `wires-energy-${width}`;
     return `<svg viewBox="0 0 ${width} 271" role="img" aria-labelledby="${id}-title ${id}-desc" xmlns="http://www.w3.org/2000/svg">
       <title id="${id}-title">Finite-wire energy splitting</title>
-      <desc id="${id}-desc">The positive energy difference between the lowest even and odd states is the smallest singular value of the finite Majorana matrix. The logarithmic plot has a display floor of ten to the minus fourteen. Black ticks mark analytic zeros and gray strips mark odd ground-state parity. The selected energy is ${scientific(s.energy)} in hopping units.</desc>
+      <desc id="${id}-desc">The magnitude of the energy difference between the lowest even and odd states is the smallest singular value of the finite Majorana matrix. The logarithmic plot has a display floor of ten to the minus fourteen. Black ticks mark analytic zeros and gray strips mark odd ground-state parity. The selected energy is ${scientific(s.energy)} in hopping units.</desc>
       <g font-family="Georgia,serif" font-size="14" fill="#333">
       <text x="${(left + right) / 2}" y="18" text-anchor="middle">Finite-chain splitting E₀/w</text>
       <rect x="${x(-2)}" y="${top}" width="${x(2) - x(-2)}" height="${bottom - top}" fill="#f1f5f7"/>
@@ -339,7 +339,7 @@
       @media print{.directions-wires .wires-wide{display:block}.directions-wires .wires-narrow{display:none}.directions-wires .wires-summary{font-size:9pt}.directions-wires .wires-legend{font-size:8pt}}
       </style>
       <div data-wires-plots>${plots(s, view)}</div>
-      <p class="wires-legend">Top: positive finite-chain splitting on a logarithmic scale. Black ticks are exact zeros; gray bars indicate odd ground parity. Brown dashed lines mark the oscillation boundaries; solid gray lines mark the bulk transitions. Bottom: blue left profile and dashed red right profile, each normalized by its sum of squares.</p>
+      <p class="wires-legend">Top: finite-chain splitting on a logarithmic scale. Black ticks are exact zeros; gray bars indicate odd ground parity. Brown dashed lines mark the oscillation boundaries; solid gray lines mark the bulk transitions. Bottom: blue left profile and dashed red right profile, each normalized by its sum of squares.</p>
       <div class="figure-controls">
         <label for="wires-sites">Sites N <input id="wires-sites" data-wires-input="sites" type="range" min="6" max="60" step="1" value="${s.sites}"><output for="wires-sites">${s.sites}</output></label>
         <label for="wires-delta">Pairing Δ/w <input id="wires-delta" data-wires-input="delta" type="range" min="0.05" max="0.95" step="0.01" value="${s.delta}"><output for="wires-delta">${fixed(s.delta)}</output></label>
