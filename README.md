@@ -22,6 +22,13 @@ provide optional, linked detours on channel current and single-particle
 interference at the collider section; they are not prerequisites for the
 quasihole construction. Each detour links back to its point of departure.
 
+[Directions to think about](docs/directions.md) offers optional follow-on reading
+after the connected notes. Seven chapters connect the saddle, detector inference,
+Majorana wires, closed surfaces, Möbius geometry, ramps and other exchange problems.
+Five interactive figures explore a Gaussian guiding center and its overlap decay,
+finite-wire modes and parity crossings, localization in nonuniform wires,
+sphere phase textures and zero counts, and a normal carried around a Möbius band.
+
 ## Open
 
 Use the [website](https://n-y-l.github.io/anyon-playground/), or download the
@@ -32,7 +39,7 @@ and its fonts are bundled locally. Source links and the companion transport site
 Default figures and typeset math in `docs/` are included in the saved HTML,
 so that the connected notes also remain readable without JavaScript. Controls
 provide optional parameter changes; the argument does not require using them.
-SVG and JSON export buttons save the displayed figure and its parameters/results.
+The main-note and notebook SVG and JSON export buttons save the displayed figure and its parameters/results.
 JSON exports are records, not importable sessions.
 
 ## Models and limits
@@ -68,6 +75,8 @@ refinement error estimate, not a rigorous global error bound.
 | Files | Purpose |
 |---|---|
 | `docs/notes.md` | Authoritative connected prose and mathematics |
+| `docs/directions.md`, `docs/directions/` | Optional follow-on reading and detailed subchapters |
+| `directions-*.js` | Follow-on models, accessible static SVG defaults and interactive controls |
 | `phonon-physics.js`, `pair-states-physics.js`, `collider-physics.js` | DOM-free models for the main notes |
 | `notes-figures.js`, `notes-interactions.js` | Shared static/live SVG figures and controls |
 | `physics.js`, `app.js`, `experiments.html` | Original independent interactive models |

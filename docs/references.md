@@ -26,6 +26,8 @@ Links beside the [calculations](notes.md) identify their scientific starting poi
 
 ## Sources for the independent notebooks
 
+For the seven follow-on reading routes, see [Sources for these directions](directions/sources.md).
+
 - [Berry, 1984](https://doi.org/10.1098/rspa.1984.0023), [Wilczek–Zee, 1984](https://doi.org/10.1103/PhysRevLett.52.2111), and [Fukui–Hatsugai–Suzuki, 2005](https://arxiv.org/abs/cond-mat/0503172): geometric transport, its degenerate generalization and gauge-invariant overlap products. The [spin notebook](../berry.html) uses the loop-product method.
 - [Kitaev](https://arxiv.org/abs/quant-ph/9707021) and [Dennis and collaborators](https://arxiv.org/abs/quant-ph/0110143): toric-code strings, ground-state information and error correction. The [lattice figures](../experiments.html#toric) implement string algebra, not a full noisy memory.
 - [Wen](https://arxiv.org/abs/cond-mat/9506066), [Lu–Vishwanath, 2012](https://arxiv.org/abs/1205.3156), and [Lu–Vishwanath, 2016](https://arxiv.org/abs/1302.2634): Abelian K matrices, charge vectors, and toric-code/double-semion examples used in the [Abelian notebook](../abelian.html).
