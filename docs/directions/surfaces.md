@@ -1,14 +1,14 @@
-# Close the surface
+# Phase winding on a closed surface
 
 <p class="reading-kicker">Direction 4 · Phase winding, magnetic flux and the sphere</p>
 
-On a plane, a drawing can leave the compensating winding outside the picture. Close the surface into a sphere and there is no distant boundary. What does that require of the zeros of a wavefunction?
+On a plane, a drawing can leave the compensating winding outside the picture. A sphere has no distant boundary. What does that require of the zeros of a wavefunction?
 
 There are two answers worth comparing. A scalar condensate without gauge flux must have zero **total signed phase winding**. A charged particle in a positive-flux lowest Landau level has a wavefunction whose zeros all carry positive winding. The distinction lies in how the wavefunction is defined across the sphere.
 
 <div class="try-this">
 
-**Predict before changing the state.** Start with the vortex–antivortex pair. Follow the small loop around each zero: does the phase color cycle in the same direction? Rotate the view until a zero moves behind the sphere. Has its winding disappeared? Then choose the magnetic lowest Landau level with two flux quanta. Compare the signs, move zero 1, and switch gauge patches. Predict which changes affect the phase colors and which can change the physical zeros.
+**Checks in the figure.** The scalar vortex–antivortex pair gives opposite phase windings around the two small loops. Rotation can hide a zero, but cannot remove its winding. The magnetic lowest Landau level with two flux quanta instead has two positive zeros. Moving a zero changes the state; switching gauge patches changes its phase representation while preserving the physical zeros.
 
 </div>
 
@@ -16,13 +16,13 @@ There are two answers worth comparing. A scalar condensate without gauge flux mu
 
 ## A scalar phase must balance
 
-First consider a thin, closed condensate shell described by one smooth complex scalar $\Psi=\sqrt n\,e^{i\chi}$. Assume isolated zeros and no gauge flux or internal texture that changes the scalar's patching. Around a small positively oriented loop enclosing zero $a$, define
+A thin, closed condensate shell is described here by one smooth complex scalar $\Psi=\sqrt n\,e^{i\chi}$, with isolated zeros and no gauge flux or internal texture that changes the scalar's patching. Around a small positively oriented loop enclosing zero $a$, the winding is
 
 $$w_a=\frac{1}{2\pi}\oint_a d\chi.$$
 
 Single-valuedness makes $w_a$ an integer. Positive orientation is set by the **local outward normal**. The same circulation viewed from one laboratory direction can therefore have opposite signs at opposite poles.
 
-Remove small disks around every zero. On the remaining surface, $d\chi$ is a globally defined closed one-form, even when no single-valued real function $\chi$ can be chosen. Stokes' theorem says the sum of its boundary integrals vanishes. Reversing the hole-boundary orientations to the small-loop convention gives
+Removing small disks around every zero leaves a surface on which $d\chi$ is a globally defined closed one-form, even when no single-valued real function $\chi$ can be chosen. Stokes' theorem says the sum of its boundary integrals vanishes. Reversing the hole-boundary orientations to the small-loop convention gives
 
 $$\sum_a w_a=0.$$
 
@@ -32,14 +32,14 @@ The figure evaluates an explicit complex scalar with the chosen zeros. Color sho
 
 ## Magnetic flux changes how the wavefunction is patched
 
-Now introduce a radial magnetic field with monopole flux, following [Haldane's spherical quantum Hall construction](https://doi.org/10.1103/PhysRevLett.51.605). Let $q$ be the particle charge and choose the orientation so that
+The comparison is a radial magnetic field with monopole flux, as in [Haldane's spherical quantum Hall construction](https://doi.org/10.1103/PhysRevLett.51.605). With particle charge $q$, the orientation is chosen so that
 
 $$N_\phi=\frac{q}{2\pi\hbar}\int_{S^2}\mathbf B\cdot d\mathbf S
 =2Q\geq0$$
 
 is an integer. Here $Q$ labels the monopole strength. This is a specified magnetic-flux model: an ordinary uniform laboratory field has zero net flux through a closed sphere.
 
-A vector potential for nonzero monopole flux cannot be smooth everywhere in one gauge. Use northern and southern patches. Their wavefunctions represent the same physical state but differ on the overlap by a gauge phase; in our convention,
+A vector potential for nonzero monopole flux cannot be smooth everywhere in one gauge. Northern and southern patches cover the sphere. Their wavefunctions represent the same physical state but differ on the overlap by a gauge phase; in the convention here,
 
 $$\Psi_S=e^{-iN_\phi\phi}\Psi_N,$$
 
@@ -47,11 +47,11 @@ where $\phi$ is longitude. Such patchwise complex amplitudes are a **section of 
 
 This changes the preceding argument. The phase derivative alone is no longer the same one-form in both patches; the gauge-invariant combination includes the vector potential. Applying Stokes' theorem with that connection gives a total signed zero index equal to $N_\phi$. A phase jump along a gauge seam is not another physical vortex. A true zero has vanishing amplitude in every regular gauge.
 
-Switch patches in the figure: the color field changes while the modulus and physical zeros stay fixed. The × marks the pole excluded from the selected patch. The displayed magnetic states have nonzero modulus there, so its apparent phase winding is a gauge defect. The numerical winding around a physical zero is always evaluated in a patch regular near that zero.
+Switching patches in the figure changes the color field while the modulus and physical zeros stay fixed. The × marks the pole excluded from the selected patch. The displayed magnetic states have nonzero modulus there, so its apparent phase winding is a gauge defect. The numerical winding around a physical zero is always evaluated in a patch regular near that zero.
 
 ## The lowest Landau level makes the count explicit
 
-Use northern-patch spinor coordinates
+Northern-patch spinor coordinates can be chosen as
 
 $$u=\cos\frac\theta2,\qquad
 v=e^{i\phi}\sin\frac\theta2,$$
@@ -66,18 +66,18 @@ The positive signs use the chosen field and orientation. The lowest-Landau-level
 
 Changing a zero's longitude selects a different polynomial at fixed flux. Changing the flux changes the degree and the allowed state space. Rotating the camera changes neither. For comparison, multiplying one linear factor by the complex conjugate of another cancels their gauge phases and constructs a scalar with the displayed positive–negative pair.
 
-## Recover the Laughlin shift
+## The Laughlin shift
 
 For $N$ electrons, the spherical Laughlin polynomial is
 
 $$\Psi_m=\prod_{i<j}(u_i v_j-u_j v_i)^m,$$
 
-up to normalization, with odd $m$. Hold every electron coordinate except $i$ fixed. The polynomial has degree $m(N-1)$ in $(u_i,v_i)$: there are $N-1$ other electrons, each contributing an order-$m$ zero. Compatibility with the one-particle Landau level therefore requires
+up to normalization, with odd $m$. With every electron coordinate except $i$ fixed, the polynomial has degree $m(N-1)$ in $(u_i,v_i)$: there are $N-1$ other electrons, each contributing an order-$m$ zero. Compatibility with the one-particle Landau level therefore requires
 
 $$N_\phi=m(N-1)=\nu^{-1}N-\mathcal S,\qquad
 \nu=\frac1m,\quad\mathcal S=m.$$
 
-Here $\nu$ is the thermodynamic filling and $\mathcal S$ the **shift**, a finite-size offset in the flux–particle relation. It is not obtained by blindly setting $N_\phi=mN$. [Wen and Zee (1992)](https://doi.org/10.1103/PhysRevLett.69.953) connect this spherical counting to orbital-spin response and spatial curvature. A quasihole insertion adds one linear factor for every electron, increasing the required flux by one while leaving the electron number fixed.
+Here $\nu$ is the thermodynamic filling and $\mathcal S$ the **shift**, a finite-size offset in the flux–particle relation. Setting $N_\phi=mN$ would miss this offset. [Wen and Zee (1992)](https://doi.org/10.1103/PhysRevLett.69.953) connect this spherical counting to orbital-spin response and spatial curvature. A quasihole insertion adds one linear factor for every electron, increasing the required flux by one while leaving the electron number fixed.
 
 ## From a closed surface to a laboratory shell
 
@@ -85,8 +85,8 @@ The geometry is experimentally useful, but the two models should remain distinct
 
 <div class="takeaway">
 
-**A question to carry forward:** open a small hole in the scalar shell. Repeat the winding argument while retaining the new boundary integral. Which step enforced zero total winding, and what can now pass through the boundary? Specify the field and its boundary conditions before importing a zero-counting rule from another system.
+**An open boundary.** A small hole in the scalar shell leaves an additional boundary integral in the winding argument. Which step enforced zero total winding, and what can now pass through the boundary? The zero-counting rule depends on both the field and its boundary conditions.
 
 </div>
 
-[Choose another direction](../directions.md) · [Take away a global orientation](orientation.md) · [Longer reading and talks](reading.md)
+[Directions](../directions.md) · [Geometry without a global orientation](orientation.md) · [Longer reading and talks](reading.md)

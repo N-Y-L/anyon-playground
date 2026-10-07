@@ -1,6 +1,6 @@
 # Sources for these directions
 
-These are starting points for the calculations and distinctions developed in the seven routes. Each chapter links its claims to the relevant paper; this list lets you choose a longer reading path. The [sources for the main anyon notes](../references.html) remain a separate guide.
+These are the starting papers for the calculations and distinctions developed in the seven directions. References also appear beside the claims they support in each chapter. The [sources for the main anyon notes](../references.html) remain a separate list.
 
 ## The single-particle saddle
 
@@ -43,4 +43,4 @@ These are starting points for the calculations and distinctions developed in the
 - [Lin and Levin, *Loop braiding statistics in exactly soluble three-dimensional lattice models* (2015)](https://journals.aps.org/prb/abstract/10.1103/PhysRevB.92.035115). Concrete models with distinct three-loop statistics.
 - [Kitaev, *Anyons in an exactly solved model and beyond* (2006)](https://arxiv.org/abs/cond-mat/0506438). An explicit lattice model and the mathematical structure of fusion and braiding.
 
-For lecture notes and recordings, see [A paper to open next](reading.html). Return to [Directions to think about](../directions.html) to choose a calculation.
+Longer treatments and recordings are collected in [Reading notes and talks](reading.html). The [directions overview](../directions.html) connects the seven calculations.

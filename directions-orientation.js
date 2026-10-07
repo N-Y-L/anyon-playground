@@ -283,7 +283,7 @@
   }
 
   function summary(s) {
-    let returnText = 'Follow the normal continuously; its length stays one.';
+    let returnText = 'The continuously followed normal has unit length.';
     if (Math.abs(s.sPi - 2) < 1e-8) returnText = 'One circuit: back at the starting point, with the opposite normal.';
     if (Math.abs(s.sPi - 4) < 1e-8) returnText = 'Two circuits: both the point and the normal are back at their starting values.';
     if (s.sPi === 0) returnText = 'At the start, the dark normal coincides with the gray reference.';
@@ -314,8 +314,8 @@
       @media print{.directions-orientation .orientation-controls{display:none}.directions-orientation .orientation-panels{grid-template-columns:1fr 1fr}.directions-orientation .orientation-summary{font-size:9pt}}
       </style>
       <div class="orientation-panels">
-        <div class="orientation-panel"><h3>Follow a local normal</h3><div data-orientation-ribbon>${ribbonSVG(s)}</div><p class="orientation-legend">Surface blue/red: positive/negative B · n using the chosen local normal. Solid dark curve: zero contour. Dashed dark line: coordinate cut. Dark arrow: followed normal · gray dashed arrow: starting normal · brown arrow: fixed field. End-on dot/cross: toward/away. Arrows and guide lines are overlaid.</p></div>
-        <div class="orientation-panel"><h3>Find where the field is tangent</h3><div data-orientation-field>${fieldSVG(s)}</div><p class="orientation-legend">Solid: first circuit · dashed: second circuit · blue dot: selected point · amber rings: all distinct core zeros and their repeats. The graph follows the normal continuously across the coordinate cut.</p></div>
+        <div class="orientation-panel"><h3>A local normal around the band</h3><div data-orientation-ribbon>${ribbonSVG(s)}</div><p class="orientation-legend">Surface blue/red: positive/negative B · n using the chosen local normal. Solid dark curve: zero contour. Dashed dark line: coordinate cut. Dark arrow: followed normal · gray dashed arrow: starting normal · brown arrow: fixed field. End-on dot/cross: toward/away. Arrows and guide lines are overlaid.</p></div>
+        <div class="orientation-panel"><h3>Where the field is tangent</h3><div data-orientation-field>${fieldSVG(s)}</div><p class="orientation-legend">Solid: first circuit · dashed: second circuit · blue dot: selected point · amber rings: all distinct core zeros and their repeats. The graph follows the normal continuously across the coordinate cut.</p></div>
       </div>
       <div class="orientation-controls">
         <label for="orientation-travel">Travel s/π <output data-orientation-value="sPi" for="orientation-travel">${fixed(s.sPi)}</output><input id="orientation-travel" data-orientation-input="sPi" type="range" min="0" max="4" step="0.01" value="${s.sPi}"></label>

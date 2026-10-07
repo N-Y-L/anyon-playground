@@ -1,12 +1,12 @@
-# Change the Hamiltonian in time
+# Ramps and conserved parity
 
-You have moved quasiholes while asking the surrounding electrons to follow. Now change the Hamiltonian itself. Prepare a ground state, turn a control knob, and ask whether the state follows the moving ground state. Going slowly helps, but first we must establish which states the dynamics can reach.
+The quasihole motion in the earlier notes assumed that the surrounding electrons followed their instantaneous low-energy state. A time-dependent Hamiltonian makes that assumption a dynamical question: does an initially prepared ground state follow the ground state as the parameters change? Going slowly can help, but the answer also depends on which states the dynamics can reach.
 
-A sudden change is usually called a **quench**; a change over a finite time is a **ramp**. We will use a ramp of the chemical potential in a finite superconducting wire. This connects the [end modes](wires.html) to a precise question: when does failing to reach the lowest energy mean that the ramp was too fast?
+A sudden change is usually called a **quench**; a change over a finite time is a **ramp**. A chemical-potential ramp in a finite superconducting wire connects the [end modes](wires.html) to a precise question: when does failing to reach the lowest energy mean that the ramp was too fast?
 
 ## A knob and a conserved quantity
 
-Take an open Kitaev chain with fermion annihilation operators $c_j$ and occupations $n_j=c_j^\dagger c_j$:
+For an open Kitaev chain with fermion annihilation operators $c_j$ and occupations $n_j=c_j^\dagger c_j$, the Hamiltonian is
 
 $$\begin{aligned}
 H(t)&=-w\sum_{j=1}^{L-1}(c_j^\dagger c_{j+1}+\mathrm{h.c.})\\
@@ -28,7 +28,7 @@ For the uniform infinite Kitaev chain with nonzero pairing, the bulk excitation 
 
 There is another kind of crossing. Two levels of opposite parity can become degenerate without coupling. Since the ramp preserves parity, the relevant gap for following a state is the gap to accessible states **within its parity sector**. A crossing with the other sector can change which state has the lowest energy overall while leaving the actual state on a smooth branch.
 
-## Follow the branch, then choose the reference
+## The evolving branch and the ground-state reference
 
 Let $|\psi(t)\rangle$ have parity $p=\pm1$. If the instantaneous, nondegenerate ground state $|g(t)\rangle$ has parity $-p$, orthogonality gives
 
@@ -38,19 +38,19 @@ This holds at every ramp speed. The dynamics cannot transfer population between 
 
 In a finite topological wire, the two Majorana end modes overlap. Their coupling splits the two lowest states of opposite parity; changing parameters can reverse their energy ordering. [Hegde, Shivamoggi, Vishveshwara and Sen](https://arxiv.org/html/1412.5255) studied the resulting **parity blocking** during ramps. Their calculation shows that the overlap with the instantaneous ground state can vanish even for slow driving. Such parity crossings can occur within the topological phase; they need not mark a closing of the bulk gap.
 
-## A crossing you can calculate by hand
+## A two-state crossing
 
-Keep only the two end states and hold their basis fixed. Let $f$ be the fermion formed from the two Majorana modes, with occupation $n_f=0$ or $1$, and take
+In a fixed basis of the two end states, let $f$ be the fermion formed from the two Majorana modes, with occupation $n_f=0$ or $1$. A simple Hamiltonian is
 
 $$H_{\rm end}(t)=\varepsilon(t)(f^\dagger f-\tfrac12).$$
 
-This is a two-state illustration of the crossing, not a simulation of a full wire ramp. Its energies are $-\varepsilon/2$ for the empty state and $+\varepsilon/2$ for the occupied state.
+This gives a two-state illustration of the crossing, not a simulation of a full wire ramp. Its energies are $-\varepsilon/2$ for the empty state and $+\varepsilon/2$ for the occupied state.
 
-Start empty with $\varepsilon>0$. Now sweep $\varepsilon$ through zero. Before reading on, sketch both energies and follow the empty branch without switching lines.
+An initially empty state with $\varepsilon>0$ lies on the lower branch. As $\varepsilon$ sweeps through zero, the two energy lines cross without any matrix element connecting them.
 
-The state stays empty, acquiring only a phase. For $\varepsilon<0$, it is an excited state, and its energy above the instantaneous ground state is $-\varepsilon$. Making the sweep slower changes none of these occupations. The fidelity to the unique ground state changes from one to zero because the reference changes branches. The evolving state has not jumped. At the crossing itself, both states are ground states; use the projector onto their span instead of selecting an arbitrary unique ground state.
+The state stays empty, acquiring only a phase. For $\varepsilon<0$, it is an excited state, and its energy above the instantaneous ground state is $-\varepsilon$. Making the sweep slower changes none of these occupations. The fidelity to the unique ground state changes from one to zero because the reference changes branches. The evolving state has not jumped. At the crossing itself, both states are ground states; the projector onto their span defines the ground-space reference without arbitrarily selecting one of them.
 
-## Keep two energy comparisons
+## Two energy comparisons
 
 For the full wire, let $E_0(t)$ be the lowest energy over both sectors and $E_p(t)$ the lowest energy in the initial sector. Then
 
@@ -60,4 +60,4 @@ $$\langle H(t)\rangle-E_0(t)
 
 The first term measures excitation above the accessible sector's lowest state. The second records the cost of staying in that sector when the other one lies lower. Only the first can be reduced by improving adiabatic following within the sector. Parity conservation still permits transitions between states of the same parity, including creation of quasiparticle pairs.
 
-When reading a ramp calculation, plot both references. Then vary the duration and wire length separately. That comparison tells you whether a signal comes from excitations generated during the drive, a change in ground-state parity, or both. For the detailed wire calculation, continue with [Hegde and collaborators, §§2 and 7](https://arxiv.org/html/1412.5255).
+Comparing both energy references while varying the duration and wire length separately distinguishes excitations generated during the drive from a change in ground-state parity. Both effects can contribute to the same signal. [Hegde and collaborators, §§2 and 7](https://arxiv.org/html/1412.5255) give the detailed wire calculation.

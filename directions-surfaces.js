@@ -219,12 +219,12 @@
   }
   function ledger(s) {
     const loop = windingLoop(s);
-    return `<h3>Count the whole sphere</h3>
+    return `<h3>Whole-sphere winding count</h3>
       <p class="surface-count">${s.positive} positive − ${s.negative} negative = <strong>${s.signedTotal}</strong></p>
       <p>${s.mode === 'scalar' ? 'A globally defined scalar has total signed winding zero.' : `The bundle has Chern number ${s.chernNumber}; this LLL state has ${s.flux} positive zeros, counted with multiplicity.`}</p>
       <p>${s.front} near-side · ${s.back} far-side. Rotating the view changes visibility, not this total.</p>
       <ul class="surface-zero-list">${s.zeros.map(zero => `<li>Zero ${zero.id}: ${zero.winding > 0 ? '+1' : '−1'}, ${zero.projected.depth >= 0 ? 'near' : 'far'} side</li>`).join('') || '<li>No zeros: the zero-flux LLL state is constant.</li>'}</ul>
-      ${loop ? `<p><strong>Follow the small loop:</strong> zero ${loop.zeroId} gives Δarg Ψ/(2π) = ${fixed(loop.winding)}. The arrow follows positive orientation around the local outward normal${s.mode === 'magnetic' ? `; the count uses a regular ${loop.patch} patch near this zero` : ''}.</p>` : ''}
+      ${loop ? `<p><strong>Winding around the selected zero:</strong> zero ${loop.zeroId} gives Δarg Ψ/(2π) = ${fixed(loop.winding)}. The arrow follows positive orientation around the local outward normal${s.mode === 'magnetic' ? `; the count uses a regular ${loop.patch} patch near this zero` : ''}.</p>` : ''}
       ${s.mode === 'magnetic' && s.flux > 0 ? `<p><strong>× Gauge pole:</strong> the ${s.patch === 'north' ? 'south' : 'north'} pole is outside the selected gauge patch. Its nonzero modulus is continuous; its phase in this gauge is undefined there. Switching patches moves this defect and leaves the physical zeros fixed.</p>` : ''}`;
   }
   function initialMarkup() {
@@ -254,7 +254,7 @@
         <label for="surface-flux" data-surface-magnetic hidden>Flux quanta <input id="surface-flux" data-surface-input="flux" type="range" min="0" max="8" step="1" value="4"><output for="surface-flux">4</output></label>
         <label for="surface-zero" data-surface-magnetic hidden>Zero 1 longitude <input id="surface-zero" data-surface-input="zeroLongitude" type="range" min="0" max="360" step="5" value="30"><output for="surface-zero">30°</output></label>
         <label for="surface-patch" data-surface-magnetic hidden>Gauge patch <select id="surface-patch" data-surface-input="patch"><option value="north">North (excludes south pole)</option><option value="south">South (excludes north pole)</option></select></label>
-        <label for="surface-loop">Inspect a winding <select id="surface-loop" data-surface-input="selectedZero"><option value="1">Zero 1 (+1)</option><option value="2">Zero 2 (−1)</option></select></label>
+        <label for="surface-loop">Winding loop <select id="surface-loop" data-surface-input="selectedZero"><option value="1">Zero 1 (+1)</option><option value="2">Zero 2 (−1)</option></select></label>
         <label for="surface-yaw">Rotate view <input id="surface-yaw" data-surface-input="yaw" type="range" min="0" max="360" step="5" value="25"><output for="surface-yaw">25°</output></label>
         <label for="surface-back"><input id="surface-back" data-surface-input="showBack" type="checkbox" checked>Show far-side markers</label>
         <button type="button" data-surface-turn>Turn around</button><button type="button" data-surface-reset>Reset</button>

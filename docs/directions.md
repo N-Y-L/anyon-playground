@@ -2,96 +2,94 @@
 
 <p class="reading-kicker">After the anyon notes · Seven ways to change the question</p>
 
-You have followed an excitation from the electron fluid to a possible measurement. Now you can start changing the experiment. Remove one particle. Close the surface. Move the Hamiltonian. Which conclusions survive, and which depended on the choice you just changed?
+The [anyon notes](notes.md) followed an excitation from the electron fluid to a possible measurement. Several questions remain close to that calculation: what changes with only one particle, on a closed surface, or under a time-dependent Hamiltonian? Changing one ingredient at a time separates the conclusions that survive from those tied to the original setup.
 
-That is the purpose of these notes: **turn a familiar calculation into a new question you can work on.** Each route starts from something in [Anyons and quantum transport](notes.md), develops one change, and points into the literature. Several routes lead into work by Smitha Vishveshwara and her collaborators. They are alternatives to explore, not another list of prerequisites.
+These notes collect seven such directions, with calculations, figures and connections to the literature. Several lead into work by Smitha Vishveshwara and her collaborators. The common thread is **what changes when an assumption changes**.
 
 <div class="reading-route">
 
-**A good first stop:** [Take one particle away](directions/saddle.html). You already know the saddle stretches one coordinate and compresses the other. With just one particle, that simple motion leads to scattering, squeezing and decay. Try the figure first; then follow the calculation that explains it.
+The [single-particle saddle](directions/saddle.html) is the closest continuation. Removing the second particle removes exchange, but leaves stretching, squeezing and a decaying overlap. This gives a baseline for identifying what the pair adds.
 
 </div>
 
-## Pick the question that catches you
+## Seven changes to the problem
 
 <div class="direction-list">
 
 <section class="direction-card">
 
-### 1. Take one particle away
+### 1. One particle at a saddle
 
-**How much of the signal was the saddle doing all along?** Follow one Gaussian packet. Its preparation controls the split between the outgoing arms, while the saddle sets the late-time decay scale of a specified overlap. The same mathematics also appears near a scattering barrier.
+**How much of the signal comes from the saddle itself?** For one Gaussian packet, preparation controls the split between outgoing arms, while the saddle sets the late-time decay scale of a specified overlap. The same mathematics also appears near a scattering barrier.
 
-[Explore the saddle →](directions/saddle.html)
-
-</section>
-
-<section class="direction-card">
-
-### 2. Ask what the detector actually knows
-
-**What would count as evidence for an exchange rule?** Compare phase shifts and current correlations, then ask what charge and heat measurements add. Each measurement answers a different question; the task is to trace the inference from a measured quantity back to a physical model.
-
-[Follow the measured signal →](directions/detectors.html)
+[Single-particle calculation →](directions/saddle.html)
 
 </section>
 
 <section class="direction-card">
 
-### 3. Move to the end of a wire
+### 2. What the detector measures
 
-**How can a protected end mode still have an energy splitting?** A finite Kitaev chain makes the distinction visible: its two ends can talk to one another. Change the length, pairing and chemical potential, then compare the calculated splitting with exact zero-mode conditions. A second figure tests how a patterned or random potential changes the end-mode criterion.
+**What counts as evidence for an exchange rule?** Phase shifts, current correlations, charge and heat measurements constrain different parts of the description. Inferring statistics requires a model connecting the preparation and dynamics to the measured quantity.
 
-[Meet the end modes →](directions/wires.html)
-
-</section>
-
-<section class="direction-card">
-
-### 4. Close the surface
-
-**Where can the winding go when there is no edge?** Compare a condensate on a sphere with a charged particle on a sphere threaded by monopole flux. The zeros look similar; the global constraints are different.
-
-[Put the calculation on a sphere →](directions/surfaces.html)
+[Observables and statistical inference →](directions/detectors.html)
 
 </section>
 
 <section class="direction-card">
 
-### 5. Take away a global orientation
+### 3. End modes in a finite wire
 
-**What happens to “clockwise” after one trip around a Möbius band?** Carry a normal vector around the strip, then ask which magnetic fields and quantum states can be defined consistently. The geometry changes what a proposed model is allowed to mean.
+**How can a protected end mode still have an energy splitting?** In a finite Kitaev chain, the two ends can talk to one another. Length, pairing and chemical potential control the splitting and its exact zeros. A patterned or random potential connects the end-mode criterion to localization in a normal chain.
 
-[Follow the twist →](directions/orientation.html)
-
-</section>
-
-<section class="direction-card">
-
-### 6. Change the Hamiltonian in time
-
-**Can going more slowly always get you to the new ground state?** A closing gap limits adiabatic motion; an exactly conserved quantum number can forbid a transition altogether. Quenches let you distinguish these two obstacles.
-
-[Try to follow the ground state →](directions/quenches.html)
+[Finite wires and localization →](directions/wires.html)
 
 </section>
 
 <section class="direction-card">
 
-### 7. Change the objects being exchanged
+### 4. Phase winding on a closed surface
 
-**Which assumptions led to the familiar braid rule?** Compare point particles in a plane with constrained motion in one dimension, loop excitations in three dimensions and collective fusion spaces. First specify the objects and their allowed motions; then ask about statistics.
+**Where can the winding go when there is no edge?** A scalar condensate on a sphere and a charged particle on a sphere threaded by monopole flux have different constraints on their zeros. The distinction comes from how the wavefunction is defined across the surface.
 
-[Change the exchange problem →](directions/statistics.html)
+[Phase winding and magnetic flux →](directions/surfaces.html)
+
+</section>
+
+<section class="direction-card">
+
+### 5. Geometry without a global orientation
+
+**What happens to “clockwise” after one trip around a Möbius band?** A continuously followed normal reverses. This constrains the magnetic fields and quantum states that can be defined consistently across the join.
+
+[Möbius geometry and compatible models →](directions/orientation.html)
+
+</section>
+
+<section class="direction-card">
+
+### 6. Ramps and conserved parity
+
+**Does a slower ramp always reach the new ground state?** A closing gap limits adiabatic motion; an exactly conserved quantum number can forbid a transition altogether. These are distinct obstacles, even when both appear in the same ramp.
+
+[Adiabatic following and parity blocking →](directions/quenches.html)
+
+</section>
+
+<section class="direction-card">
+
+### 7. Exchange rules in different settings
+
+**Which assumptions led to the familiar braid rule?** Constrained motion in one dimension, loop excitations in three dimensions and collective fusion spaces give different exchange problems. Their statistics depend on both the objects and the allowed motions.
+
+[Configuration spaces, loops and fusion →](directions/statistics.html)
 
 </section>
 
 </div>
 
-## Make one route your own
+## The comparison behind each direction
 
-Choose one figure and predict what a control will change before you move it. When the result surprises you, locate the assumption that made your prediction fail. That gives you something precise to bring to a paper—or to a conversation.
+Each comparison has three parts: **what is held fixed, what changes, and what is measured**. A change in a plotted quantity may come from the state, the dynamics or the readout. Keeping those parts separate is as useful for the single-particle saddle as it is for an exchange experiment.
 
-For each route, aim to leave with three sentences: **what was held fixed, what was changed, and what was measured.** You do not need to finish every branch before choosing one to pursue.
-
-The [reading and talks guide](directions/reading.html) offers longer companions, and the [sources for these directions](directions/sources.html) collect the references. If you want a calculation that stays close to the original two-anyon problem, return to [Further calculations](catalog.md): microscopic preparation, an outgoing-state detector, and the phase information retained by a reference measurement.
+The [reading notes and talks](directions/reading.html) collect longer treatments, and the [source list](directions/sources.html) gathers the references. [Further calculations](catalog.md) stays closer to the original two-anyon problem: microscopic preparation, an outgoing-state detector, and the phase information retained by a reference measurement.
