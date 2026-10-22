@@ -2,7 +2,7 @@
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const S = require('../directions-saddle.js');
+const S = require('../src/figures/directions-saddle.js');
 
 function close(actual, expected, tolerance = 2e-12) {
   assert.ok(Math.abs(actual - expected) < tolerance, `${actual} differs from ${expected}`);

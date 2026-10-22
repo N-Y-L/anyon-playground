@@ -3,7 +3,7 @@
 
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const Phonon = require('../phonon-physics.js');
+const Phonon = require('../src/models/phonon-physics.js');
 
 function close(actual, expected, tolerance = 2e-12) {
   assert.ok(Math.abs(actual - expected) <= tolerance, `${actual} differs from ${expected}`);

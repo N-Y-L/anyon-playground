@@ -2,7 +2,7 @@
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const O = require('../directions-orientation.js');
+const O = require('../src/figures/directions-orientation.js');
 const PI = Math.PI;
 const dot = (a, b) => a.reduce((sum, value, j) => sum + value * b[j], 0);
 function close(a, b, tolerance = 2e-12) { assert.ok(Math.abs(a - b) < tolerance, `${a} differs from ${b}`); }

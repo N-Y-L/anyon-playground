@@ -2,7 +2,7 @@
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const localization = require('../directions-localization.js');
+const localization = require('../src/figures/directions-localization.js');
 const close = (a, b, tolerance) => assert.ok(Math.abs(a - b) < tolerance, `${a} differs from ${b}`);
 
 test('block renormalization agrees with a direct short transfer-vector product', () => {

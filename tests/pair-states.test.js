@@ -3,7 +3,7 @@
 
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const P = require('../pair-states-physics.js');
+const P = require('../src/models/pair-states-physics.js');
 
 function close(actual, expected, tolerance = 2e-12) {
   assert.ok(Math.abs(actual - expected) <= tolerance, `${actual} differs from ${expected}`);

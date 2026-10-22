@@ -28,6 +28,9 @@ a:focus-visible, summary:focus-visible, button:focus-visible, input:focus-visibl
 select:focus-visible, .figure-drawing:focus-visible { outline: 2px solid #0000ee; outline-offset: 3px; }
 sup, sub { line-height: 0; }
 
+.chapter-path { margin: 1.5em 0; }
+.chapter-path span[aria-hidden] { padding: 0 .3em; }
+
 /* Figure layout and controls; the surrounding document uses ordinary HTML. */
 .inline-figure { margin: 1.5em 0; break-inside: avoid; }
 .inline-figure svg { display: block; width: 100%; height: auto; }

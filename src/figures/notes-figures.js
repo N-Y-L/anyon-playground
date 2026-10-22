@@ -1,7 +1,7 @@
 /* Copyright (c) 2026 Neil Yuanting Li. MIT License; see LICENSE. */
 (function (root, factory) {
   'use strict';
-  if (typeof module === 'object' && module.exports) module.exports = factory(require('./pair-states-physics.js'), require('./collider-physics.js'), require('./phonon-physics.js'));
+  if (typeof module === 'object' && module.exports) module.exports = factory(require('../models/pair-states-physics.js'), require('../models/collider-physics.js'), require('../models/phonon-physics.js'));
   else root.AnyonNotesFigures = factory(root.AnyonPairStates, root.AnyonCollider, root.AnyonPhonon);
 })(typeof globalThis !== 'undefined' ? globalThis : this, function (Pairs, Collider, Phonon) {
   'use strict';

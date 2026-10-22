@@ -5,7 +5,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const { readFileSync } = require('node:fs');
 const { runInNewContext } = require('node:vm');
-const C = require('../collider-physics.js');
+const C = require('../src/models/collider-physics.js');
 
 function close(actual, expected, tolerance = 1e-10) {
   assert.ok(Math.abs(actual - expected) <= tolerance, `${actual} differs from ${expected} by ${Math.abs(actual - expected)}`);
@@ -30,7 +30,7 @@ function analytic(r, ratio) {
 
 test('The standalone browser build exposes the same model without a DOM or module loader', () => {
   const browser = {};
-  runInNewContext(readFileSync(require.resolve('../collider-physics.js'), 'utf8'), browser);
+  runInNewContext(readFileSync(require.resolve('../src/models/collider-physics.js'), 'utf8'), browser);
   assert.equal(typeof browser.AnyonCollider.calculate, 'function');
   assert.equal(typeof browser.AnyonCollider.scattering, 'function');
   close(browser.AnyonCollider.calculate().fermion, C.calculate().fermion, 1e-14);

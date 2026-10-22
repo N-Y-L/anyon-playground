@@ -2,7 +2,7 @@
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const P = require('../berry-physics.js');
+const P = require('../src/models/berry-physics.js');
 const close = (a, b, tolerance = 2e-12) => assert.ok(Math.abs(a - b) < tolerance, `${a} != ${b}`);
 const samePhasor = (a, b) => a.forEach((value, i) => close(value, b[i]));
 

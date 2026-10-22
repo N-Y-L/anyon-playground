@@ -8,18 +8,46 @@ import katex from 'katex';
 import { createRequire } from 'node:module';
 import { createHash } from 'node:crypto';
 const require = createRequire(import.meta.url);
-const figures = require('../notes-figures.js');
+const figures = require('../src/figures/notes-figures.js');
 
-const docs = new URL('../docs/', import.meta.url);
-const styleVersion = createHash('sha256').update(await readFile(new URL('reading.css', docs))).digest('hex').slice(0, 12);
-const directionsStyleVersion = createHash('sha256').update(await readFile(new URL('directions.css', docs))).digest('hex').slice(0, 12);
-const notesScripts = (await Promise.all(['pair-states-physics.js','collider-physics.js','phonon-physics.js','notes-figures.js','notes-interactions.js'].map(async file => {
-  const version = createHash('sha256').update(await readFile(new URL('../' + file, docs))).digest('hex').slice(0, 12);
+const root = new URL('../', import.meta.url);
+const docs = new URL('docs/', root);
+const checkOnly = process.argv.includes('--check');
+let staleFiles = 0;
+async function savePage(file, content) {
+  const current = await readFile(file, 'utf8').catch(error => {
+    if (error.code === 'ENOENT') return null;
+    throw error;
+  });
+  if (current === content) return;
+  if (checkOnly) {
+    console.error('Needs rebuilding: ' + fileURLToPath(file));
+    staleFiles++;
+  } else {
+    await writeFile(file, content);
+    console.log('Updated ' + fileURLToPath(file));
+  }
+}
+async function assetVersion(file) {
+  return createHash('sha256').update(await readFile(new URL(file, root))).digest('hex').slice(0, 12);
+}
+const styleVersion = await assetVersion('styles/reading.css');
+const mathStyleVersion = await assetVersion('vendor/katex/katex.min.css');
+const notesScripts = (await Promise.all(['src/models/pair-states-physics.js','src/models/collider-physics.js','src/models/phonon-physics.js','src/figures/notes-figures.js','src/pages/notes-interactions.js'].map(async file => {
+  const version = await assetVersion(file);
   return `<script defer src="../${file}?v=${version}"></script>`;
 }))).join('');
-// A changed stylesheet needs a new URL even for readers with an older page open.
-const home = new URL('../index.html', import.meta.url);
-await writeFile(home, (await readFile(home, 'utf8')).replace(/href="docs\/reading\.css(?:\?v=[^"]*)?"/, `href="docs/reading.css?v=${styleVersion}"`));
+// The notebook HTML is authored directly. Refresh only its asset versions so
+// returning readers receive changed scripts and styles after a deployment.
+for (const name of ['index', 'experiments', 'berry', 'abelian', 'fusion-basis']) {
+  const file = new URL(name + '.html', root);
+  let html = await readFile(file, 'utf8');
+  const assets = [...html.matchAll(/(?:src|href)="((?:src|styles|vendor)\/[^"?]+\.(?:js|css))(?:\?v=[^"]*)?"/g)];
+  for (const match of assets) {
+    html = html.replace(match[0], match[0].split('=')[0] + `="${match[1]}?v=${await assetVersion(match[1])}"`);
+  }
+  await savePage(file, html);
+}
 const escape = text => text.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
 function renderMath(tex, displayMode) {
   return katex.renderToString(tex.trim(), {
@@ -102,23 +130,27 @@ for (const name of [...readingPages.map(([name]) => name), ...chapterNames]) {
     // static default and its own controls, with one script per model on the page.
     const figureNames = [...new Set([...body.matchAll(/<!-- DIRECTION-FIGURE: ([a-z-]+) -->/g)].map(match => match[1]))];
     for (const figureName of figureNames) {
-      const scriptName = `directions-${figureName}.js`;
+      const scriptName = `src/figures/directions-${figureName}.js`;
       const figure = require('../' + scriptName);
       body = body.replaceAll(`<!-- DIRECTION-FIGURE: ${figureName} -->`, figure.initialMarkup());
-      const version = createHash('sha256').update(await readFile(new URL('../' + scriptName, docs))).digest('hex').slice(0, 12);
+      const version = await assetVersion(scriptName);
       scripts += `<script defer src="../../${scriptName}?v=${version}"></script>`;
     }
   }
-  const extraStyles = name === 'directions' || isChapter ? `<link rel="stylesheet" href="${docsPath}directions.css?v=${directionsStyleVersion}">` : '';
   const navigation = readingPages.map(([page, label]) => {
     const current = page === name ? ' aria-current="page"' : isChapter && page === 'directions' ? ' aria-current="location"' : '';
     return `<a href="${docsPath}${page}.html"${current}>${label}</a>`;
   }).join(' · ');
   const breadcrumb = isChapter ? `<p class="chapter-path"><a href="../directions.html">Directions to think about</a> <span aria-hidden="true">/</span> <span aria-current="page">${escape(title)}</span></p>` : '';
   const page = `<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${escape(title)}</title><link rel="stylesheet" href="${sitePath}vendor/katex/katex.min.css"><link rel="stylesheet" href="${docsPath}reading.css?v=${styleVersion}">${extraStyles}${scripts}</head>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${escape(title)}</title><link rel="stylesheet" href="${sitePath}vendor/katex/katex.min.css?v=${mathStyleVersion}"><link rel="stylesheet" href="${sitePath}styles/reading.css?v=${styleVersion}">${scripts}</head>
 <body><nav aria-label="Reading navigation"><a href="${sitePath}index.html">All notes</a> · ${navigation}</nav>
 <main id="main">${breadcrumb}${body}</main><footer><a href="${sourceName}.md">Markdown source</a> · <a href="${sitePath}LICENSE">Code: MIT</a> · <a href="${sitePath}assets/README.md">Image credits</a> · Neil Yuanting Li</footer></body></html>\n`;
-  await writeFile(new URL(name + '.html', docs), page.replace(/^[ \t]+$/gm, ''));
-  console.log('Built ' + fileURLToPath(new URL(name + '.html', docs)));
+  await savePage(new URL(name + '.html', docs), page.replace(/^[ \t]+$/gm, ''));
+}
+if (staleFiles) {
+  console.error(`Run npm run docs to update ${staleFiles} file(s).`);
+  process.exitCode = 1;
+} else {
+  console.log(checkOnly ? 'Generated pages and asset versions are current.' : 'Reading pages and asset versions built successfully.');
 }

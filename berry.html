@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Calculate a spin-1/2 Berry phase from sampled eigenstates. Change phase conventions, refine a loop, and compare with the solid angle; graduate quantum mechanics, no field theory assumed.">
   <title>Calculate a geometric phase</title>
-  <link rel="stylesheet" href="vendor/katex/katex.min.css">
-  <link rel="stylesheet" href="styles.css">
-  <script defer src="vendor/katex/katex.min.js"></script>
-  <script defer src="vendor/katex/auto-render.min.js"></script>
-  <script defer src="berry-physics.js?v=0.5.0"></script>
-  <script defer src="berry.js?v=0.5.0"></script>
+  <link rel="stylesheet" href="vendor/katex/katex.min.css?v=864f909fc1f3">
+  <link rel="stylesheet" href="styles/notebooks.css?v=c1d91f70f214">
+  <script defer src="vendor/katex/katex.min.js?v=103a53763cc0"></script>
+  <script defer src="vendor/katex/auto-render.min.js?v=e5372d199bcd"></script>
+  <script defer src="src/models/berry-physics.js?v=635bfa3b3c6e"></script>
+  <script defer src="src/pages/berry.js?v=41e2b1cbdd12"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to the note</a>
@@ -74,7 +74,7 @@
   <footer class="page-footer">
     <div class="export-controls"><label for="berry-export-figure">Vector figure</label><select id="berry-export-figure"><option value="berry-sphere-svg">Spin directions</option><option value="berry-phase-svg">Mesh convergence</option><option value="berry-links-svg">Individual overlap phases</option></select><button id="berry-export-svg">Save SVG</button><button id="berry-export-json">Save parameters and results</button></div>
     <p id="berry-export-ready" hidden>Prepared file: <a id="berry-download" href="#">Download</a></p>
-    <p><a href="berry-physics.js">Calculation source</a> · <a href="tests/berry.test.js">Checks</a> · <a href="docs/references.html">Sources</a> · <a href="index.html">Contents</a></p>
+    <p><a href="src/models/berry-physics.js?v=635bfa3b3c6e">Calculation source</a> · <a href="tests/berry.test.js">Checks</a> · <a href="docs/references.html">Sources</a> · <a href="index.html">Contents</a></p>
     <p><small>Copyright (c) 2026 Neil Yuanting Li. <a href="LICENSE">MIT license</a>.</small></p>
   </footer>
   <p id="berry-announcement" class="sr-only" role="status" aria-live="polite"></p>

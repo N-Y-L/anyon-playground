@@ -2,7 +2,7 @@
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const S = require('../directions-surfaces.js');
+const S = require('../src/figures/directions-surfaces.js');
 const close = (a, b, tolerance = 2e-11) => assert.ok(Math.abs(a - b) < tolerance, `${a} differs from ${b}`);
 const multiply = (a, b) => [a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0]];
 const cross = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];

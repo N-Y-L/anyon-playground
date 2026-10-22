@@ -2,7 +2,7 @@
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const P = require('../fusion-basis-physics.js');
+const P = require('../src/models/fusion-basis-physics.js');
 const phi = (1 + Math.sqrt(5)) / 2;
 const identity = [[[1, 0], [0, 0]], [[0, 0], [1, 0]]];
 const phase = angle => [Math.cos(angle), Math.sin(angle)];

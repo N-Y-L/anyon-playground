@@ -6,7 +6,7 @@
   if (!P) {
     const message = document.createElement('p');
     message.className = 'error-message';
-    message.textContent = 'The calculation module did not load. Keep fusion-basis-physics.js beside this page and reload.';
+    message.textContent = 'The calculation module did not load. Keep the extracted repository folders together and reload.';
     byId('main').prepend(message);
     return;
   }

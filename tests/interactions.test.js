@@ -6,11 +6,11 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
-const physics = require('../physics.js');
+const physics = require('../src/models/physics.js');
 
 const root = path.join(__dirname, '..');
 const html = fs.readFileSync(path.join(root, 'experiments.html'), 'utf8');
-const application = fs.readFileSync(path.join(root, 'app.js'), 'utf8');
+const application = fs.readFileSync(path.join(root, 'src/pages/app.js'), 'utf8');
 
 function close(actual, expected) {
   assert.ok(Math.abs(actual - expected) < 1e-12, `${actual} differs from ${expected}`);

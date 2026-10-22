@@ -5,7 +5,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
-const P = require('../abelian-physics.js');
+const P = require('../src/models/abelian-physics.js');
 const r = P.rational;
 const samePhase = (actual, expected) => assert.deepEqual(actual.reducedTurns, r(...expected));
 function close(actual, expected) { assert.ok(Math.abs(actual - expected) < 1e-12, `${actual} != ${expected}`); }
@@ -14,7 +14,7 @@ test('Displayed phase formulas have imaginary exponents and agree with every sel
   // Exercise the actual UI formatter without requiring a browser or copying
   // its implementation. Parsing the emitted formula checks its mathematical
   // meaning: valid TeX alone does not imply a correct complex phase.
-  const controller = fs.readFileSync(path.join(__dirname, '../abelian.js'), 'utf8');
+  const controller = fs.readFileSync(path.join(__dirname, '../src/pages/abelian.js'), 'utf8');
   const start = controller.indexOf('  function phaseTex(phase) {');
   const end = controller.indexOf('  function phaseText(phase) {', start);
   assert.ok(start >= 0 && end > start, 'The phase formatter must be present.');

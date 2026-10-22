@@ -83,7 +83,7 @@ function createNotes() {
   // The generated page's actual load order must establish model globals
   // before rendering helpers, then bind the interaction handlers.
   const sources = Array.from(html.matchAll(/<script\b[^>]*src="([^"]+)"[^>]*>/g), match => match[1]);
-  assert.deepEqual(sources.map(source => source.split('?')[0]), ['../pair-states-physics.js', '../collider-physics.js', '../phonon-physics.js', '../notes-figures.js', '../notes-interactions.js']);
+  assert.deepEqual(sources.map(source => source.split('?')[0]), ['../src/models/pair-states-physics.js', '../src/models/collider-physics.js', '../src/models/phonon-physics.js', '../src/figures/notes-figures.js', '../src/pages/notes-interactions.js']);
   for (const source of sources) {
     const [file, query] = source.split('?');
     const script = fs.readFileSync(path.join(root, 'docs', file), 'utf8');
