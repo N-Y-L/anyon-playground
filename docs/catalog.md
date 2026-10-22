@@ -1,29 +1,36 @@
-# Further calculations
+# Questions to explore
 
-The [connected notes](notes.md) leave three concrete calculations open. Each would add physical information missing from the displayed models.
+After the [connected notes](notes.md), I have a few directions rather than a fixed project. What attracts me is the gap between a clean exchange rule and a real preparation or measurement. Each question below changes one ingredient and asks what survives.
 
-## Prepare the pair microscopically
+## How much does a packet remember its preparation?
 
-Put two weak repulsive pinning potentials into a finite Laughlin droplet and calculate its low-energy states as the pins move or are released. Compare the resulting effective amplitudes with the two preparation families in the notes. The radial moment is a first test; off-diagonal quadratic matrix elements test the operator mapping as well. Finite-size convergence, separation from the edge and leakage out of the quasihole manifold matter here.
+The exchange rule determines allowed states, but it does not choose their amplitudes. The two [localized-pair preparations](notes.md#replace-the-electron-fluid-by-two-effective-particles) already produce different fractional-statistics correlations. I would like to understand which features survive across preparations, and which encode how the excitations were localized or released.
 
-[Kjønsberg–Leinaas](https://arxiv.org/abs/cond-mat/9606214) supplies the microscopic-to-anyon state map. [Vishveshwara–Cooper](https://arxiv.org/abs/0908.3945) uses the projected-coordinate preparation, while [Subramanyan–Vishveshwara](https://arxiv.org/abs/1905.00442) develops the generalized coherent construction. The [2025 quadratic-potential preprint](https://arxiv.org/abs/2509.15488) extends the latter's dynamics. These sources do not make the preparations interchangeable.
+[Vishveshwara and Cooper](https://arxiv.org/abs/0908.3945) and [Subramanyan and Vishveshwara](https://arxiv.org/abs/1905.00442) give concrete starting points. Their state families are useful examples, not interchangeable definitions of an anyon. [Kjønsberg and Leinaas](https://arxiv.org/abs/cond-mat/9606214) connects this issue to the microscopic quasihole description.
 
-## Give the outgoing state a detector
+## Which observable tells me what I want to know?
 
-The saddle figure evolves assigned quadratic moments. A detector with a specified spatial acceptance and time window instead needs an outgoing-state probability. Calculate that probability and compare it with the weighted moment; their signs need not contain the same information. The distinction already occurs for ordinary particles, before an anyon extension is attempted.
+A separation moment, a coincidence probability and a current correlation weight an outgoing state differently. I want to understand what information each makes accessible, and which comparisons remain meaningful when the detector changes.
 
-For the [extended collider](https://arxiv.org/abs/2412.19674), change the incident spectral shape while retaining identical source preparations. Determine how the one-source reference and the exchange overlap change separately. The existing loop model uses a uniform spectral window; a Gaussian or experimentally measured spectrum would be a new calculation.
+The [saddle](notes.md#let-a-saddle-amplify-a-correlation) makes this question visible. The [detector direction](directions/detectors.md) broadens it to edge transport. A useful calculation would have to specify its state and measured operator; I do not need to prescribe that calculation before deciding which physical question interests me.
 
-## Retain the right phase information
+## What should a reference preserve?
 
-The calibrated boson/fermion reference removes single-particle contributions. In an anyon device, some single-source processes already carry braiding information. Deriving the appropriate subtraction requires a model of those tunneling histories, rather than a continuous exchange-angle replacement in a boson/fermion formula.
+The [extended collider](notes.md#when-a-splitter-has-an-interior) shows why one-particle coherence belongs in a comparison intended to isolate mutual exchange. Anyons make the question richer: some single-source histories can already carry braiding information. How should a reference retain the information I want while removing an unwanted contribution?
 
-Interferometry poses a related control problem: an enclosed-charge transition can move the edge, changing the ordinary flux phase at the same time as the statistical phase. The [Nakamura author manuscript](https://arxiv.org/abs/2006.14115) shows how device electrostatics enters the interpretation.
+Interferometry poses a related problem. A charge transition can change both the statistical phase and the area enclosed by a path. The [Nakamura experiment](https://arxiv.org/abs/2006.14115) makes the link between topology and electrostatics concrete.
 
-## Independent branches
+## What changes with geometry or a drive?
 
-The [toric-code note](../experiments.html#toric) gives an explicit lattice Hamiltonian with mutual statistics. Its [memory extension](../experiments.html#memory) explains why removing all local defects need not restore the original encoded state. The [Abelian notebook](../abelian.html) compares fusion and statistics. The [fusion-basis notebook](../fusion-basis.html) develops operations in a collective space and connects them to interacting anyon chains. These are useful separate problems rather than prerequisites for the bulk-pair calculation.
+I can follow [seven directions](directions.md): saddles, detectors, wires, closed surfaces, Möbius geometry, ramps and other exchange settings. These are different models, so I first ask what moves, which paths or states are available, and what is measured. The connection to anyons may be direct, or it may be a shared question about topology and dynamics.
 
-## Useful upstream software
+For another microscopic example, the [toric-code notebook](../experiments.html#toric) shows mutual statistics in a spin Hamiltonian. Its [memory extension](../experiments.html#memory) asks how local defects can disappear while encoded information changes. The [fusion-basis notebook](../fusion-basis.html) explores operations within a collective state space.
 
-[QuTiP](https://github.com/qutip/qutip) provides quantum-state dynamics; [qecsim](https://github.com/qecsim/qecsim) and [Stim](https://github.com/quantumlib/Stim) address stabilizer-code and error-correction calculations. They solve different problems. None is needed to run this site, and using one would not by itself supply the microscopic model or detector mapping required above.
+These are broad entry points, not claims that the open questions are new or that a project is already feasible. I can use the [paper shortlist](conversation.md) to begin a conversation, then choose the direction worth understanding more deeply.
+
+<details>
+<summary>Tools if a question eventually becomes a calculation</summary>
+
+[QuTiP](https://github.com/qutip/qutip) provides quantum-state dynamics; [qecsim](https://github.com/qecsim/qecsim) and [Stim](https://github.com/quantumlib/Stim) address stabilizer-code and error-correction calculations. They solve different problems. None is needed to read or run this site, and none supplies the missing physical model by itself.
+
+</details>

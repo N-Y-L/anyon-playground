@@ -1,33 +1,34 @@
 # Anyons and quantum transport
 
-[Read online](https://n-y-l.github.io/anyon-playground/) · [Connected notes](docs/notes.md)
+[Read online](https://n-y-l.github.io/anyon-playground/) · [Connected notes](docs/notes.md) · [Three papers to remember](docs/conversation.md)
 
-How does a many-electron state acquire movable excitations, and how does their
-exchange rule become a signal? The connected notes follow Laughlin quasiholes
-through charge, Berry transport, two-particle preparation, quadratic dynamics
-and calibrated measurements. They use graduate quantum mechanics and mathematics
-without assuming quantum field theory.
+I start with a simple question: what can a quantum state remember after I exchange
+two identical objects? These first-person notes follow quasiparticles, Laughlin
+quasiholes, fractional statistics, non-Abelian fusion states and measured signals,
+then open a few general directions to explore.
 
-The main reading page begins with an exact one-phonon fluctuation packet,
-a published quasihole density profile with local/global charge accounting, and matched
-winding paths that isolate the statistical phase. Three later comparisons show
-projected-coordinate and generalized-coherent pair states, their assigned saddle
-moments, and two references for an extended boson/fermion collider. Ten independent notebooks
-remain available for exchange, interference, Berry numerics, toric strings and
-memory, Abelian data, fusion paths and bases, Ising braids, and localized pairs.
+The assumed background is graduate mathematics, basic graduate quantum mechanics
+and very basic condensed-matter physics. Landau levels, guiding centers and edge
+channels are introduced where needed. No field theory is required.
 
-Start with the connected anyon notes. The separate
+## Choose a route
+
+- **First pass:** read the visible text in the [connected notes](docs/notes.md).
+  The core ideas come before the specialized pair-state calculation.
+- **Work it out:** open a derivation for the full assumptions, equations and
+  interactive figures. All existing calculations remain available.
+- **Remember a few papers:** [three short paper notes](docs/conversation.md)
+  connect Arovas–Schrieffer–Wilczek, Nakamura and colleagues, and Ivanov to one
+  result and one question each. Samal and colleagues is an optional fourth.
+- **Find a direction:** [questions to explore](docs/catalog.md) and
+  [seven optional directions](docs/directions.md) connect preparation,
+  measurements, saddles, wires, geometry and driven systems. These are broad
+  scientific questions, not claims of novel or completed research.
+
+Independent notebooks cover exchange, interference, Berry numerics, toric-code
+strings and memory, Abelian data, fusion and Ising braids. The optional
 [quantum-transport notes](https://n-y-l.github.io/quantum-transport-notes/)
-provide optional, linked detours on channel current and single-particle
-interference at the collider section; they are not prerequisites for the
-quasihole construction. Each detour links back to its point of departure.
-
-[Directions to think about](docs/directions.md) offers optional follow-on reading
-after the connected notes. Seven chapters connect the saddle, detector inference,
-Majorana wires, closed surfaces, Möbius geometry, ramps and other exchange problems.
-Five interactive figures explore a Gaussian guiding center and its overlap decay,
-finite-wire modes and parity crossings, localization in nonuniform wires,
-sphere phase textures and zero counts, and a normal carried around a Möbius band.
+provide linked background on current and single-particle interference.
 
 ## Open
 
@@ -74,7 +75,8 @@ refinement error estimate, not a rigorous global error bound.
 
 | Files | Purpose |
 |---|---|
-| `docs/notes.md` | Authoritative connected prose and mathematics |
+| `docs/notes.md` | Authoritative connected prose, with optional full derivations |
+| `docs/conversation.md` | Small paper shortlist, recall prompts and discussion questions |
 | `docs/directions.md`, `docs/directions/` | Optional follow-on reading and detailed subchapters |
 | `directions-*.js` | Follow-on models, accessible static SVG defaults and interactive controls |
 | `phonon-physics.js`, `pair-states-physics.js`, `collider-physics.js` | DOM-free models for the main notes |

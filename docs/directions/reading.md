@@ -1,5 +1,7 @@
 # Reading notes and talks
 
+I start with [three papers to remember](../conversation.md). The sources below are optional companions when a particular direction catches me; I do not need to work through the list.
+
 The references below extend three calculations from these notes: saddle scattering, wire end modes and statistical inference from a detector signal. In each case, a specific calculation connects the shorter treatment here to the longer paper.
 
 ## Three calculations and their sources

@@ -1,5 +1,7 @@
 # Sources
 
+For a small starting set, I use [Three papers I want to remember](conversation.md): Arovas–Schrieffer–Wilczek, Nakamura and colleagues, and Ivanov, with the extended-collider paper as an optional fourth. The longer list below documents the calculations; it is not a reading assignment.
+
 Links beside the [calculations](notes.md) identify their scientific starting points. These short routes lead to longer accounts and to the primary work.
 
 ## The electron fluid and its excitations

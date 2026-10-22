@@ -1,10 +1,15 @@
 # Geometry without a global orientation
 
-In the plane, “exchange counterclockwise” sounds unambiguous. A normal pointing out of the page fixes the direction through the right-hand rule. On a Möbius band, a small patch still has two possible normals, but following either choice around the band reverses it.
+**What becomes of a handed quantum state when space has no global handedness?** In the plane, I can say “exchange counterclockwise” after choosing an outward normal. On a Möbius band, following a normal continuously around the band brings it back reversed. My local rule for clockwise has lost its global consistency.
 
-The geometry can be fixed before choosing a quantum Hamiltonian. The first calculation compares a normal with its direction after transport around the band. It constrains the magnetic fields and boundary identifications available to a subsequent model.
+I can understand this obstruction before choosing a Hamiltonian. Then I can ask which magnetic fields and quantum states fit the geometry. The twist is a constraint on a physical model; it is not yet a quantum phase.
 
 ## A normal after one circuit
+
+I follow an arrow perpendicular to the surface. One circuit returns to the same point with the arrow reversed; two circuits restore it.
+
+<details>
+<summary>I want the coordinate description of the band</summary>
 
 The figure uses a convenient embedding in three-dimensional space. Lengths are measured in units of the centre circle's radius:
 
@@ -19,9 +24,14 @@ $$\mathbf r(s+2\pi,u)=\mathbf r(s,-u).$$
 
 That minus sign is the twist. At the centre, $u=0$, one circuit returns to the same point. But the direction across the band has reversed.
 
+</details>
+
 <!-- DIRECTION-FIGURE: orientation -->
 
 At zero travel, the moving arrow agrees with the gray reference arrow. After **One circuit**, it is back at the starting point, pointing the other way; **Two circuits** restore it. Changing the view azimuth changes only the drawing; the normal and magnetic-field calculation stay the same.
+
+<details>
+<summary>I want to check the normal explicitly</summary>
 
 Along the centre circle, the tangent and across-band direction are perpendicular unit vectors. Their cross product gives the unit normal
 
@@ -32,11 +42,20 @@ The expression satisfies $|\mathbf n|=1$, and
 $$\mathbf n(s+2\pi)=-\mathbf n(s),\qquad
 \mathbf n(s+4\pi)=\mathbf n(s).$$
 
+</details>
+
 The arrow stays perpendicular throughout its journey. Its failure to return after one circuit shows why no continuous choice of unit normal exists on the whole band. This is **nonorientability**. There is no physical tear at the join; the coordinate description needs an orientation-reversing transition there.
 
 These two circuits track an ordinary geometric vector. They do not derive the phase of a spinor, an exchange angle, or a Berry phase. Each of those requires a quantum state and a transport rule.
 
 ## A fixed laboratory field
+
+A laboratory magnetic field can exist perfectly well around the band. The obstruction concerns its **component perpendicular to the surface**. If that component were continuous and nonzero everywhere, it would itself choose a normal everywhere, contradicting the Möbius geometry. Somewhere it must vanish.
+
+In the figure, I distinguish the solid zero contour, where the field is tangent, from the dashed coordinate cut, where my convention for the normal changes. A color change at that cut need not mark a physical change.
+
+<details>
+<summary>I want the field projection and checks on the figure</summary>
 
 A uniform ambient magnetic field of magnitude $B_0>0$, tilted by an angle $\beta$ from the laboratory $z$ axis, is
 
@@ -57,13 +76,17 @@ The surface colors extend this calculation across the full width, using the norm
 
 The graph uses the continuously followed arrow over two circuits. Its sign depends on that choice. The actual normal projection, $(\mathbf B\cdot\mathbf n)\mathbf n$, is independent of the arrow's sign and agrees after one circuit. Both the scalar factor and the normal reverse together. The rings mark every distinct zero on the centre circle; changing the tilt can create extra zeros in pairs. At the tilt where a pair first appears, the graph touches zero without crossing it there.
 
-The endpoint tilts provide two useful checks. At $\beta=0$, a whole transverse line through $s=\pi$ has zero normal field. At $\beta=90^\circ$, the field is tangent all along the chosen cut, so a physical zero and a coordinate join coincide. Neither the colored surface nor its zero contour represents a quantum phase or a conducting channel.
+The endpoint tilts provide two useful checks. At $\beta=0$, a whole transverse line through $s=\pi$ has zero normal field. At $\beta=90^\circ$, the field is tangent all along the chosen cut, so a physical zero and a coordinate join coincide.
+
+</details>
+
+Neither the colored surface nor its zero contour represents a quantum phase or a conducting channel. For those I need the electronic state.
 
 ## What must a Hall state do at the join?
 
 The [Laughlin calculation](../notes.html#make-a-hole-without-removing-an-electron) began with a plane and a fixed perpendicular field. Bending its drawing into a Möbius band does not preserve those assumptions.
 
-A chiral Hall phase assigns a handedness to its response. In local coordinates, reflection reverses the sign assigned to the Hall conductivity. A homogeneous single chiral phase therefore cannot simply be identified with itself across the Möbius reflection while preserving that handedness. A concrete model must explain how its local descriptions meet.
+A **chiral** Hall phase has a handed response: reversing orientation reverses the sign assigned to its Hall conductivity. A homogeneous single chiral phase therefore cannot simply be identified with itself across the Möbius reflection while preserving that handedness. I need a model that explains how its local descriptions meet.
 
 [Beugeling, Quelle and Morais Smith](https://arxiv.org/abs/1403.6998) examine this problem using electronic band models. Their constructions distinguish local Hall regions and domain-wall channels from a uniform Hall state. A zero of the field in the figure locates a geometric obstruction; predicting conducting channels there still requires the electronic Hamiltonian, filling and gap structure.
 
@@ -75,4 +98,4 @@ The two-circuit normal trace gives a picture of that cover. Labels defined relat
 
 Nor does nonorientability exclude all topological order. [Chan, Teo and Ryu](https://arxiv.org/abs/1509.03920) construct topological phases on nonorientable surfaces by specifying how a parity symmetry acts on the anyons. The question beyond the geometric calculation is what the reflection must exchange, and whether the proposed quantum theory supports that identification.
 
-A useful distinction in [Beugeling and collaborators, §II](https://arxiv.org/html/1403.6998) is between three objects: the laboratory field, the chosen local normal, and the electronic state. Only the first two have been calculated in this figure.
+**The direction that interests me is the compatibility of geometry, symmetry and quantum order.** What must a reflection exchange, and which theories contain those partners? I keep the laboratory field, the chosen normal and the electronic state separate, as in [Beugeling and collaborators, §II](https://arxiv.org/html/1403.6998). Only the first two have been calculated in this figure.

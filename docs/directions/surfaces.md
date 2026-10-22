@@ -2,13 +2,13 @@
 
 <p class="reading-kicker">Direction 4 · Phase winding, magnetic flux and the sphere</p>
 
-On a plane, a drawing can leave the compensating winding outside the picture. A sphere has no distant boundary. What does that require of the zeros of a wavefunction?
+**Can geometry constrain a quantum state before I solve its dynamics?** On a plane, I can leave compensating phase winding outside my drawing. A sphere has no distant boundary. I have to account for the whole surface, including the side I cannot see.
 
-There are two answers worth comparing. A scalar condensate without gauge flux must have zero **total signed phase winding**. A charged particle in a positive-flux lowest Landau level has a wavefunction whose zeros all carry positive winding. The distinction lies in how the wavefunction is defined across the sphere.
+I compare two answers. A scalar condensate—a coherent quantum fluid described by one complex field—without gauge flux has zero **total signed phase winding**. A charged particle in a positive-flux lowest Landau level has zeros that all carry positive winding. The distinction lies in how the wavefunction is defined across the sphere.
 
 <div class="try-this">
 
-**Checks in the figure.** The scalar vortex–antivortex pair gives opposite phase windings around its two zeros. Rotation can hide a zero, but cannot remove its winding. The magnetic lowest Landau level with two flux quanta instead has two positive zeros. Moving a zero changes the state; switching gauge patches changes its phase representation while preserving the physical zeros.
+**What I try first.** I rotate the scalar vortex–antivortex pair: a zero can disappear from view without disappearing from the state. Then I switch to the magnetic case with two flux quanta and find two positive zeros. Moving a zero changes the state; switching the gauge patch changes its description.
 
 </div>
 
@@ -32,7 +32,12 @@ The figure evaluates an explicit complex scalar with the chosen zeros. Color sho
 
 ## Magnetic flux changes how the wavefunction is patched
 
-The comparison is a radial magnetic field with monopole flux, as in [Haldane's spherical quantum Hall construction](https://doi.org/10.1103/PhysRevLett.51.605). With particle charge $q$, the orientation is chosen so that
+I now put a radial magnetic field through the sphere, as in [Haldane's spherical quantum Hall construction](https://doi.org/10.1103/PhysRevLett.51.605). This is a monopole-flux model: an ordinary uniform laboratory field has zero net flux through a closed sphere. With nonzero net flux, I need overlapping gauge patches to describe the wavefunction. Their relative phase changes the winding count.
+
+<details>
+<summary>I want the flux integer and gauge-patch argument</summary>
+
+With particle charge $q$, the orientation is chosen so that
 
 $$N_\phi=\frac{q}{2\pi\hbar}\int_{S^2}\mathbf B\cdot d\mathbf S
 =2Q\geq0$$
@@ -47,9 +52,16 @@ where $\phi$ is longitude. Such patchwise complex amplitudes are a **section of 
 
 This changes the preceding argument. The phase derivative alone is no longer the same one-form in both patches; the gauge-invariant combination includes the vector potential. Applying Stokes' theorem with that connection gives a total signed zero index equal to $N_\phi$. A phase jump along a gauge seam is not another physical vortex. A true zero has vanishing amplitude in every regular gauge.
 
+</details>
+
 Switching patches in the figure changes the color field while the modulus and physical zeros stay fixed. The × marks the pole excluded from the selected patch. The displayed magnetic states have nonzero modulus there, so its apparent phase winding is a gauge defect. The numerical winding around a physical zero is always evaluated in a patch regular near that zero.
 
 ## The lowest Landau level makes the count explicit
+
+The lowest Landau level gives an especially neat result: **one zero per flux quantum**, counted with multiplicity. All have positive winding in the chosen convention. A general state outside that level may have extra positive–negative pairs while keeping the same signed total.
+
+<details>
+<summary>I want to see the zeros in the polynomial</summary>
 
 Northern-patch spinor coordinates can be chosen as
 
@@ -66,7 +78,14 @@ The positive signs use the chosen field and orientation. The lowest-Landau-level
 
 Changing a zero's longitude selects a different polynomial at fixed flux. Changing the flux changes the degree and the allowed state space. Rotating the camera changes neither. For comparison, multiplying one linear factor by the complex conjugate of another cancels their gauge phases and constructs a scalar with the displayed positive–negative pair.
 
+</details>
+
 ## The Laughlin shift
+
+Geometry also changes the relation between electron number and magnetic flux. On the sphere, the Laughlin state needs slightly fewer flux quanta than the large-system filling alone would suggest. The offset is called the **shift**. It connects simple zero counting to the response of quantum Hall matter to curvature.
+
+<details>
+<summary>I want the counting that gives the shift</summary>
 
 For $N$ electrons, the spherical Laughlin polynomial is
 
@@ -79,13 +98,15 @@ $$N_\phi=m(N-1)=\nu^{-1}N-\mathcal S,\qquad
 
 Here $\nu$ is the thermodynamic filling and $\mathcal S$ the **shift**, a finite-size offset in the flux–particle relation. Setting $N_\phi=mN$ would miss this offset. [Wen and Zee (1992)](https://doi.org/10.1103/PhysRevLett.69.953) connect this spherical counting to orbital-spin response and spatial curvature. A quasihole insertion adds one linear factor for every electron, increasing the required flux by one while leaving the electron number fixed.
 
+</details>
+
 ## From a closed surface to a laboratory shell
 
 The geometry is experimentally useful, but the two models should remain distinct. [Carollo and collaborators (2022)](https://www.nature.com/articles/s41586-022-04639-8) observed ultracold atomic bubbles in orbital microgravity, including partial shell coverings. [Jia and collaborators (2022)](https://arxiv.org/abs/2208.01360) created a shell condensate using two atomic species and studied its expansion and self-interference. Neither result alone supplies the monopole flux in Haldane's model.
 
 <div class="takeaway">
 
-**An open boundary.** A small hole in the scalar shell leaves an additional boundary integral in the winding argument. Which step enforced zero total winding, and what can now pass through the boundary? The zero-counting rule depends on both the field and its boundary conditions.
+**The direction that interests me.** Geometry can organize defects and constrain quantum fluids before their detailed dynamics is known. I want to understand how those constraints meet energetics, rotation and experimental control. Opening a hole in the shell is a useful thought experiment: the boundary gives phase winding somewhere to go, changing the closed-surface argument.
 
 </div>
 

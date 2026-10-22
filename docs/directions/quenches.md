@@ -1,10 +1,15 @@
 # Ramps and conserved parity
 
-The quasihole motion in the earlier notes assumed that the surrounding electrons followed their instantaneous low-energy state. A time-dependent Hamiltonian makes that assumption a dynamical question: does an initially prepared ground state follow the ground state as the parameters change? Going slowly can help, but the answer also depends on which states the dynamics can reach.
+**Does going more slowly always get me to the ground state?** The quasihole motion in the earlier notes relied on the electrons following their instantaneous low-energy state. With a changing Hamiltonian, I have to ask when that assumption works. A small gap can make following difficult; a conserved quantity can make the desired transition impossible.
 
-A sudden change is usually called a **quench**; a change over a finite time is a **ramp**. A chemical-potential ramp in a finite superconducting wire connects the [end modes](wires.html) to a precise question: when does failing to reach the lowest energy mean that the ramp was too fast?
+A sudden change is usually called a **quench**; a change over a finite time is a **ramp**. I use a finite superconducting wire to separate these two obstacles. Its [end modes](wires.html) give me a simple setting in which the lowest-energy state can change its parity—the evenness or oddness of its fermion number.
 
 ## A knob and a conserved quantity
+
+In the Kitaev chain, particles hop between neighboring sites and enter or leave in pairs. Hopping preserves particle number; pairing changes it by two. Both preserve parity. I can therefore vary the chemical potential—the energy controlling occupation—without allowing an even state to become odd.
+
+<details>
+<summary>I want the Hamiltonian and parity check</summary>
 
 For an open Kitaev chain with fermion annihilation operators $c_j$ and occupations $n_j=c_j^\dagger c_j$, the Hamiltonian is
 
@@ -18,19 +23,23 @@ Here $L$ is the number of sites, $w>0$ the hopping energy, $\Delta$ a real pairi
 
 $$P=(-1)^{\sum_jn_j},\qquad [H(t),P]=0.$$
 
-Every term contains an even number of fermion operators. Thus an initially even state stays even, and an initially odd state stays odd, under this closed unitary evolution. A superconducting pair can enter or leave without changing parity. Single-electron exchange with an environment would require a different model. [Kitaev's original wire construction](https://arxiv.org/abs/cond-mat/0010440) gives the Hamiltonian and its end modes.
+Every term contains an even number of fermion operators. Thus an initially even state stays even, and an initially odd state stays odd, under this closed unitary evolution. A superconducting pair can enter or leave without changing parity. [Kitaev's original wire construction](https://arxiv.org/abs/cond-mat/0010440) gives the Hamiltonian and its end modes.
+
+</details>
+
+This constraint assumes a closed, parity-conserving model. Single-electron exchange with an environment changes the physical question.
 
 ## What does “slow” need?
 
 For a smooth, fixed path of finite-dimensional Hamiltonians, stretching the time taken can suppress transitions out of an isolated instantaneous eigenspace. The separation from other accessible states matters: a small gap generally demands a longer ramp. [Jansen, Ruskai and Seiler](https://arxiv.org/abs/quant-ph/0603175) make this dependence precise. A small rate alone is not a complete criterion.
 
-For the uniform infinite Kitaev chain with nonzero pairing, the bulk excitation gap closes at $|\mu|=2w$. A finite wire has discrete levels instead; their spacings must be examined for the chosen length and boundary conditions. One cannot take a finite-size adiabatic result and assume its required ramp time stays finite as the wire grows.
+For the uniform infinite Kitaev chain with nonzero pairing, the bulk excitation gap closes at $|\mu|=2w$, where $\mu$ is the chemical potential and $w$ the hopping energy. A finite wire has discrete levels instead; their spacings must be examined for the chosen length and boundary conditions. One cannot take a finite-size adiabatic result and assume its required ramp time stays finite as the wire grows.
 
 There is another kind of crossing. Two levels of opposite parity can become degenerate without coupling. Since the ramp preserves parity, the relevant gap for following a state is the gap to accessible states **within its parity sector**. A crossing with the other sector can change which state has the lowest energy overall while leaving the actual state on a smooth branch.
 
 ## The evolving branch and the ground-state reference
 
-Let $|\psi(t)\rangle$ have parity $p=\pm1$. If the instantaneous, nondegenerate ground state $|g(t)\rangle$ has parity $-p$, orthogonality gives
+If I start in an even state and the new ground state is odd, their overlap is exactly zero. More generally, let $|\psi(t)\rangle$ have parity $p=\pm1$. If the instantaneous, nondegenerate ground state $|g(t)\rangle$ has parity $-p$, orthogonality gives
 
 $$F(t)=|\langle g(t)|\psi(t)\rangle|^2=0.$$
 
@@ -60,4 +69,4 @@ $$\langle H(t)\rangle-E_{\rm gs}(t)
 
 The first term measures excitation above the accessible sector's lowest state. The second records the cost of staying in that sector when the other one lies lower. Only the first can be reduced by improving adiabatic following within the sector. Parity conservation still permits transitions between states of the same parity, including creation of quasiparticle pairs.
 
-Comparing both energy references while varying the duration and wire length separately distinguishes excitations generated during the drive from a change in ground-state parity. Both effects can contribute to the same signal. [Hegde and collaborators, §§2 and 7](https://arxiv.org/html/1412.5255) give the detailed wire calculation.
+**The direction that interests me is quantum preparation under dynamical and symmetry constraints.** I want to know when a system fails to follow because I drove it too fast, and when it follows an allowed branch perfectly while the ground-state reference moves elsewhere. That distinction matters wherever I try to manipulate topological states. [Hegde and collaborators, §§2 and 7](https://arxiv.org/html/1412.5255) give the detailed wire example.

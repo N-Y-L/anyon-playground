@@ -47,3 +47,10 @@ a:focus-visible,summary:focus-visible,button:focus-visible,input:focus-visible,s
 .charge-ledger{font-size:16px;line-height:1.5}.charge-ledger caption{caption-side:top;text-align:left;font-size:16px;margin:0 0 8px;color:#333}.charge-ledger th{font-weight:normal}.charge-ledger tbody tr:last-child{font-weight:bold}
 @media(max-width:600px){.charge-ledger{font-size:15px}.charge-ledger caption{font-size:15px}.charge-ledger th,.charge-ledger td{padding:8px 5px}.figure-credit{font-size:13px}}
 @media print{.source-drawing{max-width:410px}.source-drawing img{filter:grayscale(1)}.figure-credit{font-size:8pt}.charge-ledger,.charge-ledger caption{font-size:9pt}}
+
+/* A short continuous reading route with optional full calculations. */
+.reading-route{border-left:3px solid #317b92;padding:2px 18px;margin:26px 0;background:#f4f8f9}
+details.derivation{border:1px solid #c5d2d7;border-radius:5px;padding:12px 16px;margin:26px 0}
+details.derivation>summary{font:600 15px/1.5 system-ui,sans-serif;color:#244f63}
+details.derivation[open]>summary{border-bottom:1px solid #c5d2d7;padding-bottom:12px;margin-bottom:20px}
+@media(max-width:600px){details.derivation{padding:11px}.reading-route{padding:2px 12px}}

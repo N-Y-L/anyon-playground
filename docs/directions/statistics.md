@@ -1,10 +1,15 @@
 # Exchange rules in different settings
 
-The usual route to anyons starts with point particles moving in a plane. Their paths can wind around one another, and quantum states can remember that winding. Constraining the particles to a line, replacing them by loops, or allowing an exchange to act on a space of states changes different ingredients of that construction.
+**How much richer can statistics become?** I first met anyons as pointlike excitations moving in a plane: their paths can wind around one another, and the state remembers. Now I can change the question in three ways—constrain the motion to a line, exchange extended loops, or let a braid act on several collective states.
 
-Each construction begins with the same information: **what moves, what motions are allowed, and which configurations are forbidden.** These specify the motion problem; the quantum representation determines how the allowed motions act on states.
+My starting questions stay simple: **what moves, what motion is allowed, and what is forbidden?** After specifying those, I still need a quantum rule telling me how a motion acts on the state.
 
 ## A useful relation disappears in the plane
+
+In the plane, exchanging twice in the same direction leaves a winding. For point particles free to move in ordinary three-dimensional space, that double exchange can be untangled. This geometric difference is what makes a general scalar exchange phase possible in two dimensions.
+
+<details>
+<summary>I want the braid relations</summary>
 
 Let $b_i$ denote a counterclockwise exchange of neighbors $i$ and $i+1$. Planar braids obey
 
@@ -17,9 +22,16 @@ For identical point particles freely moving in ordinary three-dimensional space,
 
 The qualification “scalar” matters. A group and a representation are different pieces of the problem. The group describes motions; its representation describes how those motions act on the retained states.
 
+</details>
+
 ## Collisions on a line
 
 Two particles constrained to a line cannot pass around one another. If coincidence is forbidden, their order cannot change continuously. If they can meet, the collision rule becomes part of the model. The phrase “one-dimensional anyons” therefore calls for a definition before importing a planar braid picture.
+
+One useful route is a lattice in which the phase acquired during a hop depends on how many particles occupy a site. [Kwan and collaborators](https://arxiv.org/abs/2306.01737) engineered this density-dependent phase with ultracold atoms and studied two-particle quantum walks. This gives a concrete physical meaning to a one-dimensional statistical parameter, without letting particles wind around one another in a plane.
+
+<details>
+<summary>I want the operator construction and hopping phase</summary>
 
 A useful lattice construction starts with boson annihilation operators $b_j$ and occupation $n_j=b_j^\dagger b_j$, and defines a string operator
 
@@ -29,9 +41,13 @@ For $j<k$, the bosonic commutation rules give $a_j a_k=e^{i\theta}a_k a_j$. Hopp
 
 $$a_j^\dagger a_{j+1}=b_j^\dagger b_{j+1}e^{i\theta n_j}.$$
 
-For this hop from $j+1$ to $j$, the phase depends on the destination's occupation before the hop. [Kwan and collaborators](https://arxiv.org/abs/2306.01737) engineered a density-dependent Peierls phase with ultracold atoms and studied two-particle quantum walks. This gives an experimentally concrete meaning to the one-dimensional statistical parameter. The on-site algebra remains bosonic: even at $\theta=\pi$, anticommutation between different sites does not impose the Pauli exclusion principle on a single site.
+For this hop from $j+1$ to $j$, the phase depends on the destination's occupation before the hop.
 
 **The operator order matters.** On a number state, the phase factor on the right acts first. Rearranging operators without their commutators changes the predicted phase. This check connects the abstract exchange rules to a hopping Hamiltonian with occupation-dependent matrix elements.
+
+</details>
+
+The on-site algebra in this model remains bosonic: even at statistical angle $\theta=\pi$, anticommutation between different sites does not impose the Pauli exclusion principle on a single site. I need the model's definition of statistics as well as its angle.
 
 ## Loops have motions that points do not
 
@@ -45,11 +61,18 @@ The third loop is part of the configuration being classified. Removing it change
 
 For non-Abelian anyons, specifying the positions and types need not specify the state. Even with the total fusion outcome fixed, different intermediate fusion channels can span a collective state space. Braiding acts by unitary matrices on that space, and the order of two braids can matter.
 
-In the Ising example at the end of the [anyon notes](../notes.html), an $R$ matrix exchanges a pair in a basis where that pair has a definite fusion channel. An $F$ matrix changes the grouping of the fusion tree. Exchanging a different pair involves a basis change, the exchange, and the inverse basis change. The resulting matrix generally differs from the first exchange matrix.
+In the Ising example in the [anyon notes](../notes.html#when-a-phase-is-no-longer-enough), an $R$ matrix exchanges a pair in a basis where that pair has a definite fusion channel. An $F$ matrix changes which pair I group first when labeling the collective state. Exchanging a different pair involves a basis change, the exchange, and the inverse basis change. The resulting matrix generally differs from the first exchange matrix.
 
-The symbols are constrained. Reassociating several fusions along different routes must give the same result—the pentagon condition. Reassociation and exchange must agree—the hexagon conditions. [Kitaev's mathematical treatment](https://arxiv.org/abs/cond-mat/0506438) develops these structures together with an explicit lattice model. They are consistency conditions for the proposed anyon theory, rather than freely adjustable gate choices.
+These operations have to agree when different descriptions represent the same process. [Kitaev's mathematical treatment](https://arxiv.org/abs/cond-mat/0506438) develops those consistency conditions together with an explicit lattice model; the matrices are not freely adjustable choices.
+
+<details>
+<summary>I want the consistency conditions and a two-state example</summary>
+
+Reassociating several fusions along different routes must give the same result—the pentagon condition. Reassociation and exchange must agree—the hexagon conditions.
 
 The two Ising braid matrices $B_1$ and $B_2$ supplied in the notes give a concrete comparison: $B_1B_2|0\rangle$ and $B_2B_1|0\rangle$, with the rightmost operation acting first. Measuring in the original $|0\rangle,|1\rangle$ basis gives equal probabilities for both sequences. In the $|\pm\rangle=(|0\rangle\pm|1\rangle)/\sqrt2$ basis, the notes' convention gives $P_+=1$ for the first sequence and $P_+=1/2$ for the second. The observable difference between the two sequences depends on this preparation and readout.
+
+</details>
 
 ## Assumptions in each setting
 
@@ -59,4 +82,4 @@ The two Ising braid matrices $B_1$ and $B_2$ supplied in the notes give a concre
 | Loop excitations in three dimensions | Allowed deformations, linking constraints and the full braiding process |
 | Non-Abelian anyons | Fusion space, basis changes, exchange matrices and measurement channel |
 
-A particular motion or operator identity makes these distinctions concrete before a complete classification is available. Comparing statistics across the three settings requires keeping track of their allowed processes, as well as their exchange phases or matrices.
+**The direction that interests me is how the space of possible motions becomes quantum information.** I can understand a useful example before learning a full classification. The central challenge is to connect an allowed motion to an operation on states and then to an observable consequence.

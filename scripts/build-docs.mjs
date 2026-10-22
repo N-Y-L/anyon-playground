@@ -69,8 +69,9 @@ marked.use({
 
 const readingPages = [
   ['notes', 'Notes'],
-  ['catalog', 'Further calculations'],
+  ['catalog', 'Questions to explore'],
   ['directions', 'Directions to think about'],
+  ['conversation', 'Three papers'],
   ['references', 'Sources']
 ];
 

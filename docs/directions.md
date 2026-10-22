@@ -1,14 +1,14 @@
 # Directions to think about
 
-<p class="reading-kicker">After the anyon notes · Seven ways to change the question</p>
+<p class="reading-kicker">After the anyon notes · Questions I want to understand</p>
 
-The [anyon notes](notes.md) followed an excitation from the electron fluid to a possible measurement. Several questions remain close to that calculation: what changes with only one particle, on a closed surface, or under a time-dependent Hamiltonian? Changing one ingredient at a time separates the conclusions that survive from those tied to the original setup.
+In the [anyon notes](notes.md), I followed an excitation from an electron fluid to a possible measurement. Now I want to step back: **how do geometry, dynamics and measurement change what quantum matter can do?** Anyons give me a starting point for that larger conversation.
 
-These notes collect seven such directions, with calculations, figures and connections to the literature. Several lead into work by Smitha Vishveshwara and her collaborators. The common thread is **what changes when an assumption changes**.
+These seven directions are questions to explore, with small models that make the ideas tangible. Several connect to work by Smitha Vishveshwara and her collaborators. I can follow the main ideas and figures first; expandable calculations keep the mathematical detail available when I want it.
 
 <div class="reading-route">
 
-The [single-particle saddle](directions/saddle.html) is the closest continuation. Removing the second particle removes exchange, but leaves stretching, squeezing and a decaying overlap. This gives a baseline for identifying what the pair adds.
+For the closest continuation, I start with the [single-particle saddle](directions/saddle.html): one instability connects transport, squeezing and wave equations near a black hole. If geometry catches my attention first, the [sphere](directions/surfaces.html) and [Möbius band](directions/orientation.html) ask what quantum states can exist when the space itself changes.
 
 </div>
 
@@ -20,7 +20,7 @@ The [single-particle saddle](directions/saddle.html) is the closest continuation
 
 ### 1. One particle at a saddle
 
-**How much of the signal comes from the saddle itself?** For one Gaussian packet, preparation controls the split between outgoing arms, while the saddle sets the late-time decay scale of a specified overlap. The same mathematics also appears near a scattering barrier.
+**How far can the same mathematics connect different physical systems?** I can meet squeezing, scattering and decaying signals in one simple saddle. The interesting part is identifying which physical ingredients make each connection work.
 
 [Single-particle calculation →](directions/saddle.html)
 
@@ -30,7 +30,7 @@ The [single-particle saddle](directions/saddle.html) is the closest continuation
 
 ### 2. What the detector measures
 
-**What counts as evidence for an exchange rule?** Phase shifts, current correlations, charge and heat measurements constrain different parts of the description. Inferring statistics requires a model connecting the preparation and dynamics to the measured quantity.
+**How does an invisible exchange rule become a measured signal?** I want to understand what interference and current fluctuations reveal about anyons, and why charge, heat and braiding answer different questions.
 
 [Observables and statistical inference →](directions/detectors.html)
 
@@ -40,7 +40,7 @@ The [single-particle saddle](directions/saddle.html) is the closest continuation
 
 ### 3. End modes in a finite wire
 
-**How can a protected end mode still have an energy splitting?** In a finite Kitaev chain, the two ends can talk to one another. Length, pairing and chemical potential control the splitting and its exact zeros. A patterned or random potential connects the end-mode criterion to localization in a normal chain.
+**What does topological protection mean in a finite, imperfect system?** A wire lets me see how information shared between distant ends coexists with finite energy splitting, and how localization changes the story.
 
 [Finite wires and localization →](directions/wires.html)
 
@@ -50,7 +50,7 @@ The [single-particle saddle](directions/saddle.html) is the closest continuation
 
 ### 4. Phase winding on a closed surface
 
-**Where can the winding go when there is no edge?** A scalar condensate on a sphere and a charged particle on a sphere threaded by monopole flux have different constraints on their zeros. The distinction comes from how the wavefunction is defined across the surface.
+**Can geometry constrain a quantum state before I solve its dynamics?** On a sphere, phase winding has nowhere to hide at a distant edge. Magnetic flux changes the answer by changing how the wavefunction fits together across the surface.
 
 [Phase winding and magnetic flux →](directions/surfaces.html)
 
@@ -60,7 +60,7 @@ The [single-particle saddle](directions/saddle.html) is the closest continuation
 
 ### 5. Geometry without a global orientation
 
-**What happens to “clockwise” after one trip around a Möbius band?** A continuously followed normal reverses. This constrains the magnetic fields and quantum states that can be defined consistently across the join.
+**What happens to a handed quantum state when space has no global handedness?** I use a Möbius band to separate a geometric twist from a magnetic field, a spin rotation and an anyon exchange.
 
 [Möbius geometry and compatible models →](directions/orientation.html)
 
@@ -70,7 +70,7 @@ The [single-particle saddle](directions/saddle.html) is the closest continuation
 
 ### 6. Ramps and conserved parity
 
-**Does a slower ramp always reach the new ground state?** A closing gap limits adiabatic motion; an exactly conserved quantum number can forbid a transition altogether. These are distinct obstacles, even when both appear in the same ramp.
+**When can slow driving prepare the state I want?** A small gap can make a ramp difficult; a conserved quantity can make the desired transition impossible. I want to understand dynamics through both constraints.
 
 [Adiabatic following and parity blocking →](directions/quenches.html)
 
@@ -80,7 +80,7 @@ The [single-particle saddle](directions/saddle.html) is the closest continuation
 
 ### 7. Exchange rules in different settings
 
-**Which assumptions led to the familiar braid rule?** Constrained motion in one dimension, loop excitations in three dimensions and collective fusion spaces give different exchange problems. Their statistics depend on both the objects and the allowed motions.
+**How much richer can statistics become?** I can change the objects, their allowed motion, or the space of states on which exchange acts. Particles on a line, loops in three dimensions and non-Abelian anyons open different doors.
 
 [Configuration spaces, loops and fusion →](directions/statistics.html)
 
@@ -90,6 +90,6 @@ The [single-particle saddle](directions/saddle.html) is the closest continuation
 
 ## The comparison behind each direction
 
-Each comparison has three parts: **what is held fixed, what changes, and what is measured**. A change in a plotted quantity may come from the state, the dynamics or the readout. Keeping those parts separate is as useful for the single-particle saddle as it is for an exchange experiment.
+I keep returning to three questions: **what is robust, what is dynamical, and what can be observed?** A topological rule constrains the possibilities, while preparation and measurement determine which of them I actually encounter. That tension is what makes these directions interesting to me.
 
-The [reading notes and talks](directions/reading.html) collect longer treatments, and the [source list](directions/sources.html) gathers the references. [Further calculations](catalog.md) stays closer to the original two-anyon problem: microscopic preparation, an outgoing-state detector, and the phase information retained by a reference measurement.
+The [reading notes and talks](directions/reading.html) give me a small set of starting points; the [source list](directions/sources.html) keeps the wider references available. [Questions to explore](catalog.md) returns to the original two-anyon problem.

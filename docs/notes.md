@@ -1,14 +1,32 @@
 # Anyons and quantum transport
 
-Put two identical particles far apart in a plane. Move each to the other's starting position, keeping them apart throughout: that is an **exchange**. The paths matter. Doing the exchange twice in the same direction winds the particles around one another; undoing the first motion retraces the paths. These are different processes in two dimensions.
+I want to understand a small puzzle with a large consequence: **what can a quantum state remember after I exchange two identical objects?** My route is from that question to a real excitation, a measured signal, and a few directions I might want to explore.
 
-Quantum transport adds ordinary phases from elapsed time, energies and magnetic flux. After those contributions are removed or matched against a reference process, an exchange can leave a residual effect that depends on how the paths wind. This is **exchange statistics**. In the simplest case the effect is a scalar phase $e^{i\theta}$; the angle $\theta$ is the **statistical phase** of the exchange. Bosons have $\theta=0$, fermions $\theta=\pi$, modulo $2\pi$. Particles with other values are **Abelian anyons**. “Abelian” says that these scalar operations commute. Some systems instead allow exchanges to act by noncommuting matrices on several states; those are non-Abelian anyons, discussed at the end.
+I assume ordinary graduate quantum mechanics—states, operators, superposition and the adiabatic idea—and graduate mathematics. I introduce the condensed-matter ingredients as they appear. No field theory is needed. The closed **Work it out** sections hold the longer derivations; I can leave them closed on a first pass.
 
-What counts as the particle? A change in the state of many electrons can be concentrated in one region and transported to another. In the example we will construct, such a moving rearrangement carries charge $+e/3$. Transport two of them slowly enough for the electrons to follow their instantaneous low-energy state, and exchanging them can contribute $e^{i\pi/3}$. The electrons themselves still carry charge $-e$ and obey fermionic antisymmetry. It is the two rearrangements that are exchanged.
+<div class="reading-route">
 
-A phase multiplying one isolated state is unobservable; the exchange phase becomes measurable as a relative phase between coherent histories, or through the interference it imposes on a two-particle state. We will construct the many-electron state, calculate the charge and exchange phase of its moving rearrangements, and then ask what a preparation and a detector actually measure. The first step is to make the particle description concrete.
+**My short route:** [what moves](#what-is-moving) → [a fractional charge](#make-a-hole-without-removing-an-electron) → [an exchange phase](#exchange-the-quasiholes-transport-the-electron-state) → [non-Abelian states](#when-a-phase-is-no-longer-enough) → [an experiment](#what-an-interferometer-has-actually-measured). Then I can choose the pair, saddle or collider calculation. The [paper shortlist](conversation.md) gives me a few results to remember, with questions attached.
+
+</div>
+
+Put two identical particles in a plane. I move each to the other's starting point without letting them meet. That is an **exchange**. Repeating the exchange in the same direction winds them around one another; reversing the first motion undoes it. The final positions agree, but the histories differ. The [exchange-path notebook](../experiments.html#exchange) lets me draw the difference.
+
+After matching or removing ordinary dynamical and magnetic phases, an exchange can multiply the state by $e^{i\theta}$. Bosons give $+1$; fermions give $-1$. Other exchange phases describe **Abelian anyons**. “Abelian” means these scalar operations commute. Later, I will let an exchange act on several collective states at once; those operations can fail to commute.
+
+A global phase on an isolated state is invisible. To learn anything, I need histories that interfere, or a correlation that depends on exchange. That is the thread I want to keep hold of: **excitation → exchange rule → observable**.
+
 
 ## What is moving?
+
+I start with a familiar impostor: a phonon. It carries energy and crystal momentum through a solid, but no extra atom has entered. A localized one-phonon packet can carry a moving excess of displacement fluctuations even though the mean displacement stays zero. The particle is a pattern in a many-body quantum state.
+
+A **quasiparticle** is an excitation whose persistence, motion and interactions admit a useful particle description. Not every disturbance qualifies. The description needs to last over the process I want to study.
+
+For anyons, the rearrangement will be in a two-dimensional electron fluid. Its constituents remain electrons with charge $-e$ and fermionic statistics. The rearrangement can have different charge and statistics. This is the distinction I need before doing any algebra: **I exchange the excitations, not the underlying electrons.**
+
+<details class="derivation">
+<summary>Work it out: a moving one-phonon fluctuation packet</summary>
 
 A particle in a material need not be one of the material's constituents. A concrete example is a phonon, a quantum of a normal mode of the atoms' motion. For a periodic chain of $N$ atoms of mass $M$, lattice spacing $a$, displacement $u_j$ from site $ja$, conjugate momentum $p_j$, and nearest-neighbor spring constant $\kappa$,
 
@@ -53,7 +71,31 @@ Times are in $\sqrt{M/\kappa}$ and excess variances in $\hbar/\sqrt{\kappa M}$. 
 
 The single phonon is an **excitation**: a change carrying energy above the ground state. This is the useful content of **quasiparticle**: a sufficiently persistent excitation whose states, energy, motion and interactions admit an effective particle description. Phonons get this description from harmonic normal modes. The localized charged excitations below arise from a correlated electronic state, by a different construction. Quantizing a spring has not explained their charge or their statistics.
 
+</details>
+
+
 ## Make a hole without removing an electron
+
+My concrete home for anyons is a **Laughlin fluid**: a correlated, incompressible state of electrons in a strong perpendicular magnetic field. “Incompressible” here means that creating unwanted bulk excitations costs a nonzero energy gap; it does not forbid motion at an edge.
+
+The field quantizes one-electron cyclotron energies into **Landau levels**. Many orbit centers share each energy. At filling $\nu=1/3$, there is roughly one electron per three available orbitals in the lowest level, and interactions decide how the electrons arrange their correlations.
+
+For electron positions $z_i=x_i+iy_i$, Laughlin's trial state is
+
+$$\Psi_3=C\prod_{i<j}(z_i-z_j)^3
+\exp\!\left[-\sum_i\frac{|z_i|^2}{4\ell_B^2}\right],
+\qquad \ell_B=\sqrt{\frac{\hbar}{eB_0}}.$$
+
+Here $e>0$, $B_0$ is the field magnitude and $C$ normalizes the state. I choose the field into the page. The cubic zeros strongly suppress close electron pairs; odd power keeps the electrons fermionic. This is a trial state for the Coulomb problem, not its general exact solution.
+
+More generally, these Laughlin states have filling $\nu=1/m$ with odd $m$ in the Laughlin liquid regime; I keep $m=3$ as my example. Now I multiply by $\prod_i(z_i-\eta)$. The extra zeros suppress electron density near the point $\eta$, creating a **quasihole**. I have kept every electron coordinate! Screening in an auxiliary plasma used to evaluate the quantum probability density fixes the local electron-number deficit at $1/m$. The quasihole therefore carries charge $q_h=e/m$, here $+e/3$. This mathematical screening does not electrically neutralize it. In a finite droplet, compensating charge lies elsewhere, typically near the edge.
+
+<!-- FIGURE: charge -->
+
+The fraction follows from a screening argument, not from merely counting a polynomial zero. [Laughlin (1983)](https://doi.org/10.1103/PhysRevLett.50.1395) supplies the wavefunction and charged excitations. My useful surprise is that **a fraction of an electron's charge need not mean a fraction of an electron**.
+
+<details class="derivation">
+<summary>Work it out: Landau levels, the Laughlin state and the screening argument</summary>
 
 The example will be an **electron fluid**: a state of interacting electrons with approximately uniform density in its interior and no crystalline order. Its quantum state is still a many-electron wavefunction.
 
@@ -127,9 +169,9 @@ $$\begin{gathered}
 
 Screening is the input that fixes the integral, rather than merely saying that the density returns to its bulk value. It holds in the plasma liquid regime used to describe the Laughlin fluid here; the polynomial alone has not proved it. Translating back to electrons gives a localized physical charge $+e/m$, which has not been electrically neutralized. On a finite droplet its compensating charge remains outside $D$.
 
-<!-- FIGURE: charge -->
 
-A complementary check is adiabatic insertion of one electromagnetic flux quantum $h/e$ through a small region. Faraday's law, $\oint\mathbf E\cdot d\mathbf l=-d\Phi/dt$, produces a circulating electric field. The Hall conductivity $\sigma_{xy}$ relates the transverse current density to this field, so radial charge transport across an enclosing circle has magnitude $|I_r|=|\sigma_{xy}\dot\Phi|$. Integrating in time with $|\sigma_{xy}|=e^2/(mh)$ gives $|\Delta Q|=|\sigma_{xy}|h/e=e/m$; the insertion direction chooses deficit or excess. This uses the Hall response of the same phase, so it checks the charge without furnishing an independent derivation of that response.
+
+A complementary check is adiabatic insertion of one electromagnetic flux quantum $h/e$ through a small region. Faraday's law, $\oint\mathbf E\cdot d\mathbf l=-d\Phi/dt$, produces a circulating electric field. A Hall current flows transverse to the electric field. The Hall conductivity $\sigma_{xy}$ relates that current density to this field, so radial charge transport across an enclosing circle has magnitude $|I_r|=|\sigma_{xy}\dot\Phi|$. Integrating in time with $|\sigma_{xy}|=e^2/(mh)$ gives $|\Delta Q|=|\sigma_{xy}|h/e=e/m$; the insertion direction chooses deficit or excess. This uses the Hall response of the same phase, so it checks the charge without furnishing an independent derivation of that response.
 
 What licenses treating $\eta$ as a position of a mobile particle? A smooth repulsive potential for electrons can pin the deficit. Moving the potential slowly transports a family of low-energy many-electron states with a localized density deficit following it. This works when the bulk gap persists, the quasihole stays away from the edge and other cores, and the motion does not excite the fluid across $\Delta$. Removing or weakening the pinning permits superpositions of different positions. An effective wavefunction for the quasihole describes those superpositions. It is a new description of states made from the same electrons, not another elementary constituent added to the Hamiltonian.
 
@@ -141,7 +183,27 @@ Here the puzzle sharpens. This polynomial is symmetric in $\eta_1,\eta_2$. Never
 
 The construction is [Laughlin’s](https://doi.org/10.1103/PhysRevLett.50.1395). For longer accounts of the wavefunction and quasiholes, see [Tong, §§3.1–3.2](https://arxiv.org/abs/1606.06687) and [Simon, Ch. 20](https://www-thphys.physics.ox.ac.uk/people/SteveSimon/topological2019/Topobook-Oct18-2019.pdf).
 
+</details>
+
+
 ## Exchange the quasiholes, transport the electron state
+
+Two quasiholes give the electron wavefunction $\prod_i(z_i-\eta_1)(z_i-\eta_2)\Psi_3$. It is symmetric in the labels $\eta_1,\eta_2$. So where could a fractional exchange phase hide?
+
+The answer is in transport. Swapping two names in a formula is different from slowly moving two pinning potentials and letting the many-electron state follow. After removing the dynamical phase, a normalized state transported around a closed path acquires the **Berry phase**
+
+$$\gamma=i\oint\langle\Psi|\nabla_{\boldsymbol\eta}\Psi\rangle\cdot d\boldsymbol\eta.$$
+
+Here $\boldsymbol\eta$ collects the moving parameters; the inner product still integrates over the electrons. I compare the same loop with and without a second, well-separated quasihole inside. The magnetic phase from the enclosed area matches. The extra phase is $2\pi/3$: one complete encircling. A direct half-exchange calculation fixes $\theta=\pi/3$ for the elementary quasihole in this orientation. Reversing the exchange reverses the phase.
+
+<!-- FIGURE: winding -->
+
+[Arovas, Schrieffer and Wilczek (1984)](https://doi.org/10.1103/PhysRevLett.53.722) made the link between quasihole transport and fractional statistics. Their result gives topology a physical carrier: a rearrangement of the electron fluid.
+
+**My checkpoint:** one exchange gives $e^{i\pi/3}$; one encircling gives $e^{2i\pi/3}$. A general Berry phase can also depend on area or other details. I call the residual statistical only after separating those contributions.
+
+<details class="derivation">
+<summary>Work it out: Berry transport, the half-exchange and planar topology</summary>
 
 Pin one quasihole at the origin and move another around a circle $\eta=Re^{i\varphi}$ in the bulk. Let the radius be large compared with the quasihole cores, but small compared with the distance to the edge. After removing the dynamical phase, the transported state acquires the Berry phase
 
@@ -166,7 +228,7 @@ The same density deficit gave charge $e/m$ and now gives a full-winding phase $2
 
 The uniform background contributes $-2\pi n_e A=-A/(m\ell_B^2)$ for enclosed area $A$. With our field convention this equals the electromagnetic Aharonov–Bohm phase $q_h\Phi/\hbar$, where $\Phi=-B_0A$. That area-dependent contribution survives even with no other quasihole present. It is the **difference** $\Delta\gamma$ that isolates braiding. The dynamical phase, $-\int E(t)dt/\hbar$, must likewise be removed or matched between the two protocols. A generic Berry phase is not automatically a statistical phase.
 
-<!-- FIGURE: winding -->
+
 
 A full winding is two exchanges, so this result fixes an exchange phase only up to a sign. To find the sign for the elementary quasihole, transport the normalized two-hole state through a half exchange itself. The same screening argument supplies the needed normalization.
 
@@ -207,7 +269,94 @@ This gives a physical realization of a possibility allowed by two-dimensional to
 
 The [path figure](../experiments.html#exchange) draws this distinction. Its paths specify a braid; they do not calculate the ordinary magnetic and dynamical phases. At $m=3$, a positive exchange gives $e^{i\pi/3}$ and a full winding gives $e^{2i\pi/3}$. The electrons underneath still obey the original antisymmetry in the $z_i$.
 
+</details>
+
+
+## When a phase is no longer enough
+
+My Laughlin example gives one state for fixed, well-separated quasihole positions and specified overall excitation type, up to a phase. In other phases those same data can leave several nearly degenerate low-energy states. A measurement near one isolated excitation cannot distinguish them. Transport can act by a matrix on this collective space; different exchanges need not commute. This is the additional physical structure of **non-Abelian anyons**.
+
+To label the states, I ask what excitation type a pair presents to a probe surrounding both, or what type remains when they are brought together. This is its **fusion channel**. The type is often called a topological charge; it need not be an electric charge. In the Ising anyon model there are types $1$ (vacuum, meaning no nontrivial excitation), $\sigma$ and $\psi$ (a fermionic excitation), with
+
+$$\sigma\times\sigma=1+\psi.$$
+
+The plus sign lists allowed pair types, not equal probabilities. The other rules needed here are $\psi\times\psi=1$ and that vacuum acts as an identity, so $1\times1=1$ and $1\times\psi=\psi$. Four $\sigma$ excitations with total type $1$ therefore span two states: the first pair and the second pair can both have type $1$, or both type $\psi$. A mixed assignment has total type $\psi$ and is excluded. I call the two allowed states $|0\rangle,|1\rangle$. These are collective pair labels, not a spin attached to each excitation.
+
+This is the extra room I need: one exchange can rotate a collective state, and exchanging a different pair can rotate it in a different way. Order can matter, just as rotations about different axes do. To observe it, I need a readout that distinguishes the resulting states; not every measurement will.
+
+For this transport, “slow” means slow enough to avoid exciting states above the collective space. If finite separation weakly splits its states, the braid should also finish before that splitting is resolved dynamically. The gap above the space and the splitting within it set different timescales; arbitrarily slow motion is not the goal.
+
+[Ivanov (2001)](https://arxiv.org/abs/cond-mat/0005069) gives a compact physical realization in a model of superconducting vortices—defects around which the condensate phase winds. Their cores bind Majorana zero modes, localized zero-energy modes described by Hermitian fermionic operators; pairs of these modes supply ordinary fermionic occupations. At fixed total fermion parity, those joint occupations leave a collective space on which his exchanges act noncommutatively, up to an overall phase. The [paper shortlist](conversation.md#3-ivanov-the-exchange-has-room-to-rotate-a-state) points to the four-vortex example.
+
+The attraction for quantum information is that well-separated excitations store information collectively, making it difficult for a local disturbance to distinguish the encoded states. The protection is conditional: unwanted excitations, finite separation and imperfect control still matter. Even ideal Ising braids alone do not supply every quantum gate. [Nayak and collaborators](https://arxiv.org/abs/0707.1889) explain the scope of that promise.
+
+<details class="derivation">
+<summary>Work it out: two noncommuting Ising braid matrices</summary>
+
+In a standard Ising convention, exchanging the first pair acts as $R=\operatorname{diag}(e^{-i\pi/8},e^{3i\pi/8})$. To exchange the middle pair, change to the basis in which that pair's type is definite, using
+
+$$\begin{gathered}
+F=\frac1{\sqrt2}\begin{pmatrix}1&1\\1&-1\end{pmatrix},\\
+B_1=R,\qquad B_2=F^{-1}RF.
+\end{gathered}$$
+
+The matrices are physical data of this model, not determined by the dimensions of the space alone. $F$ changes coordinates; $B_2$ physically transports excitations. Up to a common phase, $B_1$ and $B_2$ are quarter-turns about different Pauli axes, so their order matters. The [Ising figure](../experiments.html#braids) shows a measurement that distinguishes the resulting states; the [fusion-basis note](../fusion-basis.html) works through the analogous construction in the different Fibonacci model. [Nayak and collaborators](https://arxiv.org/abs/0707.1889) give the broader theory.
+
+</details>
+
+**My checkpoint:** fractional charge, fractional exchange phase and non-Abelian state space are different claims. A Laughlin quasihole establishes the first two without needing the third.
+
+
+## What an interferometer has actually measured
+
+I now want a signal, not just a wavefunction. Although the Hall fluid has a bulk gap, it can carry low-energy excitations along its boundary. These **edge channels** provide paths for injection and electrical readout. An interferometer lets two coherent tunneling alternatives enclose a region of a quantum Hall fluid. The oscillatory part of conductance—the current response to a small voltage—depends on their relative phase. For a simple fixed-path description at $\nu=1/3$,
+
+$$G_{\rm osc}\propto\cos\Theta,\qquad
+\Theta=\frac{q_h\Phi}{\hbar}+N\frac{2\pi}{3}+\Theta_0.$$
+
+Here $q_h=e/3$, $\Phi$ is signed enclosed magnetic flux, $N$ counts enclosed quasiholes relative to a reference, and $\Theta_0$ collects the other phase contributions. Adding one enclosed quasihole changes the statistical term by a **full braid**, $2\pi/3$.
+
+[Nakamura, Liang, Gardner and Manfra (2020)](https://www.nature.com/articles/s41567-020-1019-1) measured discrete conductance-fringe shifts at filling $1/3$, consistent with this braiding phase. Their reported magnitude was $(0.31\pm0.04)\,2\pi$. This is evidence for Abelian statistics; it does not demonstrate non-Abelian operations.
+
+The subtlety is wonderfully physical: changing the enclosed charge can also move the edge, changing the path area and its ordinary magnetic phase. Screening layers and device checks helped constrain that alternative. **Topology protects the ideal braid contribution; it does not make the voltmeter subtract electrostatics for me.**
+
+I can now ask a meaningful experimental question: what independent control separates a statistical phase slip from a change in the path? The detailed account below explains why the charge and geometry have to be read together.
+
+<details class="derivation">
+<summary>Work it out: the phase model and the electrostatic ambiguity</summary>
+
+A different route keeps the phase itself in view. In a quantum Hall interferometer, two weak tunneling alternatives for an edge quasiparticle enclose a region of the fluid. Their relative amplitude produces an oscillatory contribution to the measured conductance—the change in mean current per small change in applied voltage—
+
+$$\begin{gathered}
+G_{\rm osc}\propto\cos\Theta,\\
+\Theta=\frac{q_h\Phi}{\hbar}+N\frac{2\pi}{m}+\Theta_0.
+\end{gathered}$$
+
+$\Phi=B_zA=-B_0A$ is the signed flux for a counterclockwise relative path of area $A$, $N$ the number of enclosed quasiholes of the specified type relative to a reference, and $\Theta_0$ the other matched phase contributions. Reversing that path reverses both displayed phase contributions. The statistical term is a full encircling, not one exchange. Varying flux moves the fringes continuously; changing $N$ by one at fixed path adds $2\pi/m$.
+
+[Nakamura and collaborators](https://www.nature.com/articles/s41567-020-1019-1) measured discrete shifts in the conductance interference pattern at filling $1/3$, with a reported braiding phase magnitude $(0.31\pm0.04)\,2\pi$, consistent with $2\pi/3$. That inference depends on interpreting each localized-charge transition as a change of one quasiparticle and constraining ordinary phase shifts in the device. It is evidence for Abelian encircling statistics, distinct from observing non-Abelian braid operations.
+
+The same charge transition that changes $N$ can move the edge. At fixed magnetic field, an area change $\Delta A$ changes the flux and gives
+
+$$\Delta\Theta=\frac{q_h B_z\Delta A}{\hbar}+\Delta N\frac{2\pi}{3}.$$
+
+This is why electrostatics enters an experiment about topology. The device used screening layers to reduce coupling between charge in the interior and the edge; the authors also checked fringe and transition slopes, reproducibility, and residual coupling. The ideal braid phase is insensitive to smooth path deformations after electromagnetic contributions are removed. The measured conductance has no obligation to remove those contributions for us. [The author manuscript](https://arxiv.org/abs/2006.14115) presents the phase extraction and device controls.
+
+</details>
+
+
 ## Replace the electron fluid by two effective particles
+
+Now I take a more specialized turn. If I know the charge and exchange rule, do I know how a pair will look? No: I still need its prepared state. Statistics selects allowed states; preparation selects their amplitudes.
+
+[Vishveshwara and Cooper (2010)](https://arxiv.org/abs/0908.3945) studied localized pairs projected to the lowest Landau level. Their comparison asks whether the pair has a larger or smaller **mean squared guiding-center separation** than a matched distinguishable pair. A guiding center is the center of a cyclotron orbit. This is a useful measure of separation, with a specific reference; it is not a coincidence probability.
+
+For the fractional case, that separation excess can change sign as the localization label changes. The statistics has stayed fixed. That is a result I can explain without memorizing the series: **an anyon is not simply a fixed amount of “between boson and fermion” bunching.**
+
+The calculation below compares this preparation with the generalized coherent states used by [Subramanyan and Vishveshwara (2019)](https://arxiv.org/abs/1905.00442). They agree at the boson and fermion endpoints but differ for fractional statistics. I want to ask which preparation an actual trap would produce. That is a direction to explore, not a claim that either state is the universal anyon packet.
+
+<details class="derivation">
+<summary>Work it out: two preparation families and their separation curves</summary>
 
 Now change descriptions. The microscopic state above depended on $N$ electron positions and two quasihole parameters. The bulk-pair problem of [Vishveshwara and Cooper](https://arxiv.org/abs/0908.3945) instead starts from two effective particles, endowed with the quasiholes' charge and exchange rule. The electron coordinates no longer appear. Their effects enter through the effective parameters, the allowed states, and the conditions under which this reduction works.
 
@@ -371,9 +520,30 @@ p_n=\frac{A_nu^{2n}}{\mathcal Z_2(u)},\\
 
 The last line uses the angular-basis identification $j=2n+\alpha$. For separated holes well inside a sufficiently large droplet, write the screened norm as $\mathcal Z_2=C e^u u^{-\alpha}[1+\varepsilon(u)]$. The leading terms cancel in $\chi=\langle j\rangle-u$, leaving $\chi=u\partial_u\log[1+\varepsilon(u)]$. The residual therefore tests the screening and edge corrections. Of the two preparations above, the projected-coordinate family has the rapidly decaying corrections consistent with short-range screening; the generalized coherent family has an algebraic correction. This motivates [Kjønsberg and Leinaas's approximate coordinate-state mapping](https://arxiv.org/abs/cond-mat/9606214). The full norm would determine every $A_n$; its screened asymptotic form does not. A specified pinning-and-release protocol still needs its own microscopic state and operator mapping.
 
+
+
+</details>
+
+
 <span id="let-a-saddle-amplify-the-difference"></span>
 
 ## Let a saddle amplify a correlation
+
+A saddle gives the packet something to do. In a projected magnetic-field problem, one direction of guiding-center motion contracts while the other expands:
+
+$$X_s(t)=e^{-\lambda t}X_s(0),\qquad
+Y_s(t)=e^{\lambda t}Y_s(0).$$
+
+Here $X_s,Y_s$ are the orbit-center coordinates and $\lambda>0$ is a rate set by the saddle curvature and magnetic length. Their widths change reciprocally: this is **squeezing**. It happens for one particle too, so exponential stretching alone is not evidence for anyonic statistics.
+
+For a pair, the solvable model below can amplify a correlation in the initial state. Its assigned quadratic observables must be matched to physical position measurements before I interpret the result as spatial data. Even after that matching, a weighted moment such as $\langle y_1y_2\rangle$ differs from the probability of two particles leaving on the same side: a few distant events can dominate the moment.
+
+My question becomes **which feature of the outgoing signal remembers the pair, and which feature belongs to the saddle?** The [one-particle direction](directions/saddle.md) isolates the second part and opens an unexpected connection to barrier scattering and gravitational ringdown. The mathematical connection is real; its physical interpretation depends on the state and observable.
+
+<details class="derivation">
+<summary>Work it out: the quadratic algebra, its operator mapping and the figure</summary>
+
+This calculation continues the [pair derivation](#which-localized-state): I use its basis, the generators $K_0,K_\pm$, the state labels $\alpha,u,\beta$, and the separation excess $\chi$. I can read the physical question above independently, but I need those definitions for the equations below.
 
 A smooth saddle potential has one stable and one unstable direction of drift. For a single guiding center, write $X_s,Y_s$ with $[X_s,Y_s]=i\ell^2$ and choose its oriented energy as $H=-g(X_sY_s+Y_sX_s)/2$, where $g>0$ has units of energy per length squared. The Heisenberg equations give
 
@@ -467,7 +637,21 @@ The growing solution also has a physical stopping point. The potential must rema
 
 A more general quadratic potential provides a useful extension. For one guiding center, $V=(aX_s^2+bY_s^2)/2$ gives $\ddot X_s=-(\ell^4ab/\hbar^2)X_s$. Curvatures of the same sign give oscillatory motion; opposite signs give exponential drift. The [2025 preprint by Basani, Subramanyan and Vishveshwara](https://arxiv.org/abs/2509.15488) develops such trap and saddle dynamics for the generalized coherent pair states. Its symmetry methods build on the same quadratic algebra. Changing a curvature can change stable motion into unstable motion; it does not interpolate the particle statistics.
 
+</details>
+
+
 ## When a splitter has an interior
+
+At an ideal balanced splitter, I inject one particle in each input, with identical synchronized packets and matching internal states. Bosons then leave together; fermions leave in different outputs. The alternatives “both transmit” and “both reflect” interfere. Change the packets or give the apparatus an interior, and that simple picture needs attention.
+
+[Samal, Vishveshwara, Gefen and Väyrynen (2026)](https://arxiv.org/abs/2412.19674) studied an **extended collider** in which a particle can make several trips around an antidot—a depleted region with a circulating edge path—before exiting. One particle already interferes with itself. A comparison that discards this coherence can make fermions appear to bunch.
+
+The repair is instructive: I keep the apparatus's one-particle quantum physics in my distinguishable reference, then isolate the extra contribution from exchange. The paper does this for noninteracting bosons and fermions. It leaves an anyonic extension open, because even a single-source process can contain braiding information.
+
+**The result I want to remember:** a surprising correlation is a prompt to inspect the reference, not a statistics label by itself. I can imagine a broad research direction here—how to separate exchange, preparation and propagation when an apparatus has memory—without pretending that replacing a minus sign by $e^{i\theta}$ solves an anyon experiment.
+
+<details class="derivation">
+<summary>Work it out: packet interference and the two distinguishable references</summary>
 
 The pair calculation has made a reference indispensable: “more separated” meant more separated than a particular distinguishable preparation. A collider poses the same problem in another form. What should count as the result of two distinguishable particles in an apparatus with its own coherent paths?
 
@@ -554,52 +738,19 @@ At $r=0.95$ and $\ell_p/L=2.5$, the calculated fermion coincidence is about $0.8
 
 This is a boson/fermion theory of a noninteracting extended scatterer, published in 2026. It does **not** derive an anyon version by replacing a sign with $e^{i\theta}$. In an anyon device, even a process with only one active source may involve a tunneling excitation winding in spacetime around other excitations. That statistical contribution can enter the source-alone signal being subtracted. Extending the reference procedure while retaining the desired anyonic information is an open problem identified by the paper. The bulk-pair and collider calculations meet at a concrete issue: which parts of a measured correlation come from exchange, which from preparation, and which from propagation through the device?
 
-## What an interferometer has actually measured
+</details>
 
-A different route keeps the phase itself in view. In a quantum Hall interferometer, two weak tunneling alternatives for an edge quasiparticle enclose a region of the fluid. Their relative amplitude produces an oscillatory contribution to the measured conductance—the change in mean current per small change in applied voltage—
 
-$$\begin{gathered}
-G_{\rm osc}\propto\cos\Theta,\\
-\Theta=\frac{q_h\Phi}{\hbar}+N\frac{2\pi}{m}+\Theta_0.
-\end{gathered}$$
+<span id="a-calculation-worth-taking-further"></span>
 
-$\Phi=B_zA=-B_0A$ is the signed flux for a counterclockwise relative path of area $A$, $N$ the number of enclosed quasiholes of the specified type relative to a reference, and $\Theta_0$ the other matched phase contributions. Reversing that path reverses both displayed phase contributions. The statistical term is a full encircling, not one exchange. Varying flux moves the fringes continuously; changing $N$ by one at fixed path adds $2\pi/m$.
+## Questions I want to carry forward
 
-[Nakamura and collaborators](https://www.nature.com/articles/s41567-020-1019-1) measured discrete shifts in the conductance interference pattern at filling $1/3$, with a reported braiding phase magnitude $(0.31\pm0.04)\,2\pi$, consistent with $2\pi/3$. That inference depends on interpreting each localized-charge transition as a change of one quasiparticle and constraining ordinary phase shifts in the device. It is evidence for Abelian encircling statistics, distinct from observing non-Abelian braid operations.
+I do not need a thesis proposal before I can have an interesting conversation. I want a few questions that grow naturally from the physics:
 
-The same charge transition that changes $N$ can move the edge. At fixed magnetic field, an area change $\Delta A$ changes the flux and gives
+- **Preparation and universality.** Which features of an anyon signal survive changes in how I localize and release the excitations? The pair calculations make that distinction tangible.
+- **Evidence and measurement.** Which combination of observables best separates statistics from ordinary interference and interactions? Interferometers and colliders expose different ambiguities.
+- **Geometry and dynamics.** What survives when I change the surface, boundary or drive? A sphere changes global winding constraints; a Möbius band makes handedness a consistency question; a conserved parity can obstruct following a changing ground state.
 
-$$\Delta\Theta=\frac{q_h B_z\Delta A}{\hbar}+\Delta N\frac{2\pi}{3}.$$
+These are directions, not established new results or claims of novelty. I can choose one in [Directions to think about](directions.md), follow the calculation that catches my attention, and ask which assumption is doing the most work.
 
-This is why electrostatics enters an experiment about topology. The device used screening layers to reduce coupling between charge in the interior and the edge; the authors also checked fringe and transition slopes, reproducibility, and residual coupling. The ideal braid phase is insensitive to smooth path deformations after electromagnetic contributions are removed. The measured conductance has no obligation to remove those contributions for us. [The author manuscript](https://arxiv.org/abs/2006.14115) presents the phase extraction and device controls.
-
-## A calculation worth taking further
-
-There is now a precise question behind “how do anyons move?” Start with two weak pins in a microscopic Laughlin droplet, choose their separation and release protocol, and project the resulting state onto the low-energy quasihole manifold. How accurately does the released state follow the projected-coordinate description motivated by the ideal trial family, and does the chosen protocol instead produce generalized coherent weights or another superposition? The state can first be tested through its radial weights. The physical saddle Hamiltonian and measured position operators must also be projected into the same manifold and compared with the assigned algebraic generators; matching the state alone does not match its dynamics or its readout. Only with that operator map can $\delta$ and the outgoing model moment be interpreted for the apparatus. The two preparations share a leading large-separation tail in the assigned saddle moment but differ at finite separation. State preparation and operator assignment must therefore be tested together.
-
-A controlled study would keep cores and edges separated, track leakage out of the chosen manifold, and compare results as system size and the retained basis increase. It would then derive the actual detector observable from the outgoing state, using the same preparation in the distinguishable comparison. The point is not to find a curve that looks fractional. It is to establish which measured difference survives after the state and apparatus have been specified.
-
-For extended colliders the corresponding unresolved step is the one-source reference: preserve the phase information carried by a single packet's paths while deciding which of those paths already encode anyonic braiding. The solvable boson/fermion calculation tells us why this separation is necessary. It does not do the anyon calculation in advance.
-
-These questions lead directly into [the 2010 bulk-pair paper](https://arxiv.org/abs/0908.3945), [the 2019 dynamics treatment](https://arxiv.org/abs/1905.00442), [the 2025 quadratic-potential preprint](https://arxiv.org/abs/2509.15488), and [the 2026 collider paper](https://arxiv.org/abs/2412.19674). Each changes a definite ingredient of the calculation, rather than supplying another name for fractional statistics.
-
-## When a phase is no longer enough
-
-The Laughlin example gives one state for fixed, well-separated quasihole positions and specified overall excitation type, up to a phase. In other phases those same data can leave several nearly degenerate low-energy states. A measurement near one isolated excitation cannot distinguish them. Transport can act by a matrix on this collective space; different exchanges need not commute. This is the additional physical structure of **non-Abelian anyons**.
-
-To label the states, ask what excitation type a pair presents to a probe surrounding both, or what type remains when they are brought together. This is its **fusion channel**. The type is often called a topological charge; it need not be an electric charge. In the Ising anyon model there are types $1$ (vacuum, meaning no nontrivial excitation), $\sigma$ and $\psi$ (a fermionic excitation), with
-
-$$\sigma\times\sigma=1+\psi.$$
-
-The plus sign lists allowed pair types, not equal probabilities. The other rules needed here are $\psi\times\psi=1$ and that vacuum acts as an identity, so $1\times1=1$ and $1\times\psi=\psi$. Four $\sigma$ excitations with total type $1$ therefore span two states: the first pair and the second pair can both have type $1$, or both type $\psi$. A mixed assignment has total type $\psi$ and is excluded. Call the two allowed states $|0\rangle,|1\rangle$. These are collective pair labels, not a spin attached to each excitation.
-
-In a standard Ising convention, exchanging the first pair acts as $R=\operatorname{diag}(e^{-i\pi/8},e^{3i\pi/8})$. To exchange the middle pair, change to the basis in which that pair's type is definite, using
-
-$$\begin{gathered}
-F=\frac1{\sqrt2}\begin{pmatrix}1&1\\1&-1\end{pmatrix},\\
-B_1=R,\qquad B_2=F^{-1}RF.
-\end{gathered}$$
-
-The matrices are physical data of this model, not determined by the dimensions of the space alone. $F$ changes coordinates; $B_2$ physically transports excitations. Up to a common phase, $B_1$ and $B_2$ are quarter-turns about different Pauli axes, so their order matters. The [Ising figure](../experiments.html#braids) shows a measurement that distinguishes the resulting states; the [fusion-basis note](../fusion-basis.html) works through the analogous construction in the different Fibonacci model. [Nayak and collaborators](https://arxiv.org/abs/0707.1889) give the broader theory.
-
-The distinction from the bulk pair above is structural: a scalar statistical phase has become an operation within an unresolved collective state space. It brings new questions about preparation and measurement, while leaving the same obligation to identify which microscopic states and which measured quantities the effective calculation describes.
+Before a conversation, I return to the [paper shortlist and recall questions](conversation.md). My aim is to explain one mechanism clearly, remember what the evidence actually supports, and have one honest question about what remains open.
