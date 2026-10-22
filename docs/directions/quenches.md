@@ -1,12 +1,12 @@
 # Ramps and conserved parity
 
-The quasihole motion in the earlier notes relied on electrons following an instantaneous low-energy state. I now ask when that assumption works for a changing Hamiltonian. A small energy gap to other accessible states can make following difficult; a conserved quantity can make a desired transition impossible even during arbitrarily slow motion.
+The quasihole motion in the earlier notes relied on electrons following an instantaneous low-energy state. Slowing the motion helps only if the desired state is accessible. A small energy gap can demand a long preparation time; a conserved quantity can forbid the transition altogether.
 
-A sudden change is usually called a **quench**; a change over a finite time is a **ramp**. I use a finite superconducting wire to separate these two obstacles. Its [end modes](wires.html) give me a simple setting in which the lowest-energy state can change its parity—the evenness or oddness of its fermion number.
+A sudden change is usually called a **quench**; a change over a finite time is a **ramp**. A finite superconducting wire separates the two obstacles particularly clearly. Its [end modes](wires.html) allow the lowest-energy state to change its parity—the evenness or oddness of its fermion number—as a parameter varies.
 
 ## A knob and a conserved quantity
 
-I use the **Kitaev chain**, a model with one fermionic state per site, hopping between neighbors and superconducting pairing. Hopping preserves particle number; pairing couples states differing by two particles. Both preserve parity. I can vary the chemical potential—the energy parameter controlling occupation—without allowing an even state to become odd.
+The **Kitaev chain** has one fermionic state per site, hopping between neighbors and superconducting pairing. Hopping preserves particle number; pairing couples states differing by two particles. Both preserve parity. Varying the chemical potential—the energy parameter controlling occupation—does not allow an even state to become odd.
 
 <details>
 <summary>Hamiltonian and parity check</summary>
@@ -39,7 +39,7 @@ There is another kind of crossing. Two levels of opposite parity can become dege
 
 ## The evolving branch and the ground-state reference
 
-If I start in an even state and the new ground state is odd, their overlap is exactly zero. More generally, let the normalized evolving state $|\psi(t)\rangle$ have parity $p=\pm1$, with $+1$ denoting even. If the instantaneous, nondegenerate ground state $|g(t)\rangle$ has parity $-p$, their squared overlap, or **fidelity**, is
+If an initially even state evolves while the ground state becomes odd, their overlap is exactly zero. More generally, let the normalized evolving state $|\psi(t)\rangle$ have parity $p=\pm1$, with $+1$ denoting even. If the instantaneous, nondegenerate ground state $|g(t)\rangle$ has parity $-p$, their squared overlap, or **fidelity**, is
 
 $$F(t)=|\langle g(t)|\psi(t)\rangle|^2=0.$$
 
@@ -69,4 +69,4 @@ $$\langle H(t)\rangle-E_{\rm gs}(t)
 
 The first term measures excitation above the accessible sector's lowest state. The second records the cost of staying in that sector when the other one lies lower. Only the first can be reduced by improving adiabatic following within the sector. Parity conservation still permits transitions between states of the same parity, including creation of quasiparticle pairs.
 
-I want to distinguish failure to follow because I drove too fast from accurate following of an allowed branch after the absolute ground state has moved to another sector. That distinction matters when preparing or manipulating topological states. [Hegde and collaborators, §§2 and 7](https://arxiv.org/html/1412.5255) give the detailed wire example.
+Preparation can therefore fail in two different senses: a fast drive can excite accessible states, or accurate following can leave the system above an inaccessible ground state of opposite parity. How much energy comes from unwanted excitations, and how much is the cost of conserved parity? The two energy comparisons separate these effects when preparing or manipulating topological states. [Hegde and collaborators, §§2 and 7](https://arxiv.org/html/1412.5255) give the detailed wire example.

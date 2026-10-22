@@ -97,9 +97,9 @@ marked.use({
 
 const readingPages = [
   ['notes', 'Notes'],
-  ['catalog', 'Questions to explore'],
-  ['directions', 'Directions to think about'],
-  ['conversation', 'Three papers'],
+  ['catalog', 'Preparation and measurement'],
+  ['directions', 'Further directions'],
+  ['conversation', 'Selected papers'],
   ['references', 'Sources']
 ];
 
@@ -141,7 +141,7 @@ for (const name of [...readingPages.map(([name]) => name), ...chapterNames]) {
     const current = page === name ? ' aria-current="page"' : isChapter && page === 'directions' ? ' aria-current="location"' : '';
     return `<a href="${docsPath}${page}.html"${current}>${label}</a>`;
   }).join(' · ');
-  const breadcrumb = isChapter ? `<p class="chapter-path"><a href="../directions.html">Directions to think about</a> <span aria-hidden="true">/</span> <span aria-current="page">${escape(title)}</span></p>` : '';
+  const breadcrumb = isChapter ? `<p class="chapter-path"><a href="../directions.html">Further directions</a> <span aria-hidden="true">/</span> <span aria-current="page">${escape(title)}</span></p>` : '';
   const page = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${escape(title)}</title><link rel="stylesheet" href="${sitePath}vendor/katex/katex.min.css?v=${mathStyleVersion}"><link rel="stylesheet" href="${sitePath}styles/reading.css?v=${styleVersion}">${scripts}</head>
 <body><nav aria-label="Reading navigation"><a href="${sitePath}index.html">All notes</a> · ${navigation}</nav>

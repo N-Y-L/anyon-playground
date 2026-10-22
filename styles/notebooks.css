@@ -77,8 +77,6 @@ dfn { font-style: normal; font-weight: bold; }
 .toric-svg [role=button]:hover .cell-background { fill: transparent; stroke: #666; stroke-width: 1; }
 .toric-svg [role=button]:focus-visible .cell-background { stroke: #0000ee; stroke-width: 2; }
 .page-footer { border-top: 1px solid #999; padding: 15px 0; margin-top: 32px; font-size: 16px; }
-.export-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-.export-controls select { max-width: 300px; }
 .reading-map { border-collapse: collapse; width: 100%; margin: 22px 0; }
 .reading-map td, .reading-map th { text-align: left; vertical-align: top; border-bottom: 1px solid #ccc; padding: 10px 16px 10px 0; }
 .reading-map th { border-bottom-color: #777; }
@@ -95,7 +93,7 @@ dfn { font-style: normal; font-weight: bold; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
 @media print {
-  nav, .visual-actions, .controls-card, .page-footer, .skip-link, .example-row, .next-note, #export-ready { display: none; }
+  nav, .visual-actions, .controls-card, .page-footer, .skip-link, .example-row, .next-note { display: none; }
   body { margin: 0; max-width: none; font-size: 11pt; }
   .experiment-workspace { display: block; }
   figure, .equation { break-inside: avoid; }

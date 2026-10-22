@@ -10,14 +10,13 @@ const { createHash } = require('node:crypto');
 
 // Exercise the actual saved reading page and its browser scripts. This adapter
 // enforces select-option matching and event wiring; it does not test layout,
-// native range snapping, focus, or browser download permissions.
+// native range snapping or focus.
 function createNotes() {
   const root = path.join(__dirname, '..');
   const html = fs.readFileSync(path.join(root, 'docs/notes.html'), 'utf8');
   const byId = new Map();
   const figures = new Map();
-  const downloads = [];
-  const revoked = [];
+  const calculations = new Map();
   const attributes = source => Object.fromEntries(
     Array.from(source.matchAll(/\s([\w-]+)(?:="([^"]*)")?/g), match => [match[1], match[2] ?? ''])
   );
@@ -50,7 +49,6 @@ function createNotes() {
       return this.children.filter(node => Object.hasOwn(node.attrs, attribute[1]));
     }
     querySelector(selector) { return this.querySelectorAll(selector)[0] || null; }
-    replaceChildren(...children) { this.children = children; }
   }
 
   for (const match of html.matchAll(/<figure\b([^>]*)>([\s\S]*?)<\/figure>/g)) {
@@ -71,12 +69,7 @@ function createNotes() {
   }
 
   const sandbox = {
-    document: { getElementById: id => byId.get(id) || null, createElement: tag => new Element(tag) },
-    Blob,
-    URL: {
-      createObjectURL(blob) { downloads.push(blob); return `blob:notes-${downloads.length}`; },
-      revokeObjectURL(url) { revoked.push(url); }
-    }
+    document: { getElementById: id => byId.get(id) || null }
   };
   sandbox.window = sandbox;
   const context = vm.createContext(sandbox);
@@ -88,6 +81,18 @@ function createNotes() {
     const [file, query] = source.split('?');
     const script = fs.readFileSync(path.join(root, 'docs', file), 'utf8');
     assert.equal(query, 'v=' + createHash('sha256').update(script).digest('hex').slice(0, 12), 'Changed scripts need fresh cache URLs');
+    if (file.endsWith('/notes-interactions.js')) {
+      // Observe the figure calculations requested by the real controller,
+      // without exposing its private state.
+      for (const name of ['phonon', 'winding', 'pair', 'saddle', 'collider']) {
+        const calculate = sandbox.AnyonNotesFigures[name];
+        sandbox.AnyonNotesFigures[name] = parameters => {
+          const result = calculate(parameters);
+          calculations.set(name, result);
+          return result;
+        };
+      }
+    }
     vm.runInContext(script, context, { filename: file });
   }
 
@@ -96,61 +101,59 @@ function createNotes() {
     input(id, value) { this.element(id).value = value; this.element(id).dispatch('input'); },
     reset(name) { figures.get(`figure-${name}`).querySelector('[data-reset-figure]').click(); },
     click(id) { this.element(id).click(); },
-    async save(name, kind = 'data') {
-      const count = downloads.length;
-      figures.get(`figure-${name}`).querySelector(`[data-save-${kind}]`).click();
-      assert.equal(downloads.length, count + 1, 'Save handler did not produce a download');
-      const text = await downloads.at(-1).text();
-      return kind === 'data' ? JSON.parse(text) : text;
-    },
-    revoked,
-    get downloadCount() { return downloads.length; }
+    result(name) {
+      const result = calculations.get(name);
+      assert.ok(result, `The controller did not calculate ${name}`);
+      assert.equal(this.element(`${name}-drawing`).innerHTML, result.display || result.svg);
+      assert.equal(this.element(`${name}-summary`).textContent, result.summary);
+      if (result.rows) assert.equal(this.element('pair-table').innerHTML, result.rows);
+      return JSON.parse(JSON.stringify(result));
+    }
   };
 }
 
-test('Reading-page controls, exact statistics presets, resets, and exported results remain synchronized', async () => {
+test('Reading-page controls, exact statistics presets, resets, and displayed results remain synchronized', () => {
   const page = createNotes();
   for (const name of ['pair', 'saddle', 'collider']) {
     assert.match(page.element(`${name}-drawing`).innerHTML, /<svg/);
     assert.doesNotMatch(page.element(`${name}-summary`).textContent, /Could not calculate/);
   }
 
-  let data = await page.save('pair');
-  assert.equal(data.results.alpha, 1 / 3);
-  assert.equal(data.results.separation, 2);
-  assert.ok(Math.abs(data.results.localized.chi + 0.11925881920748752) < 1e-12);
+  let result = page.result('pair');
+  assert.equal(result.data.alpha, 1 / 3);
+  assert.equal(result.data.separation, 2);
+  assert.ok(Math.abs(result.data.localized.chi + 0.11925881920748752) < 1e-12);
   page.input('pair-alpha', '1');
   page.input('pair-separation', '0');
-  data = await page.save('pair');
-  assert.equal(data.results.localized.chi, 1);
-  assert.equal(data.results.coherent.chi, 1);
-  assert.equal(data.results.localized.radialMoment, 6);
+  result = page.result('pair');
+  assert.equal(result.data.localized.chi, 1);
+  assert.equal(result.data.coherent.chi, 1);
+  assert.equal(result.data.localized.radialMoment, 6);
   assert.equal(page.element('pair-separation-value').textContent, '0');
   assert.match(page.element('pair-table').innerHTML, /<td>6<\/td>/);
   page.reset('pair');
-  assert.equal((await page.save('pair')).results.alpha, 1 / 3);
+  assert.equal(page.result('pair').data.alpha, 1 / 3);
 
   page.click('saddle-sensitive');
   assert.equal(page.element('saddle-alpha').value, '0.6');
-  data = await page.save('saddle');
-  assert.equal(data.results.alpha, 0.6);
-  assert.equal(data.results.separation, 2.1);
+  result = page.result('saddle');
+  assert.equal(result.data.alpha, 0.6);
+  assert.equal(result.data.separation, 2.1);
   // This setting exposes the correction: localized chi is positive while
   // the assigned outgoing moment is also positive, despite the naive -chi rule.
-  assert.ok(data.results.localized.initial.chi > 0);
-  assert.ok(data.results.localized.outgoingMoment > 0);
+  assert.ok(result.data.localized.initial.chi > 0);
+  assert.ok(result.data.localized.outgoingMoment > 0);
   page.input('saddle-tau', '0');
-  const before = (await page.save('saddle')).results.localized.outgoingMoment;
+  const before = page.result('saddle').data.localized.outgoingMoment;
   page.input('saddle-tau', '1.2');
-  const after = (await page.save('saddle')).results.localized.outgoingMoment;
+  const after = page.result('saddle').data.localized.outgoingMoment;
   assert.ok(Math.abs(after / before - Math.exp(2.4)) < 1e-12);
   page.reset('saddle');
-  data = await page.save('saddle');
-  assert.equal(data.results.alpha, 1 / 3);
-  assert.equal(data.results.separation, 4);
-  assert.equal(data.results.tau, 0.6);
-  assert.match(data.conventions, /assigned algebraic moment/);
-  const svg = await page.save('saddle', 'svg');
+  result = page.result('saddle');
+  assert.equal(result.data.alpha, 1 / 3);
+  assert.equal(result.data.separation, 4);
+  assert.equal(result.data.tau, 0.6);
+  const svg = page.element('saddle-drawing').innerHTML;
   assert.match(svg, /C_alg \/ ℓ²/);
   assert.match(svg, /α = 1\/3; initial label d\/ℓ = 4; marker τ = 0\.6/);
   assert.match(page.element('saddle-summary').textContent, /α = 1\/3, d\/ℓ = 4 and τ = 0\.6/);
@@ -158,38 +161,37 @@ test('Reading-page controls, exact statistics presets, resets, and exported resu
 
   page.input('collider-r', '.8');
   page.input('collider-ratio', '1.5');
-  data = await page.save('collider');
-  assert.equal(data.results.r, 0.8);
-  assert.equal(data.results.ratio, 1.5);
+  result = page.result('collider');
+  assert.equal(result.data.r, 0.8);
+  assert.equal(result.data.ratio, 1.5);
   page.reset('collider');
-  data = await page.save('collider');
-  assert.equal(data.results.r, 0.95);
-  assert.equal(data.results.ratio, 2.5);
-  assert.ok(data.results.fermion < data.results.B1);
-  assert.ok(data.results.fermion > data.results.B2);
-  assert.ok(data.results.boson < data.results.B2);
-  assert.ok(data.results.converged);
-  assert.equal(page.revoked.length, page.downloadCount - 3, 'Each replacement download should release its previous object URL');
+  result = page.result('collider');
+  assert.equal(result.data.r, 0.95);
+  assert.equal(result.data.ratio, 2.5);
+  assert.ok(result.data.fermion < result.data.B1);
+  assert.ok(result.data.fermion > result.data.B2);
+  assert.ok(result.data.boson < result.data.B2);
+  assert.ok(result.data.converged);
 });
 
 // Verify the new calculations stay connected to the saved page, including offline defaults.
-test('Early reading figures retain exact packet data, reset behavior and vector exports', async () => {
+test('Early reading figures retain exact packet data, reset behavior and vector drawings', () => {
   const page=createNotes();
   for(const name of ['phonon','winding']) {
     assert.match(page.element(`${name}-drawing`).innerHTML, /<svg/);
     assert.doesNotMatch(page.element(`${name}-summary`).textContent, /Could not calculate/);
-    const svg=await page.save(name,'svg');
+    const svg=page.element(`${name}-drawing`).innerHTML;
     assert.doesNotMatch(svg, /<image\b|data:image/);
     assert.match(svg, /<title>/);
   }
-  let data=await page.save('phonon');
-  assert.equal(data.results.time,48);
-  assert.deepEqual(data.results.snapshots.map(x=>x.parameters.time),[0,24,48]);
-  assert.match(data.conventions,/not a phonon position probability/);
+  let result=page.result('phonon');
+  assert.equal(result.data.time,48);
+  assert.deepEqual(result.data.snapshots.map(x=>x.parameters.time),[0,24,48]);
+  assert.match(result.conventions,/not a phonon position probability/);
   page.input('phonon-time','60');
-  data=await page.save('phonon');
-  assert.deepEqual(data.results.snapshots.map(x=>x.parameters.time),[0,30,60]);
+  result=page.result('phonon');
+  assert.deepEqual(result.data.snapshots.map(x=>x.parameters.time),[0,30,60]);
   assert.equal(page.element('phonon-time-value').textContent,'60');
   page.reset('phonon');
-  assert.equal((await page.save('phonon')).results.time,48);
+  assert.equal(page.result('phonon').data.time,48);
 });

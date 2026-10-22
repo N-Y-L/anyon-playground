@@ -1,10 +1,10 @@
 # End modes in a finite wire
 
-I want to understand what topological protection means in a finite wire. In the Kitaev model, a superconducting wire can support a **Majorana end mode**: a low-energy mode concentrated near a boundary and described by a Hermitian fermionic operator. Two such modes together form an ordinary fermionic mode that can be empty or occupied. If their spatial profiles overlap, those two occupations can have different energies.
+In the Kitaev model, a superconducting wire can support a **Majorana end mode**: a low-energy mode concentrated near a boundary and described by a Hermitian fermionic operator. Two such modes together form an ordinary fermionic mode that can be empty or occupied. If their spatial profiles overlap, those two occupations can have different energies.
 
 When the wire is long compared with the distance over which an end profile decays, its two ends overlap only exponentially weakly. The energy splitting is then exponentially small. The model has a gap to excitations in its interior and short-range couplings. A small local perturbation that preserves fermion parity (whether particle number is even or odd) cannot directly couple distant ends. This is the protection at issue; an exact zero in a finite wire requires additional conditions. [Kitaev's construction](https://arxiv.org/abs/cond-mat/0010440) makes the distinction explicit.
 
-The wire has $N$ sites. I write $w>0$ for the hopping energy, which couples neighboring sites; $\Delta$ for a real superconducting pairing amplitude, which couples states differing by a pair of fermions; and $\mu$ for the chemical potential, the energy parameter controlling occupation. The figure uses $0<\Delta<w$. The energy splitting $E_0\geq0$ is the magnitude of the difference between the lowest energies in those two sectors.
+The wire has $N$ sites. I write $w>0$ for the hopping energy, which couples neighboring sites; $\Delta$ for a real superconducting pairing amplitude, which couples states differing by a pair of fermions; and $\mu$ for the chemical potential, the energy parameter controlling occupation. The figure uses $0<\Delta<w$. The energy splitting $E_0\geq0$ is the magnitude of the difference between the lowest even and odd energies.
 
 ## The condition at the far end
 
@@ -69,7 +69,7 @@ The calculation uses inverse iteration with pivoted tridiagonal solves and a shi
 
 ## A recurrence for the left profile
 
-I can build a zero-energy candidate starting at the left boundary. In a finite wire, it must also fit the right boundary. Normalizing a trial profile does not fix a failure at the far end.
+Starting at the left boundary, the zero-energy equation fixes the profile one site at a time. It can satisfy every equation along the wire and still fail at the right boundary. Normalization changes the size of the profile; it cannot repair that failure.
 
 <details>
 <summary>Recurrence and its boundary residual</summary>
@@ -172,7 +172,7 @@ For a uniform potential, $\gamma_N=0$ inside the associated normal band and $\ga
 
 </details>
 
-[DeGottardi, Sen and Vishveshwara](https://arxiv.org/abs/1208.0015) use this connection to find superconducting phase boundaries with periodic, quasiperiodic and disordered potentials. The next figure makes the comparison tangible.
+[DeGottardi, Sen and Vishveshwara](https://arxiv.org/abs/1208.0015) use this connection to find superconducting phase boundaries with periodic, quasiperiodic and disordered potentials.
 
 ## Patterned potentials
 
@@ -202,7 +202,7 @@ The quasiperiodic choice is $\beta=(\sqrt5-1)/2$, $\phi=0.3$ radians. The random
 
 </details>
 
-I want to understand how information shared between the ends survives finite size and imperfect potentials. I keep three statements separate: the infinite chain is in its topological phase; a semi-infinite end solution decays; a particular finite wire has an exact zero mode. The wire calculation alone does not enact an exchange or establish a braiding operation.
+Finite size and nonuniform potentials turn protection into a quantitative question about decay lengths and energy splittings. The infinite chain's topological phase, the decay of a semi-infinite end solution and an exact zero in a particular finite wire are related but distinct statements. How do these properties constrain the storage and manipulation of information shared between the ends? A braiding operation would additionally require a protocol for moving or coupling the modes; the static spectrum is only part of that problem.
 
 ## Read further
 

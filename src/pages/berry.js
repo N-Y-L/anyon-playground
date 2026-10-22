@@ -9,7 +9,7 @@
   }
   const BLUE = '#145b91', TAU = 2 * Math.PI;
   const defaults = () => ({ betaDegrees: 60, direction: 1, samples: 16, gaugeStrength: 0, selectedLink: 0 });
-  let state = defaults(), data, downloadUrl = null;
+  let state = defaults(), data;
   const xml = value => String(value).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;' })[c]);
   const label = (x, y, value, size = 20, color = '#000', anchor = 'middle') => `<text x="${x}" y="${y}" text-anchor="${anchor}" font-family="Times New Roman, Times, serif" font-size="${size}" fill="${color}">${xml(value)}</text>`;
   const marker = (id, color) => `<marker id="${id}" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="${color}"/></marker>`;
@@ -157,29 +157,6 @@
     syncControls(); render(); $('berry-announcement').textContent = `Loaded ${button.textContent}; other settings reset.`;
   }));
   $('berry-reset').addEventListener('click', () => { state = defaults(); syncControls(); render(); $('berry-announcement').textContent = 'Reset to a 60-degree counterclockwise loop, 16 samples, and zero phase-choice strength.'; });
-  function save(contents, type, filename) {
-    if (downloadUrl) URL.revokeObjectURL(downloadUrl);
-    downloadUrl = URL.createObjectURL(new Blob([contents], { type }));
-    const link = $('berry-download'); link.href = downloadUrl; link.download = filename; link.textContent = filename;
-    $('berry-export-ready').hidden = false; link.click();
-    $('berry-announcement').textContent = `${filename} prepared. The download link remains below the export controls.`;
-  }
-  $('berry-export-svg').addEventListener('click', () => {
-    const svg = $($('berry-export-figure').value).cloneNode(true), box = svg.getAttribute('viewBox').split(' ').map(Number);
-    svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg'); svg.setAttribute('width', box[2]); svg.setAttribute('height', box[3]);
-    for (const element of [svg, ...svg.querySelectorAll('*')]) for (const attribute of [...element.attributes]) {
-      if (/^on/i.test(attribute.name) || ['tabindex', 'class'].includes(attribute.name) || attribute.name.startsWith('data-')) element.removeAttribute(attribute.name);
-    }
-    save(`<?xml version="1.0" encoding="UTF-8"?>\n${new XMLSerializer().serializeToString(svg)}`, 'image/svg+xml;charset=utf-8', `${svg.id}.svg`);
-  });
-  $('berry-export-json').addEventListener('click', () => save(JSON.stringify({ schemaVersion: 1, model: 'Spin-1/2 ground-state latitude Berry phase',
-    parameters: { ...state, betaRadians: data.beta }, units: { angles: 'radians except betaDegrees', solidAngle: 'steradians' },
-    conventions: { Hamiltonian: 'H = -Delta n.sigma/2, Delta > 0', positiveDirection: 'Increasing azimuth, counterclockwise from +z',
-      overlap: '<u_(j+1)|u_j> / |<u_(j+1)|u_j>|; closing state is the initial stored state', phase: 'arg of the cyclic link product, modulo 2 pi',
-      gauge: 'alpha_j = g[sin(2 pi j/N) + 0.37 cos(4 pi j/N)]', error: 'arg(exp(i sampledPhase) exp(-i exactPhase)); geometric discretization error',
-      scope: 'Geometric phase only; no time evolution, dynamical phase, anyons, or adiabatic leakage is simulated.' }, results: data, convergence: convergenceData(),
-    sources: ['https://doi.org/10.1098/rspa.1984.0023', 'https://arxiv.org/abs/cond-mat/0503172'] }, null, 2) + '\n', 'application/json;charset=utf-8', 'berry-latitude.json'));
-  window.addEventListener('pagehide', () => { if (downloadUrl) URL.revokeObjectURL(downloadUrl); });
   window.renderMathInElement(document.body, { throwOnError: true, trust: false, strict: 'error',
     delimiters: [{ left: '\\[', right: '\\]', display: true }, { left: '\\(', right: '\\)', display: false }],
     ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code', 'option', 'svg'], errorCallback: (message, error) => { throw error || new Error(message); } });

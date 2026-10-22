@@ -43,8 +43,7 @@ sup, sub { line-height: 0; }
 .figure-controls output { min-width: 30px; font-variant-numeric: tabular-nums; }
 button, input, select { font: 15px Arial, sans-serif; }
 button { cursor: pointer; }
-.figure-tools, .figure-credit { font-size: .85em; }
-.figure-tools { margin: 1em 0; }
+.figure-credit { font-size: .85em; }
 .figure-credit { display: block; margin-top: .6em; }
 .figure-title { margin: 0 0 .8em; }
 .figure-shared-condition, .phase-difference, .phase-common, .phase-result { text-align: center; }
@@ -77,7 +76,7 @@ button { cursor: pointer; }
 }
 @page { margin: .7in; }
 @media print {
-  nav, footer, .figure-controls, .figure-tools, .figure-scroll-hint { display: none; }
+  nav, footer, .figure-controls, .figure-scroll-hint { display: none; }
   body { margin: 0; max-width: none; font-size: 10.5pt; line-height: 1.45; }
   h1 { font-size: 24pt; }
   h2 { font-size: 17pt; margin-top: 24pt; break-after: avoid; }

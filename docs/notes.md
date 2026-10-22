@@ -1,24 +1,22 @@
 # Anyons and quantum transport
 
-What can a quantum state remember after I exchange two identical objects? I want to follow that question from a moving disturbance in a material to an experimental signal, then consider what changes in other geometries and dynamical settings.
+These notes assume basic graduate quantum mechanics—states, operators, superposition and adiabatic evolution—and graduate mathematics. Condensed-matter concepts are introduced as needed; no quantum field theory is assumed. Longer calculations are in expandable sections, with their prerequisites stated at the start.
 
-I assume basic graduate quantum mechanics—states, operators, superposition and adiabatic evolution—and graduate mathematics. I introduce the condensed-matter ingredients as they appear. The optional derivations can stay closed on a first pass; each states what it uses from earlier calculations. No quantum field theory is needed.
+Related [papers](conversation.md) provide examples of the theory and its experimental tests.
 
-A [short paper list](conversation.md) accompanies the notes.
-
-Put two identical particles in a plane. I move each to the other's starting point without letting them meet. That is an **exchange**. Repeating the exchange in the same direction winds them around one another; reversing the first motion undoes it. The final positions agree, but the histories differ. Particle trajectories drawn against time are called **worldlines**; a set of exchange trajectories forms a **braid**. The [exchange-path notebook](../experiments.html#exchange) lets me draw the difference.
+Consider two identical particles in a plane. An **exchange** moves each to the other's starting point without letting them meet. Repeating the exchange in the same direction winds them around one another; reversing the first motion undoes it. The final positions agree, but the histories differ. Particle trajectories drawn against time are called **worldlines**; a set of exchange trajectories forms a **braid**. The [exchange-path figure](../experiments.html#exchange) illustrates the distinction.
 
 Motion can also produce a dynamical phase from the energy and elapsed time, and, for a charged particle, a magnetic Aharonov–Bohm phase from enclosed flux. After matching or removing these contributions, an exchange can multiply the state by $e^{i\theta}$. I call $\theta$ the **exchange angle**, defined modulo $2\pi$. Bosons give $+1$ and fermions $-1$. Other exchange phases describe **Abelian anyons**. “Abelian” means that these scalar operations commute. In some systems exchange instead acts on a space of collective states, and the operations need not commute.
 
-A global phase on an isolated state is invisible. To measure an exchange phase, I need interfering histories or a correlation between measured outcomes that depends on exchange.
+A global phase on an isolated state is invisible. Measuring an exchange phase requires interfering histories or a correlation between measured outcomes that depends on exchange.
 
 ## What is moving?
 
-I start with a phonon: one quantum of a collective vibration of atoms in a solid. A localized one-phonon packet carries energy through the solid without adding an atom. It can carry a moving excess of displacement fluctuations even though the mean displacement stays zero. The particle description belongs to a pattern in the state of the whole solid.
+A phonon is one quantum of a collective atomic vibration. A localized one-phonon packet carries energy through a solid, although no atom travels with it. What moves is a pattern of extra displacement fluctuations; the mean displacement can remain zero. The particle description applies to this pattern in the solid's quantum state.
 
-An **excitation** is a change of state that carries energy above the ground state. A **quasiparticle** is an excitation whose persistence, motion and interactions admit a useful particle description. That description needs to remain valid over the process I want to study.
+An **excitation** is a change of state that carries energy above the ground state. When it persists long enough to move and interact as a particle, it is called a **quasiparticle**. The description must remain valid during the motion or scattering being studied.
 
-The anyons below are excitations of a two-dimensional **electron fluid**: interacting electrons with approximately uniform density in the interior and no crystalline order. Each electron has charge $-e$, with $e>0$, and obeys fermionic statistics. A localized rearrangement of this fluid can carry a different charge and obey a different exchange rule. It is these rearrangements that I will move and exchange.
+The anyons below are excitations of a two-dimensional **electron fluid**: interacting electrons with approximately uniform density in the interior and no crystalline order. Each electron has charge $-e$, with $e>0$, and obeys fermionic statistics. A localized rearrangement of this fluid can carry a different charge and obey a different exchange rule. These rearrangements are the objects being exchanged.
 
 <details class="derivation">
 <summary>Derivation: a moving one-phonon fluctuation packet</summary>
@@ -38,7 +36,7 @@ Let $|0\rangle$ be the ground state of all retained modes. A localized one-phono
 $$u_j=\sum_{k\ne0}\sqrt{\frac{\hbar}{2MN\omega_k}}
 \left(a_ke^{ikja}+a_k^\dagger e^{-ikja}\right).$$
 
-Both $|f\rangle$ and the ground state have $\langle u_j\rangle=0$. A single phonon does not draw a little classical wave on the lattice. Instead, its extra displacement fluctuations are
+Both $|f\rangle$ and the ground state have $\langle u_j\rangle=0$. The moving packet appears in the displacement fluctuations:
 
 $$\begin{gathered}
 \langle u_j^2\rangle_f-\langle u_j^2\rangle_0\\
@@ -60,7 +58,7 @@ $$f_k=C\exp\!\left[-\frac{(ka-\pi/3)^2}{4(0.18)^2}\right]e^{28ika},$$
 
 with $C$ fixed by $\sum_k|f_k|^2=1$ over the nonzero allowed modes in $-\pi\leq ka<\pi$. Its initial envelope is centered near site $j=-28$. The plotted curves evaluate the variance above directly; no classical displacement is assigned to the state.
 
-Times are in $\sqrt{M/\kappa}$ and excess variances in $\hbar/\sqrt{\kappa M}$. The finite-chain mode probabilities, packet parameters and site values are included in the data download.
+Times are in $\sqrt{M/\kappa}$ and excess variances in $\hbar/\sqrt{\kappa M}$.
 
 </details>
 
@@ -70,7 +68,7 @@ This harmonic calculation explains the phonon's particle description. The charge
 
 ## Make a hole without removing an electron
 
-I use a **Laughlin fluid**, a correlated state of electrons in a strong perpendicular magnetic field. Its interior, called the **bulk**, has an excitation gap: a nonzero minimum energy to create additional bulk excitations. It is **incompressible** because changing the bulk charge density requires creating such excitations. Low-energy motion can still occur at the boundary.
+The main example is a **Laughlin fluid**, a correlated state of electrons in a strong perpendicular magnetic field. Its interior, called the **bulk**, has an excitation gap: a nonzero minimum energy to create additional bulk excitations. It is **incompressible** because changing the bulk charge density requires creating such excitations. Low-energy motion can still occur at the boundary.
 
 The circular motion of a charged particle in a magnetic field is its **cyclotron motion**. Quantum mechanically its energies form **Landau levels**, with many possible orbit centers at each energy. The **filling** $\nu$ counts electrons per available orbital in one level. At $\nu=1/3$, the lowest level has roughly one electron per three orbitals, and interactions select their correlations.
 
@@ -80,15 +78,15 @@ $$\Psi_3=C\prod_{i<j}(z_i-z_j)^3
 \exp\!\left[-\sum_i\frac{|z_i|^2}{4\ell_B^2}\right],
 \qquad \ell_B=\sqrt{\frac{\hbar}{eB_0}}.$$
 
-The cubic zeros strongly suppress close electron pairs, reducing their repulsive interaction energy; the odd power preserves fermionic antisymmetry. For Coulomb interactions this is a trial state representing the Laughlin fluid, rather than a general exact solution.
+As two electrons approach, the cubic factor drives the wavefunction rapidly toward zero. Close pairs become unlikely, reducing their repulsive interaction energy. The odd power also preserves fermionic antisymmetry. For Coulomb interactions this is a trial state representing the Laughlin fluid, rather than a general exact solution.
 
-More generally, the exponent can be an odd integer $m\geq3$ at filling $\nu=1/m$, within the Laughlin liquid regime. I keep $m=3$ as the example. Let $\eta$ be a chosen complex position in the bulk and multiply the wavefunction by $\prod_i(z_i-\eta)$. The extra zeros suppress electron density near $\eta$, creating a **quasihole**, while every electron coordinate remains present.
+More generally, the exponent can be an odd integer $m\geq3$ at filling $\nu=1/m$, within the Laughlin liquid regime. The main example will be $m=3$. Let $\eta$ be a chosen complex position in the bulk and multiply the wavefunction by $\prod_i(z_i-\eta)$. The extra zeros suppress electron density near $\eta$, creating a **quasihole**, while every electron coordinate remains present.
 
-To calculate its charge, the derivation below rewrites the quantum probability density as the statistical weight of a fictitious plasma. That plasma **screens** an inserted charge: its particles rearrange to cancel the charge's long-distance field. This fixes the missing electron number near the quasihole at $1/m$, giving physical charge $q_h=e/m$, here $+e/3$. The plasma charges are auxiliary quantities; the quasihole's electrical charge remains. In a finite droplet with fixed $N$, compensating charge lies outside a disk $D$ surrounding the quasihole, typically near the edge.
+To count the missing electrons, the derivation rewrites the quantum probability density as the statistical weight of a fictitious plasma. That plasma **screens** an inserted charge: its particles rearrange to cancel the charge's long-distance field. This fixes the missing electron number near the quasihole at $1/m$, giving physical charge $q_h=e/m$, here $+e/3$. The plasma charges are auxiliary quantities; the quasihole's electrical charge remains. In a finite droplet with fixed $N$, compensating charge lies outside a disk $D$ surrounding the quasihole, typically near the edge.
 
 <!-- FIGURE: charge -->
 
-[Laughlin (1983)](https://doi.org/10.1103/PhysRevLett.50.1395) supplies this wavefunction and its charged excitations. A fraction of an electron's charge has emerged from a state containing a whole number of electrons.
+[Laughlin (1983)](https://doi.org/10.1103/PhysRevLett.50.1395) supplies this wavefunction and its charged excitations. The fractional charge is carried by a localized density deficit in a state containing a whole number of electrons.
 
 <details class="derivation">
 <summary>Derivation: Landau levels, the Laughlin state and the screening argument</summary>
@@ -99,7 +97,7 @@ Take electrons with the same fixed spin, confined to a plane in a uniform magnet
 
 The one-electron Hamiltonian is $H=\boldsymbol\Pi^2/(2m_e)$, where $\boldsymbol\Pi=\mathbf p+e\mathbf A$ is the kinetic momentum. The **band mass** $m_e$ is the effective mass entering the electron kinetic energy in the material. Since $[\Pi_x,\Pi_y]=i\hbar eB_0$, the operator $c=\ell_B(\Pi_x+i\Pi_y)/(\sqrt2\hbar)$ obeys $[c,c^\dagger]=1$. Thus $H=\hbar\omega_c(c^\dagger c+1/2)$, with $\omega_c=eB_0/m_e$ and $\ell_B=\sqrt{\hbar/(eB_0)}$. These equally spaced cyclotron energies are the **Landau levels**.
 
-We need their wavefunctions, not just their energies. For a one-electron wavefunction $\varphi$ in the lowest level, $c\varphi=0$ becomes
+For a one-electron wavefunction $\varphi$ in the lowest level, $c\varphi=0$ becomes
 
 $$\begin{gathered}
 \left(\partial_{\bar z}+\frac{z}{4\ell_B^2}\right)\varphi=0,\qquad
@@ -115,16 +113,16 @@ $$\begin{gathered}
 \langle |z|^2\rangle_j=2\ell_B^2(j+1).
 \end{gathered}$$
 
-The normalization and radius follow by setting $t=|z|^2/(2\ell_B^2)$ in the radial integral and using $\int_0^\infty t^j e^{-t}dt=j!$. Increasing $j$ moves the orbital weight outward without changing its cyclotron energy. A large disk of radius $R$ and area $A=\pi R^2$ accommodates roughly $R^2/(2\ell_B^2)=A/(2\pi\ell_B^2)$ such orbitals, with boundary corrections. Freezing the cyclotron energy therefore leaves many possible states: it does not freeze where an electron's orbit is centered. At fractional **filling** $\nu=2\pi\ell_B^2n_e$, with mean electron number density $n_e$, the lowest level is partly occupied. Interactions select a many-electron state within that large degeneracy. [Tong, §1.4.3](https://arxiv.org/abs/1606.06687), gives the symmetric-gauge construction; the field orientation here fixes our choice of $z$.
+The normalization and radius follow by setting $t=|z|^2/(2\ell_B^2)$ in the radial integral and using $\int_0^\infty t^j e^{-t}dt=j!$. Increasing $j$ moves the orbital weight outward without changing its cyclotron energy. A large disk of radius $R$ and area $A=\pi R^2$ accommodates roughly $R^2/(2\ell_B^2)=A/(2\pi\ell_B^2)$ such orbitals, with boundary corrections. Fixing the cyclotron energy leaves the orbit center free. Electrons can occupy different places without changing that energy. At fractional **filling** $\nu=2\pi\ell_B^2n_e$, with mean electron number density $n_e$, the lowest level is partly occupied. Interactions select a many-electron state within that large degeneracy. [Tong, §1.4.3](https://arxiv.org/abs/1606.06687), gives the symmetric-gauge construction; the field orientation here fixes our choice of $z$.
 
-When interaction energies are small compared with $\hbar\omega_c$, mixing with higher levels is weak. **Projection** means restricting the Hilbert space to the retained level and replacing an operator $O$ by $POP$, where $P$ is the orthogonal projector onto that space. Within the partly filled level, those interactions still do all the work of selecting the state. For $\nu=1/m$, take odd $m\geq3$ in the Laughlin liquid regime, with $m=3$ as the main example. With $C_m$ fixed by normalization, Laughlin proposed
+When interaction energies are small compared with $\hbar\omega_c$, mixing with higher levels is weak. **Projection** means restricting the Hilbert space to the retained level and replacing an operator $O$ by $POP$, where $P$ is the orthogonal projector onto that space. Within the partly filled level, interactions select the state. For $\nu=1/m$, take odd $m\geq3$ in the Laughlin liquid regime, with $m=3$ as the main example. With $C_m$ fixed by normalization, Laughlin proposed
 
 $$\begin{aligned}
 \Psi_m(z_1,\ldots,z_N)&=C_m\prod_{i<j}(z_i-z_j)^m\\
 &\quad\exp\!\left[-\sum_i\frac{|z_i|^2}{4\ell_B^2}\right].
 \end{aligned}$$
 
-The polynomial is antisymmetric because $m$ is odd. Its highest power in one electron coordinate is $m(N-1)$, so a large droplet occupies roughly $mN$ lowest-level orbitals: $N$ electrons then give filling $1/m$, up to finite-size edge corrections. More than antisymmetry is happening: when two electrons approach, the amplitude vanishes as their separation to the $m$th power. The state strongly suppresses nearby electron pairs, reducing the cost of repulsive interactions without paying additional cyclotron energy. For suitable short-range interactions it is an exact ground state; for a Coulomb system it is a trial state representing the Laughlin fluid, not an exact general solution. The gap protecting this correlated fluid against additional bulk excitations is an interaction-generated many-body gap $\Delta$, distinct from the cyclotron spacing $\hbar\omega_c$. The edge of a finite droplet can still have low-energy motion.
+The polynomial is antisymmetric because $m$ is odd. Its highest power in one electron coordinate is $m(N-1)$, so a large droplet occupies roughly $mN$ lowest-level orbitals: $N$ electrons then give filling $1/m$, up to finite-size edge corrections. When two electrons approach, the amplitude vanishes as their separation to the $m$th power. The state strongly suppresses nearby electron pairs, reducing the cost of repulsive interactions without paying additional cyclotron energy. For suitable short-range interactions it is an exact ground state; for a Coulomb system it is a trial state representing the Laughlin fluid, not an exact general solution. The gap protecting this correlated fluid against additional bulk excitations is an interaction-generated many-body gap $\Delta$, distinct from the cyclotron spacing $\hbar\omega_c$. The edge of a finite droplet can still have low-energy motion.
 
 Now multiply by one factor for every electron:
 
@@ -145,7 +143,7 @@ In the Laughlin fluid, this density has a localized deficit near $\eta$ and retu
 
 $$q_h=-e\int_D\big[n_\eta(\mathbf r)-n_L(\mathbf r)\big]d^2r.$$
 
-A zero in a polynomial has located the quasihole, but has not yet evaluated this integral. To find the missing charge, write the quantum probability density in the form $\exp(-\beta U)$, a classical Boltzmann weight. Here $U$ is an auxiliary potential energy and $\beta$ an inverse temperature, with Boltzmann's constant absorbed into the units. Up to constants independent of electron positions,
+Evaluating the missing charge requires the integrated density response. To obtain it, write the quantum probability density in the form $\exp(-\beta U)$, a classical Boltzmann weight. Here $U$ is an auxiliary potential energy and $\beta$ an inverse temperature, with Boltzmann's constant absorbed into the units. Up to constants independent of electron positions,
 
 $$\begin{aligned}
 -\log|\Phi_\eta|^2&=-2m\sum_{i<j}\log\frac{|z_i-z_j|}{\ell_B}\\
@@ -155,7 +153,7 @@ $$\begin{aligned}
 
 The right-hand side is $\beta U$ for a fictitious two-dimensional plasma: particles interacting through logarithmic potentials. In dimensionless units, one convention assigns auxiliary charge $m$ to each plasma particle, charge $1$ to the inserted impurity at $\eta$, and inverse temperature $\beta=2/m$. The same logarithmic interaction then produces both coefficients, $2m$ and $2$. The quadratic term acts as the potential of a uniform neutralizing background, fixing the bulk density. These are auxiliary charges used to evaluate the quantum probability distribution, not the electrical charges in the sample.
 
-Now use a physical property of this auxiliary plasma: in its screening liquid regime, the rearranged density cancels the impurity's long-distance logarithmic field. If $\delta n=n_\eta-n_L$ is the change in particle number density, the impurity plus its surrounding response must therefore have zero auxiliary charge:
+In the screening liquid regime of this auxiliary plasma, the rearranged density cancels the impurity's long-distance logarithmic field. If $\delta n=n_\eta-n_L$ is the change in particle number density, the impurity plus its surrounding response must therefore have zero auxiliary charge:
 
 $$\begin{gathered}
 1+m\int_D\delta n\,d^2r=0\\
@@ -168,13 +166,13 @@ Screening is the input that fixes the integral, rather than merely saying that t
 
 A complementary check inserts magnetic flux $\Phi(t)$ adiabatically through a small region, changing it by one flux quantum $h/e$. Here $h=2\pi\hbar$ and $t$ is time. Faraday's law, $\oint\mathbf E\cdot d\mathbf l=-d\Phi/dt$, produces a circulating electric field. A Hall current flows transverse to the electric field. The Hall conductivity $\sigma_{xy}$ relates that current density to this field, so the radial electric current $I_r$ across an enclosing circle has magnitude $|I_r|=|\sigma_{xy}\dot\Phi|$. Integrating in time with $|\sigma_{xy}|=e^2/(mh)$ gives the transported charge $|\Delta Q|=|\sigma_{xy}|h/e=e/m$; the insertion direction chooses deficit or excess. This uses the Hall response of the same fluid, so it checks the charge without furnishing an independent derivation of that response.
 
-What licenses treating $\eta$ as a position of a mobile particle? A smooth repulsive potential for electrons can pin the deficit. Moving the potential slowly transports a family of low-energy many-electron states with a localized density deficit following it. This works when the bulk gap persists, the quasihole stays away from the edge and other cores, and the motion does not excite the fluid across $\Delta$. Removing or weakening the pinning permits superpositions of different positions. An effective wavefunction for the quasihole describes those superpositions. It is a new description of states made from the same electrons, not another elementary constituent added to the Hamiltonian.
+The parameter $\eta$ acquires the meaning of a mobile quasihole position through pinning and transport. A smooth repulsive potential for electrons can pin the deficit. Moving the potential slowly transports a family of low-energy many-electron states with a localized density deficit following it. This works when the bulk gap persists, the quasihole stays away from the edge and other cores, and the motion does not excite the fluid across $\Delta$. Removing or weakening the pinning permits superpositions of different positions. An effective wavefunction for the quasihole describes those superpositions. It is a new description of states made from the same electrons, not another elementary constituent added to the Hamiltonian.
 
 With two quasiholes the family is
 
 $$\Phi_{\eta_1,\eta_2}=\prod_i(z_i-\eta_1)(z_i-\eta_2)\Psi_m.$$
 
-Here the puzzle sharpens. This polynomial is symmetric in $\eta_1,\eta_2$. Nevertheless, adiabatically exchanging their pinning potentials can give a fractional phase. Swapping two parameter names in a formula has not transported the state along a path. That transport is what must be calculated next.
+This polynomial is symmetric in $\eta_1,\eta_2$, but that symmetry does not determine the phase acquired during transport. Adiabatically exchanging the pinning potentials moves the state along a path in parameter space; the accumulated phase must be calculated along that path.
 
 The construction is [Laughlin’s](https://doi.org/10.1103/PhysRevLett.50.1395). For longer accounts of the wavefunction and quasiholes, see [Tong, §§3.1–3.2](https://arxiv.org/abs/1606.06687) and [Simon, Ch. 20](https://www-thphys.physics.ox.ac.uk/people/SteveSimon/topological2019/Topobook-Oct18-2019.pdf).
 
@@ -182,9 +180,9 @@ The construction is [Laughlin’s](https://doi.org/10.1103/PhysRevLett.50.1395).
 
 ## Exchange the quasiholes, transport the electron state
 
-For two chosen quasihole positions $\eta_1,\eta_2$, the electron wavefunction is proportional to $\prod_i(z_i-\eta_1)(z_i-\eta_2)\Psi_3$. It is symmetric in the labels $\eta_1,\eta_2$. So where could a fractional exchange phase hide?
+For two chosen quasihole positions $\eta_1,\eta_2$, the electron wavefunction is proportional to $\prod_i(z_i-\eta_1)(z_i-\eta_2)\Psi_3$. Interchanging the labels $\eta_1,\eta_2$ leaves this polynomial unchanged. Transporting the quasiholes accumulates a phase along the path.
 
-I can hold a quasihole in place with a **pinning potential**, a local repulsive potential for electrons that favors a density deficit there. Slowly moving two such potentials transports the many-electron state. Let $|\Psi(\boldsymbol\eta)\rangle$ be a normalized instantaneous eigenstate, with $\boldsymbol\eta$ collecting the real coordinates of the pins. Choose it smoothly and single-valuedly around the closed path. Adiabatic evolution then adds, besides the dynamical phase, a **Berry phase**:
+A **pinning potential** is a local repulsive potential for electrons that holds a quasihole in place by favoring a density deficit there. Slowly moving two such potentials transports the many-electron state. Let $|\Psi(\boldsymbol\eta)\rangle$ be a normalized instantaneous eigenstate, with $\boldsymbol\eta$ collecting the real coordinates of the pins. Choose it smoothly and single-valuedly around the closed path. Adiabatic evolution then adds, besides the dynamical phase, a **Berry phase**:
 
 $$\gamma=i\oint\langle\Psi|\nabla_{\boldsymbol\eta}\Psi\rangle\cdot d\boldsymbol\eta.$$
 
@@ -214,7 +212,7 @@ $$\begin{aligned}
 \gamma&=i\oint d\eta\int d^2z\,\frac{n_{\eta,0}(z)}{\eta-z}.
 \end{aligned}$$
 
-This density includes the moving hole's own density distortion, so one must not treat the entire integrand as a fixed function of $z$ and casually perform a contour integral. Instead, compare transport with and without a second, well-separated hole inside the same path. Screening makes the density difference near the stationary hole independent of the distant moving hole, up to corrections that vanish with separation. The moving core's contribution is the same in the two processes and cancels. For that stationary density difference $\delta n(z)$, the contour integral is legitimate. The difference $\Delta\gamma$ between the two Berry phases is
+This density includes the moving hole's own distortion and depends on $\eta$, so it cannot be held fixed during the contour integral. Compare transport with and without a second, well-separated hole inside the same path. Screening makes the density difference near the stationary hole independent of the distant moving hole, up to corrections that vanish with separation. The moving core's contribution is the same in the two processes and cancels. For that stationary density difference $\delta n(z)$, the contour integral is legitimate. The difference $\Delta\gamma$ between the two Berry phases is
 
 $$\begin{aligned}
 \Delta\gamma&=i\int d^2z\,\delta n(z)\oint\frac{d\eta}{\eta-z}\\
@@ -222,7 +220,7 @@ $$\begin{aligned}
 &=\frac{2\pi}{m}.
 \end{aligned}$$
 
-The same density deficit gave charge $e/m$ and now gives a full-winding phase $2\pi/m$. This is the mechanism: transporting a zero of the electron wavefunction samples the density of the other electrons; the second quasihole changes the number sampled by a fraction.
+The same density deficit gives both charge $e/m$ and a full-winding phase $2\pi/m$. Transporting a zero of the electron wavefunction samples the electron density; the second quasihole changes the enclosed electron number by a fraction.
 
 The uniform electron number density is $n_e=1/(2\pi m\ell_B^2)$. It contributes $-2\pi n_e A=-A/(m\ell_B^2)$ for enclosed area $A$. With our field convention this equals the electromagnetic Aharonov–Bohm phase $q_h\Phi/\hbar$, where $\Phi=-B_0A$. That area-dependent contribution survives even with no other quasihole present. It is the **difference** $\Delta\gamma$ that isolates braiding. The instantaneous energy $E(t)$ contributes the dynamical phase $-\int E(t)dt/\hbar$, which must likewise be removed or matched between the two protocols. A generic Berry phase is not automatically a statistical phase.
 
@@ -264,27 +262,27 @@ The calculation extends [Arovas, Schrieffer and Wilczek’s transport argument](
 
 This gives a physical realization of a possibility allowed by two-dimensional topology. For two indistinguishable, noncoincident points, the relative vector $\mathbf r$ is identified with $-\mathbf r$. An exchange rotates it through $\pi$ and is a closed loop in the unordered configuration space. A second exchange in the same direction makes a full winding; retracing the first exchange has zero winding. The full winding cannot contract in a plane without crossing the excluded coincidence. In three dimensions it can, so a scalar exchange operation must square to one. In two dimensions its phase need not. **Abelian anyons** are the case in which these statistical operations are scalar phases. The adjective describes commuting exchange operations.
 
-The [path figure](../experiments.html#exchange) draws this distinction. Its paths specify a braid; they do not calculate the ordinary magnetic and dynamical phases. At $m=3$, a positive exchange gives $e^{i\pi/3}$ and a full winding gives $e^{2i\pi/3}$. The electrons underneath still obey the original antisymmetry in the $z_i$.
+The [path figure](../experiments.html#exchange) draws this distinction. Its paths specify a braid; they do not calculate the ordinary magnetic and dynamical phases. At $m=3$, a positive exchange gives $e^{i\pi/3}$ and a full winding gives $e^{2i\pi/3}$. The underlying electrons still obey the original antisymmetry in the $z_i$.
 
 </details>
 
 ## When a phase is no longer enough
 
-For the Laughlin state on a disk, fixing the well-separated quasihole positions leaves one low-energy state, up to a phase, once the edge state is fixed. Some other systems retain several states even after the positions, excitation types and combined type of all excitations are fixed. Their energies become degenerate as the separations grow, and a measurement near one isolated excitation cannot distinguish them. Transport acts on this collective state space by a unitary matrix. When different exchanges do not commute, the excitations are **non-Abelian anyons**.
+Fix the quasihole positions on a disk and hold the edge state fixed. For well-separated Laughlin quasiholes, one low-energy state remains, up to a phase. Other systems can retain several states even when the excitation types and their combined type are fixed. As separation grows, their energies approach equality and local measurements near one excitation cease to distinguish them. Exchanges act within this space by unitary matrices. If different exchanges fail to commute, the excitations are **non-Abelian anyons**.
 
-To label the states, I ask what excitation type a pair presents to a probe surrounding both, or what type remains when they are brought together. This is its **fusion channel**. The type is often called a topological charge; it need not be an electric charge. In the Ising anyon model there are types $1$ (vacuum, meaning no nontrivial excitation), $\sigma$ and $\psi$ (a fermionic excitation), with
+A pair's **fusion channel** is the excitation type seen by a probe surrounding both particles, or the type that remains when they are brought together. The type is often called a topological charge; it need not be an electric charge. In the Ising anyon model there are types $1$ (vacuum, meaning no nontrivial excitation), $\sigma$ and $\psi$ (a fermionic excitation), with
 
 $$\sigma\times\sigma=1+\psi.$$
 
 The plus sign lists allowed pair types, not equal probabilities. The other rules needed here are $\psi\times\psi=1$ and that vacuum acts as an identity, so $1\times1=1$ and $1\times\psi=\psi$. Four $\sigma$ excitations with total type $1$ therefore span two states: the first pair and the second pair can both have type $1$, or both type $\psi$. A mixed assignment has total type $\psi$ and is excluded. I call the two allowed states $|0\rangle,|1\rangle$. These are collective pair labels, not a spin attached to each excitation.
 
-One exchange can rotate a collective state, and exchanging a different pair can rotate it in a different way. Order can matter, just as it does for rotations about different axes. To observe the difference, I need a measurement that distinguishes the resulting states.
+One exchange can rotate a collective state, and exchanging a different pair can rotate it in a different way. Order can matter, just as it does for rotations about different axes. Observing this order dependence requires a measurement that distinguishes the resulting states.
 
-For this transport, “slow” means slow enough to avoid exciting states above the collective space. If finite separation weakly splits its states, the braid should also finish before that splitting is resolved dynamically. The gap above the space and the splitting within it set different timescales; arbitrarily slow motion is not the goal.
+For this transport, “slow” means slow enough to avoid exciting states above the collective space. If finite separation weakly splits its states, the braid should also finish before that splitting is resolved dynamically. The gap above the space and the splitting within it therefore constrain transport on different timescales.
 
 [Ivanov (2001)](https://arxiv.org/abs/cond-mat/0005069) obtains such operations in a particular two-dimensional superconducting model. Electrons pair with one unit of relative orbital angular momentum, called **$p$-wave pairing**. Their coherent pair state, the **condensate**, has a complex amplitude with an overall phase and a spin orientation. A **vortex** is a defect around which this phase winds. The paper studies **half-quantum vortices**: a $\pi$ phase winding combines with a $\pi$ rotation of the spin orientation, returning the condensate to itself. Each binds a **Majorana zero mode**, a localized zero-energy mode represented by a Hermitian fermionic operator. Two such operators combine into one ordinary fermion mode, which can be empty or occupied.
 
-The **fermion parity** records whether the total fermion number is even or odd. Superconducting pairing changes that number by two and preserves its parity. Four separated vortices have two fermion modes and, at fixed parity, two allowed joint occupations. Their exchange operations act noncommutatively on this two-dimensional space. Ivanov determines the operations up to an overall phase; the [paper discussion](conversation.md#3-ivanov-the-exchange-has-room-to-rotate-a-state) follows the four-vortex example.
+The **fermion parity** records whether the total fermion number is even or odd. Superconducting pairing changes that number by two and preserves its parity. Four separated vortices have two fermion modes and, at fixed parity, two allowed joint occupations. Their exchange operations act noncommutatively on this two-dimensional space. Ivanov determines the operations up to an overall phase; the [paper discussion](conversation.md#ivanov-non-abelian-exchange-of-vortices) follows the four-vortex example.
 
 Information stored in these collective states is insensitive to local disturbances in the limit of well-separated excitations and a persistent gap. Finite separation and the creation of additional excitations limit this protection. Even ideal Ising braids generate only a restricted set of unitary operations, so additional operations are needed for arbitrary quantum computation. [Nayak and collaborators](https://arxiv.org/abs/0707.1889) develop this connection.
 
@@ -306,7 +304,7 @@ Fractional charge, fractional exchange phase and a non-Abelian state space are d
 
 ## What an interferometer has actually measured
 
-I now turn to a measured signal. Although the Hall fluid has a bulk gap, it carries low-energy excitations along its boundary. These propagating boundary modes are **edge channels**. At a narrow constriction, a quasiparticle can tunnel between nearby edges. Two separated constrictions provide alternative paths enclosing part of the fluid; their amplitudes interfere if coherence is maintained. This device is an **interferometer**.
+Charge can move along the boundary of a Hall fluid even when its bulk is gapped. The low-energy excitations propagate in boundary modes called **edge channels**. At a narrow constriction, a quasiparticle can tunnel between nearby edges. Two separated constrictions provide alternative paths enclosing part of the fluid; their amplitudes interfere if coherence is maintained. This device is an **interferometer**.
 
 Let $G_{\rm osc}$ be the oscillatory part of its conductance, the derivative of mean current with respect to a small applied voltage. At filling $1/3$, the interfering charge is $q_h=e/3$. Write $\Phi$ for the signed enclosed magnetic flux, $N$ for the enclosed quasihole count relative to a reference, and $\Theta_0$ for the other phase contributions. A simple fixed-path description gives the relative phase $\Theta$ as
 
@@ -319,7 +317,7 @@ Adding one enclosed quasihole changes the statistical term by a **full braid**, 
 
 Changing the enclosed charge can also move the edge, changing the path area and its magnetic phase. Conducting screening layers reduced this electrostatic coupling, and device checks constrained the remaining effect. The measured conductance contains both the statistical phase and these changes in the path.
 
-I can now ask a meaningful experimental question: what independent control separates a statistical phase slip from a change in the path? The detailed account below explains why the charge and geometry have to be read together.
+Assigning a measured phase slip to braiding therefore requires independent constraints on changes in the path area.
 
 <details class="derivation">
 <summary>Derivation: the phase model and the electrostatic ambiguity</summary>
@@ -345,7 +343,7 @@ Nakamura and collaborators checked how the continuous interference fringes and d
 
 ## Replace the electron fluid by two effective particles
 
-Knowing the charge and exchange rule does not yet specify a pair wavefunction. The exchange rule constrains the available states; the preparation determines their amplitudes. I now examine two particular preparations.
+Two preparations can give different mean squared separations at the same charge and exchange angle. The exchange rule restricts the allowed states; preparation determines their amplitudes.
 
 [Vishveshwara and Cooper (2010)](https://arxiv.org/abs/0908.3945) retain only pair states in the lowest effective Landau level, a restriction called **projection**. The **guiding center** is the center of a cyclotron orbit. Their observable is the mean squared separation of the two guiding centers. They compare it with two distinguishable particles prepared with the same localization labels and packet widths. Distinguishable particles carry labels that can tell them apart, so their exchanged alternatives do not interfere.
 
@@ -356,13 +354,13 @@ The calculation compares this preparation with another family used by [Subramany
 <details class="derivation">
 <summary>Derivation: two preparation families and their separation curves</summary>
 
-Now change descriptions. The microscopic state above depended on $N$ electron positions and two quasihole parameters. The bulk-pair problem of [Vishveshwara and Cooper](https://arxiv.org/abs/0908.3945) instead starts from two effective particles, endowed with the quasiholes' charge and exchange rule. The electron coordinates no longer appear. Their effects enter through the effective parameters, the allowed states, and the conditions under which this reduction works.
+The microscopic state above depended on $N$ electron positions and two quasihole parameters. The bulk-pair problem of [Vishveshwara and Cooper](https://arxiv.org/abs/0908.3945) instead starts from two effective particles, endowed with the quasiholes' charge and exchange rule. The electron coordinates no longer appear. Their effects enter through the effective parameters, the allowed states, and the conditions under which this reduction works.
 
 I use equal charges $q=e/m$ and exchange angle $\theta=\pi/m$ for Laughlin filling $1/m$, in the field $B_z=-B_0$. I neglect the quasiholes' mutual interaction in this model and retain their lowest effective Landau level. Its orthogonal projector will be denoted $P$; projected observables have the form $POP$. The electron magnetic length remains $\ell_B=\sqrt{\hbar/(eB_0)}$. The new magnetic length is
 
 $$\ell=\sqrt{\frac{\hbar}{|q|B_0}}=\sqrt m\,\ell_B.$$
 
-It is not the electron magnetic length. A smooth potential supplies the slow motion after projection; an effective mass, if introduced before projection, drops out of the remaining orbit-center dynamics. The relation to the microscopic electron system concerns its space of low-energy quasihole states. Introducing an unprojected charged particle constructs an effective projected description; it does not derive a quasihole mass or a microscopic cyclotron ladder. This is a model for well-separated low-energy excitations, not a re-solution of the Coulomb many-electron problem. Whether a particular trap prepares one of its states has to be checked separately.
+This differs from the electron magnetic length. A smooth potential supplies the slow motion after projection; an effective mass, if introduced before projection, drops out of the remaining orbit-center dynamics. The relation to the microscopic electron system concerns its space of low-energy quasihole states. Introducing an unprojected charged particle constructs an effective projected description; it does not derive a quasihole mass or a microscopic cyclotron ladder. The model describes well-separated low-energy excitations; the underlying Coulomb many-electron problem remains outside it. Whether a particular trap prepares one of its states has to be checked separately.
 
 A particle coordinate in a magnetic field separates into cyclotron motion and the **guiding center**, the center of that orbit. To see how projection changes its algebra, take one particle with kinetic momentum $\boldsymbol\Pi=\mathbf p-q\mathbf A$, where $\mathbf A$ is a vector potential for the signed field $B_z$. Write its full position as $(x_{\rm full},y_{\rm full})$ and its guiding center as $(X,Y)$:
 
@@ -425,7 +423,7 @@ P_\alpha|w_0\rangle&=\sum_n|n,\alpha\rangle\langle n,\alpha|w_0\rangle\\
 &=\sum_n\phi_{n,\alpha}(w_0)^*|n,\alpha\rangle.
 \end{aligned}$$
 
-For a nonzero label, its normalized form maximizes the probability density at that label among states in the retained sector: Cauchy–Schwarz gives $|\langle w_0|\psi\rangle|^2\leq\langle w_0|P_\alpha|w_0\rangle$, and the projected state saturates the bound. This makes it a natural localized state without claiming minimum width. It cannot be a position eigenstate, because projection has removed the higher levels needed to make one. For a label on the incoming $x$ axis, take real $w_0=d/(2\ell)$ and set $s=d/\ell$, $u=s^2/4$. The common Gaussian cancels on normalization. What remains is exactly the localized-coordinate preparation used in the 2010 calculation:
+Normalize the projected state at a nonzero label. It maximizes the probability density there among states in the retained sector: Cauchy–Schwarz gives $|\langle w_0|\psi\rangle|^2\leq\langle w_0|P_\alpha|w_0\rangle$, and the projected state saturates the bound. This is one precise meaning of localization; it does not assert minimum width. An exact position eigenstate would require the higher levels that projection removed. For a label on the incoming $x$ axis, take real $w_0=d/(2\ell)$ and set $s=d/\ell$, $u=s^2/4$. The common Gaussian cancels on normalization. What remains is exactly the localized-coordinate preparation used in the 2010 calculation:
 
 $$\begin{gathered}
 |u,\alpha\rangle_{\rm loc}\\
@@ -434,7 +432,7 @@ $$\begin{gathered}
 Z_\alpha(u)=\sum_{n=0}^{\infty}\frac{u^{2n+\alpha}}{\Gamma(2n+\alpha+1)}.
 \end{gathered}$$
 
-The label $d$ agrees asymptotically with a packet separation. At small $d$ it is not a measured separation; we will calculate the mean squared guiding-center separation. Opposite relative labels describe the same unordered pair. Notice what the projection has supplied beyond the exchange rule: a definite amplitude for every allowed angular state.
+The label $d$ agrees asymptotically with a packet separation. At small $d$ it is not a measured separation; the mean squared guiding-center separation must be calculated from the state. Opposite relative labels describe the same unordered pair. Projection supplies a definite amplitude for every angular state allowed by the exchange rule.
 
 The same radial integral gives the full relative-position moment of one orbital,
 
@@ -455,7 +453,7 @@ For the distinguishable reference, prepare two independent guiding-center **cohe
 $$\chi=\frac{\langle r^2\rangle-\langle r^2\rangle_{\rm d}}{4\ell^2}.
 $$
 
-Squaring the amplitudes gives probabilities $p_n=u^{2n+\alpha}/[\Gamma(2n+\alpha+1)Z_\alpha]$. The whole calculation now reduces to an angular-momentum average:
+Squaring the amplitudes gives probabilities $p_n=u^{2n+\alpha}/[\Gamma(2n+\alpha+1)Z_\alpha]$. The separation excess is then an angular-momentum average:
 
 $$\boxed{\begin{aligned}
 \chi_{\rm loc}(u,\alpha)&=\sum_n(2n+\alpha)p_n-u\\
@@ -471,11 +469,11 @@ $$\begin{aligned}
 
 The first is negative and the second positive: the prepared bosons have a smaller mean squared guiding-center separation than their distinguishable reference, and the fermions a larger one. As $u\to0$, only the lowest angular state survives after normalization, giving $\chi\to\alpha$. For a fractional example, $\alpha=1/3$ and $s=2$ give $\chi_{\rm loc}\simeq-0.1193$. The mean squared guiding-center separation is then $5.523\ell^2$ instead of the reference's $6\ell^2$. The same exchange rule has given a positive excess at small separation and a negative one here. No interparticle force was added; changing the localization labels changed the weights of the available angular states.
 
-The words “bunching” and “antibunching” in this calculation refer to the sign of this **mean squared separation comparison**. It is neither a pair-density function at a particular point nor the probability that two detectors click together. Also, $s\to0$ is a formal limit of the point-anyon model: actual quasihole cores eventually overlap. The clean limiting formula is useful for checking the calculation, not for promising a physical experiment at zero separation.
+The words “bunching” and “antibunching” in this calculation refer to the sign of this **mean squared separation comparison**. It is neither a pair-density function at a particular point nor the probability that two detectors click together. Also, $s\to0$ is a formal limit of the point-anyon model: actual quasihole cores eventually overlap. This limit checks the point-particle calculation but does not describe overlapping quasihole cores.
 
 ### Which localized state?
 
-There is another natural way to prepare a compact pair, used in [Subramanyan and Vishveshwara’s dynamics study](https://arxiv.org/abs/1905.00442). It becomes clear once we identify the operators that preserve the exchange condition. A linear relative coordinate changes angular momentum by one unit and takes a state out of the chosen sector. Quadratic combinations—squares or products of coordinate operators—can connect neighboring allowed states, whose orbital indices differ by two.
+The alternative preparation used in [Subramanyan and Vishveshwara’s dynamics study](https://arxiv.org/abs/1905.00442) is defined by operators that preserve the exchange condition. A linear relative coordinate changes angular momentum by one unit and takes a state out of the chosen sector. Quadratic combinations—squares or products of coordinate operators—can connect neighboring allowed states, whose orbital indices differ by two.
 
 I define three operators $K_0,K_-,K_+$ by their action on the basis $|n,\alpha\rangle$, with $\kappa=\alpha/2+1/4$:
 
@@ -495,7 +493,7 @@ $$\begin{gathered}
 \frac{\beta^n}{\sqrt{n!\,\Gamma(n+\alpha+1/2)}}|n,\alpha\rangle.
 \end{gathered}$$
 
-Use the same incoming-axis label as before by taking real $\beta=u/2$. Its probabilities are proportional to $(u/2)^{2n}/[n!\Gamma(n+\alpha+1/2)]$. Compute $\chi=2\langle n\rangle+\alpha-u$ again, using these new weights. Bosonic and fermionic endpoints agree exactly with the previous preparation, but fractional statistics give different curves. The exchange boundary condition has not changed. The coefficients have.
+Use the same incoming-axis label as before by taking real $\beta=u/2$. Its probabilities are proportional to $(u/2)^{2n}/[n!\Gamma(n+\alpha+1/2)]$. Compute $\chi=2\langle n\rangle+\alpha-u$ again, using these new weights. Bosonic and fermionic endpoints agree exactly with the previous preparation, but fractional statistics give different curves. The two preparations obey the same exchange boundary condition but have different coefficients.
 
 <!-- FIGURE: pair -->
 
@@ -504,9 +502,9 @@ For numerical work the positive series is sufficient. Writing $I_\mu$ for the mo
 $$\chi_{\rm coh}(u,\alpha)
 =u\frac{I_{\alpha+1/2}(u)}{I_{\alpha-1/2}(u)}-u+\alpha,$$
 
-where $I_\mu(u)=\sum_{n\geq0}(u/2)^{2n+\mu}/[n!\Gamma(n+\mu+1)]$. The defining series explains where the function comes from: it is the normalization and its derivative, not a new physical postulate.
+where $I_\mu(u)=\sum_{n\geq0}(u/2)^{2n+\mu}/[n!\Gamma(n+\mu+1)]$. This function arises from the normalization series and its derivative.
 
-At large $u$, the coherent-state excess has the leading tail $\chi_{\rm coh}\sim\alpha(\alpha-1)/(2u)$ for $0<\alpha<1$; the localized-coordinate excess decays exponentially with a power prefactor. Thus the distinction survives beyond a small numerical correction at one separation.
+At large $u$, the coherent-state excess has the leading tail $\chi_{\rm coh}\sim\alpha(\alpha-1)/(2u)$ for $0<\alpha<1$; the localized-coordinate excess decays exponentially with a power prefactor.
 
 For the ideal Laughlin trial family, its microscopic normalization already constrains the effective state. Put $\eta_{1,2}=\pm\zeta/2$ and $u=|\zeta|^2/(4\ell^2)$. Expanding $\prod_i(z_i^2-\zeta^2/4)\Psi_m$ in powers of $\zeta^2$ gives electron states with different total angular momenta, hence orthogonal states in a rotationally symmetric droplet. Let $A_n$ be the nonnegative squared norms of those expansion coefficients, including the fixed length factors. Their total norm and normalized weights are
 
@@ -534,7 +532,7 @@ The rate $\lambda$ is set by the second spatial derivatives of the potential ene
 
 For a pair, the model below can amplify a correlation already present in the initial state. It represents squared relative coordinates by particular operators; interpreting its output as spatial data requires showing that these operators agree with the projected physical observables. If $y_1,y_2$ are the measured outgoing positions, the moment $\langle y_1y_2\rangle$ weights each event by their product. A few distant events can dominate this average, so its sign does not determine the probability that both particles leave on the same side.
 
-I want to distinguish features inherited from the pair from features produced by the saddle. The [one-particle calculation](directions/saddle.md) provides a baseline. It also connects the saddle equation to barrier scattering and to the decaying oscillations of a perturbed black hole, called gravitational ringdown.
+The [one-particle calculation](directions/saddle.md) describes the dynamics introduced by the saddle alone. It also connects the saddle equation to barrier scattering and to the decaying oscillations of a perturbed black hole, called gravitational ringdown.
 
 <details class="derivation">
 <summary>Derivation: the quadratic algebra, its operator mapping and the figure</summary>
@@ -568,7 +566,7 @@ r^2&=Q_x+Q_y=8\ell^2K_0.
 
 $Q_x$ and $Q_y$ represent the squared relative coordinates along the contracting and expanding directions. At the boson and fermion endpoints these generators reduce to the usual quadratic oscillator representation. For fractional statistics these are the algebraic model’s assigned quadratic observables. Even for effective point anyons, they differ from directly projecting the bare Cartesian squares. For example, use the dimensionless full relative coordinate $w=(x_{\rm full}-iy_{\rm full})/(2\ell)$. Multiplication by $w^2/2$ connects neighboring normalized orbitals with coefficient $\tfrac12\sqrt{(j+1)(j+2)}$, whereas $K_+$ has coefficient $\sqrt{(n+1)(n+\alpha+1/2)}$. The difference between the squares of these coefficients is $\alpha(\alpha-1)/4$; it vanishes only at the boson and fermion endpoints. The radial operator agrees, but the off-diagonal quadratics require a specified mapping. Thus matching this solvable Hamiltonian and its observables to a particular physical saddle is part of the effective description, already before returning to the microscopic electron fluid. [The anyon-coordinate construction](https://arxiv.org/abs/cond-mat/9606214) exhibits the required angular-momentum-dependent factors.
 
-The calculation is short once that physical choice is explicit. The commutators give
+With this operator assignment, the commutators give
 
 $$\begin{aligned}
 \dot K_0&=-2\lambda K_1,\\
@@ -623,13 +621,13 @@ They differ at subleading order and at finite separation. The figure starts at $
 
 <!-- FIGURE: saddle -->
 
-A detector needs a different calculation. An ideal measurement of whether both particles exit into the same half-plane asks for
+An ideal detector that records whether both particles exit into the same half-plane measures the probability
 
 $$P_{\rm same}=\left\langle\mathbf 1_{y_1y_2>0}\right\rangle,$$
 
-where the indicator is the projector onto that region for a specified outgoing position measurement. A real detector has a finite spatial and time response instead. When interpreted as a spatial moment, $C_{\rm alg}$ weights every event by the product $y_1y_2$: a few widely separated events can outweigh many near the center. Its sign cannot determine $P_{\rm same}$. Connecting the algebraic model to clicks therefore requires matching its operators to the measured coordinates, as well as the outgoing state and a detector model, not merely naming the saddle a splitter.
+where the indicator is the projector onto that region for a specified outgoing position measurement. A real detector has a finite spatial and time response instead. When interpreted as a spatial moment, $C_{\rm alg}$ weights every event by the product $y_1y_2$: a few widely separated events can outweigh many near the center. Its sign cannot determine $P_{\rm same}$. Predicting detector counts therefore requires the outgoing state, a detector model and a mapping from the algebraic operators to measured coordinates.
 
-The growing solution also has a physical stopping point. The potential must remain smooth over a packet and weak enough not to mix the retained levels with higher ones; eventually the expanding packet leaves the region where a quadratic saddle is an adequate approximation. Close encounters can bring quasihole cores and residual interactions into play. These conditions delimit the time interval over which a physical saddle could follow the simple exponential evolution.
+The exponential evolution is valid only while the potential remains smooth over a packet and weak enough not to mix the retained levels with higher ones; eventually the expanding packet leaves the region where a quadratic saddle is an adequate approximation. Close encounters can bring quasihole cores and residual interactions into play. These conditions delimit the time interval over which a physical saddle could follow the simple exponential evolution.
 
 A more general quadratic potential provides a useful extension. For one guiding center, let $V=(aX_s^2+bY_s^2)/2$, where $a,b$ are the energy curvatures along its principal axes. This gives $\ddot X_s=-(\ell^4ab/\hbar^2)X_s$. Curvatures of the same sign give oscillatory motion; opposite signs give exponential drift. The [2025 preprint by Basani, Subramanyan and Vishveshwara](https://arxiv.org/abs/2509.15488) develops such trap and saddle dynamics for the generalized coherent pair states. Its symmetry methods build on the same quadratic algebra. Changing a curvature can change stable motion into unstable motion; it does not interpolate the particle statistics.
 
@@ -643,14 +641,14 @@ A **beam splitter** couples two incoming channels to two outgoing channels; each
 
 I therefore keep the apparatus's one-particle interference in the reference calculation, while making the two particles distinguishable. Subtracting this reference isolates the exchange contribution in the model. The paper does this for noninteracting bosons and fermions. It leaves an anyonic extension open, because even a single-source process can contain braiding information.
 
-The broad question is how to distinguish exchange effects from preparation and propagation through several coherent paths. A boson or fermion result cannot answer the anyon problem merely by replacing its exchange sign with $e^{i\theta}$; the contributing paths and tunneling processes must also be specified.
+An anyonic extension must specify the contributing paths and tunneling processes. Replacing the bosonic or fermionic exchange sign by $e^{i\theta}$ alone does not determine the result.
 
 <details class="derivation">
 <summary>Derivation: packet interference and the two distinguishable references</summary>
 
 This calculation is independent of the pair-state algebra. It uses only one-particle scattering and bosonic or fermionic symmetrization. I compare the coincidence probability with a reference made from distinguishable particles, keeping their input packets and the apparatus fixed.
 
-For more background on what a channel carries, the optional [transport derivation of incoming flux and mean current](https://n-y-l.github.io/quantum-transport-notes/docs/notes.html#counting) supplies the connection to reservoirs. Return here for the two-particle calculation: a one-particle transmission probability alone does not give a coincidence probability.
+The [transport derivation of incoming flux and mean current](https://n-y-l.github.io/quantum-transport-notes/docs/notes.html#counting) relates channels to reservoirs. The two-particle calculation below additionally requires the interference between scattering alternatives.
 
 <span id="point-splitter"></span>
 
@@ -669,11 +667,11 @@ P_{11}^{B}&=(|T|^2-|R|^2)^2,\\
 P_{11}^{F}&=1.
 \end{aligned}$$
 
-At a balanced splitter, these are zero and one. The result assumes matching internal states and temporal packets; distinct spin states or delayed packets can remove the exchange interference. “Two particles arrived” is not enough to specify a collision.
+At a balanced splitter, these are zero and one. The result assumes matching internal states and temporal packets; distinct spin states or delayed packets can remove the exchange interference.
 
 A source supplies incoming particles; a drain is a large output reservoir that collects them. An extended collider can keep a packet circulating before letting it out. In the model of [Samal, Vishveshwara, Gefen and Väyrynen](https://arxiv.org/abs/2412.19674), two channels couple through a loop around an **antidot**, a depleted region supporting a closed edge path. An **edge channel** is a low-energy mode propagating along the boundary of a Hall fluid. A particle may complete different numbers of loops before reaching a drain. These delayed alternatives interfere even when only one source is active. This is single-particle self-interference; no partner is required.
 
-A smaller example of this one-particle interference is the [side-orbital calculation](https://n-y-l.github.io/quantum-transport-notes/docs/notes.html#side-orbital): a coherent excursion into a second orbital can cancel transmission completely. It is a different device, useful for seeing why a one-source reference must retain interference inside the apparatus. After that optional detour, resume with the packet calculation below.
+A smaller example of this one-particle interference is the [side-orbital calculation](https://n-y-l.github.io/quantum-transport-notes/docs/notes.html#side-orbital): a coherent excursion into a second orbital can cancel transmission completely. Although the device differs, it demonstrates why a one-source reference must retain interference inside the apparatus.
 
 <span id="collider-packets"></span>
 
@@ -692,14 +690,14 @@ $$\begin{aligned}
 &\quad\big[T(k)T(k')\pm R(k)R(k')\big].
 \end{aligned}$$
 
-The first term leaves both input particles in their original channels; the second swaps which input supplies each detector. Counting all outgoing temporal modes is equivalent to summing probabilities over these orthogonal spectral modes, giving $P_{11}=\int dk\,dk'|\mathcal A|^2$. The two squared terms yield $a^2+b^2$. The cross term factorizes into $J^2$, so
+The first term leaves both particles in their original channels; the second switches them. Both alternatives put one particle in each output, so their amplitudes must be added before squaring. Counting all outgoing temporal modes amounts to summing probabilities over the orthogonal spectral modes, giving $P_{11}=\int dk\,dk'|\mathcal A|^2$. The two squared terms yield $a^2+b^2$. The cross term factorizes into $J^2$, so
 
 $$\begin{aligned}
 P_{11}^{B/F}&=a^2+b^2\pm2\operatorname{Re}J^2\\
 &=a^2+b^2\mp2|J|^2.
 \end{aligned}$$
 
-The last sign follows from unitarity: $TR^*$ is imaginary at every $k$, hence $J$ is imaginary. This is the important interference step. Equal spectral probabilities without equal phases and arrival times would not justify it; a relative delay changes the amplitude overlap.
+The last sign follows from unitarity: $TR^*$ is imaginary at every $k$, hence $J$ is imaginary. Equal spectral probabilities without equal phases and arrival times would not justify this step; a relative delay changes the amplitude overlap.
 
 For a point splitter, $|J|^2=ab$ and the earlier formulas return. In an extended device, transmitted and reflected packets can have different time profiles, so $|J|^2<ab$ is possible. Two fermions can then leave through the same drain in different temporal modes. The exclusion principle forbids occupation of the same complete one-particle state, not use of the same macroscopic wire.
 
@@ -714,7 +712,7 @@ These probabilities are obtained by activating the sources separately under the 
 
 $$Q_{\rm irr}^{F/B}\equiv P_{11}^{F/B}-B_2=\pm2|J|^2.$$
 
-The term “irreducible” here denotes that specific subtraction. For a dilute train of random emissions, extracting the analogous two-source coincidence from measured currents also requires subtracting correlations recorded with each source alone, to remove pairs emitted by the same source. The single-source mean currents then provide the four probabilities in $B_2$. This source subtraction and the subsequent $B_2$ comparison do different jobs.
+The term “irreducible” here denotes that specific subtraction. For a dilute train of random emissions, extracting the analogous two-source coincidence from measured currents also requires subtracting correlations recorded with each source alone, to remove pairs emitted by the same source. The single-source mean currents then provide the four probabilities in $B_2$. The source subtraction and the subsequent $B_2$ comparison remove different contributions.
 
 For comparison, a different reference $B_1$ discards interference between the paths of each individual particle. Sum path probabilities instead of path amplitudes, obtaining $a_{\rm cl},b_{\rm cl}$, and set $B_1=a_{\rm cl}^2+b_{\rm cl}^2$. It removes single-particle coherence as well as exchange interference, so it need not agree with $B_2$. The figure gives an explicit case in which this changes the apparent sign.
 
@@ -729,22 +727,24 @@ Expanding the denominator as a geometric series identifies successive windings. 
 
 <!-- FIGURE: collider -->
 
-At $r=0.95$ and $\ell_p/L=2.5$, the calculated fermion coincidence is about $0.808$. It lies below $B_1\simeq0.903$ but above $B_2\simeq0.552$. Calling that first comparison “fermion bunching” does not mean that fermions changed statistics. The reference has included an extra change of physics. The calibrated exchange contribution remains positive, about $0.256$.
+At $r=0.95$ and $\ell_p/L=2.5$, the calculated fermion coincidence is about $0.808$. It lies below $B_1\simeq0.903$ but above $B_2\simeq0.552$. The apparent “fermion bunching” relative to $B_1$ includes the effect of restoring single-particle coherence. The calibrated exchange contribution remains positive, about $0.256$.
 
-This is a boson/fermion theory of a noninteracting extended scatterer, published in 2026. It does **not** derive an anyon version by replacing a sign with $e^{i\theta}$. In an anyon device, even a process with only one active source may involve a tunneling excitation winding in spacetime around other excitations. That statistical contribution can enter the source-alone signal being subtracted. Extending the reference procedure while retaining the desired anyonic information is an open problem identified by the paper. The bulk-pair and collider calculations meet at a concrete issue: which parts of a measured correlation come from exchange, which from preparation, and which from propagation through the device?
+This is a boson/fermion theory of a noninteracting extended scatterer, published in 2026. It does **not** derive an anyon version by replacing a sign with $e^{i\theta}$. In an anyon device, even a process with only one active source may involve a tunneling excitation winding in spacetime around other excitations. That statistical contribution can enter the source-alone signal being subtracted. Extending the reference procedure while retaining the desired anyonic information is an open problem identified by the paper. Both the bulk-pair and collider calculations show that a measured correlation depends on preparation and propagation as well as exchange.
 
 </details>
 
 <span id="a-calculation-worth-taking-further"></span>
 
-## Questions I want to carry forward
+<span id="questions-i-want-to-carry-forward"></span>
 
-These calculations leave several broad questions:
+## Further directions
 
-- **Preparation.** Which features of an anyon signal survive changes in how I localize and release the excitations? The two pair preparations give a concrete example of this dependence.
+The calculations suggest three broad directions:
+
+- **Preparation.** Which features of an anyon signal survive changes in localization and release? The two pair preparations give a concrete example of this dependence.
 - **Evidence and measurement.** Which combination of observables best separates statistics from ordinary interference and interactions? Interferometers and colliders expose different ambiguities.
-- **Geometry and dynamics.** What survives when I change the surface, boundary or drive? A sphere changes global winding constraints; a Möbius band makes handedness a consistency question; a conserved parity can obstruct following a changing ground state.
+- **Geometry and dynamics.** How do the surface, boundary and drive constrain the allowed states and dynamics? A sphere changes global winding constraints; a Möbius band makes handedness a consistency question; a conserved parity can obstruct following a changing ground state.
 
-[Directions to think about](directions.md) develops these settings through separate calculations.
+The [additional topics](directions.md) develop these settings through separate calculations.
 
-The [paper list and questions](conversation.md) returns to three examples: Berry transport of Laughlin quasiholes, experimental phase slips, and noncommuting exchanges of vortex states.
+The [selected papers](conversation.md) cover three examples: Berry transport of Laughlin quasiholes, experimental phase slips, and noncommuting exchanges of vortex states.

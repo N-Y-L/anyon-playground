@@ -84,9 +84,21 @@ function createApp(view) {
     createElement: tagName => new Element(tagName),
     addEventListener() {}
   };
+  // Observe the real model calls made by each interaction. This retains exact
+  // numerical checks without adding test-only access to the page controller.
+  const calculations = new Map();
+  const observedPhysics = Object.fromEntries(Object.entries(physics).map(([name, value]) => [name,
+    typeof value !== 'function' ? value : (...args) => {
+      const result = value(...args);
+      const call = JSON.parse(JSON.stringify({ args, result }));
+      if (!calculations.has(name)) calculations.set(name, []);
+      calculations.get(name).push(call);
+      return result;
+    }
+  ]));
   const windowEvents = {};
   const window = {
-    AnyonPhysics: physics,
+    AnyonPhysics: observedPhysics,
     katex: { render: (latex, target) => { target.textContent = latex; } },
     renderMathInElement() {},
     location: { hash: `#${view}` },
@@ -94,31 +106,26 @@ function createApp(view) {
     addEventListener: (name, callback) => { windowEvents[name] = callback; },
     cancelAnimationFrame() {}
   };
-  let savedBlob;
-  vm.runInNewContext(application, {
-    window, document, Blob,
-    URL: { createObjectURL: blob => { savedBlob = blob; return 'blob:test'; }, revokeObjectURL() {} }
-  }, { filename: 'app.js' });
+  vm.runInNewContext(application, { window, document }, { filename: 'app.js' });
   return {
     element,
-    input(id, value, event = 'input') { element(id).value = value; element(id).dispatch(event); },
-    click(id) { element(id).click(); },
+    input(id, value, event = 'input') { calculations.clear(); element(id).value = value; element(id).dispatch(event); },
+    click(id) { calculations.clear(); element(id).click(); },
     preset(attribute, value) {
       const button = elements.find(item => item.getAttribute(attribute) === value);
       assert.ok(button, `Missing preset: ${attribute}=${value}`);
-      button.click();
+      calculations.clear(); button.click();
     },
     cell(svgId, attribute, key) {
       const target = element(svgId).querySelector(`[${attribute}="${key}"]`);
       assert.ok(target, `Missing rendered cell: ${key}`);
-      element(svgId).dispatch('click', target);
+      calculations.clear(); element(svgId).dispatch('click', target);
     },
-    navigate(next) { window.location.hash = `#${next}`; windowEvents.hashchange({}); },
-    async exportJSON() {
-      savedBlob = undefined;
-      element('export-json').click();
-      assert.ok(savedBlob, 'The export handler did not produce a file');
-      return JSON.parse(await savedBlob.text());
+    navigate(next) { calculations.clear(); window.location.hash = `#${next}`; windowEvents.hashchange({}); },
+    calculation(name) {
+      const calls = calculations.get(name);
+      assert.ok(calls?.length, `The interaction did not call ${name}`);
+      return calls[0];
     }
   };
 }
@@ -131,62 +138,68 @@ function checkSixtiethSlider(app, id, expectedTick) {
   assert.equal(slider.value, String(expectedTick));
 }
 
-test('Interference slider ticks preserve exact presets and export physical angles', async () => {
+test('Interference slider ticks preserve exact presets and display physical angles', () => {
   const app = createApp('interference');
   checkSixtiethSlider(app, 'interference-theta', 30);
   app.preset('data-interference-example', 'laughlin');
   checkSixtiethSlider(app, 'interference-theta', 20);
-  let data = await app.exportJSON();
-  assert.equal(data.parameters.thetaPi, 1 / 3);
-  close(data.results.p0, 1 / 4);
+  let calculation = app.calculation('interference');
+  close(calculation.args[0].theta, Math.PI / 3);
+  close(calculation.result.p0, 1 / 4);
+  assert.equal(app.element('interference-probability').textContent, 'Output 0: 25%');
   assert.match(app.element('interference-theta-value').textContent, /\\frac\{\\pi\}\{3\}/);
 
   app.input('interference-theta', 21);
-  data = await app.exportJSON();
-  assert.equal(data.parameters.thetaPi, 21 / 60);
-  close(data.results.statisticalPhase, 7 * Math.PI / 10);
-  close(data.results.p0, (1 + Math.cos(7 * Math.PI / 10)) / 2);
+  calculation = app.calculation('interference');
+  close(calculation.args[0].theta, 21 * Math.PI / 60);
+  close(calculation.result.statisticalPhase, 7 * Math.PI / 10);
+  close(calculation.result.p0, (1 + Math.cos(7 * Math.PI / 10)) / 2);
+  assert.equal(app.element('interference-probability').textContent, `Output 0: ${(100 * calculation.result.p0).toFixed(1)}%`);
   for (const tick of [0, 60]) {
     app.input('interference-theta', tick);
-    data = await app.exportJSON();
-    assert.equal(data.parameters.thetaPi, tick / 60);
-    close(data.results.statisticalPhase, tick === 0 ? 0 : 2 * Math.PI);
-    close(data.results.p0, 1);
+    calculation = app.calculation('interference');
+    close(calculation.args[0].theta, tick * Math.PI / 60);
+    close(calculation.result.statisticalPhase, tick === 0 ? 0 : 2 * Math.PI);
+    close(calculation.result.p0, 1);
+    assert.equal(app.element('interference-probability').textContent, 'Output 0: 100%');
   }
   app.preset('data-reset', 'interference');
   checkSixtiethSlider(app, 'interference-theta', 30);
-  assert.equal((await app.exportJSON()).parameters.thetaPi, 0.5);
+  close(app.calculation('interference').args[0].theta, Math.PI / 2);
 });
 
-test('Correlation slider ticks preserve one third and both physical endpoint limits', async () => {
+test('Correlation slider ticks preserve one third and both physical endpoint limits', () => {
   const app = createApp('correlations');
   checkSixtiethSlider(app, 'correlations-alpha', 20);
   for (const preset of ['close', 'separated']) {
     app.preset('data-correlations-example', preset);
     checkSixtiethSlider(app, 'correlations-alpha', 20);
-    const data = await app.exportJSON();
-    assert.equal(data.parameters.alpha, 1 / 3);
-    assert.equal(data.results.alpha, 1 / 3);
+    const calculation = app.calculation('lllPairCorrelation');
+    assert.equal(calculation.args[0].alpha, 1 / 3);
+    assert.equal(calculation.result.alpha, 1 / 3);
     assert.match(app.element('correlations-alpha-value').textContent, /\\frac\{1\}\{3\}/);
+    assert.equal(app.element('correlations-chi').textContent, calculation.result.chi.toFixed(5));
   }
   app.input('correlations-alpha', 21);
-  let data = await app.exportJSON();
-  assert.equal(data.parameters.alpha, 21 / 60);
-  assert.equal(data.results.alpha, 21 / 60);
+  let calculation = app.calculation('lllPairCorrelation');
+  assert.equal(calculation.args[0].alpha, 21 / 60);
+  assert.equal(calculation.result.alpha, 21 / 60);
   app.input('correlations-separation', 0);
   for (const tick of [0, 60]) {
     app.input('correlations-alpha', tick);
-    data = await app.exportJSON();
-    assert.equal(data.parameters.alpha, tick / 60);
-    close(data.results.chi, tick === 0 ? 0 : 1);
-    close(data.results.meanSeparationSquared, tick === 0 ? 2 : 6);
+    calculation = app.calculation('lllPairCorrelation');
+    assert.equal(calculation.args[0].alpha, tick / 60);
+    close(calculation.result.chi, tick === 0 ? 0 : 1);
+    close(calculation.result.meanSeparationSquared, tick === 0 ? 2 : 6);
+    assert.equal(app.element('correlations-chi').textContent, tick === 0 ? '0.00000' : '1.00000');
+    assert.match(app.element('correlations-moments').textContent, new RegExp(`&=${tick === 0 ? '2' : '6'}\\.0000`));
   }
   app.preset('data-reset', 'correlations');
   checkSixtiethSlider(app, 'correlations-alpha', 20);
-  assert.equal((await app.exportJSON()).parameters.alpha, 1 / 3);
+  assert.equal(app.calculation('lllPairCorrelation').args[0].alpha, 1 / 3);
 });
 
-test('Custom memory strings give usable instructions and keep seam crossings out of ground-space labels', async () => {
+test('Custom memory strings give usable instructions and keep seam crossings out of ground-space labels', () => {
   const app = createApp('memory');
   app.click('memory-clear');
   app.cell('memory-svg', 'data-memory-cell', '0,2');
@@ -196,42 +209,50 @@ test('Custom memory strings give usable instructions and keep seam crossings out
   assert.doesNotMatch(notice, /continue the worked path/i);
   assert.equal(app.element('memory-path-next').disabled, true);
   assert.equal(app.element('memory-path-prev').disabled, true);
-  let data = await app.exportJSON();
-  assert.equal(data.parameters.example, 'custom');
-  assert.deepEqual(data.results.defects, ['0,2', '4,2']);
-  assert.deepEqual(data.results.cutParity, { x: 1, y: 0 });
-  assert.equal(data.results.logicalParity, null);
-  assert.equal(data.results.groundSpaceLoopEigenvalues, null);
-  assert.equal(data.results.energyInJm, 4);
+  let result = app.calculation('memoryStringState').result;
+  assert.deepEqual(result.defects, ['0,2', '4,2']);
+  assert.deepEqual(result.cutParity, { x: 1, y: 0 });
+  assert.equal(result.logicalParity, null);
+  assert.equal(app.element('memory-logical').textContent, 'Not assigned while endpoints remain');
+  assert.equal(app.element('memory-wilson').textContent, '');
+  assert.equal(app.element('memory-defect-count').textContent, 2);
+  assert.match(app.element('memory-energy').textContent, /\{J_m\}=4$/);
   app.cell('memory-svg', 'data-memory-cell', '4,2');
   app.cell('memory-svg', 'data-memory-cell', '0,2');
-  data = await app.exportJSON();
-  assert.deepEqual(data.results.defects, []);
-  assert.deepEqual(data.results.groundSpaceLoopEigenvalues, { verticalZ: 1, horizontalZ: 1 });
+  result = app.calculation('memoryStringState').result;
+  assert.deepEqual(result.defects, []);
+  assert.deepEqual(result.logicalParity, { x: 0, y: 0 });
+  assert.equal(app.element('memory-defect-count').textContent, 0);
+  assert.match(app.element('memory-wilson').textContent, /vertical.*&=1.*horizontal.*&=1/);
 });
 
-test('Braid direction is labeled as a future choice and only affects the appended generator', async () => {
+test('Braid direction is labeled as a future choice and only affects the appended generator', () => {
   const label = /<label\b[^>]*for="braids-direction"[^>]*>([\s\S]*?)<\/label>/.exec(html);
   assert.ok(label);
   assert.match(label[1], /next exchange/i);
   const app = createApp('braids');
-  const before = await app.exportJSON();
+  const before = app.calculation('applyBraidWord');
+  const displayedBefore = app.element('braids-state-a').textContent;
   app.input('braids-direction', -1);
-  const unchanged = await app.exportJSON();
-  assert.deepEqual(unchanged.parameters.word, [1, 2]);
-  assert.deepEqual(unchanged.results.finalA, before.results.finalA);
+  const unchanged = app.calculation('applyBraidWord');
+  assert.deepEqual(unchanged.args[0], [1, 2]);
+  assert.deepEqual(unchanged.result, before.result);
+  assert.equal(app.element('braids-state-a').textContent, displayedBefore);
   app.preset('data-braid', '2');
-  const changed = await app.exportJSON();
-  assert.deepEqual(changed.parameters.word, [1, 2, -2]);
+  const changed = app.calculation('applyBraidWord');
+  assert.deepEqual(changed.args[0], [1, 2, -2]);
   // B2 and its inverse cancel, leaving the +z quarter-turn of |+>.
-  close(changed.results.blochA.x, 0);
-  close(changed.results.blochA.y, 1);
-  close(changed.results.blochA.z, 0);
-  close(changed.results.measurementA.plus, 0.5);
+  const bloch = app.calculation('bloch').result;
+  close(bloch.x, 0);
+  close(bloch.y, 1);
+  close(bloch.z, 0);
+  close(app.calculation('measurementProbabilities').result.plus, 0.5);
+  assert.equal(app.element('braids-probability-a').textContent, '50%');
+  assert.match(app.element('braids-bloch-svg').getAttribute('aria-label'), /Y: state A 1\.00/);
   assert.match(app.element('braids-svg').innerHTML, /B2\^-1/);
 });
 
-test('Direct fusion-path selection, navigation buttons, and changed sectors stay synchronized', async () => {
+test('Direct fusion-path selection, navigation buttons, and changed sectors stay synchronized', () => {
   const app = createApp('fusion');
   const selector = app.element('fusion-path-index');
   assert.equal(selector.min, '1');
@@ -239,9 +260,10 @@ test('Direct fusion-path selection, navigation buttons, and changed sectors stay
   assert.equal(selector.step, '1');
   assert.equal(selector.value, '1');
   app.input('fusion-path-index', 2);
-  let data = await app.exportJSON();
-  assert.equal(data.parameters.pathIndex, 1);
-  assert.deepEqual(data.results.selectedPath, ['tau', 'tau', 'tau', 'vacuum']);
+  let calculation = app.calculation('fibonacciPathAt');
+  assert.equal(calculation.args[2], 1);
+  assert.deepEqual(calculation.result, ['tau', 'tau', 'tau', 'vacuum']);
+  assert.match(app.element('fusion-path-svg').getAttribute('aria-label'), /vacuum, tau, tau, tau, vacuum/);
   assert.match(app.element('fusion-path-position').textContent, /Path 2 of 2/);
   assert.equal(app.element('fusion-path-next').disabled, true);
   app.click('fusion-path-prev');
@@ -256,13 +278,14 @@ test('Direct fusion-path selection, navigation buttons, and changed sectors stay
   assert.equal(selector.value, '1');
   assert.equal(selector.max, '987');
   app.input('fusion-path-index', 987);
-  data = await app.exportJSON();
-  assert.equal(data.parameters.pathIndex, 986);
-  assert.deepEqual(data.results.selectedPath, Array(16).fill('tau'));
+  calculation = app.calculation('fibonacciPathAt');
+  assert.equal(calculation.args[2], 986);
+  assert.deepEqual(calculation.result, Array(16).fill('tau'));
   assert.match(app.element('fusion-path-position').textContent, /Path 987 of 987/);
+  assert.equal(app.element('fusion-path-svg').getAttribute('aria-label'), `Path 987 of 987; cumulative charges: vacuum, ${Array(16).fill('tau').join(', ')}.`);
   app.input('fusion-number', 2);
   assert.equal(selector.value, '1');
   assert.equal(selector.max, '1');
   assert.equal(app.element('fusion-path-next').disabled, true);
-  assert.equal((await app.exportJSON()).parameters.pathIndex, 0);
+  assert.equal(app.calculation('fibonacciPathAt').args[2], 0);
 });

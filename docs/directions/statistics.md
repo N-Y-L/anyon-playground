@@ -1,8 +1,8 @@
 # Exchange rules in different settings
 
-I first met anyons as pointlike excitations moving in a plane: their paths can wind around one another, and the state retains a phase determined by that winding. I now compare three changes to this setting: motion constrained to a line, extended loop excitations in three dimensions, and exchanges acting on several collective states.
+For Abelian anyons moving in a plane, paths can wind around one another and multiply the state by a phase determined by that winding. Three changes lead to different statistical problems: motion constrained to a line, extended loop excitations in three dimensions, and exchanges acting on several collective states.
 
-I first specify what moves, which motions are allowed and which configurations are excluded. The **configuration space** is the set of those allowed arrangements. Paths through it describe motions; a quantum representation specifies how those motions act on states.
+Each problem begins by specifying what moves, which motions are allowed and which configurations are excluded. The **configuration space** is the set of allowed arrangements. Paths through it describe motions; a quantum representation specifies how those motions act on states.
 
 ## A useful relation disappears in the plane
 
@@ -43,11 +43,11 @@ $$a_j^\dagger a_{j+1}=b_j^\dagger b_{j+1}e^{i\theta n_j}.$$
 
 For this hop from $j+1$ to $j$, the phase depends on the destination's occupation before the hop.
 
-**The operator order matters.** On a number state, the phase factor on the right acts first. Rearranging operators without their commutators changes the predicted phase. This check connects the abstract exchange rules to a hopping Hamiltonian with occupation-dependent matrix elements.
+On a number state, the phase factor on the right acts first. Rearranging operators without their commutators changes the predicted phase. The operator order thus connects the exchange rules to the occupation-dependent matrix elements of a hopping Hamiltonian.
 
 </details>
 
-The on-site algebra in this model remains bosonic: even at statistical angle $\theta=\pi$, anticommutation between different sites does not impose the Pauli exclusion principle on a single site. I need the model's definition of statistics as well as its angle.
+The on-site algebra in this model remains bosonic: even at statistical angle $\theta=\pi$, anticommutation between different sites does not impose the Pauli exclusion principle on a single site. The angle specifies only part of the statistical rule.
 
 ## Loops have motions that points do not
 
@@ -61,7 +61,7 @@ The third loop is part of the configuration being classified. Removing it change
 
 For **non-Abelian anyons**, specifying positions and excitation types can leave several collective states. A **fusion channel** labels the combined excitation type of a pair, as seen by a probe enclosing it or when the pair is brought together. Even with the total type fixed, different intermediate pair channels can span a state space. Braiding acts by unitary matrices on that space, and the order of two braids can matter.
 
-In the Ising example in the [anyon notes](../notes.html#when-a-phase-is-no-longer-enough), an $R$ matrix exchanges a pair in a basis where that pair has a definite fusion channel. An $F$ matrix changes which pair I group first when labeling the collective state. Exchanging a different pair involves a basis change, the exchange, and the inverse basis change. The resulting matrix generally differs from the first exchange matrix.
+In the Ising example in the [anyon notes](../notes.html#when-a-phase-is-no-longer-enough), an $R$ matrix exchanges a pair in a basis where that pair has a definite fusion channel. An $F$ matrix changes which pair is grouped first when labeling the collective state. Exchanging a different pair involves a basis change, the exchange, and the inverse basis change. The resulting matrix generally differs from the first exchange matrix.
 
 These operations have to agree when different descriptions represent the same process. [Kitaev's mathematical treatment](https://arxiv.org/abs/cond-mat/0506438) develops those consistency conditions together with an explicit lattice model; the matrices are not freely adjustable choices.
 
@@ -89,4 +89,4 @@ Starting from $|0\rangle$, compare $B_1B_2|0\rangle$ with $B_2B_1|0\rangle$, wit
 | Loop excitations in three dimensions | Allowed deformations, linking constraints and the full braiding process |
 | Non-Abelian anyons | Fusion space, basis changes, exchange matrices and measurement channel |
 
-I want to understand how allowed motions become operations on quantum states. A concrete example can make that relation clear before I learn a full classification, but it still needs a measurement that distinguishes the resulting states.
+Statistics depends both on the allowed motions and on their action on quantum states. New settings raise two linked questions: which exchanges remain distinct under continuous deformation, and which measurements distinguish their actions? The line, loop and fusion examples change different parts of that problem.

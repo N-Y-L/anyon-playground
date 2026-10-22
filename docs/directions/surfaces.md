@@ -1,8 +1,8 @@
 # Phase winding on a closed surface
 
-I want to know what the shape of a surface requires of a quantum state before I solve for its energy or motion. Around a zero of a complex field, its phase can change by an integer multiple of $2\pi$; that integer is the **phase winding**. On a plane, I can leave other zeros outside my drawing. A sphere has no distant boundary, so I have to account for the whole surface.
+Around a zero of a complex field, its phase can change by an integer multiple of $2\pi$; that integer is the **phase winding**. A planar picture can leave other zeros outside the drawing. A sphere has no distant boundary: counting winding requires the whole surface, and imposes a constraint before any energy or motion is calculated.
 
-I compare two models. The first is a **scalar Bose condensate**, a fluid with many bosons occupying one quantum state, described by a single complex field with no internal components. With no vector-potential coupling, its total signed winding is zero. The second is a charged particle in a radial magnetic field through the sphere. In its lowest Landau level, the zeros all have the same winding sign. The distinction lies in how local wavefunction descriptions fit together over the surface.
+Two models illustrate the constraint. A **scalar Bose condensate** is a fluid with many bosons occupying one quantum state, described by a single complex field with no internal components. With no vector-potential coupling, its total signed winding is zero. A charged particle in a radial magnetic field through the sphere behaves differently: in its lowest Landau level, the zeros all have the same winding sign. The distinction lies in how local wavefunction descriptions fit together over the surface.
 
 A **vortex** is a zero with nonzero phase winding; a vortex and an antivortex have opposite signs. The scalar example has one of each. I denote the complex field or one-particle wavefunction by $\Psi$; its modulus $|\Psi|$ is the amplitude shown by the shading. For the magnetic example, I measure flux in units $h/|q|$, where $q$ is the particle's charge and $h=2\pi\hbar$. The flux control selects the integer $N_\phi$, with the sign chosen to give positive winding. A **gauge patch** is a region with one smooth choice of vector potential and wavefunction phase. Changing patches changes the phase convention, while moving a zero changes the state.
 
@@ -26,7 +26,7 @@ The figure evaluates an explicit complex scalar with the chosen zeros. Color sho
 
 ## Magnetic flux changes how the wavefunction is patched
 
-I now use [Haldane's spherical quantum Hall construction](https://doi.org/10.1103/PhysRevLett.51.605): a radial field with nonzero net flux, as if a magnetic monopole sat at the center. This is an idealized model; an ordinary uniform laboratory field has zero net flux through a closed sphere. I write $N_\phi=q\Phi/h\geq0$ for the integer signed flux, with $\Phi$ the outward flux. Nonzero $N_\phi$ requires overlapping gauge patches, and their phase relation changes the total winding count.
+[Haldane's spherical quantum Hall construction](https://doi.org/10.1103/PhysRevLett.51.605) uses a radial field with nonzero net flux, as if a magnetic monopole sat at the center. This is an idealized model; an ordinary uniform laboratory field has zero net flux through a closed sphere. I write $N_\phi=q\Phi/h\geq0$ for the integer signed flux, with $\Phi$ the outward flux. Nonzero $N_\phi$ requires overlapping gauge patches, and their phase relation changes the total winding count.
 
 <details>
 <summary>Flux integer and gauge-patch argument</summary>
@@ -96,8 +96,8 @@ Setting $N_\phi=mN$ would miss this offset. [Wen and Zee (1992)](https://doi.org
 
 ## From a closed surface to a laboratory shell
 
-The geometry is experimentally useful, but the two models should remain distinct. [Carollo and collaborators (2022)](https://www.nature.com/articles/s41586-022-04639-8) observed ultracold atomic bubbles in orbital microgravity, including partial shell coverings. [Jia and collaborators (2022)](https://arxiv.org/abs/2208.01360) created a shell condensate using two atomic species and studied its expansion and self-interference. Neither result alone supplies the monopole flux in Haldane's model.
+[Carollo and collaborators (2022)](https://www.nature.com/articles/s41586-022-04639-8) observed ultracold atomic bubbles in orbital microgravity, including partial shell coverings. [Jia and collaborators (2022)](https://arxiv.org/abs/2208.01360) created a shell condensate using two atomic species and studied its expansion and self-interference. These experiments realize shell geometry; the monopole flux in Haldane's model is a separate ingredient.
 
-Geometry can organize defects and constrain quantum fluids before their detailed dynamics is known. I want to understand how those constraints meet energetics, rotation and experimental control. Opening a hole in the shell is a useful thought experiment: the boundary gives phase winding somewhere to go, changing the closed-surface argument.
+The winding constraint leaves energetic and dynamical questions open. Which vortex arrangements are stable, and how does rotation move or stabilize them? Opening a hole in the shell changes even the counting argument: phase circulation along the new boundary can balance the winding of interior zeros. Geometry, rotation and boundaries thus offer different ways to control defects in a quantum fluid.
 
 [Directions](../directions.md) · [Geometry without a global orientation](orientation.md) · [Longer reading and talks](reading.md)

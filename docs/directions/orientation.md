@@ -1,12 +1,12 @@
 # Geometry without a global orientation
 
-In the plane, I can say “exchange counterclockwise” after choosing an outward normal. On a Möbius band, following a normal continuously around the band brings it back reversed. I want to understand how quantum states with a preferred handedness can fit this geometry.
+In the plane, “exchange counterclockwise” has a consistent meaning after choosing a normal. On a Möbius band, following a normal continuously around the band brings it back reversed. A quantum state with a preferred handedness must accommodate this reversal.
 
-I can understand this obstruction before choosing a Hamiltonian. Then I can ask which magnetic fields and quantum states fit the geometry. The twist is a constraint on a physical model; it is not yet a quantum phase.
+The obstruction appears before any Hamiltonian is chosen. It constrains the possible magnetic fields and the way local descriptions of a quantum state can join. Determining the resulting phase of matter still requires an electronic model.
 
 ## A normal after one circuit
 
-I follow an arrow perpendicular to the surface. One circuit returns to the same point with the arrow reversed; two circuits restore it.
+An arrow kept perpendicular to the surface returns to the same point reversed after one circuit. Two circuits restore it.
 
 <details>
 <summary>Coordinate description of the band</summary>
@@ -54,7 +54,7 @@ These two circuits track an ordinary geometric vector. They do not calculate the
 
 A laboratory magnetic field can exist perfectly well around the band. The obstruction concerns its **component perpendicular to the surface**. If that component were continuous and nonzero everywhere, it would itself choose a normal everywhere, contradicting the Möbius geometry. Somewhere it must vanish.
 
-In the figure, I distinguish the solid zero contour, where the field is tangent, from the dashed coordinate cut, where my convention for the normal changes. A color change at that cut need not mark a physical change.
+The solid zero contour in the figure marks places where the field is tangent. At the dashed coordinate cut, only the convention for the normal changes; a color change there need not mark a physical change.
 
 <details>
 <summary>Field projection and checks on the figure</summary>
@@ -82,13 +82,13 @@ The endpoint tilts provide two useful checks. At $\beta=0$, a whole transverse l
 
 </details>
 
-Neither the colored surface nor its zero contour represents a quantum phase or a conducting channel. For those I need the electronic state.
+The field projection constrains an electronic model. Whether the model has a conducting channel along a zero contour depends on its quantum state, as the Hall examples below illustrate.
 
 ## What must a Hall state do at the join?
 
 The [Laughlin calculation](../notes.html#make-a-hole-without-removing-an-electron) began with a plane and a fixed perpendicular field. Bending its drawing into a Möbius band does not preserve those assumptions.
 
-The **Hall conductivity** relates a transverse electric current to an applied electric field. A **chiral** Hall phase has a handed response: reversing spatial orientation reverses the sign assigned to that conductivity. A homogeneous single chiral phase therefore cannot simply be identified with itself across the Möbius reflection while preserving its handedness. I need a model that explains how its local descriptions meet.
+The **Hall conductivity** relates a transverse electric current to an applied electric field. A **chiral** Hall phase has a handed response: reversing spatial orientation reverses the sign assigned to that conductivity. A homogeneous single chiral phase therefore cannot simply be identified with itself across the Möbius reflection while preserving its handedness. The local descriptions must join in a way that accounts for this reversal.
 
 [Beugeling, Quelle and Morais Smith](https://arxiv.org/abs/1403.6998) examine this problem in lattice electron models. Their constructions include local Hall regions separated by **domain walls**, interfaces where the response changes. Conducting modes can run along those interfaces. A zero of the field in the figure identifies a geometric constraint; predicting a conducting mode there still requires the Hamiltonian, electron occupation and excitation gaps.
 
@@ -102,4 +102,4 @@ The two-circuit normal trace gives a picture of that cover. Labels defined relat
 
 Nonorientability also allows suitable phases with anyonic excitations. [Chan, Teo and Ryu](https://arxiv.org/abs/1509.03920) construct such phases by specifying how a spatial reflection acts on the anyon types. Their “parity symmetry” means this reflection, distinct from the even or odd fermion-number parity in the wire notes.
 
-The question I would pursue is what a reflection must exchange and whether a proposed quantum theory contains those partners. I keep the laboratory field, the chosen normal and the electronic state separate, as in [Beugeling and collaborators, §II](https://arxiv.org/html/1403.6998). Only the first two have been calculated in this figure.
+The general question is what a reflection must exchange—propagating modes, spin labels or anyon types—and whether the quantum theory contains the required partners. [Beugeling and collaborators, §II](https://arxiv.org/html/1403.6998) distinguish the laboratory field, the chosen normal and the electronic state. The figure calculates the first two; the electronic model determines which states can occupy the band.

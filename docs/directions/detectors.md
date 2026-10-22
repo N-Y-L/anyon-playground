@@ -1,12 +1,12 @@
 # What the detector measures
 
-An exchange rule tells me how a quantum state changes when excitations trade places. A detector returns a current, a count, a voltage or a temperature. I want to understand how interference and fluctuations connect that rule to a measured quantity.
+An exchange rule specifies how a quantum state changes when excitations trade places. A detector returns a current, a count, a voltage or a temperature. Interference and fluctuations connect the exchange rule to these observables, together with the dynamics of propagation and detection.
 
-In the [anyon notes](../notes.html), I followed a prepared pair through a saddle model to a weighted position average. Here I compare different measurements. Preparation, motion and readout all matter, even when the underlying exchange rule stays fixed.
+The [anyon notes](../notes.html) followed a prepared pair through a saddle model to a weighted position average. Current correlations and interference phases probe different aspects of the outgoing state, even when the underlying exchange rule stays fixed.
 
 ## The measured observable
 
-I can learn from fluctuations even when the mean current looks unremarkable. A **current cross-correlation** compares deviations from the mean at two detectors. Its sign alone is not a particle label. A contact that sends each incident particle into one of two outputs already correlates their currents through this partitioning.
+Fluctuations can carry information absent from the mean current. A **current cross-correlation** compares deviations from the mean at two detectors. Its sign alone does not determine statistics. A contact that sends each incident particle into one of two outputs can correlate their currents simply through this partitioning.
 
 <details>
 <summary>Definition of the current cross-correlation</summary>
@@ -21,7 +21,7 @@ A negative value describes anticorrelation after integrating over time delays; i
 
 </details>
 
-I ask which change in the signal distinguishes the proposed exchange process from other mechanisms in the device. That depends on what was injected, how it propagated and what the contacts did.
+Identifying an exchange contribution therefore requires a reference that accounts for the injected states, propagation and contacts. Attributing a signal change to exchange requires independent constraints on these competing contributions.
 
 ## Two paths can reveal one exchange
 
@@ -59,7 +59,7 @@ The measured signal is assembled from many tunneling histories and source events
 
 ### Random arrivals can still carry a phase
 
-I do not always need two wave packets to arrive simultaneously for statistics to affect a signal. The [time-domain braiding interpretation](https://arxiv.org/abs/2510.04319v2) concerns a correlation between tunneling operators at two times. In the simple Laughlin-edge model, beam anyons passing between those times contribute full-braid phases. Their random number can reduce the magnitude of the averaged interference contribution while leaving a nonzero phase.
+Two wave packets need not arrive simultaneously for statistics to affect a signal. The [time-domain braiding interpretation](https://arxiv.org/abs/2510.04319v2) concerns a correlation between tunneling operators at two times. In the simple Laughlin-edge model, beam anyons passing between those times contribute full-braid phases. Their random number can reduce the magnitude of the averaged interference contribution while leaving a nonzero phase.
 
 <details>
 <summary>Random-arrival calculation</summary>
@@ -87,4 +87,4 @@ At $\theta=\pi/3$, the factor is $F=e^{-3\eta/2}e^{i\sqrt3\eta/2}$, giving magni
 
 These are complementary questions. Fractional charge alone does not identify an exchange phase, and a thermal measurement does not directly perform a braid. The [Feldman–Halperin review](https://arxiv.org/abs/2102.08998) is a useful guide to how charge, statistics and their experimental signatures fit together.
 
-I want to understand which measurements complement one another and when different physical mechanisms produce similar signals. In each case I need to connect the prepared state, its evolution and the measured observable. The exchange rule supplies one part of that connection.
+Different mechanisms can produce similar signals, so combining measurements helps distinguish them. Which observations constrain propagation and electrostatics independently, and which retain sensitivity to exchange? Answering this requires the prepared state, its evolution and the measured observable; the exchange rule supplies one part of the calculation.

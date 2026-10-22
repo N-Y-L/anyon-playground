@@ -17,8 +17,8 @@ pinned in `package-lock.json`; install them with `npm ci --ignore-scripts`.
    changes to its Markdown, figures, scripts or styles.
 4. Run `npm run check` for generated-page consistency, local links, math, asset
    references, and all model and control tests. `npm test` runs just the tests.
-5. Open the affected pages and inspect equations, default figures, controls and
-   exports. Check that the reading pages still make sense without JavaScript.
+5. Open the affected pages and inspect equations, default figures and controls.
+   Check that the reading pages still make sense without JavaScript.
 
 The root HTML pages are maintained directly. Keep their URLs stable when moving
 supporting files, and update references in pages, tests and build scripts together.
@@ -68,12 +68,7 @@ small-chain Fock-space calculation. The pair series has a truncation bound;
 collider quadrature reports a refinement error estimate, not a rigorous global
 error bound. Extend the relevant checks when changing these models.
 
-## Exports and bundled assets
-
-The main-note and notebook SVG and JSON export buttons save the displayed figure
-and its parameters/results. JSON exports are records, not importable sessions.
-The phonon export records every finite-chain mode and plotted site. Keep units,
-parameters and model assumptions available when adding or changing an export.
+## Bundled assets
 
 Keep math assets local so the site remains usable offline. See the
 [KaTeX distribution notes](vendor/katex/README.md) for the font subset and refresh

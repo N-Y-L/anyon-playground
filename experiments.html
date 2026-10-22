@@ -6,11 +6,11 @@
   <meta name="description" content="Visual notes on anyons: exchange, interference, fusion, braiding, and a solvable spin model. Graduate quantum mechanics; no quantum field theory assumed.">
   <title>Anyons: visual notes</title>
   <link rel="stylesheet" href="vendor/katex/katex.min.css?v=864f909fc1f3">
-  <link rel="stylesheet" href="styles/notebooks.css?v=c1d91f70f214">
+  <link rel="stylesheet" href="styles/notebooks.css?v=b73bb57491fa">
   <script defer src="vendor/katex/katex.min.js?v=103a53763cc0"></script>
   <script defer src="vendor/katex/auto-render.min.js?v=e5372d199bcd"></script>
   <script defer src="src/models/physics.js?v=6211ad6622e9"></script>
-  <script defer src="src/pages/app.js?v=14cd764bd3b2"></script>
+  <script defer src="src/pages/app.js?v=9d7bcf531e2f"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to the note</a>
@@ -64,7 +64,7 @@
 
     <section id="view-interference" data-view="interference" aria-labelledby="interference-title" hidden>
       <h1 id="interference-title">Turn a statistical phase into a probability</h1>
-      <p>A global phase of a lone state cannot be measured. I can instead put the <a href="#exchange">exchange phase</a> into one of two coherent paths and recombine them. Let a probe wind \(w\) times counterclockwise around \(N\) anyons of the same Abelian type, whose exchange angle is \(\theta\). Relative to the reference route, this adds statistical phase \(\delta=2Nw\theta\); negative \(w\) means clockwise motion. Write \(\phi\) for the other controllable relative phase and \(\Delta=\phi+\delta\). The two paths have equal populations. If their retained coherence is described by <dfn>visibility</dfn> \(0\le V\le1\), the probabilities \(P_0,P_1\) of the two outputs are</p>
+      <p>A global phase of a lone state cannot be measured. Give just one of two coherent paths the <a href="#exchange">exchange phase</a>, however, and recombination makes it observable. Let a probe wind \(w\) times counterclockwise around \(N\) anyons of the same Abelian type, whose exchange angle is \(\theta\). Relative to the reference route, this adds statistical phase \(\delta=2Nw\theta\); negative \(w\) means clockwise motion. Write \(\phi\) for the other controllable relative phase and \(\Delta=\phi+\delta\). The two paths have equal populations. If their retained coherence is described by <dfn>visibility</dfn> \(0\le V\le1\), the probabilities \(P_0,P_1\) of the two outputs are</p>
       <div class="equation">\[P_0=\frac{1+V\cos\Delta}{2},\qquad P_1=1-P_0.\]</div>
       <p>Visibility is the fringe contrast: \(V=1\) allows probabilities from 0 to 1, while \(V=0\) gives no interference. The dotted curve removes the enclosed anyons while keeping the other settings fixed. Changing \(\phi\) shifts the bright and dark outputs: a relative phase becomes a measurable probability. The statistical phase has a microscopic origin in <a href="https://doi.org/10.1103/PhysRevLett.53.722">Arovas et al.</a>; a real interferometer involves further physics, as in <a href="https://arxiv.org/abs/2006.14115">Nakamura et al.</a> The “Laughlin angle” preset uses \(\theta=\pi/3\); its quantum Hall interpretation is explained below.</p>
       <div class="example-row"><span>Examples:</span><button data-interference-example="semion">One semion</button><button data-interference-example="two">Two semions</button><button data-interference-example="laughlin">Laughlin angle</button><button data-interference-example="incoherent">Lose coherence</button></div>
@@ -235,7 +235,7 @@
 
     <section id="view-correlations" data-view="correlations" aria-labelledby="correlations-title" hidden>
       <h1 id="correlations-title">The same anyons can bunch and antibunch</h1>
-      <p>I want to test the familiar association of bosons with bunching and fermions with antibunching. This requires specifying an observable and a preparation. For the localized pair below, changing the packet separation can reverse the sign of the statistical correlation while the exchange angle stays fixed. This is the effect in <a href="https://arxiv.org/pdf/0908.3945#page=2">Vishveshwara and Cooper, Fig. 1 and Eqs. (3), (5), (6)</a>.</p>
+      <p>For the localized pair below, changing the packet separation can reverse the sign of the statistical correlation while the exchange angle stays fixed. The particles have not changed their statistics; they have been prepared differently. To calculate the effect, we must specify both the state and the quantity being measured. The example follows <a href="https://arxiv.org/pdf/0908.3945#page=2">Vishveshwara and Cooper, Fig. 1 and Eqs. (3), (5), (6)</a>.</p>
       <p>Consider two identical <dfn>Abelian anyons</dfn>, whose exchange acts by a scalar phase, in a perpendicular magnetic field. Project their states into the <dfn>lowest Landau level</dfn> (LLL), the lowest quantized cyclotron-energy level. The fast circular motion is frozen; the remaining <dfn>guiding center</dfn> is the quantum coordinate of the orbit's center. The preparation is the paper's localized two-anyon packet. It is a specific superposition, not every state with the same exchange phase.</p>
       <p>Write the exchange angle as \(\theta=\pi\alpha\), with \(0\leq\alpha\leq1\). The packet's localization labels have separation \(d\), measured here by \(s=d/\ell\). The single-particle magnetic length is \(\ell=\sqrt{\hbar/|qB|}\) in SI units, where \(q\) is the moving particle's charge and \(B\) the perpendicular magnetic field. Let \(\hat r^2\) be the squared separation of the two guiding centers. Angle brackets denote its expectation in the anyon packet (subscript \(\alpha\)) or in a distinguishable-particle reference prepared at the same \(s\) (subscript \(\mathrm d\)). Define the dimensionless difference \(\chi\) by</p>
       <div class="equation">\[\chi(s,\alpha)=\frac{\langle\hat r^2\rangle_\alpha-\langle\hat r^2\rangle_{\mathrm d}}{4\ell^2},\qquad \frac{\langle\hat r^2\rangle_{\mathrm d}}{\ell^2}=s^2+2.\]</div>
@@ -264,8 +264,7 @@
       <p class="next-note">To connect this static correlation with motion or a detector, <a href="docs/notes.html#let-a-saddle-amplify-a-correlation">continue with the saddle calculation in the connected notes.</a></p>
     </section>
 
-    <footer class="page-footer"><p><a href="berry.html">Berry phases</a> · <a href="fusion-basis.html">Fusion bases</a> · <a href="abelian.html">Abelian theories</a> · <a href="docs/notes.html">Connected notes</a> · <a href="docs/catalog.html">Further questions</a> · <a href="docs/references.html">Sources</a></p><div class="export-controls"><label for="export-figure">Figure to save</label><select id="export-figure"></select><button id="export-svg">Save SVG</button><button id="export-json">Save parameters</button></div></footer>
-    <p id="export-ready" hidden>Prepared file: <a id="export-download">Download</a>. If it did not save automatically, use this link.</p>
+    <footer class="page-footer"><p><a href="berry.html">Berry phases</a> · <a href="fusion-basis.html">Fusion bases</a> · <a href="abelian.html">Abelian theories</a> · <a href="docs/notes.html">Connected notes</a> · <a href="docs/catalog.html">Preparation and measurement</a> · <a href="docs/references.html">Sources</a></p></footer>
     <p class="sr-only" id="status-message" role="status"></p>
     <noscript><p>Enable JavaScript for the interactive figures. The <a href="docs/notes.html">connected notes</a> are a complete static reading copy.</p></noscript>
   </main>

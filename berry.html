@@ -6,18 +6,18 @@
   <meta name="description" content="Calculate a spin-1/2 Berry phase from sampled eigenstates. Change phase conventions, refine a loop, and compare with the solid angle; graduate quantum mechanics, no field theory assumed.">
   <title>Calculate a geometric phase</title>
   <link rel="stylesheet" href="vendor/katex/katex.min.css?v=864f909fc1f3">
-  <link rel="stylesheet" href="styles/notebooks.css?v=c1d91f70f214">
+  <link rel="stylesheet" href="styles/notebooks.css?v=b73bb57491fa">
   <script defer src="vendor/katex/katex.min.js?v=103a53763cc0"></script>
   <script defer src="vendor/katex/auto-render.min.js?v=e5372d199bcd"></script>
   <script defer src="src/models/berry-physics.js?v=635bfa3b3c6e"></script>
-  <script defer src="src/pages/berry.js?v=41e2b1cbdd12"></script>
+  <script defer src="src/pages/berry.js?v=5be12f3b4968"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to the note</a>
   <nav aria-label="Note navigation"><a href="index.html">Contents</a> · <a href="docs/notes.html">Connected notes</a> · <a href="experiments.html#exchange">Exchange</a> · <a href="experiments.html#interference">Interference</a> · <a href="berry.html" aria-current="page">Berry phase</a> · <a href="experiments.html#toric">Toric code</a> · <a href="experiments.html#memory">Memory</a> · <a href="abelian.html">Abelian theories</a> · <a href="experiments.html#fusion">Fusion paths</a> · <a href="fusion-basis.html">Fusion bases</a> · <a href="experiments.html#braids">Ising braids</a> · <a href="experiments.html#correlations">Correlations</a></nav>
   <main id="main" tabindex="-1">
     <h1>Calculate a geometric phase</h1>
-    <p>I want to calculate a <dfn>Berry phase</dfn>: the geometric phase acquired when a normalized eigenstate follows a closed, slow variation of its Hamiltonian, after removing the dynamical phase. Diagonalizing the Hamiltonian separately at each point gives eigenvectors with arbitrary overall phases. A product of neighboring overlaps around the closed loop will cancel these arbitrary choices.</p>
+    <p>Take a Hamiltonian slowly around a closed cycle while the state follows a nondegenerate eigenstate. The Hamiltonian returns to where it began, but the state can acquire a phase. Subtract the dynamical phase due to the energy and elapsed time: the remainder is the <dfn>Berry phase</dfn>. To calculate it from eigenvectors, there is a small nuisance. Diagonalizing the Hamiltonian separately at each point gives arbitrary overall phases. Multiplying neighboring overlaps around the closed loop cancels these arbitrary choices.</p>
     <p>Consider a spin \(1/2\) with Hamiltonian \(H=-(\Delta/2)\boldsymbol n\cdot\boldsymbol\sigma\). Here \(\Delta&gt;0\) is the energy separation of its two eigenstates, \(\boldsymbol\sigma=(\sigma_x,\sigma_y,\sigma_z)\) are the Pauli matrices, and \(\boldsymbol n\) is a unit vector. The ground state has spin expectation along \(\boldsymbol n\); these directions form the <dfn>Bloch sphere</dfn>. Let \(\beta\) be the polar angle from \(+z\) and \(\phi\) the azimuth from \(+x\). In the \(\sigma_z\) basis, its normalized two-component state, or <dfn>spinor</dfn>, is \(|u\rangle\):</p>
     <div class="equation">\[\boldsymbol n=(\sin\beta\cos\phi,\sin\beta\sin\phi,\cos\beta),\qquad |u\rangle=\begin{pmatrix}\cos(\beta/2)\\e^{i\phi}\sin(\beta/2)\end{pmatrix}.\]</div>
     <p>Hold \(\beta\) fixed and take \(\phi\) once around the circle. Positive motion increases \(\phi\), counterclockwise when viewed from \(+z\). The oriented solid angle \(\Omega\) is the enclosed area on the unit sphere, positive for this direction: \(\Omega=\pm2\pi(1-\cos\beta)\). For transport slow enough to remain in the ground state, the Berry phase is \(\gamma=-\Omega/2\), modulo \(2\pi\). The separate dynamical phase is \(-\int E\,dt/\hbar\), with instantaneous ground energy \(E=-\Delta/2\). We calculate only the geometric contribution. <a href="https://doi.org/10.1098/rspa.1984.0023">Berry’s original paper</a> derives the spin result.</p>
@@ -64,16 +64,14 @@
     <details><summary>What exactly is the finite-sample error?</summary>
       <p>With g = 0, every link before normalization is \(\cos^2(\beta/2)+\sin^2(\beta/2)e^{\mp2\pi i/N}\). Its normalized phase raised to the Nth power gives the sampled result. At finite N, the shorter great-circle arcs between spin directions enclose a different area from the smooth latitude. Refinement makes these paths agree. Changing g cannot repair a coarse mesh: it only changes the description.</p>
       <p>The error shown is \(|\arg(e^{i\gamma_N}e^{-i\gamma})|\). Neighboring orthogonal states make a normalized link undefined; the calculation rejects such a link rather than assigning it zero phase. The sample counts offered here avoid that singular case for these latitudes.</p>
-      <p>For reproducibility, the phase choices are \(\alpha_j=g[\sin(2\pi j/N)+0.37\cos(4\pi j/N)]\). Angles and g are in radians. The JSON export records every link and the parameters; no random seed is needed.</p>
+      <p>For reproducibility, the phase choices are \(\alpha_j=g[\sin(2\pi j/N)+0.37\cos(4\pi j/N)]\). Angles and g are in radians. No random seed is needed.</p>
     </details>
-    <h2>What this teaches us about anyons</h2>
+    <h2>Geometric and topological phases</h2>
     <p>These loops on the sphere can all be contracted, yet changing their area changes the phase. <em>Geometric</em> does not mean <em>topological</em>. A topological braid contribution remains unchanged under smooth path deformations that keep the excitations separated and the system in the same phase of matter. An anyon calculation must identify the relevant low-energy states and separate that contribution from geometric and dynamical phases that vary with the path.</p>
     <p>If several eigenstates share one energy, slow transport can mix them through a unitary matrix, as in <a href="https://doi.org/10.1103/PhysRevLett.52.2111">Wilczek and Zee’s construction</a>. Such mixing alone does not establish anyons. Non-Abelian anyons have a collective <a href="fusion-basis.html">fusion space</a> of states even at fixed particle types, positions, and total topological charge. The energy separation from unwanted excitations and a small splitting among these collective states impose different constraints on transport: it must avoid exciting the former without resolving the latter. Quantitative timing also depends on the path and transition matrix elements. The <a href="https://arxiv.org/abs/1106.2549">microscopic braiding analysis by Cheng, Galitski, and Das Sarma</a> discusses these conditions.</p>
     <p class="next-note">A geometric phase need not be topological. <a href="experiments.html#toric">Next: derive an anyonic winding phase directly from a spin Hamiltonian.</a></p>
   </main>
   <footer class="page-footer">
-    <div class="export-controls"><label for="berry-export-figure">Vector figure</label><select id="berry-export-figure"><option value="berry-sphere-svg">Spin directions</option><option value="berry-phase-svg">Mesh convergence</option><option value="berry-links-svg">Individual overlap phases</option></select><button id="berry-export-svg">Save SVG</button><button id="berry-export-json">Save parameters and results</button></div>
-    <p id="berry-export-ready" hidden>Prepared file: <a id="berry-download" href="#">Download</a></p>
     <p><a href="src/models/berry-physics.js?v=635bfa3b3c6e">Calculation source</a> · <a href="tests/berry.test.js">Checks</a> · <a href="docs/references.html">Sources</a> · <a href="index.html">Contents</a></p>
     <p><small>Copyright (c) 2026 Neil Yuanting Li. <a href="LICENSE">MIT license</a>.</small></p>
   </footer>

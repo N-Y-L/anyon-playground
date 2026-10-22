@@ -832,28 +832,6 @@
   function render() { renderers[active](); }
   function announce(message) { $('status-message').textContent = message; }
 
-  const figureChoices = {
-    exchange: [['exchange-svg', 'Exchange paths and relative-angle history']],
-    interference: [['interference-svg', 'Interference fringe']],
-    braids: [['braids-svg', 'Braid sequences'], ['braids-bloch-svg', 'Encoded Pauli expectations']],
-    fusion: [['fusion-path-svg', 'Selected fusion basis path']],
-    toric: [['toric-svg', 'Strings and loop on the lattice']],
-    correlations: [['correlations-svg', 'LLL pair correlation'], ['correlations-weights-svg', 'Angular-momentum weights']],
-    memory: [['memory-svg', 'Periodic toric-code string']]
-  };
-  function syncExportChoices() {
-    const selector = $('export-figure'), selected = selector.value;
-    const options = figureChoices[active];
-    const signature = options.map(([id]) => id).join(',');
-    if (selector.dataset.options === signature) return;
-    selector.replaceChildren();
-    for (const [value, label] of options) {
-      const option = document.createElement('option'); option.value = value; option.textContent = label; selector.append(option);
-    }
-    if (options.some(([id]) => id === selected)) selector.value = selected;
-    selector.dataset.options = signature;
-  }
-
   function navigate(event) {
     const hash = window.location.hash.slice(1);
     if (hash !== 'main') active = views.includes(hash) ? hash : 'exchange';
@@ -865,7 +843,6 @@
     });
     document.title = `${$(`${active}-title`).textContent} — Anyons`;
     render();
-    syncExportChoices();
     announce($(`${active}-title`).textContent);
     // Route names are not element IDs. Move readers to the new note instead
     // of leaving a "Next" link's old scroll position inside the new content.
@@ -1103,52 +1080,6 @@
   window.addEventListener('hashchange', navigate);
   document.addEventListener('visibilitychange', () => { if (document.hidden && animationView) cancelAnimation(); });
   reduceMotion.addEventListener('change', () => { if (animationView) cancelAnimation(); });
-
-  let downloadUrl = null;
-  function saveBlob(contents, type, filename) {
-    if (downloadUrl) URL.revokeObjectURL(downloadUrl);
-    downloadUrl = URL.createObjectURL(new Blob([contents], { type }));
-    const link = $('export-download');
-    link.href = downloadUrl;
-    link.download = filename;
-    link.textContent = filename;
-    $('export-ready').hidden = false;
-    link.click();
-    announce(`${filename} prepared. The download link remains available below.`);
-  }
-
-  $('export-svg').addEventListener('click', () => {
-    const figureId = $('export-figure').value;
-    const svg = $(figureId).cloneNode(true);
-    const [, , width, height] = svg.getAttribute('viewBox').split(/\s+/).map(Number);
-    svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
-    svg.setAttribute('width', String(width));
-    svg.setAttribute('height', String(height));
-    svg.removeAttribute('class');
-    svg.removeAttribute('style');
-    svg.querySelectorAll('[role="button"]').forEach(element => { element.removeAttribute('tabindex'); element.removeAttribute('role'); });
-    const serialized = new XMLSerializer().serializeToString(svg);
-    saveBlob(`<?xml version="1.0" encoding="UTF-8"?>\n${serialized}`, 'image/svg+xml;charset=utf-8', `anyons-${figureId.replace(/-svg$/, '')}.svg`);
-  });
-
-  $('export-json').addEventListener('click', () => {
-    const modelNames = { exchange: 'Abelian exchange', interference: 'Balanced two-path interference', braids: 'Four Ising sigma anyons, total charge vacuum', fusion: 'Fibonacci fusion dimensions', toric: 'Toric-code mutual e/m winding', correlations: 'Localized lowest-Landau-level anyon pair correlation', memory: 'Periodic toric-code X strings and ground-space winding' };
-    const results = {
-      exchange: exchangeResult,
-      interference: interferenceResult,
-      braids: braidResults,
-      fusion: fusionResults,
-      toric: toricResults,
-      correlations: correlationsResult,
-      memory: memoryResults
-    };
-    const exportData = { schemaVersion: 2, model: modelNames[active], experiment: active, parameters: copy(state[active]), conventions: { angleUnits: 'Radians in results; parameters ending in Pi are multiples of pi.', complexNumbers: '[real, imaginary]', braidOrder: 'Chronological; positive generators are counterclockwise.', outputs: 'Ideal model results; animations are schematic.' }, results: results[active]() };
-    if (active === 'exchange') exportData.diagramProgress = exchangeProgress;
-    if (active === 'toric') exportData.diagramProgress = toricProgress;
-    if (active === 'correlations') exportData.conventions.pairCorrelation = 'separation is packet-center distance in single-particle magnetic lengths; chi is the guiding-center mean-squared-separation shift divided by 4 ell^2; angular momentum is in hbar units. meanSeparationSquared and distinguishableMeanSeparationSquared are in ell^2 units. errorBound and omittedProbabilityBound bound series truncation, not floating-point rounding. Source: arXiv:0908.3945 Eqs. (3), (5), (6).';
-    if (active === 'memory') exportData.conventions.periodicMemory = 'Cell keys are column,row on a periodic square lattice. All edges are X operations modulo two, starting from the specified reference ground state. logicalParity is null until all endpoints annihilate.';
-    saveBlob(JSON.stringify(exportData, null, 2) + '\n', 'application/json;charset=utf-8', `anyons-${active}.json`);
-  });
 
   typeset(document.body);
   navigate();

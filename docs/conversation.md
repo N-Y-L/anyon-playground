@@ -1,77 +1,49 @@
-# Three papers I want to remember
+# Selected papers
 
-I want to remember three ideas: **a phase derived, a phase measured, and an exchange that acts as a matrix**. Each paper makes one of those ideas concrete. A fourth, optional paper asks how one-particle interference changes the interpretation of a two-particle measurement.
+These papers cover the microscopic origin of fractional statistics, evidence from interferometry and non-Abelian exchange. The final paper concerns the interpretation of collider measurements. The [main notes](notes.md) develop the physics used below.
 
-This page follows the [main notes](notes.md), where the exchange phase, quasiholes and collective states are introduced. Here I keep one result, its scope and one question per paper. The citations beside the longer calculations are there when I want to go deeper.
+<span id="1-arovas-schrieffer-and-wilczek-the-electron-state-knows-the-statistics"></span>
 
-## 1. Arovas, Schrieffer and Wilczek: the electron state knows the statistics
+## Arovas, Schrieffer and Wilczek: fractional statistics from a wavefunction
 
-**“Fractional Statistics and the Quantum Hall Effect” (1984)** · Theory · [PRL 53, 722–723](https://doi.org/10.1103/PhysRevLett.53.722) · [Author paper hosted by UBC](https://pitp.phas.ubc.ca/confs/7pines2009/readings/arovas_ASW_1984.pdf)
+D. Arovas, J. R. Schrieffer and F. Wilczek, **“Fractional Statistics and the Quantum Hall Effect” (1984)**. [Physical Review Letters 53, 722–723](https://doi.org/10.1103/PhysRevLett.53.722) · [Open copy](https://pitp.phas.ubc.ca/confs/7pines2009/readings/arovas_ASW_1984.pdf)
 
-**The result.** Arovas, Schrieffer and Wilczek deduced fractional statistics by moving Laughlin quasiholes, localized deficits of electron density. The transport is adiabatic: the motion is slow enough for the electron state to follow without creating unwanted excitations. The quasihole positions enter as parameters of an electronic many-body state; transporting that state supplies the statistical phase.
+Arovas, Schrieffer and Wilczek started with an electronic wavefunction and calculated the charge and statistics of its quasiholes. A quasihole is a localized deficit of electron density. Its position enters the wavefunction as a parameter, so moving the hole means changing the state of the electrons. Moving it slowly enough for that state to follow gives a Berry phase. Subtracting the ordinary magnetic phase isolates the contribution from the other quasihole.
 
-**How I would explain it.** “Topology tells me which exchange phases are possible. Transporting the electron state tells me which phase the Laughlin quasihole actually has.”
+Planar topology tells us which exchange phases are possible; this calculation tells us which one the Laughlin state produces. The filling $\nu$ counts electrons per available orbital in one Landau level. At $\nu=1/3$, one exchange gives $\pi/3$ and a full encircling gives $2\pi/3$, with orientation fixed as in [the derivation](notes.md#exchange-the-quasiholes-transport-the-electron-state). The electrons themselves remain fermions. What has changed is the object being exchanged.
 
-**What I keep straight.** The ordinary magnetic phase must be separated from the contribution of the other quasihole. A full encircling gives twice the elementary exchange angle; the sign also needs a convention and a specified excitation.
+The paper is only two pages. Its central argument is the relation between quasihole transport and the Berry phase of the many-electron state. The screening assumption is essential: it allows local quasihole properties to be extracted from that state.
 
-**Where I look.** This is a two-page paper. I follow the transport argument alongside [the quasihole calculation](notes.md#exchange-the-quasiholes-transport-the-electron-state), rather than trying to memorize the normalization.
+<span id="2-nakamura-and-colleagues-a-braid-shifts-a-fringe"></span>
 
-**My question.** Which part of the answer survives changing microscopic details while staying in the same phase of matter?
+## Nakamura and colleagues: braiding in an interference signal
 
-## 2. Nakamura and colleagues: a braid shifts a fringe
+J. Nakamura, S. Liang, G. C. Gardner and M. J. Manfra, **“Direct observation of anyonic braiding statistics” (2020)**. [Nature Physics 16, 931–936](https://doi.org/10.1038/s41567-020-1019-1) · [Author manuscript](https://arxiv.org/abs/2006.14115)
 
-**James Nakamura, Shuang Liang, Geoffrey C. Gardner and Michael J. Manfra, “Direct observation of anyonic braiding statistics” (2020)** · Experiment · [Nature Physics 16, 931–936](https://doi.org/10.1038/s41567-020-1019-1) · [Author manuscript](https://arxiv.org/abs/2006.14115)
+Nakamura and colleagues measured discrete shifts of conductance interference fringes at filling $\nu=1/3$. Conductance is the current response to an applied voltage. The observed phase changes were consistent with the $2\pi/3$ acquired when one Laughlin quasihole encircles another.
 
-**The result.** At filling $\nu=1/3$—one electron per three available orbitals in the lowest Landau level—they measured discrete shifts of interference fringes in conductance. These are oscillations of the current response to an applied voltage as the magnetic field or a gate voltage changes. The shifts were consistent with a $2\pi/3$ phase when one quasihole encircles another. The [Landau-level introduction](notes.md#make-a-hole-without-removing-an-electron) explains the filling convention.
+The difficulty is that an enclosed charge can also move the conducting boundary and change the area of the interference path. That changes the enclosed magnetic flux and hence the ordinary magnetic phase. Nearby conducting layers reduce this electrostatic response; their use, together with the experimental checks, supports the interpretation in terms of Abelian braiding. The [interferometer calculation](notes.md#what-an-interferometer-has-actually-measured) separates these contributions.
 
-**How I would explain it.** “An extra localized excitation inside the interference path changes the fringe phase. The hard part is checking that it did not simply move the path.”
+Figures 1 and 2 show the device, fringes and phase jumps. The important experimental question is how to distinguish a change in enclosed topological charge from a change in the path itself.
 
-**What I keep straight.** Changing enclosed charge can move the conducting boundary, or edge, and change the magnetic flux through the interference path. Nearby conducting layers reduce this electrostatic response. Their use, together with the experimental checks, supports the braiding interpretation. This experiment does not demonstrate non-Abelian exchanges.
+<span id="3-ivanov-the-exchange-has-room-to-rotate-a-state"></span>
 
-**Where I look.** Figures 1 and 2: device paths, fringes, phase jumps. Then [the notes' phase equation](notes.md#what-an-interferometer-has-actually-measured). I need the mechanism more than the numerical error bar.
+## Ivanov: non-Abelian exchange of vortices
 
-**My question.** Which control gives the cleanest separation between a statistical phase and a change in the interference path?
+D. A. Ivanov, **“Non-Abelian Statistics of Half-Quantum Vortices in p-Wave Superconductors” (2001)**. [Physical Review Letters 86, 268–271](https://doi.org/10.1103/PhysRevLett.86.268) · [Author manuscript](https://arxiv.org/abs/cond-mat/0005069)
 
-## 3. Ivanov: the exchange has room to rotate a state
+Ivanov derived exchange operators for vortices supporting Majorana zero modes. A vortex is a defect around which the phase of a superconducting pair amplitude winds. A Majorana zero mode is described by a fermionic operator equal to its Hermitian conjugate and commuting with the ideal low-energy Hamiltonian. Two such modes form one ordinary fermionic mode, which can be empty or occupied without changing the energy.
 
-**D. A. Ivanov, “Non-Abelian Statistics of Half-Quantum Vortices in p-Wave Superconductors” (2001)** · Theory · [PRL 86, 268–271](https://doi.org/10.1103/PhysRevLett.86.268) · [Author manuscript](https://arxiv.org/abs/cond-mat/0005069)
+For four vortices, two fermionic modes give four occupation states. Fixing their total fermion parity—the evenness or oddness of the occupation sum—leaves two of them. Exchanges act on this space, and the operators for different pairs need not commute. Thus an exchange history can change the collective state even when all vortex positions return to their initial values.
 
-**The result.** The model concerns vortices: defects around which the phase of a superconducting pair amplitude winds. Each vortex supports a Majorana zero mode, described by a fermionic operator that equals its Hermitian conjugate and commutes with the ideal low-energy Hamiltonian. Two such modes combine into one ordinary fermionic mode, whose occupation can be zero or one without changing the energy. Four vortices therefore give two such occupations; fixing their total fermion parity (whether the occupation sum is even or odd) leaves two states. Vortex exchanges act on these states through noncommuting operators.
+Equations (8)–(10) and the four-vortex example give the construction; the [Ising example](notes.md#when-a-phase-is-no-longer-enough) works through a two-state version. The modes must remain well separated so their energy splitting is negligible. The braid operators are determined up to an overall phase. This is a theoretical mechanism, not a demonstration that a particular material realizes it.
 
-**How I would explain it.** “The particles can return to the same positions while their collective quantum state changes. Exchanging a different pair can perform a different rotation, so order matters.”
+## Samal and colleagues: statistics in an extended collider
 
-**What I keep straight.** The zero modes are assumed to remain well separated so that their energy splitting can be neglected. The paper derives a mechanism in a model; it is not experimental evidence that a particular material realizes that model. Its braid operators are specified up to an overall phase.
+S. S. Samal, S. Vishveshwara, Y. Gefen and J. I. Väyrynen, **“Quantum Statistics and Self-Interference in Extended Colliders” (2026)**. [Physical Review Letters 136, 076301](https://doi.org/10.1103/td98-5ltj) · [Author manuscript](https://arxiv.org/abs/2412.19674)
 
-**Where I look.** Equations (8)–(10) and the four-vortex example. I first use [the Ising fusion example](notes.md#when-a-phase-is-no-longer-enough) to understand why two collective states remain. I can leave the specialized superconducting construction for a second reading.
+A collider sends two incident particles through a scattering region toward output detectors. If the region provides paths with different delays, even one particle can interfere with itself. A comparison that discards this interference can make fermions appear to bunch: the probability of finding one particle in each output falls below the reference.
 
-**My question.** What preparation and measurement would reveal that two exchanges do not commute, rather than merely revealing another accumulated phase?
+Samal and colleagues construct the reference from measurements with one source running at a time. It retains one-particle interference and separates it from the contribution due to exchange between the incident particles. Figure 2 and [the collider calculation](notes.md#when-a-splitter-has-an-interior) show the distinction.
 
-<details>
-<summary>Optional fourth: Samal and colleagues on the reference measurement</summary>
-
-**Sai Satyam Samal, Smitha Vishveshwara, Yuval Gefen and Jukka I. Väyrynen, “Quantum Statistics and Self-Interference in Extended Colliders” (2026)** · Theory · [PRL 136, 076301](https://doi.org/10.1103/td98-5ltj) · [Author manuscript](https://arxiv.org/abs/2412.19674)
-
-A collider sends two incident particles through a scattering region toward output detectors. In this paper the region has enough spatial extent to provide paths with different delays. Even one particle can interfere with itself along these paths. A reference that discards that interference can make fermions appear to bunch: the probability of finding one particle in each output falls below the reference. The authors instead construct the reference from measurements with one source running at a time. This retains one-particle interference and separates it from the contribution due to exchange between the two incident particles.
-
-I would remember: **“Before I infer statistics from a correlation, I need to know what my reference removed.”** Figure 2 and [the collider section](notes.md#when-a-splitter-has-an-interior) show why.
-
-The result concerns bosons and fermions. An anyonic extension is left open because single-source processes can already carry braiding information. That gives me a direct question for Vishveshwara: **what should an anyonic source-alone reference retain, and what should it remove?**
-
-</details>
-
-## Questions I can carry into a conversation
-
-- **From topology to dynamics:** once I know the exchange rule, what remains free about how an excitation moves or how I prepare it?
-- **From bulk to edge:** what could controlling excitations in the interior of the sample reveal that currents along its boundary leave indirect?
-- **From ideal to convincing:** which competing explanation is hardest to rule out in a proposed statistics measurement?
-
-The [localized-pair section](notes.md#replace-the-electron-fluid-by-two-effective-particles) offers another connection to Vishveshwara's work: her 2010 paper with Cooper computes a pair's mean squared separation relative to distinguishable particles prepared with the same localization labels. The labels specify the prepared state; they are not exact particle positions. I do not need to make this another paper to memorize.
-
-If another idea catches me—[saddle scattering](directions/saddle.md), [wire end modes](directions/wires.md), or [geometry](directions/surfaces.md)—I can take that branch. These are invitations to ask which assumptions matter, not claims that I have already identified a novel project.
-
-## A one-minute recall check
-
-1. **What am I exchanging?** Localized excitations of a many-body state; the electrons remain fermions.
-2. **What is the difference between exchange and encircling?** One exchange versus two in the same direction; for the elementary Laughlin quasihole at one third, $\pi/3$ versus $2\pi/3$ in the chosen orientation.
-3. **What makes the non-Abelian case different?** A collective state space remains at fixed positions and types, so exchanges can act by noncommuting matrices.
-4. **What would convince me experimentally?** An observable plus controls that distinguish its statistical contribution from preparation, ordinary phases and device dynamics.
+Their result concerns bosons and fermions. An anyonic extension remains open because single-source processes can already contain braiding. Which of those processes should a reference retain? This connects the paper to the broader problem of [inferring statistics from detector signals](directions/detectors.md).

@@ -1,6 +1,6 @@
 # One particle at a saddle
 
-I start with one particle near a **saddle of the potential energy**, a stationary point where the energy curves upward in one direction and downward in another. Removing the second particle from the [two-anyon calculation](../notes.md#let-a-saddle-amplify-a-correlation) removes exchange, but the packet can still stretch, split and lose overlap with its initial shape. The same unstable dynamics also appears in barrier scattering and in wave equations near a black hole. I want to understand how far those connections go.
+A **saddle of the potential energy** is a stationary point where the energy curves upward in one direction and downward in another. A single-particle packet near a saddle can stretch, split and lose overlap with its initial shape. Removing the second particle from the [two-anyon calculation](../notes.md#let-a-saddle-amplify-a-correlation) isolates this motion from exchange. The same unstable dynamics also appears in barrier scattering and in wave equations near a black hole.
 
 I retain the lowest Landau level, freezing the particle's cyclotron motion and describing its **guiding center**, the center of the orbit, by coordinates $X,Y$. For charge $q$ in a field of magnitude $B_0$, the magnetic length is $\ell=\sqrt{\hbar/(|q|B_0)}$. I choose the field orientation so that $[X,Y]=i\ell^2$.
 
@@ -8,7 +8,7 @@ The initial **coherent state** is a Gaussian with equal uncertainties in $X,Y$ a
 
 The figure reports two probabilities: $P_+$ is the probability of measuring $Y>0$, while $P_0$ is the squared overlap with a fixed coherent state centered at the origin. Its logarithmic decay rate, $-d\ln P_0/d\tau$, is negative while that overlap grows and positive while it falls.
 
-I move the packet toward the incoming $X$ axis and watch the outgoing split become more even. Then I center it exactly on the saddle: its mean stays put while its shape keeps changing. A stationary mean need not mean a stationary state.
+As the initial packet approaches the incoming $X$ axis, the outgoing split becomes more even. A packet centered exactly on the saddle keeps its mean position while its shape changes. A stationary mean need not mean a stationary state.
 
 <!-- DIRECTION-FIGURE: saddle -->
 
@@ -67,7 +67,7 @@ $$P_+=\Pr(Y>0)=\frac12[1+\operatorname{erf}(y_0)],$$
 
 where $\operatorname{erf}(a)=(2/\sqrt\pi)\int_0^a e^{-u^2}\,du$. This fraction is constant: the mean and width of the $Y$ distribution grow together. Its positive and negative portions move along the two outgoing directions. At $y_0=0$ the split is equal; changing $x_0$ changes the approach without changing this split. A real collection window or arrival-time gate would require its own detector model.
 
-I can instead ask whether the state matches a fixed Gaussian $|0\rangle$ centered at the origin, with guiding-center variances $\ell^2/2$. This measurement is the projector $|0\rangle\langle0|$; its probability is the squared overlap with that reference state. A centered packet loses overlap as it squeezes; a displaced packet can initially gain overlap as it approaches. At late times the overlap probability decays at rate $\lambda$.
+A different measurement tests whether the state matches a fixed Gaussian $|0\rangle$ centered at the origin, with guiding-center variances $\ell^2/2$. Its projector is $|0\rangle\langle0|$, and its probability is the squared overlap with that reference state. A centered packet loses overlap as it squeezes; a displaced packet can initially gain overlap as it approaches. At late times the overlap probability decays at rate $\lambda$.
 
 <details>
 <summary>Overlap formula and its late-time limit</summary>
@@ -147,8 +147,8 @@ The oscillator annihilation operator is $a=(X+iY)/(\sqrt2\ell)$, with $[a,a^\dag
 
 </details>
 
-For two anyons, their separation and relative angle form the relative-coordinate problem. The exchange rule restricts its angular states. I must then specify their amplitudes and determine which effective operators represent the physical potential and measurement. Adding an exchange phase to this one-particle Gaussian does not supply those ingredients.
+For two anyons, their separation and relative angle form the relative-coordinate problem. The exchange rule restricts its angular states. Their amplitudes depend on preparation, while the physical potential and measurement must be represented by appropriate effective operators. Adding an exchange phase to this one-particle Gaussian does not supply those ingredients.
 
-Simple unstable dynamics can connect quantum transport to broader wave physics. I want to understand which features survive changes of state and measurement, and which need extra ingredients such as a filled sea or inaccessible partner modes. This is a way into quantum analogues of gravitational phenomena without equating a thermal-looking curve with Hawking radiation.
+The inverted oscillator connects quantum transport to broader wave physics through a shared local instability. Which features survive changes of state, observable or boundary condition? In the examples above, stretching follows directly from the Hamiltonian, resonances depend on outgoing boundary conditions, and the thermal reduced state comes from a specified many-particle state with unobserved partner modes.
 
-[Directions to think about](../directions.md) · [What the detector measures](detectors.md) · [Reading and talks](reading.md)
+[Further directions](../directions.md) · [What the detector measures](detectors.md) · [Reading and talks](reading.md)

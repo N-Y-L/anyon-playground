@@ -1,8 +1,7 @@
 # Anyons and quantum transport
 
-Notes and interactive calculations on what a quantum state can remember after
-exchanging identical objects: quasiparticles, Laughlin quasiholes, fractional
-statistics, non-Abelian fusion states and measured signals.
+Notes and calculations on anyons, from quasiparticles and exchange statistics
+to non-Abelian fusion states and experimental measurements.
 
 The assumed background is graduate mathematics, basic graduate quantum mechanics
 and very basic condensed-matter physics. Landau levels, guiding centers and edge
@@ -15,10 +14,10 @@ check important claims against the cited papers.
 
 - [Connected notes](docs/notes.md): the main argument, with optional derivations
   and figures.
-- [Three papers to remember](docs/conversation.md): a short reading list with
-  recall prompts and discussion questions.
-- [Directions to explore](docs/directions.md): follow-on questions and detailed
-  subchapters. These are starting points, not claims of completed research.
+- [Selected papers](docs/conversation.md): three central results and a related
+  paper on collider measurements.
+- [Further directions](docs/directions.md): follow-on questions and detailed
+  calculations.
 
 ## Open the site
 
@@ -41,7 +40,7 @@ npm run check
 ```
 
 Edit the Markdown in `docs/` and regenerate its HTML reading copies. See
-[development guidance](DEVELOPMENT.md) for the workflow, model limits and exports.
+[development guidance](DEVELOPMENT.md) for the workflow and model assumptions.
 
 ## Repository map
 

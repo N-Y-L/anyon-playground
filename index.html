@@ -2,44 +2,41 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="First-person notes from anyon basics to experiments and open questions, with optional derivations, interactive figures and three memorable papers.">
+  <meta name="description" content="Notes on anyons, quasiparticles, exchange statistics and quantum transport, with derivations and interactive calculations.">
   <title>Anyons and quantum transport</title>
-  <link rel="stylesheet" href="styles/reading.css?v=c3b492618f61">
+  <link rel="stylesheet" href="styles/reading.css?v=b9b329b3b8c6">
 </head>
 <body>
-  <nav aria-label="Main navigation"><a href="docs/notes.html">Read the notes</a> · <a href="docs/conversation.html">Three papers</a> · <a href="docs/directions.html">Directions</a> · <a href="docs/references.html">Sources</a> · <a href="https://github.com/N-Y-L/anyon-playground">Code</a></nav>
+  <nav aria-label="Main navigation"><a href="docs/notes.html">Notes</a> · <a href="docs/conversation.html">Selected papers</a> · <a href="docs/directions.html">Further directions</a> · <a href="docs/references.html">References</a> · <a href="https://github.com/N-Y-L/anyon-playground">Repository</a></nav>
   <main>
     <h1>Anyons and quantum transport</h1>
     <p>Neil Yuanting Li</p>
-    <p>I want to understand what a quantum state remembers after I exchange two identical objects—and how an experiment could notice. These are my notes from that first question to a few directions worth exploring.</p>
-    <p><a href="docs/notes.html">Read the notes: what makes an anyon?</a></p>
-    <p>I assume graduate mathematics, basic graduate quantum mechanics and very basic condensed-matter physics. Definitions accompany the ideas as they appear. Optional derivations give the assumptions and calculations in more detail.</p>
-    <h2>First, the ideas</h2>
+    <p>These notes develop the physics of anyons from quasiparticles and exchange statistics to their preparation, motion and detection. The assumed background is graduate mathematics, basic graduate quantum mechanics and very basic condensed-matter physics. Definitions are introduced as needed; longer derivations can be expanded.</p>
+    <h2>Notes</h2>
+    <p><a href="docs/notes.html">Anyons and quantum transport</a> is the main text. Its first sections cover:</p>
     <ol>
-      <li><a href="docs/notes.html#what-is-moving">A particle made from a many-body state.</a> The electrons stay electrons; their excitations can behave differently.</li>
-      <li><a href="docs/notes.html#make-a-hole-without-removing-an-electron">A hole with a fraction of an electron's charge.</a> No electron needs to be cut into pieces.</li>
-      <li><a href="docs/notes.html#exchange-the-quasiholes-transport-the-electron-state">A state that remembers a winding.</a> Exchange, encircling and ordinary magnetic phases play different roles.</li>
-      <li><a href="docs/notes.html#when-a-phase-is-no-longer-enough">An exchange that rotates a collective state.</a> This is the extra structure of non-Abelian anyons.</li>
-      <li><a href="docs/notes.html#what-an-interferometer-has-actually-measured">A braid in an interference signal.</a> The experiment has to separate statistics from electrostatics.</li>
+      <li><a href="docs/notes.html#what-is-moving">Quasiparticles</a></li>
+      <li><a href="docs/notes.html#make-a-hole-without-removing-an-electron">Laughlin quasiholes and fractional charge</a></li>
+      <li><a href="docs/notes.html#exchange-the-quasiholes-transport-the-electron-state">Exchange statistics and Berry phase</a></li>
+      <li><a href="docs/notes.html#when-a-phase-is-no-longer-enough">Non-Abelian exchanges</a></li>
+      <li><a href="docs/notes.html#what-an-interferometer-has-actually-measured">Interference measurements</a></li>
     </ol>
-    <h2>A closer look at preparation and measurement</h2>
-    <p>I can ask how <a href="docs/notes.html#replace-the-electron-fluid-by-two-effective-particles">preparation changes a pair</a>, how <a href="docs/notes.html#let-a-saddle-amplify-a-correlation">a saddle amplifies a correlation</a>, or how <a href="docs/notes.html#when-a-splitter-has-an-interior">an extended collider complicates the reference</a>. A saddle is a potential that rises along one direction and falls along another. An extended collider lets a particle follow several paths before it reaches a detector. The notes introduce these models before working through their equations.</p>
-    <h2>A few papers and an open question</h2>
-    <p><a href="docs/conversation.html">Three papers I want to remember</a> gives me a result, its scope and a question for each: a phase derived, a phase measured, and a noncommuting exchange. An optional fourth explains how a reference measurement changes the interpretation of a collider signal.</p>
-    <p>The <a href="docs/catalog.html">questions to explore</a> and <a href="docs/directions.html">seven directions</a> branch into detectors, saddles, wires, closed surfaces, Möbius geometry and ramps. I can follow an interesting connection without already having a research proposal.</p>
-    <details>
-      <summary>Independent notebooks and optional background</summary>
-      <p>Each notebook specifies its own model and assumptions.</p>
-      <ul>
-        <li><a href="experiments.html#exchange">Exchange paths</a> and <a href="experiments.html#interference">interference</a></li>
-        <li><a href="berry.html">Berry phase</a> and <a href="experiments.html#correlations">localized-pair correlations</a></li>
-        <li><a href="experiments.html#toric">Toric-code strings</a> and <a href="experiments.html#memory">topological memory</a></li>
-        <li><a href="abelian.html">Abelian theories</a>, <a href="experiments.html#fusion">fusion paths</a>, <a href="fusion-basis.html">fusion bases</a> and <a href="experiments.html#braids">Ising braids</a></li>
-      </ul>
-      <p>The <a href="https://n-y-l.github.io/quantum-transport-notes/">quantum-transport notes</a> provide optional background on currents and one-particle interference, with links back to the anyon calculation.</p>
-    </details>
-    <h2>Read offline or change a calculation</h2>
-    <p>Download the repository ZIP, extract it, and open <code>index.html</code>. The text, equations and controls work offline; external sources require a connection. Figures can be saved as SVG, with numerical data in JSON. The <a href="README.md">README</a> describes models, tests and how to rebuild the reading copies.</p>
+    <p>The later sections examine <a href="docs/notes.html#replace-the-electron-fluid-by-two-effective-particles">two-particle preparation</a>, <a href="docs/notes.html#let-a-saddle-amplify-a-correlation">motion through a saddle potential</a> and <a href="docs/notes.html#when-a-splitter-has-an-interior">extended colliders</a>. They lead to questions about <a href="docs/catalog.html">preparation and measurement</a>.</p>
+    <h2>Further reading</h2>
+    <ul>
+      <li><a href="docs/conversation.html">Selected papers</a>: microscopic statistics, interferometry, non-Abelian exchange and collider measurements.</li>
+      <li><a href="docs/directions.html">Further directions</a>: detectors, saddles, wire end modes, geometry and driven systems.</li>
+      <li><a href="docs/references.html">References</a> for the derivations and calculations.</li>
+    </ul>
+    <h2>Independent calculations</h2>
+    <ul>
+      <li><a href="experiments.html#exchange">Exchange paths</a> and <a href="experiments.html#interference">interference</a></li>
+      <li><a href="berry.html">Berry phase</a> and <a href="experiments.html#correlations">localized-pair correlations</a></li>
+      <li><a href="experiments.html#toric">Toric-code strings</a> and <a href="experiments.html#memory">topological memory</a></li>
+      <li><a href="abelian.html">Abelian theories</a>, <a href="experiments.html#fusion">fusion paths</a>, <a href="fusion-basis.html">fusion bases</a> and <a href="experiments.html#braids">Ising braids</a></li>
+    </ul>
+    <p>Each calculation specifies its model and assumptions. The companion <a href="https://n-y-l.github.io/quantum-transport-notes/">quantum-transport notes</a> cover currents and single-particle interference.</p>
+    <p>For offline reading, download and extract the repository ZIP, then open <code>index.html</code>. The text, equations and controls work locally. See the <a href="README.md">README</a> for setup and source files.</p>
   </main>
   <footer>Copyright (c) 2026 Neil Yuanting Li · <a href="LICENSE">MIT license</a></footer>
 </body>

@@ -16,7 +16,6 @@
     relation: { a: [1, 2, 1], b: [2, 1, 2] },
     inverse: { a: [2, -2], b: [] }
   };
-  let exportUrl = null;
   const number = (value, digits = 4) => (Math.abs(value) < 0.5 * 10 ** -digits ? 0 : value).toFixed(digits);
   const percent = value => number(100 * value, 2) + '%';
   function complex(value, tex = false) {
@@ -151,46 +150,6 @@
     byId('fb-comparison-result').textContent = 'Squared state overlap: ' + number(result.fidelity, 6) + '. Matrix residual ‖U_A − U_B‖_F: ' + residual + '. ' + conclusion;
   }
   function renderAll() { renderBasis(); renderExchange(); renderComparison(); }
-  function prepareDownload(contents, type, filename) {
-    if (exportUrl) URL.revokeObjectURL(exportUrl);
-    exportUrl = URL.createObjectURL(new Blob([contents], { type }));
-    const link = byId('fb-export-download');
-    link.href = exportUrl;
-    link.download = filename;
-    link.textContent = filename;
-    byId('fb-export-ready').hidden = false;
-    link.click();
-  }
-  function saveSvg() {
-    let body, width, height;
-    if (byId('fb-export-figure').value === 'trees') {
-      width = 720; height = 325;
-      body = '<rect width="720" height="325" fill="white"/><g font-family="Times New Roman,serif" fill="#000" font-size="22">' + text(180, 28, 'Left basis: pair 1–2', 'text-anchor="middle"') + text(540, 28, 'Right basis: pair 2–3', 'text-anchor="middle"') + '</g><g transform="translate(10 45)">' + treeMarkup('L') + '</g><g transform="translate(370 45)">' + treeMarkup('R') + '</g><text x="360" y="319" text-anchor="middle" font-family="Times New Roman,serif" font-size="18">Same state; two different pair-charge measurements.</text>';
-    } else {
-      width = 660; height = 305;
-      const stages = P.exchangeStages(initial(), Number(byId('fb-direction').value)), index = Number(byId('fb-stage').value);
-      body = phasorMarkup(stages[index], stages[Math.max(0, index - 1)]);
-    }
-    const svg = '<?xml version="1.0" encoding="UTF-8"?>\n<svg xmlns="http://www.w3.org/2000/svg" width="' + width + '" height="' + height + '" viewBox="0 0 ' + width + ' ' + height + '">' + body + '</svg>';
-    prepareDownload(svg, 'image/svg+xml;charset=utf-8', 'fibonacci-' + byId('fb-export-figure').value + '.svg');
-  }
-  function saveParameters() {
-    const input = initial(), example = examples[byId('fb-comparison').value];
-    const data = {
-      schemaVersion: 1, model: 'Three Fibonacci tau anyons with fixed total tau',
-      convention: { chirality: 'right-handed', positiveExchange: 'counterclockwise viewed from above the plane',
-        channelOrder: ['1', 'tau'], wordOrder: 'chronological; [1,2] has matrix B2 B1',
-        complexEncoding: '[real, imaginary]', basis: 'left association ((tau tau)_a tau)_tau',
-        source: 'https://arxiv.org/html/2407.21761v2#S2.SS1' },
-      phi: P.phi, fMatrix: P.fMatrix(), counterclockwiseR: P.braidMatrix(1),
-      initialChoice: byId('fb-initial').value, inputLeft: input, inputRight: P.changeBasis(input),
-      direction: Number(byId('fb-direction').value), selectedStep: Number(byId('fb-stage').value),
-      exchangeSteps: P.exchangeStages(input, Number(byId('fb-direction').value)),
-      comparison: { choice: byId('fb-comparison').value, initialChoice: byId('fb-comparison-initial').value,
-        input: P.initialState(byId('fb-comparison-initial').value), wordA: example.a, wordB: example.b, ...comparisonData() }
-    };
-    prepareDownload(JSON.stringify(data, null, 2) + '\n', 'application/json;charset=utf-8', 'fibonacci-fusion-basis.json');
-  }
   byId('fb-initial').addEventListener('change', () => { byId('fb-stage').value = '0'; renderBasis(); renderExchange(); });
   byId('fb-direction').addEventListener('change', renderExchange);
   byId('fb-stage').addEventListener('change', renderExchange);
@@ -201,12 +160,8 @@
   byId('fb-reset').addEventListener('click', () => {
     byId('fb-initial').value = 'vacuum'; byId('fb-direction').value = '1'; byId('fb-stage').value = '0';
     byId('fb-comparison').value = 'order'; byId('fb-comparison-initial').value = 'plus';
-    byId('fb-export-ready').hidden = true;
     renderAll();
   });
-  byId('fb-export-svg').addEventListener('click', saveSvg);
-  byId('fb-export-json').addEventListener('click', saveParameters);
-  window.addEventListener('pagehide', () => { if (exportUrl) URL.revokeObjectURL(exportUrl); });
   if (globalThis.renderMathInElement) renderMathInElement(document.body, { delimiters: [{ left: '\\[', right: '\\]', display: true }, { left: '\\(', right: '\\)', display: false }], throwOnError: false });
   renderAll();
 })();

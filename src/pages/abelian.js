@@ -21,11 +21,8 @@
   const vectorText = vector => `(${vector.join(', ')})`;
   const vectorTex = vector => `\\begin{pmatrix}${vector.join('\\\\')}\\end{pmatrix}`;
   const matrixTex = matrix => `\\begin{pmatrix}${matrix.map(row => row.map(entry => typeof entry === 'number' ? entry : fractionTex(entry)).join('&')).join('\\\\')}\\end{pmatrix}`;
-  const escapeXml = text => String(text).replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;' })[character]);
-  const text = (x, y, content, size = 21, color = '#000', anchor = 'middle') => `<text x="${x}" y="${y}" fill="${color}" font-size="${size}" font-family="Times New Roman, Times, serif" text-anchor="${anchor}">${escapeXml(content)}</text>`;
   const defaults = () => ({ model: 'toric', probe: 1, target: 2, n: [0, 0], direction: 1 });
   let state = defaults();
-  let downloadUrl = null;
   const modelNotes = {
     toric: 'Four sectors with fusion group ℤ₂ × ℤ₂. e and m are bosons with mutual winding −1; ε = e × m is an emergent fermion. The chosen charge vector is zero: these symbols e and m are not electromagnetic charge and flux.',
     doubleSemion: 'Four sectors with the same fusion group ℤ₂ × ℤ₂. s and s̄ exchange with opposite phases +i and −i; s × s̄ = b is bosonic. The bar denotes opposite semion handedness: each semion is its own fusion inverse, s × s = s̄ × s̄ = 1.',
@@ -87,10 +84,10 @@
   function comparisonRows(model, data) {
     const originalExchange = P.phase(P.multiply(data.originalSpin.turns, P.rational(state.direction)));
     return [
-      { label: 'Integer label', tex: [vectorTex(data.representative), vectorTex(data.shiftedLabel)], plain: [vectorText(data.representative), vectorText(data.shiftedLabel)] },
-      { label: 'Charge q/e', tex: [fractionTex(data.originalCharge), fractionTex(data.charge)], plain: [P.format(data.originalCharge), P.format(data.charge)] },
-      { label: 'Identical-probe exchange', tex: [phaseTex(originalExchange), phaseTex(data.exchange)], plain: [phaseText(originalExchange), phaseText(data.exchange)] },
-      { label: `Winding around ${model.sectors[state.target].name}`, tex: [phaseTex(data.originalMutual), phaseTex(data.mutual)], plain: [phaseText(data.originalMutual), phaseText(data.mutual)] }
+      { label: 'Integer label', tex: [vectorTex(data.representative), vectorTex(data.shiftedLabel)] },
+      { label: 'Charge q/e', tex: [fractionTex(data.originalCharge), fractionTex(data.charge)] },
+      { label: 'Identical-probe exchange', tex: [phaseTex(originalExchange), phaseTex(data.exchange)] },
+      { label: `Winding around ${model.sectors[state.target].name}`, tex: [phaseTex(data.originalMutual), phaseTex(data.mutual)] }
     ];
   }
   function comparisonTable(model, data) {
@@ -109,33 +106,6 @@
       return row;
     }));
     math('abelian-fusion-equation', `${vectorTex(data.shiftedLabel)}+${vectorTex(data.target)}=${vectorTex(data.fusion.label)}=${vectorTex(data.fusion.sector.label)}+K${vectorTex(data.fusion.removedLocal)}`, true);
-  }
-  function tableSvg(model, data, kind) {
-    const summary = kind === 'summary', width = 760, height = summary ? 355 : 155 + model.sectorCount * 53;
-    let body = `<title>${escapeXml(model.name)}: ${summary ? 'local attachment comparison' : 'full-winding matrix'}</title><rect width="${width}" height="${height}" fill="white"/>` +
-      text(380, 28, `${model.name} · ${state.direction === 1 ? 'counterclockwise' : 'clockwise'}`, 23);
-    if (summary) {
-      body += text(440, 74, 'Listed representative', 20) + text(645, 74, 'After attachment', 20);
-      comparisonRows(model, data).forEach((row, index) => {
-        const y = 119 + index * 47;
-        body += text(24, y, row.label, 20, '#000', 'start') + text(440, y, row.plain[0], 21) + text(645, y, row.plain[1], 21);
-      });
-      body += text(380, 320, `Both labels belong to sector ${data.sector.name}; target ${vectorText(data.target)}.`, 20);
-    } else {
-      const x = index => 230 + index * 130;
-      body += text(28, 81, 'Probe / target', 20, '#000', 'start');
-      model.sectors.forEach((target, col) => { body += text(x(col), 81, target.name, 23); });
-      model.sectors.forEach((probe, row) => {
-        const y = 129 + row * 53;
-        body += text(88, y, probe.name, 23);
-        model.sectors.forEach((target, col) => {
-          const phase = P.phase(P.multiply(P.mutual(model, probe.label, target.label).turns, P.rational(state.direction)));
-          body += text(x(col), y, phaseText(phase), 21);
-        });
-      });
-      body += text(380, height - 16, 'All local attachments leave this matrix unchanged.', 19);
-    }
-    return `<?xml version="1.0" encoding="UTF-8"?>\n<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">${body}</svg>`;
   }
   function windingTable(model) {
     const table = $('abelian-mutual-table');
@@ -203,28 +173,5 @@
     syncControls(); render();
     $('abelian-announcement').textContent = `Example selected: ${button.textContent}.`;
   }));
-  function save(contents, type, filename) {
-    if (downloadUrl) URL.revokeObjectURL(downloadUrl);
-    downloadUrl = URL.createObjectURL(new Blob([contents], { type }));
-    const link = $('abelian-download'); link.href = downloadUrl; link.download = filename; link.textContent = filename;
-    $('abelian-export-ready').hidden = false; link.click();
-    $('abelian-announcement').textContent = `${filename} prepared. Its download link remains below the export controls.`;
-  }
-  $('abelian-export-svg').addEventListener('click', () => {
-    const kind = $('abelian-export-figure').value;
-    save(tableSvg(P.models[state.model], result(), kind), 'image/svg+xml;charset=utf-8', `${state.model}-${kind}.svg`);
-  });
-  $('abelian-export-json').addEventListener('click', () => {
-    const model = P.models[state.model];
-    const data = { schemaVersion: 1, model: model.name, modelId: model.id, K: model.K, inverseK: model.inverse, chargeVector: model.t,
-      parameters: { probeIndex: state.probe, targetIndex: state.target, localAttachment: state.n.slice(), direction: state.direction },
-      conventions: { rationalNumbers: '{ numerator, denominator }, reduced exactly', phaseTurns: 'Angle divided by 2 pi; complex coordinates are approximate [real, imaginary].', positiveDirection: 'Counterclockwise', charge: 'q/e with e > 0; for K=3 the electron label is -3.', sectors: 'Quotient by all local K n; for odd K exchange factors depend on representatives.', fusion: 'The integer-label sum is exact. Removing K n may remove a local integer charge.', torusDegeneracy: 'Ideal gapped-phase value; finite-size splitting is not calculated.' },
-      sectorCount: model.sectorCount, idealTorusDegeneracy: model.sectorCount, chiralCentralCharge: model.signature,
-      sectors: model.sectors.map(sector => ({ ...sector, representativeSpin: P.spin(model, sector.label), charge: P.charge(model, sector.label) })),
-      counterclockwiseMutualMatrix: model.sectors.map(left => model.sectors.map(right => P.mutual(model, left.label, right.label))),
-      results: result(), sources: ['https://doi.org/10.1103/PhysRevB.93.155121', 'https://arxiv.org/abs/1205.3156', 'https://arxiv.org/abs/cond-mat/9506066'] };
-    save(JSON.stringify(data, null, 2) + '\n', 'application/json;charset=utf-8', `anyons-abelian-${state.model}.json`);
-  });
-  window.addEventListener('pagehide', () => { if (downloadUrl) URL.revokeObjectURL(downloadUrl); });
   typeset(document.body); syncControls(); render();
 })();

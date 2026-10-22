@@ -1,6 +1,6 @@
 # Sources for these directions
 
-I collect the papers cited in the seven directions here for reference. The chapters introduce the physical terms and place citations beside the claims they support. The [three-paper shortlist](../conversation.md) is the shorter starting point; the [sources for the main anyon notes](../references.html) are listed separately.
+These papers support the seven directions, with citations beside the relevant arguments in each chapter. The [selected papers](../conversation.md) have a shorter discussion; the [sources for the main anyon notes](../references.html) are listed separately.
 
 ## The single-particle saddle
 
