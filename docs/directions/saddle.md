@@ -1,6 +1,6 @@
 # One particle at a saddle
 
-A **saddle of the potential energy** is a stationary point where the energy curves upward in one direction and downward in another. A single-particle packet near a saddle can stretch, split and lose overlap with its initial shape. Removing the second particle from the [two-anyon calculation](../notes.md#let-a-saddle-amplify-a-correlation) isolates this motion from exchange. The same unstable dynamics also appears in barrier scattering and in wave equations near a black hole.
+A **saddle of the potential energy** is a stationary point where the energy curves upward in one direction and downward in another. A single-particle packet near a saddle can stretch, split and lose overlap with its initial shape. Removing the second particle from the [two-anyon calculation](../transport.md#let-a-saddle-amplify-a-correlation) isolates this motion from exchange. The same unstable dynamics also appears in barrier scattering and in wave equations near a black hole.
 
 I retain the lowest Landau level, freezing the particle's cyclotron motion and describing its **guiding center**, the center of the orbit, by coordinates $X,Y$. For charge $q$ in a field of magnitude $B_0$, the magnetic length is $\ell=\sqrt{\hbar/(|q|B_0)}$. I choose the field orientation so that $[X,Y]=i\ell^2$.
 
@@ -138,7 +138,7 @@ For a connection to quantum radiation, the state matters. [Stone (2013)](https:/
 
 ## Returning to the pair
 
-For an ordinary oscillator, a Hamiltonian made from quadratic combinations of creation and annihilation operators preserves the even and odd occupation sectors: states with even occupation can mix with one another but cannot become odd. This connects oscillator algebra to the [pair calculation](../notes.md#which-localized-state).
+For an ordinary oscillator, a Hamiltonian made from quadratic combinations of creation and annihilation operators preserves the even and odd occupation sectors: states with even occupation can mix with one another but cannot become odd. This connects oscillator algebra to the [pair calculation](../transport.md#which-localized-state).
 
 <details>
 <summary>Oscillator operators</summary>

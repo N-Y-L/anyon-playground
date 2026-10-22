@@ -12,12 +12,14 @@ check important claims against the cited papers.
 
 ## Start reading
 
-- [Connected notes](docs/notes.md): the main argument, with optional derivations
-  and figures.
-- [Selected papers](docs/conversation.md): three central results and a related
-  paper on collider measurements.
-- [Further directions](docs/directions.md): follow-on questions and detailed
-  calculations.
+- [An introduction to anyons](docs/notes.md): why two dimensions matter,
+  microscopic examples, exchange and measurement, with optional derivations.
+- [Preparation, motion and detection](docs/transport.md): the transport
+  continuation, from localized pairs to saddle potentials and colliders.
+- [Selected papers](docs/conversation.md): five studies of statistics,
+  correlations and measurement, including two by Vishveshwara and collaborators.
+- [Further directions](docs/directions.md): readout, protection and preparation,
+  and the effect of geometry.
 
 ## Open the site
 

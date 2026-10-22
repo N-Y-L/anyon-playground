@@ -1,6 +1,6 @@
 # Selected papers
 
-These papers cover the microscopic origin of fractional statistics, evidence from interferometry and non-Abelian exchange. The final paper concerns the interpretation of collider measurements. The [main notes](notes.md) develop the physics used below.
+The first three papers connect the microscopic origin of fractional statistics, an interference experiment and non-Abelian exchange. The last two examine how preparation and propagation affect correlations. The [introduction](notes.md) develops the core physics; the [transport continuation](transport.md) works through the pair and collider models.
 
 <span id="1-arovas-schrieffer-and-wilczek-the-electron-state-knows-the-statistics"></span>
 
@@ -12,7 +12,7 @@ Arovas, Schrieffer and Wilczek started with an electronic wavefunction and calcu
 
 Planar topology tells us which exchange phases are possible; this calculation tells us which one the Laughlin state produces. The filling $\nu$ counts electrons per available orbital in one Landau level. At $\nu=1/3$, one exchange gives $\pi/3$ and a full encircling gives $2\pi/3$, with orientation fixed as in [the derivation](notes.md#exchange-the-quasiholes-transport-the-electron-state). The electrons themselves remain fermions. What has changed is the object being exchanged.
 
-The paper is only two pages. Its central argument is the relation between quasihole transport and the Berry phase of the many-electron state. The screening assumption is essential: it allows local quasihole properties to be extracted from that state.
+The charge deficit enters the Berry-phase calculation directly: moving the quasihole samples the electron density. The screening assumption is essential: it allows local quasihole properties to be extracted from that state.
 
 <span id="2-nakamura-and-colleagues-a-braid-shifts-a-fringe"></span>
 
@@ -24,7 +24,7 @@ Nakamura and colleagues measured discrete shifts of conductance interference fri
 
 The difficulty is that an enclosed charge can also move the conducting boundary and change the area of the interference path. That changes the enclosed magnetic flux and hence the ordinary magnetic phase. Nearby conducting layers reduce this electrostatic response; their use, together with the experimental checks, supports the interpretation in terms of Abelian braiding. The [interferometer calculation](notes.md#what-an-interferometer-has-actually-measured) separates these contributions.
 
-Figures 1 and 2 show the device, fringes and phase jumps. The important experimental question is how to distinguish a change in enclosed topological charge from a change in the path itself.
+Figures 1 and 2 show the device, fringes and phase jumps. The important experimental question is how to distinguish a change in enclosed [topological charge](notes.md#when-a-phase-is-no-longer-enough)—the combined excitation type resolved by a surrounding probe—from a change in the path itself. Topological charge need not be an electric charge.
 
 <span id="3-ivanov-the-exchange-has-room-to-rotate-a-state"></span>
 
@@ -38,12 +38,22 @@ For four vortices, two fermionic modes give four occupation states. Fixing their
 
 Equations (8)–(10) and the four-vortex example give the construction; the [Ising example](notes.md#when-a-phase-is-no-longer-enough) works through a two-state version. The modes must remain well separated so their energy splitting is negligible. The braid operators are determined up to an overall phase. This is a theoretical mechanism, not a demonstration that a particular material realizes it.
 
+## Vishveshwara and Cooper: correlations of a localized anyon pair
+
+S. Vishveshwara and N. R. Cooper, **“Correlations and beam splitters for quantum Hall anyons” (2010)**. [Physical Review B 81, 201306(R)](https://doi.org/10.1103/PhysRevB.81.201306) · [Author manuscript](https://arxiv.org/abs/0908.3945)
+
+Vishveshwara and Cooper study two effective charged anyons in the lowest Landau level, the lowest kinetic-energy level in a magnetic field. They compare the mean squared separation of their **guiding centers**, the centers of their cyclotron orbits, with that of distinguishable particles prepared using the same localization labels.
+
+For fractional statistics, this difference changes sign as the initial separation label increases, although the exchange angle stays fixed. Figure 1 makes the physical point: a fixed statistical rule does not assign a universal tendency to remain closer together or farther apart.
+
+They then apply a **saddle potential**, whose energy curves upward in one direction and downward in another, to amplify a position correlation. Equations (5)–(8) connect preparation, correlation and motion. The [transport calculation](transport.md#replace-the-electron-fluid-by-two-effective-particles) follows this construction and distinguishes a separation moment from the probability of joint detector events. That distinction determines what the proposed beam splitter would need to measure.
+
 ## Samal and colleagues: statistics in an extended collider
 
 S. S. Samal, S. Vishveshwara, Y. Gefen and J. I. Väyrynen, **“Quantum Statistics and Self-Interference in Extended Colliders” (2026)**. [Physical Review Letters 136, 076301](https://doi.org/10.1103/td98-5ltj) · [Author manuscript](https://arxiv.org/abs/2412.19674)
 
 A collider sends two incident particles through a scattering region toward output detectors. If the region provides paths with different delays, even one particle can interfere with itself. A comparison that discards this interference can make fermions appear to bunch: the probability of finding one particle in each output falls below the reference.
 
-Samal and colleagues construct the reference from measurements with one source running at a time. It retains one-particle interference and separates it from the contribution due to exchange between the incident particles. Figure 2 and [the collider calculation](notes.md#when-a-splitter-has-an-interior) show the distinction.
+Samal and colleagues construct the reference from measurements with one source running at a time. It retains one-particle interference and separates it from the contribution due to exchange between the incident particles. Figure 2 and [the collider calculation](transport.md#when-a-splitter-has-an-interior) show the distinction.
 
-Their result concerns bosons and fermions. An anyonic extension remains open because single-source processes can already contain braiding. Which of those processes should a reference retain? This connects the paper to the broader problem of [inferring statistics from detector signals](directions/detectors.md).
+Their result concerns bosons and fermions. The paper leaves an anyonic extension unresolved because single-source processes can already contain braiding. Which of those processes should a reference retain? This connects the paper to the broader problem of [inferring statistics from detector signals](directions/detectors.md).

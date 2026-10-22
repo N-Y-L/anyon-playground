@@ -8,12 +8,13 @@ const path = require('node:path');
 const vm = require('node:vm');
 const { createHash } = require('node:crypto');
 
-// Exercise the actual saved reading page and its browser scripts. This adapter
+// Exercise the actual saved introduction and transport pages and their browser scripts. This adapter
 // enforces select-option matching and event wiring; it does not test layout,
 // native range snapping or focus.
-function createNotes() {
+function createReadingPage(name) {
+  assert.ok(['notes', 'transport'].includes(name), `Unknown reading page ${name}`);
   const root = path.join(__dirname, '..');
-  const html = fs.readFileSync(path.join(root, 'docs/notes.html'), 'utf8');
+  const html = fs.readFileSync(path.join(root, `docs/${name}.html`), 'utf8');
   const byId = new Map();
   const figures = new Map();
   const calculations = new Map();
@@ -24,6 +25,7 @@ function createNotes() {
   class Element {
     constructor(tag, attrs = {}) {
       this.tag = tag;
+      this.tagName = tag.toUpperCase();
       this.attrs = attrs;
       this.id = attrs.id;
       this.currentValue = attrs.value || '';
@@ -65,6 +67,15 @@ function createNotes() {
       const options = Array.from(select[2].matchAll(/<option\b([^>]*)>/g), entry => attributes(entry[1]));
       element.options = options.map(option => option.value);
       element.value = (options.find(option => Object.hasOwn(option, 'selected')) || options[0]).value;
+    }
+  }
+
+  // Compatibility anchors keep moved sections linkable. They are real ID
+  // matches even though they are not interactive figures and have no controls.
+  for (const match of html.matchAll(/<([a-z][\w-]*)\b([^>]*)>/g)) {
+    const attrs = attributes(match[2]);
+    if (attrs.id && !byId.has(attrs.id)) {
+      byId.set(attrs.id, new Element(match[1], attrs));
     }
   }
 
@@ -112,8 +123,8 @@ function createNotes() {
   };
 }
 
-test('Reading-page controls, exact statistics presets, resets, and displayed results remain synchronized', () => {
-  const page = createNotes();
+test('Transport-page controls, exact statistics presets, resets, and displayed results remain synchronized', () => {
+  const page = createReadingPage('transport');
   for (const name of ['pair', 'saddle', 'collider']) {
     assert.match(page.element(`${name}-drawing`).innerHTML, /<svg/);
     assert.doesNotMatch(page.element(`${name}-summary`).textContent, /Could not calculate/);
@@ -174,9 +185,12 @@ test('Reading-page controls, exact statistics presets, resets, and displayed res
   assert.ok(result.data.converged);
 });
 
-// Verify the new calculations stay connected to the saved page, including offline defaults.
-test('Early reading figures retain exact packet data, reset behavior and vector drawings', () => {
-  const page=createNotes();
+// Verify the foundational figures remain in the introduction, including offline defaults.
+test('Introduction figures retain exact packet data, reset behavior and vector drawings', () => {
+  const page=createReadingPage('notes');
+  for (const name of ['pair', 'saddle', 'collider']) {
+    assert.equal(page.element(`figure-${name}`).tagName, 'SPAN');
+  }
   for(const name of ['phonon','winding']) {
     assert.match(page.element(`${name}-drawing`).innerHTML, /<svg/);
     assert.doesNotMatch(page.element(`${name}-summary`).textContent, /Could not calculate/);

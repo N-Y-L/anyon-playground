@@ -25,7 +25,7 @@
     update(name);
   }
   for(const name of ['phonon','winding','pair','saddle','collider']){
-    const figure=el(`figure-${name}`);if(!figure)continue;
+    const figure=el(`figure-${name}`);if(figure?.tagName!=='FIGURE')continue;
     figure.querySelectorAll('input,select').forEach(input=>input.addEventListener('input',()=>update(name)));
     figure.querySelector('[data-reset-figure]')?.addEventListener('click',()=>reset(name));
     update(name);

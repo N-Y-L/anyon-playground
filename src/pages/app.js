@@ -389,14 +389,14 @@
     $('braids-capacity').textContent = `${config.word.length} of 8 exchanges${config.word.length === 8 ? ' · remove one to add another' : ''}`;
     document.querySelectorAll('[data-braid]').forEach(button => { button.disabled = config.word.length >= 8; });
     $('braids-undo').disabled = config.word.length === 0;
-    const measurementLabel = config.measurement === 'z' ? 'First pair → vacuum' : `+1 outcome in the ${config.measurement.toUpperCase()} basis`;
+    const measurementLabel = config.measurement === 'z' ? 'First pair → vacuum' : config.measurement === 'x' ? 'Middle pair → vacuum' : '+1 outcome in the Y basis';
     $('braids-label-a').textContent = `A: ${measurementLabel}`;
     $('braids-label-b').textContent = `B: ${measurementLabel}`;
     $('braids-probability-a').textContent = percent(result.measurementA.plus);
     $('braids-probability-b').textContent = percent(result.measurementB.plus);
     $('braids-bar-a').style.width = `${100 * result.measurementA.plus}%`;
     $('braids-bar-b').style.width = `${100 * result.measurementB.plus}%`;
-    const otherLabel = config.measurement === 'z' ? String.raw`\(\psi\) channel` : String.raw`\(-1\) outcome in the \(${config.measurement.toUpperCase()}\) basis`;
+    const otherLabel = config.measurement !== 'y' ? String.raw`\(\psi\) channel` : String.raw`\(-1\) outcome in the \(${config.measurement.toUpperCase()}\) basis`;
     setText('braids-other-a', `${otherLabel}: ${percent(result.measurementA.minus)}`);
     setText('braids-other-b', `${otherLabel}: ${percent(result.measurementB.minus)}`);
     $('braids-fidelity').textContent = number(result.fidelity, 3);

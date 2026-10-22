@@ -96,7 +96,8 @@ marked.use({
 });
 
 const readingPages = [
-  ['notes', 'Notes'],
+  ['notes', 'Introduction'],
+  ['transport', 'Transport'],
   ['catalog', 'Preparation and measurement'],
   ['directions', 'Further directions'],
   ['conversation', 'Selected papers'],
@@ -112,19 +113,20 @@ const chapterNames = chapterFiles.filter(file => file.isFile() && file.name.ends
 
 for (const name of [...readingPages.map(([name]) => name), ...chapterNames]) {
   const isChapter = name.startsWith('directions/');
+  const hasNotesFigures = name === 'notes' || name === 'transport';
   const docsPath = isChapter ? '../' : '';
   const sitePath = isChapter ? '../../' : '../';
   const sourceName = name.split('/').at(-1);
   const source = await readFile(new URL(name + '.md', docs), 'utf8');
   const title = source.split('\n')[0].replace(/^# /, '');
   let body = marked.parse(source).replace(/href="([^":]+)\.md(#[^"]*)?"/g, 'href="$1.html$2"');
-  if (name === 'notes') body = body.replace(/<!-- FIGURE: (phonon|charge|winding|pair|saddle|collider) -->/g, (_, figure) => figures.initialMarkup(figure));
+  if (hasNotesFigures) body = body.replace(/<!-- FIGURE: (phonon|charge|winding|pair|saddle|collider) -->/g, (_, figure) => figures.initialMarkup(figure));
   const headings = [...body.matchAll(/<h2 id="([^"]+)">([\s\S]*?)<\/h2>/g)];
   const contentsLabel = 'Contents';
-  const showContents = (name === 'notes' || isChapter) && headings.length > 1;
+  const showContents = (hasNotesFigures || isChapter) && headings.length > 1;
   const contents = showContents ? `<nav class="contents" aria-label="${contentsLabel}"><p>${contentsLabel}</p><ul>${headings.map(([,id,title]) => `<li><a href="#${id}">${title.replace(/<\/?a\b[^>]*>/g, '')}</a></li>`).join('')}</ul></nav>` : '';
   if (showContents) body = body.replace(/(<h2\b)/, contents + '$1');
-  let scripts = name === 'notes' ? notesScripts : '';
+  let scripts = hasNotesFigures ? notesScripts : '';
   if (isChapter) {
     // A chapter may contain more than one model. Each named figure supplies its
     // static default and its own controls, with one script per model on the page.

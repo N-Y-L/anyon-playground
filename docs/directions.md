@@ -2,58 +2,32 @@
 
 <span id="directions-to-think-about"></span>
 
-The [anyon notes](notes.md) connect excitations of an electron fluid to their motion and measurement. Changing the geometry, dynamics or detector opens several further questions: how much of a signal follows from statistics, which states fit on a given surface, and what a conservation law allows during preparation.
+The [anyon notes](notes.md) connect a many-particle state to its excitations, their exchange and a measurement. Three questions lead further, with concrete calculations drawn partly from work by Smitha Vishveshwara and her collaborators.
 
-The examples below develop these questions through small models, several drawn from work by Smitha Vishveshwara and her collaborators. Longer calculations accompany the figures.
+## 1. How does a detector distinguish statistics from dynamics?
 
-The [single-particle saddle](directions/saddle.html) continues the transport problem. The [sphere](directions/surfaces.html) and [Möbius band](directions/orientation.html) instead ask which quantum states are compatible with a changed surface.
+Two preparations with the same exchange angle can have different spatial correlations. The [pair and transport calculations](transport.md) suggest a controlled comparison: keep the exchange rule fixed, change the preparation, and calculate the same observable. Which features survive? The [preparation and measurement questions](catalog.md) develop this comparison.
 
-## Seven changes to the problem
+The [detector chapter](directions/detectors.md) turns to currents along a quantum Hall sample's boundary. Several paths through a collider let even one particle interfere with itself. A reference measurement must account for these paths before a difference is attributed to mutual exchange. For anyons, single-source histories can themselves contain braiding. What should the reference retain?
 
-### 1. One particle at a saddle
+The [single-particle saddle](directions/saddle.md) isolates propagation. Its unstable motion also connects to barrier scattering and black-hole wave equations. Which similarities follow from the shared equation, and which require a particular state or boundary condition? This broader connection tests how far a mathematical analogy carries physical information.
 
-In the lowest Landau level, a potential with opposite curvatures in two directions produces **squeezing**, contraction of one quantum width accompanied by expansion of its conjugate width. The same unstable dynamics appears in barrier scattering and in wave equations near a black hole. The shared equation gives a useful connection; the state and measurement determine how far it extends.
+## 2. What protects a state while it is being manipulated?
 
-[Single-particle calculation](directions/saddle.html)
+For non-Abelian anyons, several collective states remain at fixed positions and particle types. The [fusion and exchange calculation](directions/statistics.md#an-exchange-can-rotate-a-fusion-state) shows how changing exchange order can change a measured probability.
 
-### 2. What the detector measures
+A superconducting wire supplies a related microscopic model. A **Majorana end mode** is a low-energy mode localized near a boundary and described by a Hermitian fermionic operator. Two modes make one ordinary fermionic occupation. Fixing **fermion parity**, whether the occupation sum is even or odd, leaves one state for a single pair; four modes leave a two-state space. A [network of wires](https://arxiv.org/abs/1006.4395) can provide paths for exchanging the modes.
 
-Interference and current fluctuations can reveal anyon statistics, but ordinary propagation phases and contact dynamics also affect them. Measurements of charge, heat flow and the effect of a braid—an exchange history—constrain different properties of the state.
+The [finite-wire calculation](directions/wires.md) determines the energy splitting caused by overlapping end modes. States with unequal energies accumulate a relative phase. Exciting the interior costs a different energy: how do both scales constrain operation time as length or disorder changes?
 
-[Observables and statistical inference](directions/detectors.html)
+The [ramp calculation](directions/quenches.md) changes a Hamiltonian parameter over time. Slowing this **ramp** can reduce unwanted excitations, but cannot change a conserved parity. Does failure to follow the ground state reflect excitation of an accessible state, or a ground state whose parity has become inaccessible? These require different remedies.
 
-### 3. End modes in a finite wire
+## 3. Which states and motions fit the geometry?
 
-A superconducting wire can support modes localized near its ends, with amplitudes that decay into the interior. Their overlap produces a small energy splitting. Finite length and nonuniform potentials test what remains of the protection supplied by a gapped interior and widely separated ends.
+Planar particles can pass around one another. On a line, their collision rule matters. **Loop excitations** spread along closed curves; in three dimensions, one loop can pass through another's opening. The [exchange-settings chapter](directions/statistics.md) asks which motions remain distinct under continuous deformation.
 
-[Finite wires and localization](directions/wires.html)
+The [sphere calculation](directions/surfaces.md) counts **winding**, the integer number of phase turns around a field's zero. A globally defined complex scalar has zero total signed winding; magnetic flux changes how a quantum Hall wavefunction joins across patches and changes that constraint. Zeros with nonzero winding are **vortices** in a shell-shaped atomic fluid. Which arrangements are stable? The winding count constrains the possibilities; the energy determines stability.
 
-### 4. Phase winding on a closed surface
+On a Möbius band, a continuously followed normal returns reversed. A Hall state with a preferred handedness must accommodate that reversal. The [nonorientable-surface chapter](directions/orientation.md) asks which partners—oppositely propagating modes or different anyon types—the theory needs for its local descriptions to join. A compatible electronic model then determines where conducting channels occur.
 
-Around a zero of a complex field, the phase can change by an integer multiple of $2\pi$. That integer is its **winding**. On a sphere, the total winding is constrained by how the field is defined over the whole surface. Magnetic flux changes that constraint.
-
-[Phase winding and magnetic flux](directions/surfaces.html)
-
-### 5. Geometry without a global orientation
-
-A normal followed continuously around a Möbius band returns reversed. A quantum state with a preferred handedness must accommodate that reversal in the way its local descriptions join. The geometric reversal is distinct from a spin rotation or an anyon exchange.
-
-[Möbius geometry and compatible models](directions/orientation.html)
-
-### 6. Ramps and conserved parity
-
-A **ramp** changes a Hamiltonian parameter over time. A small energy gap to accessible states makes adiabatic following difficult; a conserved quantity can forbid the desired transition altogether. Conservation of fermion **parity**, the evenness or oddness of particle number, separates these two effects in a superconducting wire.
-
-[Adiabatic following and parity blocking](directions/quenches.html)
-
-### 7. Exchange rules in different settings
-
-Particles on a line, loop excitations in three dimensions and non-Abelian anyons change either the allowed motions or the states on which those motions act. For the non-Abelian case, **fusion channels**—the combined excitation types of pairs—label the collective states. Exchange can rotate a state in this space, making the order of exchanges observable.
-
-[Configuration spaces, loops and fusion](directions/statistics.html)
-
-## The comparison behind each direction
-
-Topology and symmetry constrain the allowed states and motions. They leave dynamical questions open: whether a defect is stable, how an end mode decays, how long preparation takes, or how much interference remains in a detector. The research directions arise where these constraints meet a particular Hamiltonian and measurement.
-
-The [reading notes and talks](directions/reading.html) connect the calculations to longer treatments; the [source list](directions/sources.html) collects their references. [Preparation and measurement](catalog.md) returns to the original two-anyon problem.
+The [selected papers](conversation.md) provide a short entry into these ideas. [Longer reading and talks](directions/reading.md) and the [source list](directions/sources.md) support the detailed calculations.

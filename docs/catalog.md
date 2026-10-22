@@ -1,27 +1,27 @@
 # Preparation and measurement
 
-An exchange rule constrains the possible states and their evolution, but does not specify how to prepare an excitation or detect it. The [main notes](notes.md) leave several questions about this distinction.
+The [anyon introduction](notes.md) establishes what exchange can do to a quantum state. The [pair and transport calculations](transport.md) ask how that change becomes visible. They suggest three concrete comparisons, each separating an exchange rule from the additional physics needed to use it.
 
-## Dependence on preparation
+## Change the preparation, keep the exchange rule
 
-The two [localized-pair preparations](notes.md#replace-the-electron-fluid-by-two-effective-particles) have the same fractional exchange angle but different pair correlations. Which features persist across preparations, and which depend on how the excitations were localized or released?
+The two [localized-pair preparations](transport.md#replace-the-electron-fluid-by-two-effective-particles) have the same fractional exchange angle but different pair correlations. [Vishveshwara and Cooper](https://arxiv.org/abs/0908.3945) and [Subramanyan and Vishveshwara](https://arxiv.org/abs/1905.00442) supply these state families. [Kjønsberg and Leinaas](https://arxiv.org/abs/cond-mat/9606214) connect the effective two-particle description to microscopic quasiholes.
 
-[Vishveshwara and Cooper](https://arxiv.org/abs/0908.3945) and [Subramanyan and Vishveshwara](https://arxiv.org/abs/1905.00442) provide concrete examples of different state families. [Kjønsberg and Leinaas](https://arxiv.org/abs/cond-mat/9606214) connect the effective two-particle description to microscopic quasiholes. Comparing these constructions is a way to separate consequences of exchange symmetry from consequences of a chosen preparation.
+Evolving both preparations through the same potential and calculating the same observable gives a controlled comparison. Which features persist, and which reflect the way the excitations were localized? A further variation is to add an interaction energy depending on particle separation while retaining the same exchange rule. Its effect on the signal would test how much a proposed signature depends on the assumed dynamics.
 
-## Dependence on the observable
+## Change the observable, keep the outgoing state
 
-A separation moment averages a power of the distance between particles. A coincidence probability counts joint detector events. A current correlation measures how currents fluctuate together. These observables weight the outgoing state differently; agreement in one does not imply agreement in the others.
+A separation moment averages a power of the distance between particles. A coincidence probability measures how often specified joint detector events occur. A current correlation measures how currents fluctuate together. These observables weight the outgoing state differently.
 
-The [saddle calculation](notes.md#let-a-saddle-amplify-a-correlation) makes this distinction explicit: a growing quadratic moment does not by itself determine a coincidence probability. Connecting the model to a detector requires its outgoing state, the measured operator and a physical account of the detector's response. The [transport discussion](directions/detectors.md) considers related issues for currents along a sample's boundary.
+The [saddle calculation](transport.md#let-a-saddle-amplify-a-correlation) determines a growing quadratic moment. To predict joint arrivals in two outputs, one must instead specify the collection regions and calculate the probability of detecting one excitation in each. Does the feature identified in the moment survive that change of observable? Finite collection windows and arrival-time resolution then become explicit parts of the calculation. The [detector chapter](directions/detectors.md) considers the related problem for currents along a sample's boundary.
 
-## The reference measurement
+## Change the reference, keep the propagation
 
-In the [extended collider](notes.md#when-a-splitter-has-an-interior), a reference intended to isolate mutual exchange must retain interference between paths already available to one particle. Anyons complicate the separation because some single-source histories can themselves contain braiding. A useful extension would have to determine which statistical contribution the chosen comparison actually isolates.
+In the [extended collider](transport.md#when-a-splitter-has-an-interior), a reference intended to isolate mutual exchange must retain interference between paths already available to one particle. [Samal and collaborators](https://arxiv.org/html/2412.19674) show this for bosons and fermions. Their paper leaves an anyonic extension unresolved: histories with only one source active can already contain braiding. Which of these histories should the reference retain, and which statistical contribution would subtraction isolate?
 
-Interferometry has a related ambiguity. A charge transition can change both the statistical phase and the area enclosed by a path. The [Nakamura experiment](https://arxiv.org/abs/2006.14115) illustrates why topology and electrostatics must be considered together when interpreting a phase jump.
+Interferometry poses a related inference problem. A change in enclosed charge can alter both the statistical phase and the area enclosed by a path. The [Nakamura experiment](https://arxiv.org/abs/2006.14115) shows why independent control of this electrostatic response matters. Comparing the reference process is as important as calculating the signal.
 
-## Geometry and dynamics
+## From readout to preparation and geometry
 
-[Further directions](directions.md) consider saddle potentials, wire end states, closed surfaces, Möbius geometry, time-dependent Hamiltonians and other exchange settings. Each changes the allowed motions, the available states or the observable. Some connections concern anyons directly; others concern the wider relation between topology and dynamics.
+These comparisons concern the readout of statistics. The other [research directions](directions.md) ask how finite energy splittings and conserved parity constrain manipulation, and how a sphere or Möbius band changes the allowed states. They connect the same distinction—what topology fixes and what the Hamiltonian must supply—to different physical problems.
 
-The [toric-code example](../experiments.html#toric) gives another microscopic starting point: a spin Hamiltonian in which moving one excitation around another produces a phase. Its [memory extension](../experiments.html#memory) shows how local defects can disappear while information stored in global properties of the state changes. The [fusion-basis calculation](../fusion-basis.html) instead examines the collective states that remain at fixed particle types and positions.
+The [toric-code example](../experiments.html#toric) provides another microscopic starting point: a spin Hamiltonian in which moving one excitation around another produces a phase. Its [memory calculation](../experiments.html#memory) follows how local defects can disappear while information stored globally changes. The [fusion-basis calculation](../fusion-basis.html) instead examines collective states at fixed particle types and positions.

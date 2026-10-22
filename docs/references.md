@@ -1,6 +1,6 @@
 # Sources
 
-The [selected papers](conversation.md) introduce three central results and a related collider calculation. The references below support the detailed derivations and models.
+The [selected papers](conversation.md) introduce five studies of exchange, correlations and measurement. The references below support the detailed derivations and models.
 
 Links beside the [calculations](notes.md) identify their scientific starting points. These short routes lead to longer accounts and to the primary work.
 
@@ -14,21 +14,29 @@ Links beside the [calculations](notes.md) identify their scientific starting poi
 
 [Kjønsberg and Leinaas, 1997](https://arxiv.org/abs/cond-mat/9606214) is especially useful at the transition to an effective anyon coordinate: it constructs the quasihole map and distinguishes projected-coordinate states from generalized coherent states. Its complex conjugation and operator factors matter when comparing conventions.
 
+[Kjønsberg and Leinaas, 1999, §2](https://arxiv.org/abs/cond-mat/9901266) distinguish a fractional excess charge from a fractional mean caused by an ordinary particle's spatial uncertainty, and compare charge fluctuations with those of the ground state.
+
+## Spin models, fusion and protection
+
+[Kitaev, 2003](https://arxiv.org/abs/quant-ph/9707021) constructs the toric code: commuting spin interactions, string operators, mutual statistics and ground states distinguished by noncontractible loops. [Kitaev, 2006, §5.2](https://arxiv.org/html/cond-mat/0506438v3#S5.SS2) explains the self- and mutual statistics of its excitation types. The [spin derivation](notes.md#derive-a-winding-phase-from-spins) uses this model as a microscopic complement to the Laughlin fluid.
+
+[Nayak and collaborators, 2008](https://arxiv.org/abs/0707.1889) review non-Abelian fusion, braiding, topological protection and the computational capabilities of different anyon theories. The [introduction](notes.md#when-a-phase-is-no-longer-enough) uses its Ising conventions.
+
 ## Preparation, dynamics and measurements
 
-[Vishveshwara and Cooper, 2010](https://arxiv.org/abs/0908.3945) — localized-pair weights and the excess mean squared separation. Published in Physical Review B. The site's original correlation notebook reproduces this preparation; the main notes add its comparison with another state family.
+[Vishveshwara and Cooper, 2010](https://arxiv.org/abs/0908.3945) — localized-pair weights and the excess mean squared separation. Published in Physical Review B. The site's original correlation notebook reproduces this preparation; the transport continuation adds its comparison with another state family.
 
 [Subramanyan and Vishveshwara, 2019](https://arxiv.org/abs/1905.00442) — generalized coherent states, harmonic and saddle motion, and proposed bulk interferometry. Published in Journal of Statistical Mechanics. The state construction is part of the physical model.
 
 [Basani, Subramanyan and Vishveshwara, 2025](https://arxiv.org/abs/2509.15488) — quadratic-potential dynamics and its symmetries. An arXiv preprint in the version checked for these notes.
 
-[Samal, Vishveshwara, Gefen and Väyrynen, 2026](https://arxiv.org/abs/2412.19674) — self-interference and two-particle comparisons constructed from one-source measurements in extended colliders. Published in Physical Review Letters. Its boson/fermion result leaves an anyonic extension open.
+[Samal, Vishveshwara, Gefen and Väyrynen, 2026](https://arxiv.org/abs/2412.19674) — self-interference and two-particle comparisons constructed from one-source measurements in extended colliders. Published in Physical Review Letters. The paper leaves an anyonic extension of its boson/fermion result unresolved.
 
 [Nakamura and collaborators, 2020](https://arxiv.org/abs/2006.14115) — conductance phase slips at filling 1/3 and the electrostatic checks needed to interpret them as braiding. [Published experiment](https://www.nature.com/articles/s41567-020-1019-1).
 
 ## Sources for the independent notebooks
 
-For the seven follow-on reading routes, see [Sources for these directions](directions/sources.md).
+For the follow-on calculations, see [Sources for these directions](directions/sources.md).
 
 - [Berry, 1984](https://doi.org/10.1098/rspa.1984.0023), [Wilczek–Zee, 1984](https://doi.org/10.1103/PhysRevLett.52.2111), and [Fukui–Hatsugai–Suzuki, 2005](https://arxiv.org/abs/cond-mat/0503172): geometric transport, its degenerate generalization and gauge-invariant overlap products. The [spin notebook](../berry.html) uses the loop-product method.
 - [Kitaev](https://arxiv.org/abs/quant-ph/9707021) and [Dennis and collaborators](https://arxiv.org/abs/quant-ph/0110143): toric-code strings, ground-state information and error correction. The [lattice figures](../experiments.html#toric) implement string algebra, not a full noisy memory.
