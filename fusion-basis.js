@@ -126,7 +126,7 @@
     const physical = stage.basis === 'L' ? stage.amplitudes : P.changeBasis(stage.amplitudes);
     byId('fb-stage-fidelity').textContent = number(P.fidelity(input, physical), 6);
     const before = P.probabilities(input)[0], current = P.probabilities(physical)[0];
-    byId('fb-exchange-observation').textContent = 'At this step, a pair-12 charge measurement would give vacuum with probability ' + percent(current) + ' (input: ' + percent(before) + '). ' + (stageIndex < 2 ? 'No physical exchange has occurred.' : 'The changed state comes from the channel-dependent exchange phases, not from either coordinate transformation.');
+    byId('fb-exchange-observation').textContent = 'At this step, a pair-12 charge measurement would give vacuum with probability ' + percent(current) + ' (input: ' + percent(before) + '). ' + (stageIndex < 2 ? 'No physical exchange has occurred.' : 'Any physical state change comes from the channel-dependent exchange phases. The coordinate transformations preserve the state.');
   }
   function wordLabel(word) { return word.length ? '[' + word.join(', ').replaceAll('-', '−') + ']' : 'no exchange'; }
   function comparisonData() {

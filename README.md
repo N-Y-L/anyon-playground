@@ -9,13 +9,14 @@ then open a few general directions to explore.
 
 The assumed background is graduate mathematics, basic graduate quantum mechanics
 and very basic condensed-matter physics. Landau levels, guiding centers and edge
-channels are introduced where needed. No field theory is required.
+channels are introduced where needed. No field theory is required. The pages use plain HTML headings, links and
+native expandable derivations; the figures and their controls are optional.
 
 ## Choose a route
 
 - **First pass:** read the visible text in the [connected notes](docs/notes.md).
   The core ideas come before the specialized pair-state calculation.
-- **Work it out:** open a derivation for the full assumptions, equations and
+- **Work it out:** expand a derivation for its assumptions, equations and
   interactive figures. All existing calculations remain available.
 - **Remember a few papers:** [three short paper notes](docs/conversation.md)
   connect Arovas–Schrieffer–Wilczek, Nakamura and colleagues, and Ivanov to one
@@ -54,7 +55,7 @@ JSON exports are records, not importable sessions.
   The localization label is not an exact separation. The normalized zero-label
   limit is mathematical; physical quasihole cores cannot remain separated there.
 - The two pair preparations have different angular weights for fractional
-  statistics. The saddle uses a specified SU(1,1) representation. Its assigned
+  statistics. The saddle uses a representation of the su(1,1) algebra defined in the notes. Its assigned
   quadratic observables require operator matching before interpreting them as
   physical spatial measurements; a weighted moment is not a coincidence rate.
 - The loop-collider model describes noninteracting bosons and fermions with

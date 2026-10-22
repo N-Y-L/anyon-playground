@@ -1,17 +1,17 @@
 # Ramps and conserved parity
 
-**Does going more slowly always get me to the ground state?** The quasihole motion in the earlier notes relied on the electrons following their instantaneous low-energy state. With a changing Hamiltonian, I have to ask when that assumption works. A small gap can make following difficult; a conserved quantity can make the desired transition impossible.
+The quasihole motion in the earlier notes relied on electrons following an instantaneous low-energy state. I now ask when that assumption works for a changing Hamiltonian. A small energy gap to other accessible states can make following difficult; a conserved quantity can make a desired transition impossible even during arbitrarily slow motion.
 
 A sudden change is usually called a **quench**; a change over a finite time is a **ramp**. I use a finite superconducting wire to separate these two obstacles. Its [end modes](wires.html) give me a simple setting in which the lowest-energy state can change its parity—the evenness or oddness of its fermion number.
 
 ## A knob and a conserved quantity
 
-In the Kitaev chain, particles hop between neighboring sites and enter or leave in pairs. Hopping preserves particle number; pairing changes it by two. Both preserve parity. I can therefore vary the chemical potential—the energy controlling occupation—without allowing an even state to become odd.
+I use the **Kitaev chain**, a model with one fermionic state per site, hopping between neighbors and superconducting pairing. Hopping preserves particle number; pairing couples states differing by two particles. Both preserve parity. I can vary the chemical potential—the energy parameter controlling occupation—without allowing an even state to become odd.
 
 <details>
-<summary>I want the Hamiltonian and parity check</summary>
+<summary>Hamiltonian and parity check</summary>
 
-For an open Kitaev chain with fermion annihilation operators $c_j$ and occupations $n_j=c_j^\dagger c_j$, the Hamiltonian is
+For an open chain of $L$ sites, let $c_j$ annihilate a fermion at site $j$ and $n_j=c_j^\dagger c_j$ count its occupation. Let $w>0$ be the hopping energy, $\Delta$ a real pairing amplitude and $\mu(t)$ the chemical potential at time $t$. With “h.c.” denoting the Hermitian conjugate, the Hamiltonian is
 
 $$\begin{aligned}
 H(t)&=-w\sum_{j=1}^{L-1}(c_j^\dagger c_{j+1}+\mathrm{h.c.})\\
@@ -19,7 +19,7 @@ H(t)&=-w\sum_{j=1}^{L-1}(c_j^\dagger c_{j+1}+\mathrm{h.c.})\\
 -\mu(t)\sum_{j=1}^{L}(n_j-\tfrac12).
 \end{aligned}$$
 
-Here $L$ is the number of sites, $w>0$ the hopping energy, $\Delta$ a real pairing energy, and $\mu(t)$ the changing chemical potential. “h.c.” adds the Hermitian conjugate. Pairing changes particle number by two, so particle number is not conserved. Its evenness or oddness is:
+Pairing changes particle number by two, so particle number is not conserved. The parity operator $P$, with eigenvalue $+1$ for even particle number and $-1$ for odd particle number, obeys
 
 $$P=(-1)^{\sum_jn_j},\qquad [H(t),P]=0.$$
 
@@ -35,21 +35,21 @@ For a smooth, fixed path of finite-dimensional Hamiltonians, stretching the time
 
 For the uniform infinite Kitaev chain with nonzero pairing, the bulk excitation gap closes at $|\mu|=2w$, where $\mu$ is the chemical potential and $w$ the hopping energy. A finite wire has discrete levels instead; their spacings must be examined for the chosen length and boundary conditions. One cannot take a finite-size adiabatic result and assume its required ramp time stays finite as the wire grows.
 
-There is another kind of crossing. Two levels of opposite parity can become degenerate without coupling. Since the ramp preserves parity, the relevant gap for following a state is the gap to accessible states **within its parity sector**. A crossing with the other sector can change which state has the lowest energy overall while leaving the actual state on a smooth branch.
+There is another kind of crossing. Two levels of opposite parity can become degenerate without coupling. The **even and odd parity sectors** are the subspaces with those two parity values. Since the ramp preserves parity, the gap relevant to following a state is the gap to accessible states within its own sector. A crossing with the other sector can change which state has the lowest energy overall while leaving the evolving state on a smooth branch.
 
 ## The evolving branch and the ground-state reference
 
-If I start in an even state and the new ground state is odd, their overlap is exactly zero. More generally, let $|\psi(t)\rangle$ have parity $p=\pm1$. If the instantaneous, nondegenerate ground state $|g(t)\rangle$ has parity $-p$, orthogonality gives
+If I start in an even state and the new ground state is odd, their overlap is exactly zero. More generally, let the normalized evolving state $|\psi(t)\rangle$ have parity $p=\pm1$, with $+1$ denoting even. If the instantaneous, nondegenerate ground state $|g(t)\rangle$ has parity $-p$, their squared overlap, or **fidelity**, is
 
 $$F(t)=|\langle g(t)|\psi(t)\rangle|^2=0.$$
 
 This holds at every ramp speed. The dynamics cannot transfer population between the two sectors. It may nevertheless follow the lowest state *within its original sector* extremely well.
 
-In a finite topological wire, the two Majorana end modes overlap. Their coupling splits the two lowest states of opposite parity; changing parameters can reverse their energy ordering. [Hegde, Shivamoggi, Vishveshwara and Sen](https://arxiv.org/html/1412.5255) studied the resulting **parity blocking** during ramps. Their calculation shows that the overlap with the instantaneous ground state can vanish even for slow driving. Such parity crossings can occur within the topological phase; they need not mark a closing of the bulk gap.
+In the topological regime, a long open Kitaev wire has a gapped interior and two low-energy **Majorana end modes**, localized modes described by Hermitian fermionic operators. Their finite overlap splits the two lowest states of opposite parity; changing parameters can reverse their energy ordering. [Hegde, Shivamoggi, Vishveshwara and Sen](https://arxiv.org/html/1412.5255) studied the resulting **parity blocking**: conserved parity prevents the evolving state from following a ground state that switches sector. Such crossings can occur without closing the bulk excitation gap.
 
 ## A two-state crossing
 
-In a fixed basis of the two end states, let $f$ be the fermion formed from the two Majorana modes, with occupation $n_f=0$ or $1$. A simple Hamiltonian is
+In a fixed basis of the two end states, let $f$ annihilate the fermionic mode formed from the two Majorana modes. Its occupation $n_f=f^\dagger f$ is $0$ or $1$. Let $\varepsilon(t)$ be the signed energy of the occupied state relative to the empty state. A simple Hamiltonian is
 
 $$H_{\rm end}(t)=\varepsilon(t)(f^\dagger f-\tfrac12).$$
 
@@ -69,4 +69,4 @@ $$\langle H(t)\rangle-E_{\rm gs}(t)
 
 The first term measures excitation above the accessible sector's lowest state. The second records the cost of staying in that sector when the other one lies lower. Only the first can be reduced by improving adiabatic following within the sector. Parity conservation still permits transitions between states of the same parity, including creation of quasiparticle pairs.
 
-**The direction that interests me is quantum preparation under dynamical and symmetry constraints.** I want to know when a system fails to follow because I drove it too fast, and when it follows an allowed branch perfectly while the ground-state reference moves elsewhere. That distinction matters wherever I try to manipulate topological states. [Hegde and collaborators, §§2 and 7](https://arxiv.org/html/1412.5255) give the detailed wire example.
+I want to distinguish failure to follow because I drove too fast from accurate following of an allowed branch after the absolute ground state has moved to another sector. That distinction matters when preparing or manipulating topological states. [Hegde and collaborators, §§2 and 7](https://arxiv.org/html/1412.5255) give the detailed wire example.

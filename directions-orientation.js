@@ -265,7 +265,7 @@
     const zeroes = s.zeros.flatMap(z => [z.s, z.s + 2 * PI, z.s + 4 * PI]).filter(z => z <= 4 * PI);
     return `<svg viewBox="0 0 440 350" role="img" aria-labelledby="orientation-field-title orientation-field-desc" xmlns="http://www.w3.org/2000/svg">
       <title id="orientation-field-title">Signed normal field over two circuits</title>
-      <desc id="orientation-field-desc">The normal component divided by field magnitude is ${fixed(s.component, 3)} at s divided by pi equal to ${fixed(s.sPi)}. It changes sign after one circuit. All ${s.zeros.length} distinct core zeros per circuit are highlighted, including any tangency: s divided by pi equals ${s.zeros.map(z => fixed(z.s / PI, 3)).join(', ')} on the first circuit.</desc>
+      <desc id="orientation-field-desc">The normal component divided by field magnitude is ${fixed(s.component, 3)} at s divided by pi equal to ${fixed(s.sPi)}. It changes sign after one circuit. All ${s.zeros.length} distinct zeros along the center circle per circuit are highlighted, including any tangency: s divided by pi equals ${s.zeros.map(z => fixed(z.s / PI, 3)).join(', ')} on the first circuit.</desc>
       <g font-family="system-ui,sans-serif" font-size="13" fill="#3d484b">
       <path d="M48 38V266H402" fill="none" stroke="#a7afb1"/>
       <path d="M48 ${y(0)}H402" stroke="#a7afb1"/>
@@ -315,7 +315,7 @@
       </style>
       <div class="orientation-panels">
         <div class="orientation-panel"><h3>A local normal around the band</h3><div data-orientation-ribbon>${ribbonSVG(s)}</div><p class="orientation-legend">Surface blue/red: positive/negative B · n using the chosen local normal. Solid dark curve: zero contour. Dashed dark line: coordinate cut. Dark arrow: followed normal · gray dashed arrow: starting normal · brown arrow: fixed field. End-on dot/cross: toward/away. Arrows and guide lines are overlaid.</p></div>
-        <div class="orientation-panel"><h3>Where the field is tangent</h3><div data-orientation-field>${fieldSVG(s)}</div><p class="orientation-legend">Solid: first circuit · dashed: second circuit · blue dot: selected point · amber rings: all distinct core zeros and their repeats. The graph follows the normal continuously across the coordinate cut.</p></div>
+        <div class="orientation-panel"><h3>Where the field is tangent</h3><div data-orientation-field>${fieldSVG(s)}</div><p class="orientation-legend">Solid: first circuit · dashed: second circuit · blue dot: selected point · amber rings: all distinct zeros along the center circle and their repeats. The graph follows the normal continuously across the coordinate cut.</p></div>
       </div>
       <div class="orientation-controls">
         <label for="orientation-travel">Travel s/π <output data-orientation-value="sPi" for="orientation-travel">${fixed(s.sPi)}</output><input id="orientation-travel" data-orientation-input="sPi" type="range" min="0" max="4" step="0.01" value="${s.sPi}"></label>

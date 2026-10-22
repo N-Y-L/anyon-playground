@@ -134,7 +134,7 @@
       @media print{.directions-saddle .saddle-panels{grid-template-columns:1fr 1fr}.directions-saddle .saddle-summary{font-size:9pt}.directions-saddle .saddle-panel h3{font-size:11pt}.directions-saddle .saddle-legend{font-size:8pt}}
       </style>
       <div class="saddle-panels">
-        <div class="saddle-panel"><h3>One packet, squeezed</h3><div data-saddle-covariance>${covarianceSVG(s)}</div><p class="saddle-legend">Blue: current covariance · dashed gray: initial covariance. Ellipse radii are one standard deviation; axis limits expand together when needed.</p></div>
+        <div class="saddle-panel"><h3>One packet, squeezed</h3><div data-saddle-covariance>${covarianceSVG(s)}</div><p class="saddle-legend">Blue: current uncertainty ellipse · dashed gray: initial uncertainty ellipse. Ellipse radii are one standard deviation; axis limits expand together when needed.</p></div>
         <div class="saddle-panel"><h3>A fixed mode at the origin</h3><div data-saddle-overlap>${overlapSVG(s)}</div><p class="saddle-legend">Blue: exact overlap · dashed brown: late-time form. A straight tail on the log scale reveals exponential decay. The dot marks the selected time.</p></div>
       </div>
       <div class="figure-controls">

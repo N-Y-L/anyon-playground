@@ -92,9 +92,9 @@ for (const name of [...readingPages.map(([name]) => name), ...chapterNames]) {
   let body = marked.parse(source).replace(/href="([^":]+)\.md(#[^"]*)?"/g, 'href="$1.html$2"');
   if (name === 'notes') body = body.replace(/<!-- FIGURE: (phonon|charge|winding|pair|saddle|collider) -->/g, (_, figure) => figures.initialMarkup(figure));
   const headings = [...body.matchAll(/<h2 id="([^"]+)">([\s\S]*?)<\/h2>/g)];
-  const contentsLabel = isChapter ? 'On this page' : 'In these notes';
+  const contentsLabel = 'Contents';
   const showContents = (name === 'notes' || isChapter) && headings.length > 1;
-  const contents = showContents ? `<nav class="contents${isChapter ? ' chapter-contents' : ''}" aria-label="${contentsLabel}"><span>${contentsLabel}</span>${headings.map(([,id,title]) => `<a href="#${id}">${title.replace(/<\/?a\b[^>]*>/g, '')}</a>`).join('')}</nav>` : '';
+  const contents = showContents ? `<nav class="contents" aria-label="${contentsLabel}"><p>${contentsLabel}</p><ul>${headings.map(([,id,title]) => `<li><a href="#${id}">${title.replace(/<\/?a\b[^>]*>/g, '')}</a></li>`).join('')}</ul></nav>` : '';
   if (showContents) body = body.replace(/(<h2\b)/, contents + '$1');
   let scripts = name === 'notes' ? notesScripts : '';
   if (isChapter) {
@@ -113,11 +113,11 @@ for (const name of [...readingPages.map(([name]) => name), ...chapterNames]) {
   const navigation = readingPages.map(([page, label]) => {
     const current = page === name ? ' aria-current="page"' : isChapter && page === 'directions' ? ' aria-current="location"' : '';
     return `<a href="${docsPath}${page}.html"${current}>${label}</a>`;
-  }).join('');
+  }).join(' · ');
   const breadcrumb = isChapter ? `<p class="chapter-path"><a href="../directions.html">Directions to think about</a> <span aria-hidden="true">/</span> <span aria-current="page">${escape(title)}</span></p>` : '';
   const page = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${escape(title)}</title><link rel="stylesheet" href="${sitePath}vendor/katex/katex.min.css"><link rel="stylesheet" href="${docsPath}reading.css?v=${styleVersion}">${extraStyles}${scripts}</head>
-<body><nav aria-label="Reading navigation"><a href="${sitePath}index.html">All notes</a>${navigation}</nav>
+<body><nav aria-label="Reading navigation"><a href="${sitePath}index.html">All notes</a> · ${navigation}</nav>
 <main id="main">${breadcrumb}${body}</main><footer><a href="${sourceName}.md">Markdown source</a> · <a href="${sitePath}LICENSE">Code: MIT</a> · <a href="${sitePath}assets/README.md">Image credits</a> · Neil Yuanting Li</footer></body></html>\n`;
   await writeFile(new URL(name + '.html', docs), page.replace(/^[ \t]+$/gm, ''));
   console.log('Built ' + fileURLToPath(new URL(name + '.html', docs)));

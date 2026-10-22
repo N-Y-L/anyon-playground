@@ -1,11 +1,11 @@
 # Sources for these directions
 
-These are the starting papers for the calculations and distinctions developed in the seven directions. References also appear beside the claims they support in each chapter. The [sources for the main anyon notes](../references.html) remain a separate list.
+I collect the papers cited in the seven directions here for reference. The chapters introduce the physical terms and place citations beside the claims they support. The [three-paper shortlist](../conversation.md) is the shorter starting point; the [sources for the main anyon notes](../references.html) are listed separately.
 
 ## The single-particle saddle
 
 - [Hegde, Subramanyan, Bradlyn and Vishveshwara, *Quasinormal modes and the Hawking–Unruh effect in quantum Hall systems* (2019)](https://arxiv.org/abs/1812.08803). The inverted-oscillator connection to scattering and outgoing resonances.
-- [Subramanyan, Hegde, Vishveshwara and Bradlyn, *Physics of the inverted harmonic oscillator* (2021)](https://arxiv.org/abs/2012.09875). The extended treatment, including guiding centers, squeezing and scattering.
+- [Subramanyan, Hegde, Vishveshwara and Bradlyn, *Physics of the inverted harmonic oscillator* (2021)](https://arxiv.org/abs/2012.09875). The extended treatment of orbit-center motion, reciprocal changes of quantum widths and scattering.
 - [Stone, *An analogue of Hawking radiation in the quantum Hall effect* (2013)](https://arxiv.org/abs/1209.2317). A specified many-fermion state behind a thermal outgoing description.
 - [Andrade e Silva and Jacobson, *Guiding center quantization of a quantum Hall analog of Hawking radiation* (2026, arXiv version 1)](https://arxiv.org/abs/2609.00158v1). A re-examination of the guiding-center analogue and its interpretation.
 
@@ -21,14 +21,14 @@ These are the starting papers for the calculations and distinctions developed in
 
 - [Kitaev, *Unpaired Majorana fermions in quantum wires* (2001)](https://arxiv.org/abs/cond-mat/0010440). The chain and its boundary modes.
 - [Hegde and Vishveshwara, *Majorana wave-function oscillations, fermion parity switches, and disorder in Kitaev chains* (2016)](https://arxiv.org/abs/1603.03394). The finite-wire crossing pattern and its relation to localization.
-- [DeGottardi, Sen and Vishveshwara, *Majorana fermions in superconducting 1D systems having periodic, quasiperiodic, and disordered potentials* (2013)](https://arxiv.org/abs/1208.0015). Transfer matrices and the normal-chain localization criterion.
+- [DeGottardi, Sen and Vishveshwara, *Majorana fermions in superconducting 1D systems having periodic, quasiperiodic, and disordered potentials* (2013)](https://arxiv.org/abs/1208.0015). A mapping to a chain without pairing that determines whether a superconducting end profile decays.
 - [Hegde, Shivamoggi, Vishveshwara and Sen, *Quench dynamics and parity blocking in Majorana wires* (2015)](https://arxiv.org/abs/1412.5255). Dynamics constrained by conserved parity.
 - [Jansen, Ruskai and Seiler, *Bounds for the adiabatic approximation with applications to quantum computation* (2007)](https://arxiv.org/abs/quant-ph/0603175). Conditions and quantitative bounds for adiabatic following.
 
 ## Closed surfaces
 
 - [Haldane, *Fractional quantization of the Hall effect: a hierarchy of incompressible quantum fluid states* (1983)](https://doi.org/10.1103/PhysRevLett.51.605). The sphere geometry for quantum Hall states.
-- [Wen and Zee, *Shift and spin vector: new topological quantum numbers for the Hall fluids* (1992)](https://doi.org/10.1103/PhysRevLett.69.953). The shift and geometric response.
+- [Wen and Zee, *Shift and spin vector: new topological quantum numbers for the Hall fluids* (1992)](https://doi.org/10.1103/PhysRevLett.69.953). The finite offset in the flux–particle relation on a sphere and the response to spatial curvature.
 - [Padavić and collaborators, *Vortex-antivortex physics in shell-shaped Bose–Einstein condensates*](https://arxiv.org/abs/2005.13030). A route from the winding count to condensate vortex energetics and dynamics.
 
 ## Nonorientable surfaces

@@ -221,7 +221,7 @@
     const loop = windingLoop(s);
     return `<h3>Whole-sphere winding count</h3>
       <p class="surface-count">${s.positive} positive − ${s.negative} negative = <strong>${s.signedTotal}</strong></p>
-      <p>${s.mode === 'scalar' ? 'A globally defined scalar has total signed winding zero.' : `The bundle has Chern number ${s.chernNumber}; this LLL state has ${s.flux} positive zeros, counted with multiplicity.`}</p>
+      <p>${s.mode === 'scalar' ? 'A globally defined scalar has total signed winding zero.' : `The signed flux is ${s.chernNumber} quanta; this lowest-Landau-level state has ${s.flux} positive zeros, counted with multiplicity.`}</p>
       <p>${s.front} near-side · ${s.back} far-side. Rotating the view changes visibility, not this total.</p>
       <ul class="surface-zero-list">${s.zeros.map(zero => `<li>Zero ${zero.id}: ${zero.winding > 0 ? '+1' : '−1'}, ${zero.projected.depth >= 0 ? 'near' : 'far'} side</li>`).join('') || '<li>No zeros: the zero-flux LLL state is constant.</li>'}</ul>
       ${loop ? `<p><strong>Winding around the selected zero:</strong> zero ${loop.zeroId} gives Δarg Ψ/(2π) = ${fixed(loop.winding)}. The arrow follows positive orientation around the local outward normal${s.mode === 'magnetic' ? `; the count uses a regular ${loop.patch} patch near this zero` : ''}.</p>` : ''}
@@ -259,7 +259,7 @@
         <label for="surface-back"><input id="surface-back" data-surface-input="showBack" type="checkbox" checked>Show far-side markers</label>
         <button type="button" data-surface-turn>Turn around</button><button type="button" data-surface-reset>Reset</button>
       </div>
-      <figcaption>Phase, relative modulus and winding counts of explicit scalar and LLL functions on a sphere. The controls select configurations and viewpoints; they do not solve the Gross–Pitaevskii equation, predict equilibrium positions, or evolve vortices. Phase in the magnetic case depends on the chosen gauge patch. The ledger always includes the far hemisphere.</figcaption>
+      <figcaption>Phase, relative modulus and winding counts of explicit scalar and lowest-Landau-level functions on a sphere. The controls select configurations and viewpoints; they do not solve an equation for condensate dynamics, predict equilibrium positions, or evolve vortices. Phase in the magnetic case depends on the chosen gauge patch. The zero count always includes the far hemisphere.</figcaption>
       <noscript><p>The default shows a scalar pair separated by 120°. Its signed total is zero. Changing the state or viewpoint requires JavaScript.</p></noscript>
     </figure>`;
   }

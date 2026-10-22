@@ -1,56 +1,91 @@
 /* Copyright (c) 2026 Neil Yuanting Li. MIT License; see LICENSE. */
-html{color-scheme:light;background:#fff;color:#171717;scroll-behavior:smooth}
-body{font:19px/1.6 Georgia,"Times New Roman",serif;max-width:820px;margin:28px auto;padding:0 26px}
-a{color:#145b91;text-underline-offset:3px}a:visited{color:#5b3b71}
-nav{display:flex;flex-wrap:wrap;gap:7px 24px;border-bottom:1px solid #bbb;padding-bottom:14px;font:16px/1.6 system-ui,sans-serif}
-h1{font-size:37px;line-height:1.18;font-weight:normal;margin:40px 0 25px;max-width:780px}
-h2{font-size:28px;line-height:1.28;margin:64px 0 22px;font-weight:normal;scroll-margin-top:20px}
-h3{font-size:22px;margin-top:36px;line-height:1.35}p,li{margin:17px 0}
-.contents{margin:22px 0 34px;padding:16px 0 18px;gap:7px 22px;font-size:14px;line-height:1.5;border-top:1px solid #bbb}
-.contents span{flex:0 0 100%;color:#666;font-size:13px;text-transform:uppercase;letter-spacing:.06em}
-table{border-collapse:collapse;font-size:15px;margin:18px 0;width:100%}th,td{border-bottom:1px solid #bbb;padding:9px 12px;text-align:left;vertical-align:top}th{font-weight:normal}thead th{border-bottom-color:#555}
-.katex{font-size:1.04em}.equation{margin:26px 0;padding:8px 3px;overflow-x:auto;overflow-y:hidden}.equation .katex-display{margin:0;text-align:left}.equation .katex-display>.katex{text-align:left}
-.table-scroll{overflow-x:auto}.inline-figure{margin:32px -12px;padding:20px 12px 14px;border-top:1px solid #aaa;border-bottom:1px solid #aaa;break-inside:avoid}
-.inline-figure svg{display:block;width:100%;height:auto}.figure-drawing{overflow-x:auto}.figure-scroll-hint{display:none}.inline-figure figcaption{font:16px/1.5 Georgia,serif;margin:8px 0 18px;color:#333}
-.figure-controls{display:flex;align-items:center;flex-wrap:wrap;gap:12px 24px;font:14px/1.5 system-ui,sans-serif;margin:16px 0}
-.figure-controls label{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.figure-controls input{width:138px;accent-color:#145b91}.figure-controls output{min-width:30px;font-variant-numeric:tabular-nums}
-button,select{font:14px/1.35 system-ui,sans-serif;background:#fff;border:1px solid #999;border-radius:3px;padding:5px 9px;color:#111}button{cursor:pointer}button:hover{background:#f1f5f8}
-.figure-summary{font:16px/1.6 Georgia,serif}.figure-tools{font:13px system-ui,sans-serif;margin:14px 0 0}.figure-tools button{font-size:12px}
-details{margin:24px 0}summary{cursor:pointer;font-weight:bold}footer{border-top:1px solid #999;margin-top:50px;padding:18px 0;font-size:14px}
-a:focus-visible,summary:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,.figure-drawing:focus-visible{outline:2px solid #145b91;outline-offset:4px}pre{overflow:auto}sup,sub{line-height:0}
-@media(max-width:600px){body{padding:0 18px;margin:18px auto;font-size:17px;line-height:1.6}h1{font-size:29px;margin-top:28px}h2{font-size:25px;margin-top:46px}.equation{font-size:16px;margin:20px 0}.inline-figure{margin:28px -8px;padding:15px 8px}.inline-figure figcaption{font-size:15px}.figure-controls{gap:12px}.figure-controls label{flex:1 0 100%}.figure-controls input{flex:1;max-width:230px}.contents{font-size:13px}th,td{padding:8px}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-@media(max-width:600px){.figure-drawing svg{min-width:600px}.figure-scroll-hint{display:block;font:12px/1.5 system-ui,sans-serif;color:#555;margin:8px 0}}
-@page{margin:0.7in}
-@media print{nav,footer,.figure-controls,.figure-tools,.figure-scroll-hint{display:none}body{margin:0;padding:0;max-width:none;font-size:10.5pt;line-height:1.45}h1{font-size:24pt}h2{font-size:17pt;margin-top:24pt;break-after:avoid}h3{break-after:avoid}.equation{break-inside:avoid;font-size:10pt;overflow:visible}.inline-figure{break-inside:avoid;margin:18pt 0}.figure-drawing{overflow:visible}.figure-drawing svg{min-width:0;filter:grayscale(1)}.inline-figure figcaption,.figure-summary{font-size:9pt}a{color:inherit;text-decoration:none}}
+html { color-scheme: light; background: white; color: black; }
+body { font: 18px/1.5 "Times New Roman", Times, serif; max-width: 900px; margin: 24px 32px; }
+a { color: #0000ee; }
+a:visited { color: #551a8b; }
+a[aria-current=page] { font-weight: bold; }
+nav { line-height: 1.8; }
+h1 { font-size: 2em; line-height: 1.2; margin: 1em 0 .6em; }
+h2 { font-size: 1.5em; line-height: 1.3; margin: 1.8em 0 .6em; scroll-margin-top: 16px; }
+h3 { font-size: 1.17em; margin: 1.5em 0 .5em; }
+p { margin: 1em 0; }
+li { margin: .4em 0; }
+.contents { margin: 1.5em 0; }
+.contents p { margin-bottom: .4em; }
+.contents ul { margin-top: 0; }
+.contents li { margin: .15em 0; }
+table { border-collapse: collapse; margin: 1em 0; }
+th, td { border-bottom: 1px solid #aaa; padding: .4em .8em .4em 0; text-align: left; vertical-align: top; }
+.table-scroll, pre { overflow-x: auto; }
+.katex { font-size: 1.04em; }
+.equation { margin: 1.3em 0; padding: 5px 0; overflow-x: auto; overflow-y: hidden; }
+.equation .katex-display { margin: 0; text-align: left; }
+.equation .katex-display > .katex { text-align: left; }
+details { margin: 1.5em 0; }
+summary { cursor: pointer; font-weight: bold; }
+footer { border-top: 1px solid #999; margin-top: 2.5em; padding: 1em 0; font-size: .9em; }
+a:focus-visible, summary:focus-visible, button:focus-visible, input:focus-visible,
+select:focus-visible, .figure-drawing:focus-visible { outline: 2px solid #0000ee; outline-offset: 3px; }
+sup, sub { line-height: 0; }
 
-.concept-figure .figure-scroll-hint{display:none}
-.concept-figure .figure-drawing{overflow:visible}
-.protocol-panels{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:22px}
-.concept-figure .figure-drawing svg{min-width:0;max-width:350px;margin:auto}
-.phase-difference,.phase-common{text-align:center;font-size:18px;margin:14px 0}
-@media(max-width:600px){.protocol-panels{grid-template-columns:1fr;gap:10px}.phase-difference,.phase-common{font-size:17px}}
-@media print{.protocol-panels{grid-template-columns:1fr 1fr;gap:12pt}.phase-difference,.phase-common{font-size:9pt}}
+/* Figure layout and controls; the surrounding document uses ordinary HTML. */
+.inline-figure { margin: 1.5em 0; break-inside: avoid; }
+.inline-figure svg { display: block; width: 100%; height: auto; }
+.figure-drawing { overflow-x: auto; }
+.figure-scroll-hint { display: none; }
+.inline-figure figcaption { margin: .75em 0; font-size: .95em; }
+.figure-controls { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 24px; margin: 1em 0; }
+.figure-controls label { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+.figure-controls input { width: 138px; }
+.figure-controls output { min-width: 30px; font-variant-numeric: tabular-nums; }
+button, input, select { font: 15px Arial, sans-serif; }
+button { cursor: pointer; }
+.figure-tools, .figure-credit { font-size: .85em; }
+.figure-tools { margin: 1em 0; }
+.figure-credit { display: block; margin-top: .6em; }
+.figure-title { margin: 0 0 .8em; }
+.figure-shared-condition, .phase-difference, .phase-common, .phase-result { text-align: center; }
+.phase-result p { margin: .5em 0; }
+.empty-summary { display: none; }
+.figure-method { font-size: .95em; }
+.protocol-panels { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 22px; }
+.concept-figure .figure-scroll-hint { display: none; }
+.concept-figure .figure-drawing { overflow: visible; }
+.concept-figure .figure-drawing svg { min-width: 0; max-width: 350px; margin: auto; }
+.phonon-figure .figure-drawing svg { max-width: none; min-width: 0; }
+#phonon-drawing .phonon-narrow { display: none; }
+.source-drawing { max-width: 640px; margin: 1em 0; }
+.source-drawing img { display: block; width: 100%; height: auto; }
+.charge-ledger caption { caption-side: top; text-align: left; margin-bottom: .5em; }
 
-.figure-title{font-size:21px;font-weight:normal;line-height:1.35;margin:0 0 18px}
-.figure-shared-condition{font-size:16px;text-align:center;color:#555;margin:0 0 8px}
-.phase-result{border-top:1px solid #ccc;margin:12px 0;padding-top:12px;text-align:center}
-.phase-result .phase-difference{font-size:26px;margin:4px 0 8px}.phase-result p{font-size:16px;margin:6px 0}
-.phase-common{font-size:16px;color:#555;margin:14px 0 20px}.empty-summary{display:none}
-.figure-method{font-size:16px;margin:14px 0 28px}.figure-method summary{font-weight:normal;color:#444}
-.phonon-figure .figure-drawing svg{max-width:none;min-width:0}#phonon-drawing .phonon-narrow{display:none}
-@media(max-width:600px){.figure-title{font-size:20px}.figure-shared-condition,.phase-common{font-size:15px}.phase-result .phase-difference{font-size:24px}#phonon-drawing .phonon-wide{display:none}#phonon-drawing .phonon-narrow{display:block}}
-@media print{.figure-title{font-size:13pt}.figure-shared-condition,.phase-common,.phase-result p{font-size:9pt}.phase-result .phase-difference{font-size:15pt}#phonon-drawing .phonon-wide{display:block}#phonon-drawing .phonon-narrow{display:none}.figure-method{font-size:9pt}}
-
-.source-drawing{max-width:640px;margin:16px auto 22px}.source-drawing img{display:block;width:100%;height:auto}
-.figure-credit{display:block;margin-top:10px;font-size:14px;color:#555}
-.charge-ledger{font-size:16px;line-height:1.5}.charge-ledger caption{caption-side:top;text-align:left;font-size:16px;margin:0 0 8px;color:#333}.charge-ledger th{font-weight:normal}.charge-ledger tbody tr:last-child{font-weight:bold}
-@media(max-width:600px){.charge-ledger{font-size:15px}.charge-ledger caption{font-size:15px}.charge-ledger th,.charge-ledger td{padding:8px 5px}.figure-credit{font-size:13px}}
-@media print{.source-drawing{max-width:410px}.source-drawing img{filter:grayscale(1)}.figure-credit{font-size:8pt}.charge-ledger,.charge-ledger caption{font-size:9pt}}
-
-/* A short continuous reading route with optional full calculations. */
-.reading-route{border-left:3px solid #317b92;padding:2px 18px;margin:26px 0;background:#f4f8f9}
-details.derivation{border:1px solid #c5d2d7;border-radius:5px;padding:12px 16px;margin:26px 0}
-details.derivation>summary{font:600 15px/1.5 system-ui,sans-serif;color:#244f63}
-details.derivation[open]>summary{border-bottom:1px solid #c5d2d7;padding-bottom:12px;margin-bottom:20px}
-@media(max-width:600px){details.derivation{padding:11px}.reading-route{padding:2px 12px}}
+@media (max-width: 600px) {
+  body { margin: 18px; font-size: 17px; }
+  h1 { font-size: 1.7em; }
+  .equation { font-size: 16px; }
+  th, td { padding-right: .6em; }
+  .figure-controls { gap: 12px; }
+  .figure-controls label { flex: 1 0 100%; }
+  .figure-controls input { flex: 1; max-width: 230px; }
+  .figure-drawing svg { min-width: 600px; }
+  .figure-scroll-hint { display: block; font-size: .85em; }
+  .protocol-panels { grid-template-columns: 1fr; gap: 10px; }
+  #phonon-drawing .phonon-wide { display: none; }
+  #phonon-drawing .phonon-narrow { display: block; }
+}
+@page { margin: .7in; }
+@media print {
+  nav, footer, .figure-controls, .figure-tools, .figure-scroll-hint { display: none; }
+  body { margin: 0; max-width: none; font-size: 10.5pt; line-height: 1.45; }
+  h1 { font-size: 24pt; }
+  h2 { font-size: 17pt; margin-top: 24pt; break-after: avoid; }
+  h3 { break-after: avoid; }
+  .equation { break-inside: avoid; font-size: 10pt; overflow: visible; }
+  .inline-figure { break-inside: avoid; margin: 18pt 0; }
+  .figure-drawing { overflow: visible; }
+  .figure-drawing svg { min-width: 0; filter: grayscale(1); }
+  .protocol-panels { grid-template-columns: 1fr 1fr; gap: 12pt; }
+  #phonon-drawing .phonon-wide { display: block; }
+  #phonon-drawing .phonon-narrow { display: none; }
+  .source-drawing { max-width: 410px; }
+  a { color: inherit; text-decoration: none; }
+}

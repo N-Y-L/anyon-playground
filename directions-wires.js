@@ -318,7 +318,7 @@
     const parity = s.atCrossing ? 'At this analytic zero, the even and odd ground states are degenerate.' : `The lowest-energy state has <strong>${s.parity > 0 ? 'even' : 'odd'} fermion parity</strong>.`;
     const energy = !s.converged ? 'The lowest-mode iteration did not converge at this setting.' : s.atCrossing ? 'The exact splitting is zero; floating-point input rounding and the solver can leave a small computed remainder.' : `The computed splitting is E₀/w = ${scientificHTML(s.energy)}${s.energy < 1e-14 ? ', below the plotted display floor' : ''}.`;
     const mode = s.topological ? 'The semi-infinite problem supports decaying end modes here.' : 'Here the plotted finite profiles belong to the lowest bulk level, not a localized end mode.';
-    const residual = view.compare ? `<p><strong>Zero-energy recurrence comparison:</strong> r/w = ${scientificHTML(s.residual)} at the far boundary. This is a boundary-condition residual, not an excitation energy; the dotted profile need not equal the finite singular mode.</p>` : '';
+    const residual = view.compare ? `<p><strong>Zero-energy recurrence comparison:</strong> r/w = ${scientificHTML(s.residual)} at the far boundary. This is a boundary-condition residual, not an excitation energy; the dotted profile need not equal the finite-chain mode.</p>` : '';
     const failures = curveCache && curveCache.sites === s.sites && curveCache.delta === s.delta ? curveCache.failures : 0;
     return `<p>${energy} ${parity}</p><p>${mode} Oscillation boundary: |μ|/w = ${fixed(s.oscillationBoundary)}; bulk transition: |μ|/w = 2.</p>${residual}${failures ? `<p>${failures} unconverged curve points have been omitted.</p>` : ''}`;
   }
@@ -349,7 +349,7 @@
         <button type="button" data-wires-crossing>Nearest exact crossing</button><button type="button" data-wires-reset>Reset</button>
       </div>
       <div class="wires-summary" data-wires-summary aria-live="polite">${summary(s, view)}</div>
-      <figcaption>The uniform, open Kitaev chain with real 0 &lt; Δ &lt; w. E₀ is the smallest singular value of its finite Majorana matrix. The two profiles are singular vectors, not two independent excitations. Their signs are independently positive at their own ends. Values below 10⁻¹⁴w are clipped only in the plot; analytic zeros are identified separately from tiny numerical estimates.</figcaption>
+      <figcaption>The uniform, open Kitaev chain with real 0 &lt; Δ &lt; w. E₀ is the lowest even–odd energy splitting. The two profiles are spatial components of one fermionic mode. Their signs are independently positive at their own ends. Values below 10⁻¹⁴w are clipped only in the plot; analytic zeros are identified separately from tiny numerical estimates.</figcaption>
       <noscript><p>The default has N = 20, Δ/w = 0.2, and μ/w = 0.6. The static figure remains readable; controls require JavaScript.</p></noscript>
     </figure>`;
   }

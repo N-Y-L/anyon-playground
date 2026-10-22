@@ -22,7 +22,7 @@ Links beside the [calculations](notes.md) identify their scientific starting poi
 
 [Basani, Subramanyan and Vishveshwara, 2025](https://arxiv.org/abs/2509.15488) — quadratic-potential dynamics and its symmetries. An arXiv preprint in the version checked for these notes.
 
-[Samal, Vishveshwara, Gefen and Väyrynen, 2026](https://arxiv.org/abs/2412.19674) — self-interference and calibrated two-particle references for extended colliders. Published in Physical Review Letters. Its boson/fermion result leaves an anyonic extension open.
+[Samal, Vishveshwara, Gefen and Väyrynen, 2026](https://arxiv.org/abs/2412.19674) — self-interference and two-particle comparisons constructed from one-source measurements in extended colliders. Published in Physical Review Letters. Its boson/fermion result leaves an anyonic extension open.
 
 [Nakamura and collaborators, 2020](https://arxiv.org/abs/2006.14115) — conductance phase slips at filling 1/3 and the electrostatic checks needed to interpret them as braiding. [Published experiment](https://www.nature.com/articles/s41567-020-1019-1).
 
